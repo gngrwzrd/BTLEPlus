@@ -1,0 +1,16 @@
+Test file transfer.
+
+Implement take turn.
+
+Write a tester app to automate a complete test of every feature.
+
+Add randmized packet loss simulation.
+
+
+If I switch packet provider and receiver to require NSFileHandle then I think I can leave it up to the user to
+implement resuming of file transfers in either direction.
+
+Fix resend from packet?
+
+Add streaming BLEPlusSerialServiceStreamingMessage - provides and receives packets.
+Keepalive?

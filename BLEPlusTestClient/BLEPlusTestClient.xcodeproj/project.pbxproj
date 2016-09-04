@@ -1,0 +1,387 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		07FE2E2A1D772CB100BCF386 /* MyPeripheralClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FE2E291D772CB100BCF386 /* MyPeripheralClient.swift */; };
+		F475286D1D7614CD00CBCC65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F475286C1D7614CD00CBCC65 /* AppDelegate.swift */; };
+		F475286F1D7614CD00CBCC65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F475286E1D7614CD00CBCC65 /* Assets.xcassets */; };
+		F47528721D7614CD00CBCC65 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F47528701D7614CD00CBCC65 /* MainMenu.xib */; };
+		F47528821D76151700CBCC65 /* BLEPlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F475287F1D7614E000CBCC65 /* BLEPlus.framework */; };
+		F47528831D76151700CBCC65 /* BLEPlus.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F475287F1D7614E000CBCC65 /* BLEPlus.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		07FE2E271D772CA900BCF386 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F47528791D7614E000CBCC65 /* BLEPlus.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0775BCF91D7674A3005E44C8;
+			remoteInfo = BLEPlusIOS;
+		};
+		F475287E1D7614E000CBCC65 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F47528791D7614E000CBCC65 /* BLEPlus.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 07842C221D6C08C700BADF79;
+			remoteInfo = BLEPlus;
+		};
+		F47528801D7614E000CBCC65 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F47528791D7614E000CBCC65 /* BLEPlus.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0775BC6A1D712EC3005E44C8;
+			remoteInfo = BLEPlusTests;
+		};
+		F47528841D76151700CBCC65 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F47528791D7614E000CBCC65 /* BLEPlus.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 07842C211D6C08C700BADF79;
+			remoteInfo = BLEPlus;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F47528861D76151700CBCC65 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F47528831D76151700CBCC65 /* BLEPlus.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		07FE2E291D772CB100BCF386 /* MyPeripheralClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyPeripheralClient.swift; path = ../../Shared/MyPeripheralClient.swift; sourceTree = "<group>"; };
+		F47528691D7614CD00CBCC65 /* BLEPlusTestClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLEPlusTestClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F475286C1D7614CD00CBCC65 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F475286E1D7614CD00CBCC65 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F47528711D7614CD00CBCC65 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		F47528731D7614CD00CBCC65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F47528791D7614E000CBCC65 /* BLEPlus.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BLEPlus.xcodeproj; path = ../BLEPlus/BLEPlus.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F47528661D7614CD00CBCC65 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F47528821D76151700CBCC65 /* BLEPlus.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F47528601D7614CD00CBCC65 = {
+			isa = PBXGroup;
+			children = (
+				F47528791D7614E000CBCC65 /* BLEPlus.xcodeproj */,
+				F475286B1D7614CD00CBCC65 /* BLEPlusTestClient */,
+				F475286A1D7614CD00CBCC65 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F475286A1D7614CD00CBCC65 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F47528691D7614CD00CBCC65 /* BLEPlusTestClient.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F475286B1D7614CD00CBCC65 /* BLEPlusTestClient */ = {
+			isa = PBXGroup;
+			children = (
+				07FE2E291D772CB100BCF386 /* MyPeripheralClient.swift */,
+				F475286C1D7614CD00CBCC65 /* AppDelegate.swift */,
+				F475286E1D7614CD00CBCC65 /* Assets.xcassets */,
+				F47528731D7614CD00CBCC65 /* Info.plist */,
+				F47528701D7614CD00CBCC65 /* MainMenu.xib */,
+			);
+			path = BLEPlusTestClient;
+			sourceTree = "<group>";
+		};
+		F475287A1D7614E000CBCC65 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F475287F1D7614E000CBCC65 /* BLEPlus.framework */,
+				F47528811D7614E000CBCC65 /* BLEPlusTests.xctest */,
+				07FE2E281D772CA900BCF386 /* BLEPlusIOS.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F47528681D7614CD00CBCC65 /* BLEPlusTestClient */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F47528761D7614CD00CBCC65 /* Build configuration list for PBXNativeTarget "BLEPlusTestClient" */;
+			buildPhases = (
+				F47528651D7614CD00CBCC65 /* Sources */,
+				F47528661D7614CD00CBCC65 /* Frameworks */,
+				F47528671D7614CD00CBCC65 /* Resources */,
+				F47528861D76151700CBCC65 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F47528851D76151700CBCC65 /* PBXTargetDependency */,
+			);
+			name = BLEPlusTestClient;
+			productName = BLEPlusTestClient;
+			productReference = F47528691D7614CD00CBCC65 /* BLEPlusTestClient.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F47528611D7614CD00CBCC65 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Aaron Smith";
+				TargetAttributes = {
+					F47528681D7614CD00CBCC65 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = F47528641D7614CD00CBCC65 /* Build configuration list for PBXProject "BLEPlusTestClient" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F47528601D7614CD00CBCC65;
+			productRefGroup = F475286A1D7614CD00CBCC65 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F475287A1D7614E000CBCC65 /* Products */;
+					ProjectRef = F47528791D7614E000CBCC65 /* BLEPlus.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				F47528681D7614CD00CBCC65 /* BLEPlusTestClient */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		07FE2E281D772CA900BCF386 /* BLEPlusIOS.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = BLEPlusIOS.framework;
+			remoteRef = 07FE2E271D772CA900BCF386 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F475287F1D7614E000CBCC65 /* BLEPlus.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = BLEPlus.framework;
+			remoteRef = F475287E1D7614E000CBCC65 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F47528811D7614E000CBCC65 /* BLEPlusTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = BLEPlusTests.xctest;
+			remoteRef = F47528801D7614E000CBCC65 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F47528671D7614CD00CBCC65 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F475286F1D7614CD00CBCC65 /* Assets.xcassets in Resources */,
+				F47528721D7614CD00CBCC65 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F47528651D7614CD00CBCC65 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07FE2E2A1D772CB100BCF386 /* MyPeripheralClient.swift in Sources */,
+				F475286D1D7614CD00CBCC65 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F47528851D76151700CBCC65 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BLEPlus;
+			targetProxy = F47528841D76151700CBCC65 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F47528701D7614CD00CBCC65 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F47528711D7614CD00CBCC65 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F47528741D7614CD00CBCC65 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F47528751D7614CD00CBCC65 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		F47528771D7614CD00CBCC65 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../BLEPlus/build/Debug\"";
+				INFOPLIST_FILE = BLEPlusTestClient/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gngrwzrd.BLEPlusTestClient;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F47528781D7614CD00CBCC65 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../BLEPlus/build/Debug\"";
+				INFOPLIST_FILE = BLEPlusTestClient/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gngrwzrd.BLEPlusTestClient;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F47528641D7614CD00CBCC65 /* Build configuration list for PBXProject "BLEPlusTestClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F47528741D7614CD00CBCC65 /* Debug */,
+				F47528751D7614CD00CBCC65 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F47528761D7614CD00CBCC65 /* Build configuration list for PBXNativeTarget "BLEPlusTestClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F47528771D7614CD00CBCC65 /* Debug */,
+				F47528781D7614CD00CBCC65 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F47528611D7614CD00CBCC65 /* Project object */;
+}
