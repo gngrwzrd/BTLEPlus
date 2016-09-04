@@ -1,8 +1,12 @@
+Implement take turn. Currently because the timer is restarted all the time it will not allow
+messages to be sent from the peer as quickly as it can. Need to only restart the timer when it
+expires.
+
 Test file transfer.
 
 Rename everything to BTLEPlus
 
-Implement take turn.
+
 
 Write a tester app to automate a complete test of every feature.
 

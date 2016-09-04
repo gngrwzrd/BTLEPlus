@@ -104,7 +104,7 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 	private var dispatchQueue:dispatch_queue_t
 	
 	/// Queue for sending user messages
-	private var sendQueue:[BLEPlusSerialServiceMessage]?
+	public var sendQueue:[BLEPlusSerialServiceMessage]?
 	
 	/// The current message being transmitted.
 	private var currentUserMessage:BLEPlusSerialServiceMessage?
@@ -120,6 +120,8 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 	
 	/// The mode this controller is running as.
 	private var mode:BLEPlusSerialServiceControllerMode = .Central
+	
+	private var turnMode:BLEPlusSerialServiceControllerMode = .Central
 	
 	/// A timer that keeps track of when to offer the peer a turn.
 	private var offerTurnTimer:NSTimer?
@@ -188,12 +190,38 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 	
 	/// Start the offer turn timer.
 	func startOfferTurnTimer() {
-		self.offerTurnTimer = NSTimer(timeInterval: 5, target: self, selector: #selector(BLEPlusSerialServiceController.offerTurnTimeout(_:)), userInfo: nil, repeats: false)
+		//don't allow restarting the timer otherwise the peer won't get to send as
+		//quikly as possible.
+		if self.offerTurnTimer != nil {
+			return
+		}
+		
+		//if it's not our turn return
+		if self.mode != self.turnMode {
+			return
+		}
+		
+		print("startOfferTurnTimer")
+		self.offerTurnTimer?.invalidate()
+		let timer = NSTimer(timeInterval: 5, target: self, selector: #selector(BLEPlusSerialServiceController.offerTurnTimeout(_:)), userInfo: nil, repeats: false)
+		self.offerTurnTimer = timer
+		NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
+	}
+	
+	/// End the offer turn timer.
+	func endOfferTurnTimer() {
+		print("endOfferTurnTimer")
+		self.offerTurnTimer?.invalidate()
+		self.offerTurnTimer = nil
 	}
 	
 	/// When offer turn timer expires.
 	func offerTurnTimeout(timer:NSTimer) {
 		dispatch_async(dispatchQueue) {
+			print("offerTurnTimeout")
+			if self.mode != self.turnMode {
+				return
+			}
 			if self.currentSendControl != nil || self.currentReceiver != nil || self.currentUserMessage != nil {
 				self.shouldOfferTurn = true
 			} else {
@@ -204,14 +232,13 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 	
 	/// Ends the wait timer.
 	func endWaitTimer() {
-		if let timer = waitTimer {
-			timer.invalidate()
-		}
+		waitTimer?.invalidate()
 		waitTimer = nil
 	}
 	
 	/// Starts the wait timer.
 	func startWaitTimer() {
+		waitTimer?.invalidate()
 		let timer = NSTimer(timeInterval: 5, target: self, selector: #selector(BLEPlusSerialServiceController.waitTimeout(_:)), userInfo: nil, repeats: false)
 		waitTimer = timer
 		NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
@@ -235,22 +262,23 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 			self.startSending()
 		}
 		
-		//if we're the central, send a peer info message.
-		if !hasDiscoverdPeerInfo && mode == .Central {
-			dispatch_async(dispatchQueue) {
+		dispatch_async(dispatchQueue) {
+			self.startOfferTurnTimer()
+			//if we're the central, send a peer info message.
+			if !self.hasDiscoverdPeerInfo && self.mode == .Central {
 				self.sendPeerInfoControlRequest()
 				self.startWaitTimer()
-			}
-		} else {
-			dispatch_async(dispatchQueue) {
+			} else {
 				if self.sendQueue?.count < 1 {
 					return
 				}
 				if self.currentUserMessage != nil {
 					return
 				}
-				self.currentUserMessage = self.sendQueue?[0]
-				self.sendNewMessageControlRequest()
+				if self.turnMode == self.mode {
+					self.currentUserMessage = self.sendQueue?[0]
+					self.sendNewMessageControlRequest()
+				}
 			}
 		}
 	}
@@ -346,6 +374,9 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 					self.sendControlMessage(message)
 				}
 			}
+			if message.protocolType == .TakeTurn {
+				self.shouldOfferTurn = false
+			}
 			if expectingAck {
 				self.startWaitTimer()
 			}
@@ -377,6 +408,7 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 	
 	/// Sends a take turn control message.
 	func sendTakeTurnControlMessage() {
+		self.endOfferTurnTimer()
 		let takeTurn = BLEPlusSerialServiceProtocolMessage(withType: .TakeTurn)
 		sendControlMessage(takeTurn, expectingAck: false)
 	}
@@ -414,6 +446,7 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 	/// When you receive a control packet you must call this.
 	public func receivedData(packet:NSData) {
 		endWaitTimer()
+		startOfferTurnTimer()
 		resumeBlock = nil
 		let message = BLEPlusSerialServiceProtocolMessage(withData: packet)
 		switch message.protocolType {
@@ -482,18 +515,37 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 	
 	/// When received an ack for take turn message
 	func receivedAckForTakeTurn() {
-		
+		dispatch_async(dispatchQueue) {
+			//if we're the central and we received an ack for take turn it means the peripheral has messages.
+			if self.mode == .Central {
+				self.turnMode = .Peripheral
+			}
+		}
 	}
 	
 	/// When received a take turn message.
 	func receivedTakeTurnMessage(message:BLEPlusSerialServiceProtocolMessage) {
 		dispatch_async(dispatchQueue) {
+			
+			//if received a take turn message and we're the central we take control back.
 			if self.mode == .Central {
+				if self.currentSendControl?.protocolType == .TakeTurn {
+					self.currentSendControl = nil
+				}
 				self.startSending()
 			}
+			
+			//if received a take turn and we're the peripheral make sure there are messages
+			//to send otherwise give control back to the central.
 			if self.mode == .Peripheral {
 				if self.sendQueue?.count < 1 {
+					self.turnMode = .Central
 					self.sendTakeTurnControlMessage()
+				} else {
+					self.endOfferTurnTimer()
+					self.turnMode = .Peripheral
+					self.sendAck()
+					self.startSending()
 				}
 			}
 		}
