@@ -121,6 +121,12 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 	/// The mode this controller is running as.
 	private var mode:BLEPlusSerialServiceControllerMode = .Central
 	
+	/// A timer that keeps track of when to offer the peer a turn.
+	private var offerTurnTimer:NSTimer?
+	
+	/// Whether or not a turn should be offered to the peer.
+	private var shouldOfferTurn = false
+	
 	/// default init
 	public init(withMode mode:BLEPlusSerialServiceControllerMode) {
 		self.mode = mode
@@ -178,6 +184,22 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 	public func send(message:BLEPlusSerialServiceMessage) {
 		sendQueue?.append(message)
 		startSending()
+	}
+	
+	/// Start the offer turn timer.
+	func startOfferTurnTimer() {
+		self.offerTurnTimer = NSTimer(timeInterval: 5, target: self, selector: #selector(BLEPlusSerialServiceController.offerTurnTimeout(_:)), userInfo: nil, repeats: false)
+	}
+	
+	/// When offer turn timer expires.
+	func offerTurnTimeout(timer:NSTimer) {
+		dispatch_async(dispatchQueue) {
+			if self.currentSendControl != nil || self.currentReceiver != nil || self.currentUserMessage != nil {
+				self.shouldOfferTurn = true
+			} else {
+				self.sendTakeTurnControlMessage()
+			}
+		}
 	}
 	
 	/// Ends the wait timer.
@@ -284,6 +306,10 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 			self.currentUserMessage?.provider?.finishMessage()
 			self.currentUserMessage = nil
 			self.sendQueue?.removeAtIndex(0)
+			if self.shouldOfferTurn {
+				self.sendTakeTurnControlMessage()
+				return
+			}
 			self.startSending()
 		}
 	}
@@ -349,6 +375,12 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 		sendControlMessage(newMessage)
 	}
 	
+	/// Sends a take turn control message.
+	func sendTakeTurnControlMessage() {
+		let takeTurn = BLEPlusSerialServiceProtocolMessage(withType: .TakeTurn)
+		sendControlMessage(takeTurn, expectingAck: false)
+	}
+	
 	/// Send an end of message control request.
 	func sendEndMessageControlRequest(windowSize:BLEPlusSerialServiceWindowSizeType) {
 		let endMessage = BLEPlusSerialServiceProtocolMessage(endMessageWithWindowSize: windowSize)
@@ -400,9 +432,6 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 		case .EndMessage:
 			print("received end message:",packet.bleplus_base16EncodedString(uppercase:true))
 			receivedEndMessage(message)
-		case .Abort:
-			print("received abort:",packet.bleplus_base16EncodedString(uppercase:true))
-			receivedAbortMessage(message)
 		case .Resend:
 			print("received resend:",packet.bleplus_base16EncodedString(uppercase:true))
 			receivedResendMessage(message)
@@ -412,6 +441,12 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 		case .Data:
 			print("received data message:",packet.bleplus_base16EncodedString(uppercase:true))
 			receivedDataMessage(message)
+		case .TakeTurn:
+			print("received take turn message:",packet.bleplus_base16EncodedString(uppercase: true))
+			receivedTakeTurnMessage(message)
+		case .Abort:
+			print("received abort:",packet.bleplus_base16EncodedString(uppercase:true))
+			receivedAbortMessage(message)
 		default:
 			break
 		}
@@ -419,26 +454,49 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 	
 	/// Received an ack.
 	public func receivedAck(message:BLEPlusSerialServiceProtocolMessage) {
-		guard let csc = currentSendControl else {
-			return
+		dispatch_async(dispatchQueue) { 
+			guard let csc = self.currentSendControl else {
+				return
+			}
+			switch csc.protocolType {
+			case .NewMessage:
+				self.startSendingPackets()
+			case .NewFileMessage:
+				self.startSendingPackets()
+			case .EndPart:
+				self.startSendingPackets()
+			case .EndMessage:
+				self.endCurrentMessage()
+			case .PeerInfo:
+				self.receivedAckForPeerInfo()
+			case .Abort:
+				self.receivedAckForAbort()
+			case .TakeTurn:
+				self.receivedAckForTakeTurn()
+			default:
+				break
+			}
+			self.currentSendControl = nil
 		}
-		switch csc.protocolType {
-		case .NewMessage:
-			startSendingPackets()
-		case .NewFileMessage:
-			startSendingPackets()
-		case .EndPart:
-			startSendingPackets()
-		case .EndMessage:
-			endCurrentMessage()
-		case .PeerInfo:
-			receivedAckForPeerInfo()
-		case .Abort:
-			receivedAckForAbort()
-		default:
-			break
+	}
+	
+	/// When received an ack for take turn message
+	func receivedAckForTakeTurn() {
+		
+	}
+	
+	/// When received a take turn message.
+	func receivedTakeTurnMessage(message:BLEPlusSerialServiceProtocolMessage) {
+		dispatch_async(dispatchQueue) {
+			if self.mode == .Central {
+				self.startSending()
+			}
+			if self.mode == .Peripheral {
+				if self.sendQueue?.count < 1 {
+					self.sendTakeTurnControlMessage()
+				}
+			}
 		}
-		currentSendControl = nil
 	}
 	
 	/// On ack for abort message.

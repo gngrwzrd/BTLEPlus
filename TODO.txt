@@ -1,5 +1,7 @@
 Test file transfer.
 
+Rename everything to BTLEPlus
+
 Implement take turn.
 
 Write a tester app to automate a complete test of every feature.

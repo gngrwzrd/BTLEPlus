@@ -29,7 +29,7 @@ import Foundation
 	/// A file to send.
 	public var fileURL:NSURL?
 	
-	//internal packet provider that the serial service controller uses.
+	/// internal packet provider that the serial service controller uses.
 	var provider:BLEPlusSerialServicePacketProvider?
 	
 	/**

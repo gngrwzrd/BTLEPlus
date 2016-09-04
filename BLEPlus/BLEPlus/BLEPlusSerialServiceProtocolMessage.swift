@@ -20,7 +20,8 @@ Control message types.
 - EndMessage:			End the current message.
 - Resend:				Resend the current window.
 - Data:					Data message.
-- Abort:					Abort the current state and reset. Allow the central to start over.
+- TakeTurn:             The peers turn to send messages.
+- Abort:				Abort the current state and reset. Allow the central to start over.
 */
 public enum BLEPlusSerialServiceProtocolMessageType : BLEPlusSerialServiceProtocolMessageType_Type {
 	case None = 0
@@ -32,7 +33,8 @@ public enum BLEPlusSerialServiceProtocolMessageType : BLEPlusSerialServiceProtoc
 	case EndMessage = 6
 	case Data = 7
 	case Resend = 8
-	case Abort = 9
+	case TakeTurn = 9
+	case Abort = 10
 }
 
 /// BLEPlusSerialServiceMessage is used over the control channel
