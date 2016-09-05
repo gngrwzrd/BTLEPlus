@@ -22,14 +22,14 @@ public class BLEPlusSerialServicePacketReceiver : NSObject {
 	/// The file url.
 	var fileURL:NSURL?
 	
-	/// Wrapped user type.
+	/// The user identifieable message type.
 	var messageType:BLEPlusSerialServiceMessageType_Type = 0
 	
 	/// Message id.
-	var messageId:BLEPLusSerialServiceMessageIdType = 0
+	var messageId:BLEPLusSerialServiceMessageId_Type = 0
 	
-	/// Window Size.
-	var windowSize:BLEPlusSerialServiceWindowSizeType {
+	/// Window Size. This is clamped between 0 and BLEPlusSerialServiceMaxWindowSize.
+	var windowSize:BLEPlusSerialServiceWindowSize_Type {
 		get {
 			return _windowSize
 		} set(new) {
@@ -40,7 +40,7 @@ public class BLEPlusSerialServicePacketReceiver : NSObject {
 			}
 		}
 	}
-	private var _windowSize:BLEPlusSerialServiceWindowSizeType = 0
+	private var _windowSize:BLEPlusSerialServiceWindowSize_Type = BLEPlusSerialServiceDefaultWindowSize
 	
 	/// Whether or not this receiver needs packets resent from the client.
 	var needsPacketsResent:Bool = false
@@ -94,7 +94,7 @@ public class BLEPlusSerialServicePacketReceiver : NSObject {
 	
 	- returns: BLEPlusSerialServicePacketReceiver
 	*/
-	init?(withWindowSize:BLEPlusSerialServiceWindowSizeType, messageSize:UInt64 = 0) {
+	init?(withWindowSize:BLEPlusSerialServiceWindowSize_Type, messageSize:UInt64 = 0) {
 		guard withWindowSize > 0 else {
 			return nil
 		}
@@ -116,7 +116,7 @@ public class BLEPlusSerialServicePacketReceiver : NSObject {
 	
 	- returns: BLEPlusSerialServicePacketReceiver
 	*/
-	init?(withFileURLForWriting:NSURL, windowSize:BLEPlusSerialServiceWindowSizeType, messageSize:UInt64 = 0) {
+	init?(withFileURLForWriting:NSURL, windowSize:BLEPlusSerialServiceWindowSize_Type, messageSize:UInt64 = 0) {
 		guard let path = withFileURLForWriting.path else {
 			return nil
 		}
@@ -154,6 +154,7 @@ public class BLEPlusSerialServicePacketReceiver : NSObject {
 	
 	/// Commit packet data by appending the current packet window to the message.
 	func commitPacketData() {
+		needsPacketsResent = false
 		let part = NSMutableData()
 		var loopPacketCounter = beginWindowPacketCount
 		var writtenPackets:BLEPlusSerialServicePacketCountType = 0

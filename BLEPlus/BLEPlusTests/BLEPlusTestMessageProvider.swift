@@ -15,7 +15,7 @@ class BLEPlusTestMessageProvider : XCTestCase {
 		let fileURL = NSBundle(forClass: self.dynamicType).URLForImageResource("IMG_5543")
 		let _provider = BLEPlusSerialServicePacketProvider.createWithFileURLForReading(fileURL!, mtu: 1024, windowSize: 25)
 		_provider!.windowSize = 200
-		assert(_provider!.windowSize == 128)
+		assert(_provider!.windowSize == BLEPlusSerialServiceMaxWindowSize)
 	}
 	
 	func testCreateReturnsNil() {

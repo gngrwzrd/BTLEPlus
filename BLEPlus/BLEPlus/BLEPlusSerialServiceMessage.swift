@@ -21,7 +21,7 @@ import Foundation
 	public var messageType:BLEPlusSerialServiceMessageType_Type = 0
 	
 	/// A message id for tracking request / response lifecycle.
-	public var messageId:BLEPLusSerialServiceMessageIdType = 0
+	public var messageId:BLEPLusSerialServiceMessageId_Type = 0
 	
 	/// Data to send.
 	public var data:NSData?
@@ -40,7 +40,7 @@ import Foundation
 	
 	- returns: BLEPlusSerialServiceMessage
 	*/
-	public init?(withType:BLEPlusSerialServiceMessageType_Type, messageId:BLEPLusSerialServiceMessageIdType, data:NSData) {
+	public init?(withType:BLEPlusSerialServiceMessageType_Type, messageId:BLEPLusSerialServiceMessageId_Type, data:NSData) {
 		guard data.length > 0 else {
 			return nil
 		}
@@ -57,12 +57,12 @@ import Foundation
 	/**
 	Init with a file URL to send.
 	
-	- parameter withType:     BLEPlusSerialServiceWrappedUserType
+	- parameter withType:     BLEPLusSerialServiceMessageId_Type
 	- parameter withFileURL:  NSURL
 	
 	- returns: BLEPlusSerialServiceMessage
 	*/
-	public init?(withType:BLEPlusSerialServiceMessageType_Type, messageId:BLEPLusSerialServiceMessageIdType, fileURL:NSURL) {
+	public init?(withType:BLEPlusSerialServiceMessageType_Type, messageId:BLEPLusSerialServiceMessageId_Type, fileURL:NSURL) {
 		guard withType > 0 else {
 			return nil
 		}

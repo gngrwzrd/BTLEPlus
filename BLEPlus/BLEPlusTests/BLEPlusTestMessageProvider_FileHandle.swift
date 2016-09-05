@@ -13,7 +13,7 @@ class BLEPlusTestMessageProvider_FileHandle : XCTestCase {
 	
 	var testMTU:BLEPlusSerialServiceMTUType = 0
 	var testRealMTU:BLEPlusSerialServiceMTUType = 0
-	var testWindowSize:BLEPlusSerialServiceWindowSizeType = 0
+	var testWindowSize:BLEPlusSerialServiceWindowSize_Type = 0
 	
 	override func setUp() {
 		testMTU = 1024

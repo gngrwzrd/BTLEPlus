@@ -45,10 +45,10 @@ class BLEPlusTestUserMessage : XCTestCase {
 	
 	func testNewLargeMessage() {
 		let messageSize:UInt64 = 1024
-		let newMessage = BLEPlusSerialServiceProtocolMessage(newLargeMessageWithExpectedSize: messageSize, messageType: 1, messageId: 1)
+		let newMessage = BLEPlusSerialServiceProtocolMessage(newFileMessageWithExpectedSize: messageSize, messageType: 1, messageId: 1)
 		let newMessage2 = BLEPlusSerialServiceProtocolMessage(withData: newMessage.data)
 		assert(newMessage2.messageSize == messageSize)
-		assert(newMessage2.protocolType == .NewLargeMessage)
+		assert(newMessage2.protocolType == .NewFileMessage)
 	}
 	
 	func testEndMessage() {
@@ -69,7 +69,7 @@ class BLEPlusTestUserMessage : XCTestCase {
 		let message = BLEPlusSerialServiceProtocolMessage(endPartWithWindowSize: 64)
 		let message2 = BLEPlusSerialServiceProtocolMessage(withData: message.data)
 		assert(message2.protocolType == .EndPart)
-		assert(message2.windowSize == 128)
+		assert(message2.windowSize == BLEPlusSerialServiceMaxWindowSize)
 	}
 	
 	func testDataMessage() {

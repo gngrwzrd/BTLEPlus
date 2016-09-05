@@ -69,9 +69,8 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 	/// Maximum transmission unit.
 	public var mtu:BLEPlusSerialServiceMTUType = BLEPlusSerialServiceDefaultMTU
 	
-	/// Window size is how many buffers are available for sending / receiving.
-	/// Total bytes in the window is windowSize*mtu.
-	public var windowSize:BLEPlusSerialServiceWindowSizeType {
+	/// Window size. This is clamped between 0 and BLEPlusSerialServiceMaxWindowSize.
+	public var windowSize:BLEPlusSerialServiceWindowSize_Type {
 		get {
 			return _windowSize
 		} set(new) {
@@ -82,7 +81,7 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 			}
 		}
 	}
-	private var _windowSize:BLEPlusSerialServiceWindowSizeType = BLEPlusSerialServiceMaxWindowSize
+	private var _windowSize:BLEPlusSerialServiceWindowSize_Type = BLEPlusSerialServiceDefaultWindowSize
 	
 	/// When resume is called if this block is set it's called.
 	private var resumeBlock:(()->Void)?
@@ -121,6 +120,7 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 	/// The mode this controller is running as.
 	private var mode:BLEPlusSerialServiceControllerMode = .Central
 	
+	/// The mode for whoever's turn it is.
 	private var turnMode:BLEPlusSerialServiceControllerMode = .Central
 	
 	/// A timer that keeps track of when to offer the peer a turn.
@@ -317,6 +317,8 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 			if self.pausePackets {
 				return
 			}
+			
+			print(self.currentUserMessage?.provider?.progress())
 			if provider.isEndOfMessage {
 				self.sendEndMessageControlRequest(provider.endOfMessageWindowSize)
 			} else {
@@ -389,7 +391,7 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 		sendControlMessage(ack, expectingAck: false)
 	}
 	
-	/// Send a 'new message' control request.
+	/// Send a new message control request.
 	func sendNewMessageControlRequest() {
 		guard let currentUserMessage = currentUserMessage else {
 			return
@@ -414,13 +416,13 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 	}
 	
 	/// Send an end of message control request.
-	func sendEndMessageControlRequest(windowSize:BLEPlusSerialServiceWindowSizeType) {
+	func sendEndMessageControlRequest(windowSize:BLEPlusSerialServiceWindowSize_Type) {
 		let endMessage = BLEPlusSerialServiceProtocolMessage(endMessageWithWindowSize: windowSize)
 		sendControlMessage(endMessage)
 	}
 	
 	/// Send an end part message control request.
-	func sendEndPartControlRequest(windowSize:BLEPlusSerialServiceWindowSizeType) {
+	func sendEndPartControlRequest(windowSize:BLEPlusSerialServiceWindowSize_Type) {
 		let endPart = BLEPlusSerialServiceProtocolMessage(endPartWithWindowSize: windowSize)
 		sendControlMessage(endPart)
 	}
@@ -518,6 +520,7 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 		dispatch_async(dispatchQueue) {
 			//if we're the central and we received an ack for take turn it means the peripheral has messages.
 			if self.mode == .Central {
+				self.endOfferTurnTimer()
 				self.turnMode = .Peripheral
 			}
 		}
@@ -532,6 +535,7 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 				if self.currentSendControl?.protocolType == .TakeTurn {
 					self.currentSendControl = nil
 				}
+				self.turnMode = .Central
 				self.startSending()
 			}
 			
@@ -625,6 +629,7 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 			return
 		}
 		dispatch_async(dispatchQueue) {
+			currentReceiver.windowSize = message.windowSize
 			currentReceiver.commitPacketData()
 			if currentReceiver.needsPacketsResent {
 				let packet = currentReceiver.resendFromPacket()
@@ -677,11 +682,13 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 		dispatch_async(dispatchQueue) { 
 			if self.mode == .Central {
 				self.endWaitTimer()
+				self.endOfferTurnTimer()
 				self.resumeBlock = nil
 				self.currentUserMessage?.provider?.reset()
 				self.sendAck()
 			}
 			if self.mode == .Peripheral {
+				self.endOfferTurnTimer()
 				self.currentReceiver?.reset()
 				self.currentReceiver = nil
 				self.sendAck()
@@ -696,8 +703,8 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 				return
 			}
 			//TODO: fix resend from packet.
-			provider.resendWindow()
 			//provider.resendFromPacket(message.resendFromPacket)
+			provider.resendWindow()
 			self.startSendingPackets(false)
 		}
 	}

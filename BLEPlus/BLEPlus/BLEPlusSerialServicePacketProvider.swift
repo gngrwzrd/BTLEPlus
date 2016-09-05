@@ -22,7 +22,7 @@ public class BLEPlusSerialServicePacketProvider : NSObject {
 	var mtu:BLEPlusSerialServiceMTUType = BLEPlusSerialServiceDefaultMTU
 	
 	/// Window size 
-	var windowSize:BLEPlusSerialServiceWindowSizeType {
+	var windowSize:BLEPlusSerialServiceWindowSize_Type {
 		get {
 			return _windowSize
 		} set(new) {
@@ -33,7 +33,7 @@ public class BLEPlusSerialServicePacketProvider : NSObject {
 			}
 		}
 	}
-	private var _windowSize:BLEPlusSerialServiceWindowSizeType = BLEPlusSerialServiceMaxWindowSize
+	private var _windowSize:BLEPlusSerialServiceWindowSize_Type = BLEPlusSerialServiceMaxWindowSize
 	
 	/// The provider source when small messages are sending an NSData.
 	var data:NSData?
@@ -66,7 +66,7 @@ public class BLEPlusSerialServicePacketProvider : NSObject {
 	/// The window size for the end of message. When a message reaches the
 	/// end the window size will generally not be full. This will return the smaller
 	/// window size that should be used.
-	var endOfMessageWindowSize:BLEPlusSerialServiceWindowSizeType = 0
+	var endOfMessageWindowSize:BLEPlusSerialServiceWindowSize_Type = 0
 	
 	/// The last packet counter value when fillWindow was called. This is set so that
 	/// resendWindow will reset the packet counter to this value.
@@ -182,7 +182,7 @@ public class BLEPlusSerialServicePacketProvider : NSObject {
 		gotPacketCount = 0
 		
 		var packet:NSData? = nil
-		var windowUsedCount:BLEPlusSerialServiceWindowSizeType = 0
+		var windowUsedCount:BLEPlusSerialServiceWindowSize_Type = 0
 		var wrappedPacket:NSMutableData? = nil
 		let mtuInt = Int(mtu) - Int(BLEPlusSerialServicePacketProvider.headerSize + BLEPlusSerialServiceProtocolMessage.headerSize)
 		var loopPacketCounter = packetCounter
