@@ -331,7 +331,9 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 	func endCurrentMessage() {
 		dispatch_async(dispatchQueue) {
 			if let cm = self.currentUserMessage {
-				self.delegate?.serialServiceController?(self, sentMessage: cm)
+				dispatch_async(self.delegateQueue) {
+					self.delegate?.serialServiceController?(self, sentMessage: cm)
+				}
 			}
 			self.currentUserMessage?.provider?.finishMessage()
 			self.currentUserMessage = nil
@@ -354,7 +356,9 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 				return
 			}
 			print("resending control data: ", data.bleplus_base16EncodedString(uppercase:true))
-			self.delegate?.serialServiceController(self, wantsToSendData: data)
+			dispatch_async(self.delegateQueue) {
+				self.delegate?.serialServiceController(self, wantsToSendData: data)
+			}
 		}
 	}
 	

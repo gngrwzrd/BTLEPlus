@@ -33,7 +33,8 @@ import Foundation
 	
 	- returns: BLEPlusRequest
 	*/
-	public init(requestType:BLEPlusRequestResponseMessageType_Type, responseType:BLEPlusRequestResponseMessageType_Type) {
+	public init?(requestType:BLEPlusRequestResponseMessageType_Type, responseType:BLEPlusRequestResponseMessageType_Type, data:NSData) {
+		super.init(withMessageType: requestType, messageId: 0, data: data)
 		self.messageType = requestType
 		self.requestType = requestType
 		self.responseType = responseType

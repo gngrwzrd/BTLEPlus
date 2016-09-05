@@ -19,14 +19,6 @@ public typealias BLEPlusRequestResponseMessageId_Type = BLEPLusSerialServiceMess
 @objc public protocol BLEPlusRequestResponseControllerDelegate {
 	
 	/**
-	This is required in order to send data.
-	
-	- parameter controller:	BLEPlusRequestResponseController
-	- parameter data:			NSData
-	*/
-	func requestResponseController(controller:BLEPlusRequestResponseController, wantsToSendData data:NSData)
-	
-	/**
 	Called when a request has been sent.
 	
 	- parameter controller:	 BLEPlusRequestResponseController
@@ -46,30 +38,27 @@ public typealias BLEPlusRequestResponseMessageId_Type = BLEPLusSerialServiceMess
 /// The BLEPlusRequestResponseController handles maps messages into requests and responses.
 /// Internally this uses a BLEPlusSerialServiceController which handles all of the protocol management
 /// for you. Responses may come back to you out of the order the requests were sent in.
-@objc public class BLEPlusRequestResponseController : NSObject, BLEPlusSerialServiceControllerDelegate {
+@objc public class BLEPlusRequestResponseController : BLEPlusSerialServiceController {
 	
 	/// Delegate to receive callbacks.
-	public var delegate:BLEPlusRequestResponseControllerDelegate?
-	
-	/// A serial controller that does the lifing.
-	public var serialController:BLEPlusSerialServiceController?
+	public var requestResponseDelegate:BLEPlusRequestResponseControllerDelegate?
 	
 	/// Pending requests.
 	var requests:[BLEPlusRequest] = []
 	
 	/// A counter for message ids.
-	class var messageIdCounter:BLEPlusRequestResponseMessageId_Type = 0
+	static var messageIdCounter:BLEPlusRequestResponseMessageId_Type = 0
 	
 	/**
-	Init a new BLEPlusRequestResponseController.
+	Create a BLEPlusRequestResponseController.
 	
-	- parameter mode:	The mode to operate as.
+	- parameter requestResponseDelegate:	AnyObject that implements the protocol.
 	
-	- returns: BLEPlusRequestResponseController.
+	- returns: BLEPlusRequestController.
 	*/
-	public init(mode:BLEPlusSerialServiceControllerMode) {
-		self.serialController = BLEPlusSerialServiceController(mode)
-		self.serialController?.delegate = self
+	public init(requestResponseDelegate:BLEPlusRequestResponseControllerDelegate, mode:BLEPlusSerialServiceControllerMode, delegateQueue:dispatch_queue_t) {
+		super.init(withMode: mode, delegateQueue: delegateQueue)
+		self.requestResponseDelegate = requestResponseDelegate
 	}
 	
 	/**
@@ -86,7 +75,7 @@ public typealias BLEPlusRequestResponseMessageId_Type = BLEPLusSerialServiceMess
 			messageId = 0
 		}
 		BLEPlusRequestResponseController.messageIdCounter = messageId
-		self.serialController?.send(request)
+		send(request)
 	}
 	
 	/**
@@ -97,41 +86,33 @@ public typealias BLEPlusRequestResponseMessageId_Type = BLEPLusSerialServiceMess
 	*/
 	public func sendResponse(forRequest:BLEPlusRequest, response:BLEPlusResponse) {
 		response.messageId = forRequest.messageId
-		self.serialController?.send(response)
+		send(response)
 	}
 	
 	/**
-	You are required to call this when you receive raw data.
+	Call when you get the serialServiceController receivedMessage delegate callback.
 	
-	- parameter data:	NSData
+	- parameter message:	BLEPlusSerialServiceMessage
 	*/
-	public func receivedData(data:NSData) {
-		self.serialController?.receivedData(data)
-	}
-	
-	/// Delegate implementation for serial service controller
-	func serialServiceController(controller: BLEPlusSerialServiceController, wantsToSendData data: NSData) {
-		self.delegate?.requestResponseController(self, wantsToSendData: data)
-	}
-	
-	/// Serial service sent a complete message, lookup pending request and send to delegate as being sent.
-	func serialServiceController(controller: BLEPlusSerialServiceController, sentMessage message: BLEPlusSerialServiceMessage) {
-		//Find pending request and call delegate with it.
+	public func receivedMessage(message:BLEPlusSerialServiceMessage) {
 		for request in self.requests {
 			if request.messageId == message.messageId {
-				delegate?.requestResponseController(self, sentRequest: request)
+				let response = BLEPlusResponse(responseType: request.responseType)
+				requestResponseDelegate?.requestResponseControllerReceivedResponse?(response, forRequest: request)
 			}
 		}
 	}
 	
-	/// Received a complete message, the message id is used to lookup the request and pass a response to the delegate.
-	func serialServiceController(controller: BLEPlusSerialServiceController, receivedMessage message: BLEPlusSerialServiceMessage) {
-		//if this is a response type
-		//look up requests and find matching messageId
+	/**
+	Call this when you get the serialServiceController sentMessage delegate callback.
+	
+	- parameter message:	BLEPlusSerialServiceMessage
+	*/
+	public func sentMessage(message:BLEPlusSerialServiceMessage) {
+		//Find pending request and call delegate with it.
 		for request in self.requests {
 			if request.messageId == message.messageId {
-				let response = BLEPlusResponse(responseType: request.responseType)
-				delegate?.requestResponseControllerReceivedResponse(message, forRequest: response)
+				requestResponseDelegate?.requestResponseController?(self, sentRequest: request)
 			}
 		}
 	}

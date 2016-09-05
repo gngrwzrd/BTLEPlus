@@ -77,57 +77,6 @@ public class BLEPlusSerialServicePacketProvider : NSObject {
 	var lastFileOffsetAtStart:UInt64 = 0
 	
 	/**
-	Create a BLEPlusSerialServicePacketProvider with data provider, mtu and send windowSize.
-	
-	- parameter data:			NSData object to send.
-	- parameter mtu:			Maximum transmission unit.
-	- parameter windowSize:	Send window size.
-	
-	- returns: BLEPlusSerialServicePacketProvider?
-	*/
-	class func createWithData(data:NSData, mtu:UInt16, windowSize:UInt8) -> BLEPlusSerialServicePacketProvider? {
-		guard data.length > 0 else {
-			return nil
-		}
-		guard mtu < UInt16.max else {
-			return nil
-		}
-		guard windowSize <= BLEPlusSerialServiceMaxPacketCounter && windowSize > 0 else {
-			return nil
-		}
-		if let provider = BLEPlusSerialServicePacketProvider(withData: data) {
-			provider.mtu = mtu
-			provider.windowSize = windowSize
-			return provider
-		}
-		return nil
-	}
-	
-	/**
-	Create a BLEPlusSerialServicePacketProvider with file provider, mtu and send windowSize.
-	
-	- parameter fileURLForReading:	File NSURL for reading.
-	- parameter mtu:						Maximum transmission unit.
-	- parameter windowSize:				Send window size.
-	
-	- returns: BLEPlusSerialServicePacketProvider?
-	*/
-	class func createWithFileURLForReading(fileURLForReading:NSURL, mtu:UInt16, windowSize:UInt8) -> BLEPlusSerialServicePacketProvider? {
-		guard let path = fileURLForReading.path else {
-			return nil
-		}
-		guard NSFileManager.defaultManager().fileExistsAtPath(path) else {
-			return nil
-		}
-		if let provider = BLEPlusSerialServicePacketProvider(withFileURLForReading: fileURLForReading) {
-			provider.mtu = mtu
-			provider.windowSize = windowSize
-			return provider
-		}
-		return nil
-	}
-	
-	/**
 	Init with data to send.
 	
 	- parameter withData:	NSData to send.
@@ -145,7 +94,7 @@ public class BLEPlusSerialServicePacketProvider : NSObject {
 	}
 	
 	/**
-	Init with file handle for reading to send.
+	Init with file url for reading to send.
 	
 	- parameter withFileHandleForReading:	NSFileHandle for reading.
 	- parameter fileSize:						The size of the file.

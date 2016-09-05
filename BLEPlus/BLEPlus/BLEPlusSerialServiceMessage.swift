@@ -40,12 +40,12 @@ import Foundation
 	
 	- returns: BLEPlusSerialServiceMessage
 	*/
-	public init?(withType:BLEPlusSerialServiceMessageType_Type, messageId:BLEPLusSerialServiceMessageId_Type, data:NSData) {
+	public init?(withMessageType:BLEPlusSerialServiceMessageType_Type, messageId:BLEPLusSerialServiceMessageId_Type, data:NSData) {
 		guard data.length > 0 else {
 			return nil
 		}
 		self.data = data
-		self.messageType = withType
+		self.messageType = withMessageType
 		self.messageId = messageId
 		if let provider = BLEPlusSerialServicePacketProvider(withData: data) {
 			self.provider = provider
@@ -62,8 +62,8 @@ import Foundation
 	
 	- returns: BLEPlusSerialServiceMessage
 	*/
-	public init?(withType:BLEPlusSerialServiceMessageType_Type, messageId:BLEPLusSerialServiceMessageId_Type, fileURL:NSURL) {
-		guard withType > 0 else {
+	public init?(withMessageType:BLEPlusSerialServiceMessageType_Type, messageId:BLEPLusSerialServiceMessageId_Type, fileURL:NSURL) {
+		guard withMessageType > 0 else {
 			return nil
 		}
 		guard let path = fileURL.path else {
@@ -73,7 +73,7 @@ import Foundation
 			return nil
 		}
 		self.fileURL = fileURL
-		self.messageType = withType
+		self.messageType = withMessageType
 		self.messageId = messageId
 		if let provider = BLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL) {
 			self.provider = provider
