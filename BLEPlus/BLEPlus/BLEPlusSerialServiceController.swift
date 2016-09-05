@@ -57,12 +57,20 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 	optional func serialServiceController(controller:BLEPlusSerialServiceController, sentRequest:BLEPlusSerialServiceMessage)
 	
 	/**
+	Called when a request has been received.
+	
+	- parameter response:   BLEPlusResponse
+	- parameter forRequest: BLEPlusRequest
+	*/
+	optional func serialServiceController(controller:BLEPlusSerialServiceController, receivedRequest request:BLEPlusSerialServiceMessage)
+	
+	/**
 	Called when a response has been received for it's matching request.
 	
 	- parameter response:   BLEPlusResponse
 	- parameter forRequest: BLEPlusRequest
 	*/
-	optional func serialServiceControllerReceivedResponse(response:BLEPlusSerialServiceMessage, forRequest:BLEPlusSerialServiceMessage)
+	optional func serialServiceController(controller:BLEPlusSerialServiceController, receivedResponse response:BLEPlusSerialServiceMessage, forRequest request:BLEPlusSerialServiceMessage)
 }
 
 /// BLEPlusSerialServiceController is controller that has logic to send
@@ -682,7 +690,7 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 						if let _message = BLEPlusSerialServiceMessage(withMessageType: currentReceiver.messageType, messageId: currentReceiver.messageId, data: data) {
 							self.delegate?.serialServiceController?(self, receivedMessage: _message)
 							if let request = self.getRequest(_message) {
-								self.delegate?.serialServiceControllerReceivedResponse?(_message, forRequest: request)
+								self.delegate?.serialServiceController?(self, receivedResponse: _message, forRequest: request)
 							}
 						}
 					}
@@ -690,7 +698,7 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 						if let _message = BLEPlusSerialServiceMessage(withMessageType: currentReceiver.messageType, messageId: currentReceiver.messageId, fileURL: fileURL) {
 							self.delegate?.serialServiceController?(self, receivedMessage: _message)
 							if let request = self.getRequest(_message) {
-								self.delegate?.serialServiceControllerReceivedResponse?(_message, forRequest: request)
+								self.delegate?.serialServiceController?(self, receivedResponse: _message, forRequest: request)
 							}
 						}
 					}

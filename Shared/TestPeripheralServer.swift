@@ -61,6 +61,19 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPl
 		}
 	}
 	
+	public func serialServiceController(controller: BLEPlusSerialServiceController, sentMessage message: BLEPlusSerialServiceMessage) {
+		
+	}
+	
+	public func serialServiceController(controller: BLEPlusSerialServiceController, sentRequest: BLEPlusSerialServiceMessage) {
+		
+	}
+	
+	public func serialServiceController(controller: BLEPlusSerialServiceController, receivedResponse response: BLEPlusSerialServiceMessage, forRequest request: BLEPlusSerialServiceMessage) {
+		
+	}
+	
+	
 	func startAdvertising() {
 		service = CBMutableService(type: TestPeripheralServer.ServiceUUID, primary: true)
 		let props = CBCharacteristicProperties.Read.rawValue | CBCharacteristicProperties.Write.rawValue | CBCharacteristicProperties.WriteWithoutResponse.rawValue | CBCharacteristicProperties.NotifyEncryptionRequired.rawValue
