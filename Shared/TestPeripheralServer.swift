@@ -42,9 +42,6 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPl
 	}
 	
 	public func serialServiceController(controller: BLEPlusSerialServiceController, wantsToSendData data: NSData) {
-		
-		
-		
 		let didSend = self.pmanager.updateValue(data, forCharacteristic: self.channel, onSubscribedCentrals: nil)
 		if !didSend {
 			print("! did send:")

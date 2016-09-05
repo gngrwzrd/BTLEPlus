@@ -37,9 +37,6 @@
 		07842C401D6E97BD00BADF79 /* BLEPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07842C3E1D6E97BD00BADF79 /* BLEPeripheral.swift */; };
 		07842C421D6EA01000BADF79 /* BLEPlusSerialServicePacketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07842C411D6EA01000BADF79 /* BLEPlusSerialServicePacketProvider.swift */; };
 		07A193351D77B1E700CC03DC /* TODO.txt in Resources */ = {isa = PBXBuildFile; fileRef = 07A193341D77B1E700CC03DC /* TODO.txt */; };
-		07C375EE1D7C868E007BE013 /* BLEPlusRequestResponseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C375ED1D7C868E007BE013 /* BLEPlusRequestResponseController.swift */; };
-		07C375F01D7C86F6007BE013 /* BLEPlusRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C375EF1D7C86F6007BE013 /* BLEPlusRequest.swift */; };
-		07C375F21D7C86FF007BE013 /* BLEPlusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C375F11D7C86FF007BE013 /* BLEPlusResponse.swift */; };
 		07C7311C1D732EAA00D5D49A /* BLEPlusSerialServiceMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C7311B1D732EAA00D5D49A /* BLEPlusSerialServiceMessage.swift */; };
 /* End PBXBuildFile section */
 
@@ -81,9 +78,6 @@
 		07842C3E1D6E97BD00BADF79 /* BLEPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPeripheral.swift; sourceTree = "<group>"; };
 		07842C411D6EA01000BADF79 /* BLEPlusSerialServicePacketProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPlusSerialServicePacketProvider.swift; sourceTree = "<group>"; };
 		07A193341D77B1E700CC03DC /* TODO.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = TODO.txt; path = ../TODO.txt; sourceTree = "<group>"; };
-		07C375ED1D7C868E007BE013 /* BLEPlusRequestResponseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPlusRequestResponseController.swift; sourceTree = "<group>"; };
-		07C375EF1D7C86F6007BE013 /* BLEPlusRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPlusRequest.swift; sourceTree = "<group>"; };
-		07C375F11D7C86FF007BE013 /* BLEPlusResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPlusResponse.swift; sourceTree = "<group>"; };
 		07C7311B1D732EAA00D5D49A /* BLEPlusSerialServiceMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPlusSerialServiceMessage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -180,7 +174,6 @@
 				0714840A1D7C85C60078D15F /* BLEPlus.swift */,
 				07C467DB1D7B5D6400DDE819 /* BLEPlus */,
 				0775BC911D7470DC005E44C8 /* SerialService */,
-				07C467DE1D7B660500DDE819 /* RequestResponse */,
 				07842C231D6C08C700BADF79 /* Products */,
 				07842C271D6C08C700BADF79 /* Info.plist */,
 			);
@@ -195,16 +188,6 @@
 				07842C3B1D6E97AA00BADF79 /* BLEAdvertisementData.swift */,
 			);
 			name = BLEPlus;
-			sourceTree = "<group>";
-		};
-		07C467DE1D7B660500DDE819 /* RequestResponse */ = {
-			isa = PBXGroup;
-			children = (
-				07C375EF1D7C86F6007BE013 /* BLEPlusRequest.swift */,
-				07C375F11D7C86FF007BE013 /* BLEPlusResponse.swift */,
-				07C375ED1D7C868E007BE013 /* BLEPlusRequestResponseController.swift */,
-			);
-			name = RequestResponse;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -387,14 +370,11 @@
 			files = (
 				07842C321D6CA9B200BADF79 /* BLEPlusSerialServiceProtocolMessage.swift in Sources */,
 				07842C421D6EA01000BADF79 /* BLEPlusSerialServicePacketProvider.swift in Sources */,
-				07C375EE1D7C868E007BE013 /* BLEPlusRequestResponseController.swift in Sources */,
 				07842C401D6E97BD00BADF79 /* BLEPeripheral.swift in Sources */,
 				0775BC801D721B1F005E44C8 /* BLEPlusSerialServiceController.swift in Sources */,
 				07C7311C1D732EAA00D5D49A /* BLEPlusSerialServiceMessage.swift in Sources */,
-				07C375F21D7C86FF007BE013 /* BLEPlusResponse.swift in Sources */,
 				07842C3C1D6E97AA00BADF79 /* BLEAdvertisementData.swift in Sources */,
 				0714840B1D7C85C60078D15F /* BLEPlus.swift in Sources */,
-				07C375F01D7C86F6007BE013 /* BLEPlusRequest.swift in Sources */,
 				07842C3F1D6E97BD00BADF79 /* BLECentralManager.swift in Sources */,
 				07842C301D6C0C9F00BADF79 /* BLEPlusSerialServicePacketReceiver.swift in Sources */,
 			);

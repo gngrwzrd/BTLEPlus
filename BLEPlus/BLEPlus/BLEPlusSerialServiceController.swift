@@ -48,6 +48,21 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 	*/
 	optional func serialServiceController(controller:BLEPlusSerialServiceController, receivedMessage message:BLEPlusSerialServiceMessage)
 	
+	/**
+	Called when a request has been sent.
+	
+	- parameter controller:	 BLEPlusRequestResponseController
+	- parameter sentRequest: BLEPlusRequest
+	*/
+	optional func serialServiceController(controller:BLEPlusSerialServiceController, sentRequest:BLEPlusSerialServiceMessage)
+	
+	/**
+	Called when a response has been received for it's matching request.
+	
+	- parameter response:   BLEPlusResponse
+	- parameter forRequest: BLEPlusRequest
+	*/
+	optional func serialServiceControllerReceivedResponse(response:BLEPlusSerialServiceMessage, forRequest:BLEPlusSerialServiceMessage)
 }
 
 /// BLEPlusSerialServiceController is controller that has logic to send
@@ -661,13 +676,19 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 			} else {
 				dispatch_async(self.delegateQueue, {
 					if let data = currentReceiver.data {
-						if let _message = BLEPlusSerialServiceMessage(withType: currentReceiver.messageType, messageId: currentReceiver.messageId,data: data) {
+						if let _message = BLEPlusSerialServiceMessage(withMessageType: currentReceiver.messageType, messageId: currentReceiver.messageId, data: data) {
 							self.delegate?.serialServiceController?(self, receivedMessage: _message)
+							if let request = self.getRequest(_message) {
+								self.delegate?.serialServiceControllerReceivedResponse?(_message, forRequest: request)
+							}
 						}
 					}
 					if let fileURL = currentReceiver.fileURL {
-						if let _message = BLEPlusSerialServiceMessage(withType: currentReceiver.messageType, messageId: currentReceiver.messageId, fileURL: fileURL) {
+						if let _message = BLEPlusSerialServiceMessage(withMessageType: currentReceiver.messageType, messageId: currentReceiver.messageId, fileURL: fileURL) {
 							self.delegate?.serialServiceController?(self, receivedMessage: _message)
+							if let request = self.getRequest(_message) {
+								self.delegate?.serialServiceControllerReceivedResponse?(_message, forRequest: request)
+							}
 						}
 					}
 					dispatch_async(self.dispatchQueue) {
@@ -748,5 +769,49 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 			self.windowSize = message.windowSize
 			self.sendAck()
 		}
+	}
+	
+	// MARK: Request / Response handling.
+	
+	/// Requests stored until a response is received.
+	var requests:[BLEPlusSerialServiceMessage] = []
+	
+	// A counter for tracking request/responses.
+	var messageIdCounter:BLEPLusSerialServiceMessageId_Type = 0
+	
+	// Check if a message was a request.
+	func getRequest(response:BLEPlusSerialServiceMessage) -> BLEPlusSerialServiceMessage? {
+		for request in requests {
+			if request.messageType == response.messageType {
+				return request
+			}
+		}
+		return nil
+	}
+	
+	///Sends a message as a request
+	public func sendRequest(requestType:UInt8, message:BLEPlusSerialServiceMessage) {
+		var messageId = messageIdCounter
+		message.messageType = requestType
+		messageId = messageId + 1
+		if messageId == BLEPlusSerialServiceMaxMessageId {
+			messageId = 0
+		}
+		messageIdCounter = messageId
+		message.messageId = messageId
+		requests.append(message)
+		send(message)
+	}
+	
+	/**
+	Send a response to a request.
+	
+	- parameter forRequest:	BLEPlusRequest - The request to respond to.
+	- parameter response:	BLEPlusResponse - The response.
+	*/
+	public func sendResponse(responseType:UInt8, responseMessage:BLEPlusSerialServiceMessage, forRequestMessage:BLEPlusSerialServiceMessage) {
+		responseMessage.messageType = responseType
+		responseMessage.messageId = forRequestMessage.messageId
+		send(responseMessage)
 	}
 }
