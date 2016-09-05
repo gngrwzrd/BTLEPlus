@@ -348,6 +348,9 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 			if let cm = self.currentUserMessage {
 				dispatch_async(self.delegateQueue) {
 					self.delegate?.serialServiceController?(self, sentMessage: cm)
+					if let request = self.getRequest(cm) {
+						self.delegate?.serialServiceController?(self, sentRequest: request)
+					}
 				}
 			}
 			self.currentUserMessage?.provider?.finishMessage()
