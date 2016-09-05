@@ -115,7 +115,7 @@ Control message types.
 - TakeTurn:          The peers turn to send messages.
 - Abort:             Abort the current state and reset. Allow the central to start over.
 */
-public enum BLEPlusSerialServiceProtocolMessageType : BLEPlusSerialServiceProtocolMessageType_Type {
+@objc public enum BLEPlusSerialServiceProtocolMessageType : BLEPlusSerialServiceProtocolMessageType_Type {
 	case None = 0
 	case PeerInfo = 1
 	case Ack = 2
@@ -131,7 +131,7 @@ public enum BLEPlusSerialServiceProtocolMessageType : BLEPlusSerialServiceProtoc
 
 /// BLEPlusSerialServiceMessage is used over the control channel
 /// to communicate what's happening on the transfer channel.
-public class BLEPlusSerialServiceProtocolMessage : NSObject {
+@objc public class BLEPlusSerialServiceProtocolMessage : NSObject {
 	
 	/// The size of the header for a BLEPlusSerialServiceMessage.
 	/// Default value is 1 byte for the message type.
