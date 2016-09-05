@@ -11,7 +11,7 @@ import Foundation
 /// BLEPlusSerialServicePacketReceiver handles incoming data from a paar
 /// and manages a packet counter. The receiver also figures out when
 /// packets need to be resent from missing packets.
-public class BLEPlusSerialServicePacketReceiver : NSObject {
+@objc public class BLEPlusSerialServicePacketReceiver : NSObject {
 	
 	/// Data for smaller messages.
 	var data:NSMutableData?
