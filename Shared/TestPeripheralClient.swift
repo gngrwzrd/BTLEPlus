@@ -18,7 +18,7 @@ import BLEPlus
 public class TestPeripheralClient : BLEPeripheral, BLEPlusSerialServiceControllerDelegate {
 	
 	public static let ScanForUUID:CBUUID = CBUUID(string:"6DC4B345-635C-4690-B51D-0D358D32D5EF")
-	var controller:BLEPlusRequestResponseController?
+	var controller:BLEPlusSerialServiceController?
 	var channel:CBCharacteristic?
 	
 	override public init() {
