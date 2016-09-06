@@ -103,7 +103,7 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 	private var isActive = false
 	
 	/// What protocol messages are being waited for.
-	private var waitingFor:[BLEPlusSerialServiceProtocolMessageType]?
+	private var filter:[BLEPlusSerialServiceProtocolMessageType]! = []
 	
 	/// Serial dispatch queue for processing activity.
 	private var serialQueue:dispatch_queue_t
@@ -157,41 +157,6 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 		serialQueue = dispatch_queue_create("com.bleplus.SerialServiceController", DISPATCH_QUEUE_SERIAL)
 		delegateQueue = queue
 		super.init()
-	}
-	
-	/// Call this when you are connected and ready to send or receive data.
-	public func resume() {
-		pausePackets = false
-		dispatch_async(serialQueue) {
-			print("resume: set isPaused = false")
-			self.isPaused = false
-		}
-		if resumeBlock != nil {
-			dispatch_async(serialQueue) {
-				self.resumeBlock?()
-			}
-		} else {
-			self.startSending()
-		}
-	}
-	
-	/// Call this when you have been disconnected. The currently active messages
-	/// packet counter is reset to resend the last window once resume is called
-	/// again.
-	public func pause() {
-		pausePackets = true
-		dispatch_async(serialQueue) {
-			print("resume: set isPaused = true")
-			self.isPaused = true
-			self.currentUserMessage?.provider?.resendWindow()
-			self.currentReceiver?.resetWindowForReceiving()
-		}
-	}
-	
-	/// Queue a message to be sent.
-	public func send(message:BLEPlusSerialServiceMessage) {
-		messageQueue?.append(message)
-		startSending()
 	}
 	
 	/// Start the offer turn timer.
@@ -254,8 +219,48 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 	func waitTimeout(timer:NSTimer?) {
 		dispatch_async(serialQueue) {
 			if let currentSendControl = self.currentSendControl {
-				self.sendControlMessage(currentSendControl)
+				self.delegate?.serialServiceController(self, wantsToSendData: currentSendControl.data!)
 			}
+		}
+	}
+	
+	/// Call this when you are connected and ready to send or receive data.
+	public func resume() {
+		pausePackets = false
+		dispatch_async(serialQueue) {
+			print("resume: set isPaused = false")
+			self.isPaused = false
+		}
+		if resumeBlock != nil {
+			dispatch_async(serialQueue) {
+				self.resumeBlock?()
+			}
+		} else {
+			self.startSending()
+		}
+	}
+	
+	/// Call this when you have been disconnected. The currently active messages
+	/// packet counter is reset to resend the last window once resume is called
+	/// again.
+	public func pause() {
+		pausePackets = true
+		dispatch_async(serialQueue) {
+			print("resume: set isPaused = true")
+			self.isPaused = true
+			self.currentUserMessage?.provider?.resendWindow()
+			self.currentReceiver?.resetWindowForReceiving()
+		}
+	}
+	
+	/// Queue a message to be sent.
+	public func send(message:BLEPlusSerialServiceMessage) {
+		dispatch_async(serialQueue) {
+			self.messageQueue?.append(message)
+			if(self.isActive) {
+				return
+			}
+			self.startSending()
 		}
 	}
 	
@@ -299,6 +304,7 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 			guard let provider = self.currentUserMessage?.provider else {
 				return
 			}
+			self.isActive =  true
 			var packet:NSData
 			var message:BLEPlusSerialServiceProtocolMessage
 			if(fillNewWindow) {
@@ -333,6 +339,240 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 		}
 	}
 	
+	/// Utility to send a control message.
+	func sendControlMessage(message:BLEPlusSerialServiceProtocolMessage, expectingAck:Bool = true) {
+		if isPaused {
+			return
+		}
+		dispatch_async(serialQueue) {
+			guard let data = message.data else {
+				return
+			}
+			
+			if self.isActive {
+				print(">>>>>>>>>> is active")
+				return
+			}
+			
+			print("sending control data: ", data.bleplus_base16EncodedString(uppercase:true))
+			
+			self.currentSendControl = message
+			self.delegate?.serialServiceController(self, wantsToSendData: data)
+			self.isActive = true
+			
+			if message.protocolType != .Ack {
+				self.resumeBlock = {
+					print("resuming sendControlMessage (\(message))")
+					self.sendControlMessage(message, expectingAck: expectingAck)
+				}
+			}
+			
+			if message.protocolType == .TakeTurn {
+				self.shouldOfferTurn = false
+			}
+			
+			if expectingAck {
+				self.startWaitTimer()
+			}
+		}
+	}
+	
+	/// Resends the current control message.
+	func resendCurrentControlMessage() {
+		if isPaused {
+			return
+		}
+		dispatch_async(serialQueue) {
+			guard let data = self.currentSendControl?.data else {
+				return
+			}
+			print("resending control data: ", data.bleplus_base16EncodedString(uppercase:true))
+			self.delegate?.serialServiceController(self, wantsToSendData: data)
+		}
+	}
+	
+	/// Send an ack
+	func sendAck() {
+		dispatch_async(serialQueue) { 
+			let ack = BLEPlusSerialServiceProtocolMessage(withType: .Ack)
+			self.sendControlMessage(ack, expectingAck: false)
+		}
+	}
+	
+	/// Send a new message control request.
+	func sendNewMessageControlRequest() {
+		dispatch_async(serialQueue) { 
+			guard let currentUserMessage = self.currentUserMessage else {
+				return
+			}
+			guard let provider = currentUserMessage.provider else {
+				return
+			}
+			var newMessage:BLEPlusSerialServiceProtocolMessage
+			if provider.fileHandle != nil {
+				newMessage = BLEPlusSerialServiceProtocolMessage(newFileMessageWithExpectedSize: provider.messageSize, messageType: currentUserMessage.messageType, messageId: currentUserMessage.messageId)
+			} else {
+				newMessage = BLEPlusSerialServiceProtocolMessage(newMessageWithExpectedSize: provider.messageSize, messageType: currentUserMessage.messageType, messageId: currentUserMessage.messageId)
+			}
+			self.filter = [.Ack,.Abort]
+			self.sendControlMessage(newMessage, expectingAck: true)
+		}
+	}
+	
+	/// Sends a take turn control message.
+	func sendTakeTurnControlMessage() {
+		dispatch_async(serialQueue) { 
+			self.endOfferTurnTimer()
+			let takeTurn = BLEPlusSerialServiceProtocolMessage(withType: .TakeTurn)
+			self.filter = [.Ack,.TakeTurn]
+			self.sendControlMessage(takeTurn, expectingAck: true)
+		}
+	}
+	
+	/// Send an end of message control request.
+	func sendEndMessageControlRequest(windowSize:BLEPlusSerialServiceWindowSize_Type) {
+		dispatch_async(serialQueue) { 
+			let endMessage = BLEPlusSerialServiceProtocolMessage(endMessageWithWindowSize: windowSize)
+			self.filter = [.Ack,.Resend]
+			self.sendControlMessage(endMessage, expectingAck: true)
+		}
+	}
+	
+	/// Send an end part message control request.
+	func sendEndPartControlRequest(windowSize:BLEPlusSerialServiceWindowSize_Type) {
+		dispatch_async(serialQueue) { 
+			let endPart = BLEPlusSerialServiceProtocolMessage(endPartWithWindowSize: windowSize)
+			self.filter = [.Ack,.Resend]
+			self.sendControlMessage(endPart, expectingAck: true)
+		}
+	}
+	
+	/// Sends a peer info control request.
+	func sendPeerInfoControlRequest(expectingAck:Bool = true) {
+		dispatch_async(serialQueue) { 
+			let peerinfo = BLEPlusSerialServiceProtocolMessage(peerInfoMessageWithMTU: self.mtu, windowSize: self.windowSize)
+			self.sendControlMessage(peerinfo, expectingAck: expectingAck)
+			self.filter = [.PeerInfo,.Ack,.Abort]
+		}
+	}
+	
+	/// Sends a resend transfer control request.
+	func sendResendControlMessage(resendFromPacket:BLEPlusSerialServicePacketCountType) {
+		dispatch_async(serialQueue) { 
+			let resend = BLEPlusSerialServiceProtocolMessage(resendMessageWithStartFromPacket: resendFromPacket)
+			self.filter = [.Data,.EndMessage,.EndPart,.Abort]
+			self.sendControlMessage(resend)
+		}
+	}
+	
+	/// Send an abort.
+	func sendAbortControlMessage() {
+		dispatch_async(serialQueue) { 
+			let abort = BLEPlusSerialServiceProtocolMessage(withType: .Abort)
+			self.filter = []
+			self.sendControlMessage(abort, expectingAck: false)
+		}
+	}
+	
+	/// When you receive data you must call this.
+	public func receivedData(packet:NSData) {
+		dispatch_async(serialQueue) { 
+			//create a message
+			let message = BLEPlusSerialServiceProtocolMessage(withData: packet)
+			
+			//if filters are set make sure the incoming packet is allowed.
+			//otherwise let anything in.
+			if self.filter.count > 1 {
+				if !self.filter.contains(message.protocolType) {
+					return
+				}
+			}
+			
+			self.isActive = false
+			self.endWaitTimer()
+			self.startOfferTurnTimer()
+			self.resumeBlock = nil
+			
+			switch message.protocolType {
+			case .Ack:
+				print("received ack:",packet.bleplus_base16EncodedString(uppercase:true))
+				self.receivedAck(message)
+			case .NewMessage:
+				print("received new message:",packet.bleplus_base16EncodedString(uppercase:true))
+				self.receivedNewMessageRequest(message)
+			case .NewFileMessage:
+				print("received new large:",packet.bleplus_base16EncodedString(uppercase:true))
+				self.receivedNewLargeMessageRequest(message)
+			case .EndPart:
+				print("received end part:",packet.bleplus_base16EncodedString(uppercase:true))
+				self.receivedEndPartMessage(message)
+			case .EndMessage:
+				print("received end message:",packet.bleplus_base16EncodedString(uppercase:true))
+				self.receivedEndMessage(message)
+			case .Resend:
+				print("received resend:",packet.bleplus_base16EncodedString(uppercase:true))
+				self.receivedResendMessage(message)
+			case .PeerInfo:
+				print("received peer info:",packet.bleplus_base16EncodedString(uppercase:true))
+				self.receivedPeerInfoMessage(message)
+			case .Data:
+				print("received data message:",packet.bleplus_base16EncodedString(uppercase:true))
+				self.receivedDataMessage(message)
+			case .TakeTurn:
+				print("received take turn message:",packet.bleplus_base16EncodedString(uppercase: true))
+				self.receivedTakeTurnMessage(message)
+			case .Abort:
+				print("received abort:",packet.bleplus_base16EncodedString(uppercase:true))
+				self.receivedAbortMessage(message)
+			default:
+				break
+			}
+		}
+	}
+	
+	/// Received an ack.
+	public func receivedAck(message:BLEPlusSerialServiceProtocolMessage) {
+		dispatch_async(serialQueue) {
+			guard let csc = self.currentSendControl else {
+				return
+			}
+			switch csc.protocolType {
+			case .NewMessage:
+				self.receivedAckForNewMessage(message)
+			case .NewFileMessage:
+				self.receivedAckForNewFileMessage(message)
+			case .EndPart:
+				self.receivedAckForEndPart(message)
+			case .EndMessage:
+				self.receivedAckForEndMessage()
+			case .PeerInfo:
+				self.receivedAckForPeerInfo()
+			case .Abort:
+				self.receivedAckForAbort()
+			case .TakeTurn:
+				self.receivedAckForTakeTurn()
+			default:
+				break
+			}
+			self.currentSendControl = nil
+		}
+	}
+	
+	/// Ack a new message.
+	func receivedAckForNewMessage(message:BLEPlusSerialServiceProtocolMessage) {
+		self.startSendingPackets()
+	}
+	
+	/// Ack a new file message.
+	func receivedAckForNewFileMessage(message:BLEPlusSerialServiceProtocolMessage) {
+		self.startSendingPackets()
+	}
+	
+	/// Ack end part
+	func receivedAckForEndPart(message:BLEPlusSerialServiceProtocolMessage) {
+		self.startSendingPackets()
+	}
+	
 	/// Ack end message
 	func receivedAckForEndMessage() {
 		dispatch_async(serialQueue) {
@@ -352,179 +592,6 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 		}
 	}
 	
-	/// Resends the current control message.
-	func resendCurrentControlMessage() {
-		if isPaused {
-			return
-		}
-		dispatch_async(serialQueue) {
-			guard let data = self.currentSendControl?.data else {
-				return
-			}
-			print("resending control data: ", data.bleplus_base16EncodedString(uppercase:true))
-			dispatch_async(self.delegateQueue) {
-				self.delegate?.serialServiceController(self, wantsToSendData: data)
-			}
-		}
-	}
-	
-	/// Utility to send a control message.
-	func sendControlMessage(message:BLEPlusSerialServiceProtocolMessage, expectingAck:Bool = true) {
-		if isPaused {
-			return
-		}
-		dispatch_async(serialQueue) {
-			guard let data = message.data else {
-				return
-			}
-			self.currentSendControl = message
-			print("sending control data: ", data.bleplus_base16EncodedString(uppercase:true))
-			self.delegate?.serialServiceController(self, wantsToSendData: data)
-			if message.protocolType != .Ack {
-				self.resumeBlock = {
-					print("resuming sendControlMessage (\(message))")
-					self.sendControlMessage(message)
-				}
-			}
-			if message.protocolType == .TakeTurn {
-				self.shouldOfferTurn = false
-			}
-			if expectingAck {
-				self.startWaitTimer()
-			}
-		}
-	}
-	
-	/// Send an ack
-	func sendAck() {
-		let ack = BLEPlusSerialServiceProtocolMessage(withType: .Ack)
-		sendControlMessage(ack, expectingAck: false)
-	}
-	
-	/// Send a new message control request.
-	func sendNewMessageControlRequest() {
-		guard let currentUserMessage = currentUserMessage else {
-			return
-		}
-		guard let provider = currentUserMessage.provider else {
-			return
-		}
-		var newMessage:BLEPlusSerialServiceProtocolMessage
-		if provider.fileHandle != nil {
-			newMessage = BLEPlusSerialServiceProtocolMessage(newFileMessageWithExpectedSize: provider.messageSize, messageType: currentUserMessage.messageType, messageId: currentUserMessage.messageId)
-		} else {
-			newMessage = BLEPlusSerialServiceProtocolMessage(newMessageWithExpectedSize: provider.messageSize, messageType: currentUserMessage.messageType, messageId: currentUserMessage.messageId)
-		}
-		sendControlMessage(newMessage)
-	}
-	
-	/// Sends a take turn control message.
-	func sendTakeTurnControlMessage() {
-		self.endOfferTurnTimer()
-		let takeTurn = BLEPlusSerialServiceProtocolMessage(withType: .TakeTurn)
-		sendControlMessage(takeTurn, expectingAck: false)
-	}
-	
-	/// Send an end of message control request.
-	func sendEndMessageControlRequest(windowSize:BLEPlusSerialServiceWindowSize_Type) {
-		let endMessage = BLEPlusSerialServiceProtocolMessage(endMessageWithWindowSize: windowSize)
-		sendControlMessage(endMessage)
-	}
-	
-	/// Send an end part message control request.
-	func sendEndPartControlRequest(windowSize:BLEPlusSerialServiceWindowSize_Type) {
-		let endPart = BLEPlusSerialServiceProtocolMessage(endPartWithWindowSize: windowSize)
-		sendControlMessage(endPart)
-	}
-	
-	/// Sends a peer info control request.
-	func sendPeerInfoControlRequest(expectingAck:Bool = true) {
-		let peerinfo = BLEPlusSerialServiceProtocolMessage(peerInfoMessageWithMTU: mtu, windowSize: windowSize)
-		sendControlMessage(peerinfo, expectingAck: expectingAck)
-	}
-	
-	/// Sends a resend transfer control request.
-	func sendResendControlMessage(resendFromPacket:BLEPlusSerialServicePacketCountType) {
-		let resend = BLEPlusSerialServiceProtocolMessage(resendMessageWithStartFromPacket: resendFromPacket)
-		sendControlMessage(resend)
-	}
-	
-	/// Send an abort.
-	func sendAbortControlMessage() {
-		let pending = BLEPlusSerialServiceProtocolMessage(withType: .Abort)
-		sendControlMessage(pending)
-	}
-	
-	/// When you receive a control packet you must call this.
-	public func receivedData(packet:NSData) {
-		endWaitTimer()
-		startOfferTurnTimer()
-		resumeBlock = nil
-		let message = BLEPlusSerialServiceProtocolMessage(withData: packet)
-		switch message.protocolType {
-		case .Ack:
-			print("received ack:",packet.bleplus_base16EncodedString(uppercase:true))
-			receivedAck(message)
-		case .NewMessage:
-			print("received new message:",packet.bleplus_base16EncodedString(uppercase:true))
-			receivedNewMessageRequest(message)
-		case .NewFileMessage:
-			print("received new large:",packet.bleplus_base16EncodedString(uppercase:true))
-			receivedNewLargeMessageRequest(message)
-		case .EndPart:
-			print("received end part:",packet.bleplus_base16EncodedString(uppercase:true))
-			receivedEndPartMessage(message)
-		case .EndMessage:
-			print("received end message:",packet.bleplus_base16EncodedString(uppercase:true))
-			receivedEndMessage(message)
-		case .Resend:
-			print("received resend:",packet.bleplus_base16EncodedString(uppercase:true))
-			receivedResendMessage(message)
-		case .PeerInfo:
-			print("received peer info:",packet.bleplus_base16EncodedString(uppercase:true))
-			receivedPeerInfoMessage(message)
-		case .Data:
-			print("received data message:",packet.bleplus_base16EncodedString(uppercase:true))
-			receivedDataMessage(message)
-		case .TakeTurn:
-			print("received take turn message:",packet.bleplus_base16EncodedString(uppercase: true))
-			receivedTakeTurnMessage(message)
-		case .Abort:
-			print("received abort:",packet.bleplus_base16EncodedString(uppercase:true))
-			receivedAbortMessage(message)
-		default:
-			break
-		}
-	}
-	
-	/// Received an ack.
-	public func receivedAck(message:BLEPlusSerialServiceProtocolMessage) {
-		dispatch_async(serialQueue) {
-			guard let csc = self.currentSendControl else {
-				return
-			}
-			switch csc.protocolType {
-			case .NewMessage:
-				self.startSendingPackets()
-			case .NewFileMessage:
-				self.startSendingPackets()
-			case .EndPart:
-				self.startSendingPackets()
-			case .EndMessage:
-				self.receivedAckForEndMessage()
-			case .PeerInfo:
-				self.receivedAckForPeerInfo()
-			case .Abort:
-				self.receivedAckForAbort()
-			case .TakeTurn:
-				self.receivedAckForTakeTurn()
-			default:
-				break
-			}
-			self.currentSendControl = nil
-		}
-	}
-	
 	/// When received an ack for take turn message
 	func receivedAckForTakeTurn() {
 		dispatch_async(serialQueue) {
@@ -533,6 +600,21 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 				self.endOfferTurnTimer()
 				self.turnMode = .Peripheral
 			}
+		}
+	}
+	
+	/// On ack for abort message.
+	func receivedAckForAbort() {
+		if mode == .Central {
+			startSending()
+		}
+	}
+	
+	/// When an ack was received for a peer info message.
+	func receivedAckForPeerInfo() {
+		dispatch_async(serialQueue) {
+			self.hasDiscoverdPeerInfo = true
+			self.startSending()
 		}
 	}
 	
@@ -565,21 +647,6 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 		}
 	}
 	
-	/// On ack for abort message.
-	func receivedAckForAbort() {
-		if mode == .Central {
-			startSending()
-		}
-	}
-	
-	/// When an ack was received for a peer info message.
-	func receivedAckForPeerInfo() {
-		dispatch_async(serialQueue) {
-			self.hasDiscoverdPeerInfo = true
-			self.startSending()
-		}
-	}
-	
 	/// When a data message was received
 	func receivedDataMessage(message:BLEPlusSerialServiceProtocolMessage) {
 		dispatch_async(serialQueue) {
@@ -604,6 +671,7 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 			self.currentReceiver = receiver
 			self.currentReceiver?.messageType = message.messageType
 			self.currentReceiver?.messageId = message.messageId
+			self.filter = [.Data,.Resend,.EndMessage,.EndPart,.Abort]
 			self.sendAck()
 		}
 	}
@@ -629,24 +697,27 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 			self.currentReceiver?.messageType = message.messageType
 			self.currentReceiver?.beginMessage()
 			self.currentReceiver?.beginWindow()
+			self.filter = [.Data,.Resend,.EndMessage,.EndPart,.Abort]
 			self.sendAck()
 		}
 	}
 	
 	/// Received an end part control
 	func receivedEndPartMessage(message:BLEPlusSerialServiceProtocolMessage) {
-		guard let currentReceiver = currentReceiver else {
-			return
-		}
 		dispatch_async(serialQueue) {
+			guard let currentReceiver = self.currentReceiver else {
+				return
+			}
 			currentReceiver.windowSize = message.windowSize
 			currentReceiver.commitPacketData()
 			if currentReceiver.needsPacketsResent {
 				let packet = currentReceiver.resendFromPacket()
 				let resend = BLEPlusSerialServiceProtocolMessage(resendMessageWithStartFromPacket: packet)
-				self.sendControlMessage(resend)
+				self.filter = [.Data,.EndMessage,.EndPart,.Abort]
+				self.sendControlMessage(resend, expectingAck: false)
 			} else {
 				currentReceiver.beginWindow()
+				self.filter = [.Data,.EndMessage,.EndPart,.Abort]
 				self.sendAck()
 			}
 		}
@@ -654,16 +725,22 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 	
 	/// Received an end message control
 	func receivedEndMessage(message:BLEPlusSerialServiceProtocolMessage) {
-		guard let currentReceiver = currentReceiver else {
-			return
-		}
 		dispatch_async(serialQueue) {
+			
+			guard let currentReceiver = self.currentReceiver else {
+				return
+			}
+			
 			currentReceiver.windowSize = message.windowSize
 			currentReceiver.commitPacketData()
+			
 			if currentReceiver.needsPacketsResent {
+				
 				let packet = currentReceiver.resendFromPacket()
 				let resend = BLEPlusSerialServiceProtocolMessage(resendMessageWithStartFromPacket: packet)
+				self.filter = [.Data,.EndMessage,.EndPart,.Abort]
 				self.sendControlMessage(resend)
+				
 			} else {
 				dispatch_async(self.delegateQueue, {
 					
@@ -683,6 +760,7 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 						self.currentReceiver?.finishMessage()
 						self.currentReceiver = nil
 						self.sendAck()
+						self.filter = []
 					}
 				})
 			}
@@ -694,6 +772,7 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 		print("received abort",message)
 		dispatch_async(serialQueue) {
 			if self.mode == .Central {
+				self.filter = []
 				self.endWaitTimer()
 				self.endOfferTurnTimer()
 				self.resumeBlock = nil
@@ -701,6 +780,7 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 				self.sendAck()
 			}
 			if self.mode == .Peripheral {
+				self.filter = []
 				self.endOfferTurnTimer()
 				self.currentReceiver?.reset()
 				self.currentReceiver = nil
@@ -718,6 +798,7 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 			//TODO: fix resend from packet.
 			//provider.resendFromPacket(message.resendFromPacket)
 			provider.resendWindow()
+			self.filter = [.Abort]
 			self.startSendingPackets(false)
 		}
 	}
@@ -733,6 +814,7 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 			if self.mode == .Central {
 				if let currentSendControl = self.currentSendControl {
 					if currentSendControl.protocolType == .PeerInfo {
+						self.filter = [.Ack,.PeerInfo,.Abort]
 						self.currentSendControl = nil
 						self.hasDiscoverdPeerInfo = true
 						self.mtu = message.mtu
@@ -746,6 +828,7 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 			//if we receive a peer info with too big of sizes return a response with what we can handle.
 			if self.mode == .Peripheral {
 				if message.mtu > self.mtu || message.windowSize > self.windowSize {
+					self.filter = []
 					self.sendPeerInfoControlRequest(false)
 					return
 				}

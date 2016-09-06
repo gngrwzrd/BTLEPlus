@@ -1,3 +1,5 @@
+start an inactive timer when sending ack, which resends the ack.???? What if the client receives it but nothing to do???
+
 need to add logic to queue everything if the serial queue is not idle. Seems like bugs will
 happen if things are allowed to be sent or received while waiting for a specific response to a control
 message.
