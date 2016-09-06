@@ -48,26 +48,19 @@ class ViewController: UIViewController, BLECentralManagerDelegate {
 	}
 	
 	@IBAction func sendHelloWorld() {
-		let s = "Hello World"
-		let d = s.dataUsingEncoding(NSUTF8StringEncoding)
-		let message = BLEPlusSerialServiceMessage(withMessageType:1, messageId: 1, data: d!)
-		myPeripheral?.controller?.send(message!)
+		myPeripheral?.sendHelloWorld()
 	}
 	
 	@IBAction func sendLipsum() {
-		let s = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-		let d = s.dataUsingEncoding(NSUTF8StringEncoding)
-		let message = BLEPlusSerialServiceMessage(withMessageType: 3, messageId: 2, data: d!)
-		myPeripheral?.controller?.sendQueue?.append(message!)
-		
-		let message2 = BLEPlusSerialServiceMessage(withMessageType: 3, messageId: 2, data: d!)
-		myPeripheral?.controller?.send(message2!)
+		myPeripheral?.sendLipsum()
 	}
 	
 	@IBAction func sendImage() {
-		let fileURL = NSBundle.mainBundle().URLForResource("IMG_0123", withExtension: "PNG")
-		let message = BLEPlusSerialServiceMessage(withMessageType: 11, messageId: 2, fileURL: fileURL!)
-		myPeripheral?.controller?.send(message!)
+		myPeripheral?.sendImage()
+	}
+	
+	@IBAction func sendHelloWorldRequest() {
+		myPeripheral?.sendHelloWorldRequest()
 	}
 }
 

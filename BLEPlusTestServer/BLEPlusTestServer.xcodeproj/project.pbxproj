@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		075C69C51D7E56940082FCA7 /* TestRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075C69C41D7E56940082FCA7 /* TestRequests.swift */; };
 		0775BCA51D754C1D005E44C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0775BCA41D754C1D005E44C8 /* AppDelegate.swift */; };
 		0775BCA71D754C1D005E44C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0775BCA61D754C1D005E44C8 /* Assets.xcassets */; };
 		0775BCAA1D754C1D005E44C8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0775BCA81D754C1D005E44C8 /* MainMenu.xib */; };
@@ -62,6 +63,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		075C69C41D7E56940082FCA7 /* TestRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestRequests.swift; path = /Users/aaronsmith/Development/Aaron/BLEPlus/BLEPlusTestClientIOS/BLEPlusTestClientIOS/../../Shared/TestRequests.swift; sourceTree = "<absolute>"; };
 		0775BCA11D754C1D005E44C8 /* BLEPlusTestServer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLEPlusTestServer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0775BCA41D754C1D005E44C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0775BCA61D754C1D005E44C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				0775BCC91D75D33A005E44C8 /* CoreBluetooth.framework */,
 				0775BCA41D754C1D005E44C8 /* AppDelegate.swift */,
 				07A193361D77CB2E00CC03DC /* TestPeripheralServer.swift */,
+				075C69C41D7E56940082FCA7 /* TestRequests.swift */,
 				0775BCA61D754C1D005E44C8 /* Assets.xcassets */,
 				0775BCA81D754C1D005E44C8 /* MainMenu.xib */,
 				0775BCAB1D754C1D005E44C8 /* Info.plist */,
@@ -227,6 +230,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				075C69C51D7E56940082FCA7 /* TestRequests.swift in Sources */,
 				0775BCA51D754C1D005E44C8 /* AppDelegate.swift in Sources */,
 				07A193371D77CB2E00CC03DC /* TestPeripheralServer.swift in Sources */,
 			);

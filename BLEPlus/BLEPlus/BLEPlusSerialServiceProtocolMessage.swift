@@ -30,7 +30,7 @@ public typealias BLEPlusSerialServicePacketCountType = UInt8
 /// their header size from this MTU value. So the actual supported payload
 /// is this value - header sizes. Header sizes can be different for different
 /// kinds of messages.
-public let BLEPlusSerialServiceDefaultMTU:UInt16 = 128
+public let BLEPlusSerialServiceDefaultMTU:UInt16 = 20
 
 /// This is the real payload mtu after headers are subtracted.
 public let BLEPlusSerialServiceRealMTU:UInt16 = BLEPlusSerialServiceDefaultMTU - UInt16(BLEPlusSerialServicePacketProvider.headerSize + BLEPlusSerialServiceProtocolMessage.headerSize)

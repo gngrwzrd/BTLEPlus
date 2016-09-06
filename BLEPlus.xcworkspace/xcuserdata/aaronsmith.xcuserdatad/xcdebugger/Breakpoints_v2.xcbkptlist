@@ -9,109 +9,109 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BLEPlusTestClientIOS/BLEPlusTestClientIOS/MyPeripheralClient.swift"
-            timestampString = "494312590.983882"
+            filePath = "Shared/TestPeripheralServer.swift"
+            timestampString = "494823125.069708"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "respondsToAdvertisementData(_:)"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
+            landmarkName = "recievedHelloWorldResponse(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BLEPlusTestClientIOS/BLEPlusTestClientIOS/MyPeripheralClient.swift"
-            timestampString = "494312656.310194"
+            filePath = "BLEPlus/BLEPlus/BLEPlusSerialServiceController.swift"
+            timestampString = "494823617.555899"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "disconnected()"
+            startingLineNumber = "472"
+            endingLineNumber = "472"
+            landmarkName = "receivedData(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BLEPlusTestClientIOS/BLEPlusTestClientIOS/MyPeripheralClient.swift"
-            timestampString = "494312657.152227"
+            filePath = "BLEPlus/BLEPlus/BLEPlusSerialServiceController.swift"
+            timestampString = "494823643.020541"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
-            landmarkName = "deviceIsReady()"
+            startingLineNumber = "654"
+            endingLineNumber = "654"
+            landmarkName = "receivedEndMessage(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BLEPlusTestClientIOS/BLEPlusTestClientIOS/MyPeripheralClient.swift"
-            timestampString = "494312661.445801"
+            filePath = "BLEPlus/BLEPlus/BLEPlusSerialServiceController.swift"
+            timestampString = "494823648.650148"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "peripheral(_:didUpdateNotificationStateForCharacteristic:error:)"
+            startingLineNumber = "662"
+            endingLineNumber = "662"
+            landmarkName = "receivedEndMessage(_:)"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BLEPlusIOS.BLEPlusSerialServiceController.(receivedEndMessage (BLEPlusIOS.BLEPlusSerialServiceProtocolMessage) -&gt; ()).(closure #1).(closure #1)"
+                  moduleName = "BLEPlusIOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aaronsmith/Development/Aaron/BLEPlus/BLEPlus/BLEPlus/BLEPlusSerialServiceController.swift"
+                  timestampString = "494823648.662289"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "663"
+                  endingLineNumber = "663"
+                  offsetFromSymbolStart = "32">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BLEPlusIOS.BLEPlusSerialServiceController.(receivedEndMessage (BLEPlusIOS.BLEPlusSerialServiceProtocolMessage) -&gt; ()).(closure #1).(closure #1)"
+                  moduleName = "BLEPlusIOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aaronsmith/Development/Aaron/BLEPlus/BLEPlus/BLEPlus/BLEPlusSerialServiceController.swift"
+                  timestampString = "494823648.662406"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "663"
+                  endingLineNumber = "663"
+                  offsetFromSymbolStart = "80">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BLEPlusTestClientIOS/BLEPlusTestClientIOS/MyPeripheralClient.swift"
-            timestampString = "494312757.757707"
+            filePath = "Shared/TestPeripheralServer.swift"
+            timestampString = "494824174.62681"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
-            landmarkName = "peripheral(_:didWriteValueForDescriptor:error:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/MyPeripheralClient.swift"
-            timestampString = "494350956.876871"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "peripheral(_:didUpdateNotificationStateForCharacteristic:error:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/MyPeripheralClient.swift"
-            timestampString = "494389772.318686"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
-            landmarkName = "peripheral(_:didUpdateValueForCharacteristic:error:)"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
+            landmarkName = "serialServiceController(_:wantsToSendData:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -122,92 +122,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/TestPeripheralServer.swift"
-            timestampString = "494632223.980975"
+            timestampString = "494824231.75152"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "118"
-            endingLineNumber = "118"
-            landmarkName = "peripheralManager(_:didReceiveReadRequest:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/TestPeripheralServer.swift"
-            timestampString = "494632223.980975"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
-            landmarkName = "peripheralManager(_:central:didSubscribeToCharacteristic:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/TestPeripheralServer.swift"
-            timestampString = "494632223.980975"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
             landmarkName = "peripheralManagerIsReadyToUpdateSubscribers(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/TestPeripheralServer.swift"
-            timestampString = "494632223.980975"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
-            landmarkName = "peripheralManager(_:central:didUnsubscribeFromCharacteristic:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/TestPeripheralServer.swift"
-            timestampString = "494632223.980975"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
-            landmarkName = "peripheralManager(_:didReceiveWriteRequests:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/TestPeripheralServer.swift"
-            timestampString = "494632223.980975"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
-            landmarkName = "peripheralManager(_:didReceiveWriteRequests:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

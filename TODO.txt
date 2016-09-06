@@ -1,20 +1,12 @@
-test request/response
+need to add logic to queue everything if the serial queue is not idle. Seems like bugs will
+happen if things are allowed to be sent or received while waiting for a specific response to a control
+message.
+I think I can use a waitingFor[] array to keep track of what's allowed to be received. If
+something is received out of order then it's ignored.
 
-If I switch packet provider and receiver to require NSFileHandle then I think I can leave it up to the user to
-implement resuming of file transfers in either direction.
-
-I think the file resume logic will need to always write to tmp files, allowing the user to concatenate them
-themselves. Otherwise it'll have to be built into the serial service which is too specific to go there.
-
-rename BLEPlusSerialServiceControllerMode to BLEPlusDeviceMode
-
+file resume logic.
 Rename everything to BTLEPlus
-
 Write a tester app to automate a complete test of every feature.
-
 Add randmized packet loss simulation.
-
 Fix resend from packet?
-
 Add streaming BLEPlusSerialServiceStreamingMessage - provides and receives packets.
-Keepalive?

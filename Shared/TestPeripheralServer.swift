@@ -15,13 +15,15 @@ import BLEPlusIOS
 import BLEPlus
 #endif
 
-public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPlusSerialServiceControllerDelegate {
+public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPlusSerialServiceControllerDelegate, BLEPlusRequestResponseControllerDelegate {
 	
 	public static let ServiceUUID = CBUUID(string: "6DC4B345-635C-4690-B51D-0D358D32D5EF")
 	public static let CharacteristicUUID = CBUUID(string: "CF8F353A-420C-423D-BEE8-BA36499335DF")
 	
-	var testPairing:Bool = false
 	var controller:BLEPlusSerialServiceController!
+	var requestController:BLEPlusRequestResponseController!
+	
+	var testPairing:Bool = false
 	var pmanager:CBPeripheralManager!
 	var channel:CBMutableCharacteristic!
 	var service:CBMutableService!
@@ -39,40 +41,9 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPl
 	func setupBLEPlus() {
 		controller = BLEPlusSerialServiceController(withMode: .Peripheral)
 		controller.delegate = self
+		requestController = BLEPlusRequestResponseController()
+		requestController.delegate = self
 	}
-	
-	public func serialServiceController(controller: BLEPlusSerialServiceController, wantsToSendData data: NSData) {
-		let didSend = self.pmanager.updateValue(data, forCharacteristic: self.channel, onSubscribedCentrals: nil)
-		if !didSend {
-			print("! did send:")
-			controller.pause()
-		}
-	}
-	
-	public func serialServiceController(controller: BLEPlusSerialServiceController, receivedMessage message: BLEPlusSerialServiceMessage) {
-		print("received complete user message", message.messageType)
-		if message.messageType < 10 {
-			let string = String.init(data: message.data!, encoding: NSUTF8StringEncoding)
-			print(string)
-		}
-		if message.messageType == 11 {
-			print("received image")
-			print(message.fileURL)
-		}
-	}
-	
-	public func serialServiceController(controller: BLEPlusSerialServiceController, sentMessage message: BLEPlusSerialServiceMessage) {
-		
-	}
-	
-	public func serialServiceController(controller: BLEPlusSerialServiceController, sentRequest: BLEPlusSerialServiceMessage) {
-		
-	}
-	
-	public func serialServiceController(controller: BLEPlusSerialServiceController, receivedResponse response: BLEPlusSerialServiceMessage, forRequest request: BLEPlusSerialServiceMessage) {
-		
-	}
-	
 	
 	func startAdvertising() {
 		service = CBMutableService(type: TestPeripheralServer.ServiceUUID, primary: true)
@@ -143,6 +114,50 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPl
 		if characteristic == channel {
 			controller.pause()
 		}
+	}
+	
+	public func serialServiceController(controller: BLEPlusSerialServiceController, wantsToSendData data: NSData) {
+		let didSend = self.pmanager.updateValue(data, forCharacteristic: self.channel, onSubscribedCentrals: nil)
+		if !didSend {
+			print("! did send:")
+			controller.pause()
+		}
+	}
+	
+	public func serialServiceController(controller: BLEPlusSerialServiceController, receivedMessage message: BLEPlusSerialServiceMessage) {
+		print("received complete message:", message.messageType)
+		
+		if message.messageType == HelloWorldRequest {
+			receivedHelloWorldRequest(message)
+		}
+		
+		if message.messageType == HelloWorldResponse {
+			recievedHelloWorldResponse(message)
+		}
+		
+		if message.messageType < 10 {
+			let string = String.init(data: message.data!, encoding: NSUTF8StringEncoding)
+			print(string)
+		}
+		
+		if message.messageType == 11 {
+			print("received image")
+			print(message.fileURL)
+		}
+	}
+	
+	func receivedHelloWorldRequest(request:BLEPlusSerialServiceMessage) {
+		let s = String(data: request.data!, encoding: NSUTF8StringEncoding)
+		print(s)
+		let v = "Goodbye World"
+		let d = v.dataUsingEncoding(NSUTF8StringEncoding)
+		let response = BLEPlusSerialServiceMessage(withMessageType: HelloWorldResponse, messageId: request.messageId, data: d!)
+		controller.send(response!)
+	}
+	
+	func recievedHelloWorldResponse(request:BLEPlusSerialServiceMessage) {
+		let s = String(data:request.data!, encoding: NSUTF8StringEncoding)
+		print("received hello world response:",s)
 	}
 }
 	

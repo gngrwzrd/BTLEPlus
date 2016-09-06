@@ -14,6 +14,7 @@
 		0775BCE41D767467005E44C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0775BCE21D767467005E44C8 /* LaunchScreen.storyboard */; };
 		0775BD181D7674CF005E44C8 /* BLEPlusIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0775BD151D7674B9005E44C8 /* BLEPlusIOS.framework */; };
 		0775BD191D7674CF005E44C8 /* BLEPlusIOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0775BD151D7674B9005E44C8 /* BLEPlusIOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		07C375FB1D7DE3FF007BE013 /* TestRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C375FA1D7DE3FF007BE013 /* TestRequests.swift */; };
 		07E7601B1D7B7BD5000EC850 /* IMG_0123.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 07E7601A1D7B7BD5000EC850 /* IMG_0123.PNG */; };
 		07FE2E241D772C9800BCF386 /* TestPeripheralClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FE2E231D772C9800BCF386 /* TestPeripheralClient.swift */; };
 /* End PBXBuildFile section */
@@ -79,6 +80,7 @@
 		0775BCE31D767467005E44C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0775BCE51D767467005E44C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0775BD0A1D7674B9005E44C8 /* BLEPlus.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BLEPlus.xcodeproj; path = ../BLEPlus/BLEPlus.xcodeproj; sourceTree = "<group>"; };
+		07C375FA1D7DE3FF007BE013 /* TestRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestRequests.swift; path = ../../Shared/TestRequests.swift; sourceTree = "<group>"; };
 		07E7601A1D7B7BD5000EC850 /* IMG_0123.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0123.PNG; sourceTree = "<group>"; };
 		07FE2E231D772C9800BCF386 /* TestPeripheralClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestPeripheralClient.swift; path = ../../Shared/TestPeripheralClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,6 +119,7 @@
 			children = (
 				07E7601A1D7B7BD5000EC850 /* IMG_0123.PNG */,
 				07FE2E231D772C9800BCF386 /* TestPeripheralClient.swift */,
+				07C375FA1D7DE3FF007BE013 /* TestRequests.swift */,
 				0775BCD91D767467005E44C8 /* AppDelegate.swift */,
 				0775BCDB1D767467005E44C8 /* ViewController.swift */,
 				0775BCDD1D767467005E44C8 /* Main.storyboard */,
@@ -266,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				07FE2E241D772C9800BCF386 /* TestPeripheralClient.swift in Sources */,
+				07C375FB1D7DE3FF007BE013 /* TestRequests.swift in Sources */,
 				0775BCDC1D767467005E44C8 /* ViewController.swift in Sources */,
 				0775BCDA1D767467005E44C8 /* AppDelegate.swift in Sources */,
 			);
