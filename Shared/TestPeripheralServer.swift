@@ -21,7 +21,6 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPl
 	public static let CharacteristicUUID = CBUUID(string: "CF8F353A-420C-423D-BEE8-BA36499335DF")
 	
 	var controller:BLEPlusSerialServiceController!
-	var requestController:BLEPlusRequestResponseController!
 	
 	var testPairing:Bool = false
 	var pmanager:CBPeripheralManager!
@@ -41,8 +40,6 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPl
 	func setupBLEPlus() {
 		controller = BLEPlusSerialServiceController(withMode: .Peripheral)
 		controller.delegate = self
-		requestController = BLEPlusRequestResponseController()
-		requestController.delegate = self
 	}
 	
 	func startAdvertising() {
