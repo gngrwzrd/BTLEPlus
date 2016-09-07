@@ -1,11 +1,4 @@
-start an inactive timer when sending ack, which resends the ack.???? What if the client receives it but nothing to do???
-
-need to add logic to queue everything if the serial queue is not idle. Seems like bugs will
-happen if things are allowed to be sent or received while waiting for a specific response to a control
-message.
-I think I can use a waitingFor[] array to keep track of what's allowed to be received. If
-something is received out of order then it's ignored.
-
+progress needs to go backwards on resend window
 file resume logic.
 Rename everything to BTLEPlus
 Write a tester app to automate a complete test of every feature.
