@@ -1,28 +1,22 @@
 # BTLE+ Serial Service Protocol
 
-The BTLE+ Serial Service protocol is a binary protocol used to exchange data
-between two BTLE peers - a central and a peripheral.
+The BTLE+ Serial Service protocol is a binary protocol used to exchange data between two BTLE peers - a central and a peripheral.
 
-This document describes the format and illustrates the messages and
-their control flow required.
+This document describes the format and illustrates the messages and their control flow required.
 
 ## Terms
 
 MTU - Maximum transmission unit. Default is 20 bytes.
 
-Packet - A packet is the smallest amount of data transferrable between peers.
-A packet's max size in bytes is the MTU.
+Packet - A packet is the smallest amount of data transferrable between peers. A packet's max size in bytes is the MTU.
 
-Window Size - The number of open buffers to send or receive data. Each buffer's
-size is MTU.
+Window Size - The number of open buffers to send or receive data. Each buffer's size is MTU.
 
-Part - A part is the entire window of bytes sent or received. This can also
-be less than the entire window if the message is even smaller.
+Part - A part is the entire window of bytes sent or received. This can also be less than the entire window if the message is even smaller.
 
 ## Protocol Messages
 
-The protocol exchanges messages between central and peripheral. The first
-byte in each message indicates the protocol message type.
+Protocol messages are used to control the flow of data and are exchanged between the central and peripheral peers.
 
 ##### Protocol Types
 
@@ -73,9 +67,7 @@ At first connection, central sends peer info, and peripheral accepts.
 |  PeerInfo -> |            |
 |              | <- Ack     |
 
-If the peripheral can't accept the sizes sent by the central, it responds with
-it's own acceptable sizes for the central to use. In this example the peer info response
-is considered the ACK and the central must accept it.
+If the peripheral can't accept the sizes sent by the central, it responds with it's own acceptable sizes for the central to use. In this example the peer info response is considered the ACK and the central must accept it.
 
 |      Central | Peripheral   |
 |-------------:|--------------|
@@ -128,19 +120,16 @@ Multiple parts are transferred.
 
 Both central and peripheral need to allow each other to send their queued messages.
 
-By default the central is the controller of turns, it must offer the peripheral a
-turn to send it's messages.
+By default the central is the controller of turns, it must offer the peripheral a turn to send it's messages.
 
-If the peripheral has messages, it responds with an ACK and taking control.
+If the peripheral has messages, it responds with an ACK and takes control.
 
 |     Central | Peripheral |
 |------------:|------------|
 | TakeTurn -> |            |
 |             | <- Ack     |
 
-If the peripheral doesn't have any messages, it will respond with it's own TakeTurn
-message, and the central must accept and take control. In this case the central either
-has more messages, or is responsible for sending TakeTurn again when it deems necessary.
+If the peripheral doesn't have any messages, it will respond with it's own TakeTurn message, and the central must accept and take control. In this case the central either has more messages, or is responsible for sending TakeTurn again when it deems necessary.
 
 |     Central | Peripheral   |
 |------------:|--------------|

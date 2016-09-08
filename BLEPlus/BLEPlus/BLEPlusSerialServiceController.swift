@@ -50,17 +50,11 @@ public enum BLEPlusSerialServiceControllerMode :UInt8 {
 }
 
 /**
-BLEPlusSerialServiceController is controller that has logic to send
-and receive data over the BLEPlusSerialService protocol.
+BLEPlusSerialServiceController is controller that implements logic to send
+and receive data using the binary BLEPlus Serial Service protocol.
 
-It's up to you to send the data. You need to implement the
-BLEPlusSerialServiceControllerDelegate and send the data yourself when
-serialServiceController(_:wantesToSendData:) is called.
-
-When you receive data, it's up to you to call receivedData.
-
-In order to send something custom, you use BLEPlusSerialServiceMessage and
-call send.
+It's implementation is independent of how the data is sent or received,
+leaving that up to the user.
 */
 @objc public class BLEPlusSerialServiceController : NSObject {
 	
@@ -701,6 +695,7 @@ call send.
 		guard let csc = self.currentSendControl else {
 			return
 		}
+		self.currentSendControl = nil
 		switch csc.protocolType {
 		case .NewMessage:
 			self.receivedAckForNewMessage(message)
@@ -717,7 +712,6 @@ call send.
 		default:
 			break
 		}
-		self.currentSendControl = nil
 	}
 	
 	/// Ack a new message.
@@ -748,10 +742,10 @@ call send.
 		self.currentUserMessage = nil
 		self.messageQueue?.removeAtIndex(0)
 		
-//		if self.turnMode == self.mode && self.messageQueue?.count < 1 {
-//			self.sendTakeTurnControlMessage(true, acceptFilter: [.TakeTurn,.Ack,.Abort])
-//			return
-//		}
+		if self.turnMode == self.mode && self.messageQueue?.count < 1 {
+			self.sendTakeTurnControlMessage(true, acceptFilter: [.TakeTurn,.Ack,.Abort])
+			return
+		}
 		
 		self.acceptFilter = [.TakeTurn,.Ack,.Abort]
 		self.startSending()
