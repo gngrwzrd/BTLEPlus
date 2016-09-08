@@ -1,6 +1,6 @@
 # BTLE+ Serial Service Protocol
 
-The BLEPlus serial protocol is a binary protocol used to exchange data
+The BTLE+ Serial Service protocol is a binary protocol used to exchange data
 between two BTLE peers - a central and a peripheral.
 
 This document describes the format and illustrates the messages and
@@ -27,15 +27,16 @@ byte in each message indicates the protocol message type.
 ##### Protocol Types
 
 ````
-PeerInfo           = 1    
-Ack                = 2    
-NewMessage         = 3    
-NewFileMessage     = 4    
+PeerInfo           = 1
+Ack                = 2
+NewMessage         = 3
+NewFileMessage     = 4
 EndPart            = 5
-EndMessage         = 6       
-Resend             = 7    
-Data               = 8    
-Abort              = 9    
+EndMessage         = 6
+Data               = 7
+Resend             = 8
+TakeTurn           = 9
+Abort              = 10
 ````
 
 ##### Protocol Control Message Formats
@@ -45,37 +46,36 @@ Protocol message fields are stored in network order (big endian).
 Sizes are in bytes:
 
 ````
-Ack:            [protocolType:1]    
-PeerInfo:       [protocolType:1, mtu:2, windowSize:1]    
-NewMessage:     [protocolType:1, messageType:1, messageId: 1, expectedSize:8]    
-NewFileMessage: [protocolType:1, messageType:1, messageId: 1, expectedSize:8]    
-EndMessage:     [protocolType:1, endMessageWindowSize:1]    
+Ack:            [protocolType:1]
+PeerInfo:       [protocolType:1, mtu:2, windowSize:1]
+NewMessage:     [protocolType:1, messageType:1, messageId: 1, expectedSize:8]
+NewFileMessage: [protocolType:1, messageType:1, messageId: 1, expectedSize:8]
+EndMessage:     [protocolType:1, endMessageWindowSize:1]
 EndPart:        [protocolType:1, endPartWindowSize:1]
-Resend:         [protocolType:1]    
-Data:           [protocolType:1, packetCount:1, data:18]    
-Abort:          [protocolType:1]    
+Resend:         [protocolType:1]
+Data:           [protocolType:1, packetCount:1, data:18]
+TakeTurn:       [protocolType:1]
+Abort:          [protocolType:1]
 ````
+
+## Responsibilities
+
+By default the central is in control and initiates messages. The central must offer the peripehral a chance to send it's messages by sending TakeTurn messages. See the flow examples below to see how the message exchange works.
 
 ## Control Flow Examples
 
-The central is always responsible for initiating messages with the peripheral.
-The examples below illustrate the flow of messages.
-
 #### Peer Info
 
-Central sends peer info, and peripheral accepts.
+At first connection, central sends peer info, and peripheral accepts.
 
 |      Central | Peripheral |
 |-------------:|------------|
 |  PeerInfo -> |            |
 |              | <- Ack     |
 
-#### Peer Info
-
-Central sends peer info, peripheral denies and sends it's acceptable
-info. When the peripheral sends back a peer info, it's considered
-an ACK in this case and the Central must use the provided MTU and
-windowSize.
+If the peripheral can't accept the sizes sent by the central, it responds with
+it's own acceptable sizes for the central to use. In this example the peer info response
+is considered the ACK and the central must accept it.
 
 |      Central | Peripheral   |
 |-------------:|--------------|
@@ -93,8 +93,6 @@ A single part is transferred. The message was <= a single packet.
 |        Data -> |            |
 |  EndMessage -> |            |
 |                | <- Ack     |
-
-#### New Message Control Flow
 
 Multiple parts are transferred.
 
@@ -126,21 +124,32 @@ Multiple parts are transferred.
 |                | <- Ack     |
 
 
-#### Take Turn Sending Messages Flow
+#### Take Turn Flow
 
 Both central and peripheral need to allow each other to send their queued messages.
 
-If the peripheral has messages, and ACK is sent to the central to denote that it will start sending messages.
+By default the central is the controller of turns, it must offer the peripheral a
+turn to send it's messages.
+
+If the peripheral has messages, it responds with an ACK and taking control.
 
 |     Central | Peripheral |
 |------------:|------------|
 | TakeTurn -> |            |
 |             | <- Ack     |
 
-
-If the peripheral doesn't have any queued messages, it will respond with another TakeTurn protocol message.
+If the peripheral doesn't have any messages, it will respond with it's own TakeTurn
+message, and the central must accept and take control. In this case the central either
+has more messages, or is responsible for sending TakeTurn again when it deems necessary.
 
 |     Central | Peripheral   |
 |------------:|--------------|
 | TakeTurn -> |              |
 |             | <- Take Turn |
+|      Ack -> |              |
+
+## Aborting
+
+Aborting happens when there's an internal inconsistency on either side. Abort simply means reset the current message if any to prepare to receive more data, or send more data.
+
+If there's currently no message being transferred, then the peers must completely reset, and start at the PeerInfo negotiation step.
