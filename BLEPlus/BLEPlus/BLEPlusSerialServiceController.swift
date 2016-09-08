@@ -564,7 +564,7 @@ call send.
 				//no messages, give control back to central.
 				self.turnMode = .Central
 				self.stopOfferTurnTimer()
-				self.sendTakeTurnControlMessage(true, acceptFilter: [.Ack,.Abort])
+				self.sendTakeTurnControlMessage(true, acceptFilter: [.TakeTurn,.Ack,.Abort])
 				
 			} else {
 				
@@ -743,9 +743,16 @@ call send.
 				self.delegate?.serialServiceController?(self, sentMessage: cm)
 			}
 		}
+		
 		self.currentUserMessage?.provider?.finishMessage()
 		self.currentUserMessage = nil
 		self.messageQueue?.removeAtIndex(0)
+		
+//		if self.turnMode == self.mode && self.messageQueue?.count < 1 {
+//			self.sendTakeTurnControlMessage(true, acceptFilter: [.TakeTurn,.Ack,.Abort])
+//			return
+//		}
+		
 		self.acceptFilter = [.TakeTurn,.Ack,.Abort]
 		self.startSending()
 	}
