@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		075C69C51D7E56940082FCA7 /* TestRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075C69C41D7E56940082FCA7 /* TestRequests.swift */; };
 		0775BCA51D754C1D005E44C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0775BCA41D754C1D005E44C8 /* AppDelegate.swift */; };
 		0775BCA71D754C1D005E44C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0775BCA61D754C1D005E44C8 /* Assets.xcassets */; };
 		0775BCAA1D754C1D005E44C8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0775BCA81D754C1D005E44C8 /* MainMenu.xib */; };
@@ -15,6 +14,7 @@
 		0775BCC81D75C594005E44C8 /* BLEPlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0775BCB71D754C38005E44C8 /* BLEPlus.framework */; };
 		0775BCCA1D75D33A005E44C8 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0775BCC91D75D33A005E44C8 /* CoreBluetooth.framework */; };
 		07A193371D77CB2E00CC03DC /* TestPeripheralServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A193361D77CB2E00CC03DC /* TestPeripheralServer.swift */; };
+		F4D5747B1D81D97B0004D04F /* TestRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D5747A1D81D97B0004D04F /* TestRequests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,7 +63,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		075C69C41D7E56940082FCA7 /* TestRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestRequests.swift; path = /Users/aaronsmith/Development/Aaron/BLEPlus/BLEPlusTestClientIOS/BLEPlusTestClientIOS/../../Shared/TestRequests.swift; sourceTree = "<absolute>"; };
 		0775BCA11D754C1D005E44C8 /* BLEPlusTestServer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLEPlusTestServer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0775BCA41D754C1D005E44C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0775BCA61D754C1D005E44C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -72,6 +71,7 @@
 		0775BCB11D754C37005E44C8 /* BLEPlus.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BLEPlus.xcodeproj; path = ../BLEPlus/BLEPlus.xcodeproj; sourceTree = "<group>"; };
 		0775BCC91D75D33A005E44C8 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		07A193361D77CB2E00CC03DC /* TestPeripheralServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestPeripheralServer.swift; path = ../../Shared/TestPeripheralServer.swift; sourceTree = "<group>"; };
+		F4D5747A1D81D97B0004D04F /* TestRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestRequests.swift; path = ../../Shared/TestRequests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,7 +110,7 @@
 				0775BCC91D75D33A005E44C8 /* CoreBluetooth.framework */,
 				0775BCA41D754C1D005E44C8 /* AppDelegate.swift */,
 				07A193361D77CB2E00CC03DC /* TestPeripheralServer.swift */,
-				075C69C41D7E56940082FCA7 /* TestRequests.swift */,
+				F4D5747A1D81D97B0004D04F /* TestRequests.swift */,
 				0775BCA61D754C1D005E44C8 /* Assets.xcassets */,
 				0775BCA81D754C1D005E44C8 /* MainMenu.xib */,
 				0775BCAB1D754C1D005E44C8 /* Info.plist */,
@@ -230,7 +230,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				075C69C51D7E56940082FCA7 /* TestRequests.swift in Sources */,
+				F4D5747B1D81D97B0004D04F /* TestRequests.swift in Sources */,
 				0775BCA51D754C1D005E44C8 /* AppDelegate.swift in Sources */,
 				07A193371D77CB2E00CC03DC /* TestPeripheralServer.swift in Sources */,
 			);

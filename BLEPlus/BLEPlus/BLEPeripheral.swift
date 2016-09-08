@@ -1,38 +1,36 @@
 
 import CoreBluetooth
 
-/*
-The BLEPeripheral is a generic device that once connected, will discover services,
-included services, characteristics, descriptors, and subscribe to required
-characteristic changes.
-
-Each device goes through a setup process before it's considered ready.
-
-Connect - This is the first step in the process.
-
-Discovery - This is the second step in the process. It includes
-discovering services, included services, characteristics and descriptors.
-
-Subscribe - This is the third step in the process. It includes
-subscribing to any characteristics that support notify.
-
-Additional Setup -  This is an optional step in which you can include additional
-steps as part of the device setup process. You can override
-requiresAdditionalSetup() and performAdditionalSetup() to add your
-custom setup into the setup process. Just make sure to call deviceIsReady()
-
-Ready - This is the last step and the device is considered ready.
-
-Once the setup process is completed your device is considered `ready`.
-
-Each step in the setup process has hooks you can use to override
-and change each step.
-
-Each step also has variables to customize retries and timeouts before a retry.
-
-After a device is ready, it's up to you to implement behavior with the peripheral.
-
-*/
+/// The BLEPeripheral is a generic peripheral that once connected,
+/// will discover services, included services, characteristics,
+/// descriptors, and subscribe to required characteristic changes.
+///
+/// Each device goes through a setup process before it's considered ready.
+///
+/// Connect - This is the first step in the process.
+///
+/// Discovery - This is the second step in the process. It includes
+/// discovering services, included services, characteristics and
+/// descriptors.
+///
+/// Subscribe - This is the third step in the process. It includes
+/// subscribing to any characteristics that support notify.
+///
+/// Additional Setup -  This is an optional step in which you can include
+/// additional steps as part of the device setup process. You can override
+/// requiresAdditionalSetup() and performAdditionalSetup() to add your
+/// custom setup into the setup process. Just make sure to call deviceIsReady()
+///
+/// Ready - This is the last step and the device is considered ready.
+///
+/// Once the setup process is completed your device is considered `ready`.
+///
+/// Each step in the setup process has hooks you can use to override
+/// and change each step.
+///
+/// Each step also has variables to customize retries and timeouts before a retry.
+///
+/// After a device is ready, it's up to you to implement behavior with the peripheral.
 @objc public class BLEPeripheral : NSObject, CBPeripheralDelegate {
 	
 	/// The CBPeripheral this class monitors and manages.

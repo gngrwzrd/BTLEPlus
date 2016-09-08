@@ -103,17 +103,16 @@ extension NSData {
 /**
 Control message types.
 
-- None:					None.
-- PeerInfo:				Peer transfer information.
-- Ack:					Acknowledge.
-- NewMessage:			Client or server is requesting to send a new message.
-- NewFileMessage:		Client or server is requesting to send a new file message.
-- EndPart:				End the current window.
-- EndMessage:			End the current message.
-- Resend:				Resend the current window.
-- Data:					Data message.
+- None:              None.
+- PeerInfo:          Peer transfer information.
+- Ack:               Acknowledge.
+- NewMessage:        Client or server is requesting to send a new message.
+- NewFileMessage:    Client or server is requesting to send a new file message.
+- EndPart:           End the current window.
+- EndMessage:        End the current message.
+- Resend:            Resend the current window.
+- Data:              Data message.
 - TakeTurn:          The peers turn to send messages.
-- Busy:              The central is peripheral is currently busy and can't accept a new message.
 - Abort:             Abort the current state and reset. Allow the central to start over.
 */
 @objc public enum BLEPlusSerialServiceProtocolMessageType : BLEPlusSerialServiceProtocolMessageType_Type {
@@ -127,8 +126,7 @@ Control message types.
 	case Data = 7
 	case Resend = 8
 	case TakeTurn = 9
-	case Busy = 10
-	case Abort = 11
+	case Abort = 10
 }
 
 /// BLEPlusSerialServiceMessage is used over the control channel

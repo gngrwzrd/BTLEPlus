@@ -1,4 +1,4 @@
-# BTLE Plus Serial Service Protocol
+# BTLE+ Serial Service Protocol
 
 The BLEPlus serial protocol is a binary protocol used to exchange data
 between two BTLE peers - a central and a peripheral.

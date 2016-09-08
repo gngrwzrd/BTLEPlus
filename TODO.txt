@@ -1,3 +1,9 @@
+implement abort logic - I took it out to simplify for now.
+
+For file handling, change the producer/receiver to only require file handles,
+this way I can add delegate methods that return a file handle for me. This
+will allow easier file resume handling and allow the user to do it themselves.
+
 
 since request/response needs two types, maybe switch messageType to two bytes.
 progress needs to go backwards on resend window
