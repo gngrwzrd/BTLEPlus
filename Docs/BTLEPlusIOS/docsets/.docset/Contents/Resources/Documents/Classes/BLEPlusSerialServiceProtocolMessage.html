@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>BLEPlusSerialServiceProtocolMessage Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Class/BLEPlusSerialServiceProtocolMessage" class="dashAnchor"></a>
+
+    <a title="BLEPlusSerialServiceProtocolMessage Class Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+           Docs
+        </a>
+         (75% documented)
+      </p>
+    
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html"> Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      BLEPlusSerialServiceProtocolMessage Class Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BLEAdvertisementData.html">BLEAdvertisementData</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BLECentralManager.html">BLECentralManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BLEHeartrate.html">BLEHeartrate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BLEPLus.html">BLEPLus</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BLEPeripheral.html">BLEPeripheral</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BLEPlusCharacteristicSpec.html">BLEPlusCharacteristicSpec</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BLEPlusSerialServiceController.html">BLEPlusSerialServiceController</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BLEPlusSerialServiceMessage.html">BLEPlusSerialServiceMessage</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes.html#/s:C11BTLEPlusIOS34BLEPlusSerialServicePacketProvider">BLEPlusSerialServicePacketProvider</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BLEPlusSerialServicePacketReceiver.html">BLEPlusSerialServicePacketReceiver</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BLEPlusSerialServiceProtocolMessage.html">BLEPlusSerialServiceProtocolMessage</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BLEPlusServiceSpec.html">BLEPlusServiceSpec</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Global Variables.html">Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Global Variables.html#/s:v11BTLEPlusIOS30BLEPlusSerialServiceDefaultMTUVs6UInt16">BLEPlusSerialServiceDefaultMTU</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Global Variables.html#/s:v11BTLEPlusIOS37BLEPlusSerialServiceDefaultWindowSizeVs5UInt8">BLEPlusSerialServiceDefaultWindowSize</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Global Variables.html#/s:v11BTLEPlusIOS32BLEPlusSerialServiceMaxMessageIdVs5UInt8">BLEPlusSerialServiceMaxMessageId</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Global Variables.html#/s:v11BTLEPlusIOS36BLEPlusSerialServiceMaxPacketCounterVs5UInt8">BLEPlusSerialServiceMaxPacketCounter</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Global Variables.html#/s:v11BTLEPlusIOS33BLEPlusSerialServiceMaxWindowSizeVs5UInt8">BLEPlusSerialServiceMaxWindowSize</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Global Variables.html#/s:v11BTLEPlusIOS27BLEPlusSerialServiceRealMTUVs6UInt16">BLEPlusSerialServiceRealMTU</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/BLEPlusSerialServiceControllerMode.html">BLEPlusSerialServiceControllerMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/BLEPlusSerialServiceProtocolMessageType.html">BLEPlusSerialServiceProtocolMessageType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/BLECentralManagerDelegate.html">BLECentralManagerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/BLEPlusSerialServiceControllerDelegate.html">BLEPlusSerialServiceControllerDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Typealiases.html">Typealiases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:11BTLEPlusIOS34BLEPLusSerialServiceMessageId_Type">BLEPLusSerialServiceMessageId_Type</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:11BTLEPlusIOS27BLEPlusSerialServiceMTUType">BLEPlusSerialServiceMTUType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:11BTLEPlusIOS36BLEPlusSerialServiceMessageType_Type">BLEPlusSerialServiceMessageType_Type</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:11BTLEPlusIOS35BLEPlusSerialServicePacketCountType">BLEPlusSerialServicePacketCountType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:11BTLEPlusIOS44BLEPlusSerialServiceProtocolMessageType_Type">BLEPlusSerialServiceProtocolMessageType_Type</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:11BTLEPlusIOS35BLEPlusSerialServiceWindowSize_Type">BLEPlusSerialServiceWindowSize_Type</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>BLEPlusSerialServiceProtocolMessage</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BLEPlusSerialServiceProtocolMessage</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+
+                </div>
+              </div>
+            <p>BLEPlusSerialServiceMessage is used over the control channel
+to communicate what&rsquo;s happening on the transfer channel.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:ZvC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage10headerSizeVs5UInt8"></a>
+                    <a name="//apple_ref/swift/Variable/headerSize" class="dashAnchor"></a>
+                    <a class="token" href="#/s:ZvC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage10headerSizeVs5UInt8">headerSize</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The size of the header for a BLEPlusSerialServiceMessage.
+Default value is 1 byte for the message type.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">headerSize</span><span class="p">:</span><span class="kt">UInt8</span> <span class="o">=</span> <span class="mi">1</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage12protocolTypeOS_39BLEPlusSerialServiceProtocolMessageType"></a>
+                    <a name="//apple_ref/swift/Property/protocolType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage12protocolTypeOS_39BLEPlusSerialServiceProtocolMessageType">protocolType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Message type</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">protocolType</span><span class="p">:</span><span class="kt"><a href="../Enums/BLEPlusSerialServiceProtocolMessageType.html">BLEPlusSerialServiceProtocolMessageType</a></span> <span class="o">=</span> <span class="o">.</span><span class="kt">None</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage11messageTypeVs5UInt8"></a>
+                    <a name="//apple_ref/swift/Property/messageType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage11messageTypeVs5UInt8">messageType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A custom user message type.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">messageType</span><span class="p">:</span><span class="kt">UInt8</span> <span class="o">=</span> <span class="mi">0</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage9messageIdVs5UInt8"></a>
+                    <a name="//apple_ref/swift/Property/messageId" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage9messageIdVs5UInt8">messageId</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A custom user message id.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">messageId</span><span class="p">:</span><span class="kt"><a href="../Typealiases.html#/s:11BTLEPlusIOS34BLEPLusSerialServiceMessageId_Type">BLEPLusSerialServiceMessageId_Type</a></span> <span class="o">=</span> <span class="mi">0</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage4dataGSqCSo6NSData_"></a>
+                    <a name="//apple_ref/swift/Property/data" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage4dataGSqCSo6NSData_">data</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Raw message data.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">data</span><span class="p">:</span><span class="kt">NSData</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage13packetPayloadGSqCSo6NSData_"></a>
+                    <a name="//apple_ref/swift/Property/packetPayload" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage13packetPayloadGSqCSo6NSData_">packetPayload</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>For data messages, this is the packet data stripped of the type header.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">packetPayload</span><span class="p">:</span><span class="kt">NSData</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage3mtuVs6UInt16"></a>
+                    <a name="//apple_ref/swift/Property/mtu" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage3mtuVs6UInt16">mtu</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Maximum Transmission Unit</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">mtu</span><span class="p">:</span><span class="kt"><a href="../Typealiases.html#/s:11BTLEPlusIOS27BLEPlusSerialServiceMTUType">BLEPlusSerialServiceMTUType</a></span> <span class="o">=</span> <span class="mi">0</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage10windowSizeVs5UInt8"></a>
+                    <a name="//apple_ref/swift/Property/windowSize" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage10windowSizeVs5UInt8">windowSize</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Window size. This is clamped between 0 and BLEPlusSerialServiceMaxWindowSize.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">windowSize</span><span class="p">:</span><span class="kt"><a href="../Typealiases.html#/s:11BTLEPlusIOS35BLEPlusSerialServiceWindowSize_Type">BLEPlusSerialServiceWindowSize_Type</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage16resendFromPacketVs5UInt8"></a>
+                    <a name="//apple_ref/swift/Property/resendFromPacket" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage16resendFromPacketVs5UInt8">resendFromPacket</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The packet to resend data from.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">resendFromPacket</span><span class="p">:</span><span class="kt"><a href="../Typealiases.html#/s:11BTLEPlusIOS35BLEPlusSerialServicePacketCountType">BLEPlusSerialServicePacketCountType</a></span> <span class="o">=</span> <span class="mi">0</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage11messageSizeVs6UInt64"></a>
+                    <a name="//apple_ref/swift/Property/messageSize" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage11messageSizeVs6UInt64">messageSize</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The expected message size.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">messageSize</span><span class="p">:</span><span class="kt">UInt64</span> <span class="o">=</span> <span class="mi">0</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessagecFT8withTypeOS_39BLEPlusSerialServiceProtocolMessageType_S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(withType:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessagecFT8withTypeOS_39BLEPlusSerialServiceProtocolMessageType_S0_">init(withType:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialize with the control type. This is only used when there is no other
+data required as part of the message</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">withType</span><span class="p">:</span><span class="kt"><a href="../Enums/BLEPlusSerialServiceProtocolMessageType.html">BLEPlusSerialServiceProtocolMessageType</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>withType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The control message type.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>BLEPlusSerialServiceMessage</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessagecFT8withDataGSqCSo6NSData__S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(withData:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessagecFT8withDataGSqCSo6NSData__S0_">init(withData:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialize a control message with raw NSData. The data is expected to be
+in the protocol message format.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">withData</span><span class="p">:</span><span class="kt">NSData</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>withData</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Protocol format data.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>BLEPlusSerialServiceMessage</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessagecFT22peerInfoMessageWithMTUVs6UInt1610windowSizeVs5UInt8_S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(peerInfoMessageWithMTU:windowSize:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessagecFT22peerInfoMessageWithMTUVs6UInt1610windowSizeVs5UInt8_S0_">init(peerInfoMessageWithMTU:windowSize:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a peer info message with MTU and window size.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">peerInfoMessageWithMTU</span><span class="p">:</span><span class="kt"><a href="../Typealiases.html#/s:11BTLEPlusIOS27BLEPlusSerialServiceMTUType">BLEPlusSerialServiceMTUType</a></span><span class="p">,</span> <span class="nv">windowSize</span><span class="p">:</span><span class="kt"><a href="../Typealiases.html#/s:11BTLEPlusIOS35BLEPlusSerialServiceWindowSize_Type">BLEPlusSerialServiceWindowSize_Type</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>peerInfoMessageWithMTU</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Maximum transmission unit.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>windowSize</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Window size. Max is 64</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>BLEPlusSerialServiceMessage</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessagecFT32resendMessageWithStartFromPacketVs5UInt8_S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(resendMessageWithStartFromPacket:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessagecFT32resendMessageWithStartFromPacketVs5UInt8_S0_">init(resendMessageWithStartFromPacket:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a resend message with start from packet.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">resendMessageWithStartFromPacket</span><span class="p">:</span><span class="kt"><a href="../Typealiases.html#/s:11BTLEPlusIOS35BLEPlusSerialServicePacketCountType">BLEPlusSerialServicePacketCountType</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>resendMessageWithStartFromPacket</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The packet to start from.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>BLEPlusSerialServiceMessage</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessagecFT24endMessageWithWindowSizeVs5UInt8_S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(endMessageWithWindowSize:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessagecFT24endMessageWithWindowSizeVs5UInt8_S0_">init(endMessageWithWindowSize:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates an end control message with window size.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">endMessageWithWindowSize</span><span class="p">:</span><span class="kt"><a href="../Typealiases.html#/s:11BTLEPlusIOS35BLEPlusSerialServiceWindowSize_Type">BLEPlusSerialServiceWindowSize_Type</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>endMessageWithWindowSize</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The window size for the last window of the message.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>BLEPlusSerialServiceMessage</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessagecFT21endPartWithWindowSizeVs5UInt8_S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(endPartWithWindowSize:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessagecFT21endPartWithWindowSizeVs5UInt8_S0_">init(endPartWithWindowSize:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates an end part control message with window size.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">endPartWithWindowSize</span><span class="p">:</span><span class="kt"><a href="../Typealiases.html#/s:11BTLEPlusIOS35BLEPlusSerialServiceWindowSize_Type">BLEPlusSerialServiceWindowSize_Type</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>endPartWithWindowSize</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The window size of the current part.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>BLEPlusSerialServiceMessage</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessagecFT30newFileMessageWithExpectedSizeVs6UInt6411messageTypeVs5UInt89messageIdS2__S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(newFileMessageWithExpectedSize:messageType:messageId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessagecFT30newFileMessageWithExpectedSizeVs6UInt6411messageTypeVs5UInt89messageIdS2__S0_">init(newFileMessageWithExpectedSize:messageType:messageId:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a new large message control message with the expected size of data transfer.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">newFileMessageWithExpectedSize</span><span class="p">:</span><span class="kt">UInt64</span><span class="p">,</span> <span class="nv">messageType</span><span class="p">:</span><span class="kt"><a href="../Typealiases.html#/s:11BTLEPlusIOS36BLEPlusSerialServiceMessageType_Type">BLEPlusSerialServiceMessageType_Type</a></span><span class="p">,</span> <span class="nv">messageId</span><span class="p">:</span><span class="kt"><a href="../Typealiases.html#/s:11BTLEPlusIOS34BLEPLusSerialServiceMessageId_Type">BLEPLusSerialServiceMessageId_Type</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>newFileMessageWithExpectedSize</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The expected data size.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>BLEPlusSerialServiceMessage</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessagecFT26newMessageWithExpectedSizeVs6UInt6411messageTypeVs5UInt89messageIdS2__S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(newMessageWithExpectedSize:messageType:messageId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessagecFT26newMessageWithExpectedSizeVs6UInt6411messageTypeVs5UInt89messageIdS2__S0_">init(newMessageWithExpectedSize:messageType:messageId:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a new message control message with the expected size of the data transfer.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">newMessageWithExpectedSize</span><span class="p">:</span><span class="kt">UInt64</span><span class="p">,</span> <span class="nv">messageType</span><span class="p">:</span><span class="kt"><a href="../Typealiases.html#/s:11BTLEPlusIOS36BLEPlusSerialServiceMessageType_Type">BLEPlusSerialServiceMessageType_Type</a></span><span class="p">,</span> <span class="nv">messageId</span><span class="p">:</span><span class="kt"><a href="../Typealiases.html#/s:11BTLEPlusIOS34BLEPLusSerialServiceMessageId_Type">BLEPLusSerialServiceMessageId_Type</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>newMessageWithExpectedSize</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Expected data transfer size.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>BLEPlusSerialServiceMessage</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessagecFT19dataMessageWithDataGSqCSo6NSData__S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(dataMessageWithData:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessagecFT19dataMessageWithDataGSqCSo6NSData__S0_">init(dataMessageWithData:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a new data message with provided data. The data should include a 1 byte packet number before the payload.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">dataMessageWithData</span><span class="p">:</span><span class="kt">NSData</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>dataMessageWithData</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>NSData</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>BLEPlusSerialServiceMessage</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage21isValidControlMessageFT_Sb"></a>
+                    <a name="//apple_ref/swift/Method/isValidControlMessage()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage21isValidControlMessageFT_Sb">isValidControlMessage()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Test whether or not this message is valid.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">isValidControlMessage</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Bool</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-08)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

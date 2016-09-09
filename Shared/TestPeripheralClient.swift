@@ -10,12 +10,12 @@ import Foundation
 import CoreBluetooth
 
 #if os(iOS)
-import BLEPlusIOS
+import BTLEPlusIOS
 #elseif os(OSX)
-import BLEPlus
+import BTLEPlus
 #endif
 
-public class TestPeripheralClient : BLEPeripheral, BLEPlusSerialServiceControllerDelegate, BLEPlusRequestResponseControllerDelegate {
+public class TestPeripheralClient : BLEPeripheral, BLEPlusSerialServiceControllerDelegate {
 	
 	public static let ScanForUUID:CBUUID = CBUUID(string:"6DC4B345-635C-4690-B51D-0D358D32D5EF")
 	var serialController:BLEPlusSerialServiceController!

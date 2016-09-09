@@ -9,9 +9,9 @@
 import Foundation
 
 #if os(iOS)
-	import BLEPlusIOS
+import BTLEPlusIOS
 #elseif os(OSX)
-	import BLEPlus
+import BTLEPlus
 #endif
 
 public let HelloWorldRequest:BLEPlusSerialServiceMessageType_Type = 21

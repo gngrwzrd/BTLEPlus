@@ -12,10 +12,10 @@ import CoreBluetooth
 #if os(iOS)
 import BLEPlusIOS
 #elseif os(OSX)
-import BLEPlus
+import BTLEPlus
 #endif
 
-public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPlusSerialServiceControllerDelegate, BLEPlusRequestResponseControllerDelegate {
+public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPlusSerialServiceControllerDelegate {
 	
 	public static let ServiceUUID = CBUUID(string: "6DC4B345-635C-4690-B51D-0D358D32D5EF")
 	public static let CharacteristicUUID = CBUUID(string: "CF8F353A-420C-423D-BEE8-BA36499335DF")
@@ -101,6 +101,10 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPl
 	
 	public func peripheralManager(peripheral: CBPeripheralManager, central: CBCentral, didSubscribeToCharacteristic characteristic: CBCharacteristic) {
 		print("server: central subscribed")
+		
+		print("maxValue: ",central.maximumUpdateValueLength)
+		controller.mtu = BLEPlusSerialServiceMTUType(central.maximumUpdateValueLength)
+		
 		if characteristic == channel {
 			controller.resume()
 		}
