@@ -20,7 +20,7 @@
         <a class="header-link" href="../index.html">
            Docs
         </a>
-         (75% documented)
+         (84% documented)
       </p>
     
     
@@ -48,9 +48,6 @@
                 <a class="nav-group-task-link" href="../Classes/BLEHeartrate.html">BLEHeartrate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/BLEPLus.html">BLEPLus</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/BLEPeripheral.html">BLEPeripheral</a>
               </li>
               <li class="nav-group-task">
@@ -63,16 +60,10 @@
                 <a class="nav-group-task-link" href="../Classes/BLEPlusSerialServiceMessage.html">BLEPlusSerialServiceMessage</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes.html#/s:C11BTLEPlusIOS34BLEPlusSerialServicePacketProvider">BLEPlusSerialServicePacketProvider</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/BLEPlusSerialServicePacketReceiver.html">BLEPlusSerialServicePacketReceiver</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/BLEPlusSerialServiceProtocolMessage.html">BLEPlusSerialServiceProtocolMessage</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/BLEPlusServiceSpec.html">BLEPlusServiceSpec</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLEPlus.html">BTLEPlus</a>
               </li>
             </ul>
           </li>
@@ -89,13 +80,7 @@
                 <a class="nav-group-task-link" href="../Global Variables.html#/s:v11BTLEPlusIOS32BLEPlusSerialServiceMaxMessageIdVs5UInt8">BLEPlusSerialServiceMaxMessageId</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Global Variables.html#/s:v11BTLEPlusIOS36BLEPlusSerialServiceMaxPacketCounterVs5UInt8">BLEPlusSerialServiceMaxPacketCounter</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Global Variables.html#/s:v11BTLEPlusIOS33BLEPlusSerialServiceMaxWindowSizeVs5UInt8">BLEPlusSerialServiceMaxWindowSize</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Global Variables.html#/s:v11BTLEPlusIOS27BLEPlusSerialServiceRealMTUVs6UInt16">BLEPlusSerialServiceRealMTU</a>
               </li>
             </ul>
           </li>
@@ -103,10 +88,15 @@
             <a class="nav-group-name-link" href="../Enums.html">Enums</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/BLEPlusSerialServiceControllerMode.html">BLEPlusSerialServiceControllerMode</a>
+                <a class="nav-group-task-link" href="../Enums/BLEPlusSerialServiceRunMode.html">BLEPlusSerialServiceRunMode</a>
               </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/BLEPlusSerialServiceProtocolMessageType.html">BLEPlusSerialServiceProtocolMessageType</a>
+                <a class="nav-group-task-link" href="../Extensions/OptionSetType.html">OptionSetType</a>
               </li>
             </ul>
           </li>
@@ -128,7 +118,7 @@
                 <a class="nav-group-task-link" href="../Typealiases.html#/s:11BTLEPlusIOS34BLEPLusSerialServiceMessageId_Type">BLEPLusSerialServiceMessageId_Type</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Typealiases.html#/s:11BTLEPlusIOS27BLEPlusSerialServiceMTUType">BLEPlusSerialServiceMTUType</a>
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:11BTLEPlusIOS28BLEPlusSerialServiceMTU_Type">BLEPlusSerialServiceMTU_Type</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Typealiases.html#/s:11BTLEPlusIOS36BLEPlusSerialServiceMessageType_Type">BLEPlusSerialServiceMessageType_Type</a>
@@ -157,7 +147,8 @@
 
                 </div>
               </div>
-            <p>BLEPlusSerialServiceControllerDelegate is the protocol you can implement to receive callbacks.</p>
+            <p>BLEPlusSerialServiceControllerDelegate is the protocol you implement to received events
+from a serial service controller.</p>
 
           </div>
         </section>
@@ -179,7 +170,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>When the serial service controller needs to send data it asks the delegate to send it on it&rsquo;s bahalf.</p>
+                        <p>When the serial service controller needs to send data it asks the delegate to send it.</p>
 
                       </div>
                       <div class="declaration">
@@ -202,7 +193,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>BLEPlusSerialServiceController.</p>
+                                  <p>BLEPlusSerialServiceController</p>
 
                                 </div>
                               </td>
@@ -215,7 +206,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>NSData.</p>
+                                  <p>The data to send.</p>
 
                                 </div>
                               </td>
@@ -239,7 +230,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>When a message was entirely sent and received by the peer.</p>
+                        <p>When a message was entirely sent, and received by the peer.</p>
 
                       </div>
                       <div class="declaration">
@@ -262,7 +253,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>BLEPlusSerialServiceController.</p>
+                                  <p>BLEPlusSerialServiceController</p>
 
                                 </div>
                               </td>
@@ -275,7 +266,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The user message that was sent.</p>
+                                  <p>The message that was sent.</p>
 
                                 </div>
                               </td>
@@ -306,7 +297,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">optional</span> <span class="kd">func</span> <span class="nf">serialServiceController</span><span class="p">(</span><span class="nv">controller</span><span class="p">:</span><span class="kt"><a href="../Classes/BLEPlusSerialServiceController.html">BLEPlusSerialServiceController</a></span><span class="p">,</span> <span class="n">receivedMessage</span> <span class="nv">message</span><span class="p">:</span><span class="kt"><a href="../Classes/BLEPlusSerialServiceMessage.html">BLEPlusSerialServiceMessage</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">serialServiceController</span><span class="p">(</span><span class="nv">controller</span><span class="p">:</span><span class="kt"><a href="../Classes/BLEPlusSerialServiceController.html">BLEPlusSerialServiceController</a></span><span class="p">,</span> <span class="n">receivedMessage</span> <span class="nv">message</span><span class="p">:</span><span class="kt"><a href="../Classes/BLEPlusSerialServiceMessage.html">BLEPlusSerialServiceMessage</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -322,7 +313,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>BLEPlusSerialServiceController.</p>
+                                  <p>BLEPlusSerialServiceController</p>
 
                                 </div>
                               </td>
@@ -335,7 +326,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>BLEPlusSerialServiceUserMessasge.</p>
+                                  <p>The message that was received.</p>
 
                                 </div>
                               </td>
@@ -354,7 +345,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-08)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-10)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

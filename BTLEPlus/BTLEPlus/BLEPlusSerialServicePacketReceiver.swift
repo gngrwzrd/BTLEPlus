@@ -11,7 +11,7 @@ import Foundation
 /// BLEPlusSerialServicePacketReceiver handles incoming data from a paar
 /// and manages a packet counter. The receiver also figures out when
 /// packets need to be resent from missing packets.
-@objc public class BLEPlusSerialServicePacketReceiver : NSObject {
+@objc class BLEPlusSerialServicePacketReceiver : NSObject {
 	
 	/// Data for smaller messages.
 	var data:NSMutableData?
@@ -46,7 +46,7 @@ import Foundation
 	var needsPacketsResent:Bool = false
 	
 	/// The total bytes received.
-	public var bytesReceived:UInt64 = 0
+	var bytesReceived:UInt64 = 0
 	
 	/// Total bytes in this message.
 	private var messageSize:UInt64 = 0
@@ -258,7 +258,7 @@ import Foundation
 	/// Receive progress. This is the progress of how many total bytes have been received
 	/// to the receive window, but not necessarily how many bytes have been written to disk
 	/// if it's a large message.
-	public func progress() -> Float {
+	func progress() -> Float {
 		if messageSize > 0 {
 			return Float(bytesReceived) / Float(messageSize)
 		}

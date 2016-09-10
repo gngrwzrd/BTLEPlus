@@ -20,7 +20,7 @@
         <a class="header-link" href="../index.html">
            Docs
         </a>
-         (75% documented)
+         (84% documented)
       </p>
     
     
@@ -48,9 +48,6 @@
                 <a class="nav-group-task-link" href="../Classes/BLEHeartrate.html">BLEHeartrate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/BLEPLus.html">BLEPLus</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/BLEPeripheral.html">BLEPeripheral</a>
               </li>
               <li class="nav-group-task">
@@ -63,16 +60,10 @@
                 <a class="nav-group-task-link" href="../Classes/BLEPlusSerialServiceMessage.html">BLEPlusSerialServiceMessage</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes.html#/s:C8BTLEPlus34BLEPlusSerialServicePacketProvider">BLEPlusSerialServicePacketProvider</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/BLEPlusSerialServicePacketReceiver.html">BLEPlusSerialServicePacketReceiver</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/BLEPlusSerialServiceProtocolMessage.html">BLEPlusSerialServiceProtocolMessage</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/BLEPlusServiceSpec.html">BLEPlusServiceSpec</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLEPlus.html">BTLEPlus</a>
               </li>
             </ul>
           </li>
@@ -89,13 +80,7 @@
                 <a class="nav-group-task-link" href="../Global Variables.html#/s:v8BTLEPlus32BLEPlusSerialServiceMaxMessageIdVs5UInt8">BLEPlusSerialServiceMaxMessageId</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Global Variables.html#/s:v8BTLEPlus36BLEPlusSerialServiceMaxPacketCounterVs5UInt8">BLEPlusSerialServiceMaxPacketCounter</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Global Variables.html#/s:v8BTLEPlus33BLEPlusSerialServiceMaxWindowSizeVs5UInt8">BLEPlusSerialServiceMaxWindowSize</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Global Variables.html#/s:v8BTLEPlus27BLEPlusSerialServiceRealMTUVs6UInt16">BLEPlusSerialServiceRealMTU</a>
               </li>
             </ul>
           </li>
@@ -103,10 +88,15 @@
             <a class="nav-group-name-link" href="../Enums.html">Enums</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/BLEPlusSerialServiceControllerMode.html">BLEPlusSerialServiceControllerMode</a>
+                <a class="nav-group-task-link" href="../Enums/BLEPlusSerialServiceRunMode.html">BLEPlusSerialServiceRunMode</a>
               </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/BLEPlusSerialServiceProtocolMessageType.html">BLEPlusSerialServiceProtocolMessageType</a>
+                <a class="nav-group-task-link" href="../Extensions/OptionSetType.html">OptionSetType</a>
               </li>
             </ul>
           </li>
@@ -128,16 +118,10 @@
                 <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus34BLEPLusSerialServiceMessageId_Type">BLEPLusSerialServiceMessageId_Type</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus27BLEPlusSerialServiceMTUType">BLEPlusSerialServiceMTUType</a>
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus28BLEPlusSerialServiceMTU_Type">BLEPlusSerialServiceMTU_Type</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus36BLEPlusSerialServiceMessageType_Type">BLEPlusSerialServiceMessageType_Type</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus35BLEPlusSerialServicePacketCountType">BLEPlusSerialServicePacketCountType</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus44BLEPlusSerialServiceProtocolMessageType_Type">BLEPlusSerialServiceProtocolMessageType_Type</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus35BLEPlusSerialServiceWindowSize_Type">BLEPlusSerialServiceWindowSize_Type</a>
@@ -157,12 +141,9 @@
 
                 </div>
               </div>
-            <p>BLEPlusSerialServiceMessage is the base class for sending user defined
-messages over the BLEPlus Serial Service.</p>
-
-<p>The type property is automatically encoded for you in the transfer,
-on the peripheral or central side when you get a message callback you
-can inspect the type to figure out what message it is.</p>
+            <p>The BLEPlusSerialServiceMessage class is the base class for all user defined
+messages that are sent over the serial service protocol. You pass instances of
+this to <em>BLEPlusSerialServiceController.send()</em>.</p>
 
           </div>
         </section>
@@ -184,8 +165,7 @@ can inspect the type to figure out what message it is.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A custom type you can use to indicate which type of user message is
-being transfered.</p>
+                        <p>A user defined type.</p>
 
                       </div>
                       <div class="declaration">
@@ -212,7 +192,8 @@ being transfered.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A message id for tracking request / response lifecycle.</p>
+                        <p>A user defined message id for tracking the message when it&rsquo;s sent
+from one peer to the other.</p>
 
                       </div>
                       <div class="declaration">
@@ -239,7 +220,7 @@ being transfered.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Data to send.</p>
+                        <p>User defined data to send.</p>
 
                       </div>
                       <div class="declaration">
@@ -266,7 +247,7 @@ being transfered.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A file to send.</p>
+                        <p>User defined file to send.</p>
 
                       </div>
                       <div class="declaration">
@@ -293,7 +274,7 @@ being transfered.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Init with data to send.</p>
+                        <p>Initialize a BLEPlusSerialServiceMessage with it&rsquo;s message type, message id, and data.</p>
 
                       </div>
                       <div class="declaration">
@@ -311,12 +292,25 @@ being transfered.</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>withType</em>
+                                <em>withMessageType</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>BLEPlusSerialServiceWrapperUserType</p>
+                                  <p>User defined message type.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>messageId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>User defined message id for tracking messages.</p>
 
                                 </div>
                               </td>
@@ -329,7 +323,7 @@ being transfered.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>NSData</p>
+                                  <p>User defined data.</p>
 
                                 </div>
                               </td>
@@ -418,7 +412,7 @@ being transfered.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-08)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-10)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

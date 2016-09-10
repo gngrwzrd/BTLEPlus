@@ -8,13 +8,25 @@
 
 import Foundation
 
-public class BLEPLus {
+public class BTLEPlus {
 	
-	public func BLEPlusUnlock(license:String) -> Bool {
+	/**
+	Unlock BTLEPlus.
+	
+	- parameter license:	The license.
+	
+	- returns: Bool - Whether or not unlock was successful.
+	*/
+	public func BTLEPlusUnlock(license:String) -> Bool {
 		return true
 	}
 	
-	public func BLEPlusIsUnlocked() -> Bool {
+	/**
+	Check if BTLEPlus is unlocked.
+	
+	- returns: Bool
+	*/
+	public func BTLEPlusIsUnlocked() -> Bool {
 		return true
 	}
 	

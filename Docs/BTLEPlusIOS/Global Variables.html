@@ -19,7 +19,7 @@
         <a class="header-link" href="index.html">
            Docs
         </a>
-         (75% documented)
+         (84% documented)
       </p>
     
     
@@ -47,9 +47,6 @@
                 <a class="nav-group-task-link" href="Classes/BLEHeartrate.html">BLEHeartrate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/BLEPLus.html">BLEPLus</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/BLEPeripheral.html">BLEPeripheral</a>
               </li>
               <li class="nav-group-task">
@@ -62,16 +59,10 @@
                 <a class="nav-group-task-link" href="Classes/BLEPlusSerialServiceMessage.html">BLEPlusSerialServiceMessage</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes.html#/s:C11BTLEPlusIOS34BLEPlusSerialServicePacketProvider">BLEPlusSerialServicePacketProvider</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/BLEPlusSerialServicePacketReceiver.html">BLEPlusSerialServicePacketReceiver</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/BLEPlusSerialServiceProtocolMessage.html">BLEPlusSerialServiceProtocolMessage</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/BLEPlusServiceSpec.html">BLEPlusServiceSpec</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/BTLEPlus.html">BTLEPlus</a>
               </li>
             </ul>
           </li>
@@ -88,13 +79,7 @@
                 <a class="nav-group-task-link" href="Global Variables.html#/s:v11BTLEPlusIOS32BLEPlusSerialServiceMaxMessageIdVs5UInt8">BLEPlusSerialServiceMaxMessageId</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Global Variables.html#/s:v11BTLEPlusIOS36BLEPlusSerialServiceMaxPacketCounterVs5UInt8">BLEPlusSerialServiceMaxPacketCounter</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Global Variables.html#/s:v11BTLEPlusIOS33BLEPlusSerialServiceMaxWindowSizeVs5UInt8">BLEPlusSerialServiceMaxWindowSize</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Global Variables.html#/s:v11BTLEPlusIOS27BLEPlusSerialServiceRealMTUVs6UInt16">BLEPlusSerialServiceRealMTU</a>
               </li>
             </ul>
           </li>
@@ -102,10 +87,15 @@
             <a class="nav-group-name-link" href="Enums.html">Enums</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/BLEPlusSerialServiceControllerMode.html">BLEPlusSerialServiceControllerMode</a>
+                <a class="nav-group-task-link" href="Enums/BLEPlusSerialServiceRunMode.html">BLEPlusSerialServiceRunMode</a>
               </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/BLEPlusSerialServiceProtocolMessageType.html">BLEPlusSerialServiceProtocolMessageType</a>
+                <a class="nav-group-task-link" href="Extensions/OptionSetType.html">OptionSetType</a>
               </li>
             </ul>
           </li>
@@ -127,7 +117,7 @@
                 <a class="nav-group-task-link" href="Typealiases.html#/s:11BTLEPlusIOS34BLEPLusSerialServiceMessageId_Type">BLEPLusSerialServiceMessageId_Type</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Typealiases.html#/s:11BTLEPlusIOS27BLEPlusSerialServiceMTUType">BLEPlusSerialServiceMTUType</a>
+                <a class="nav-group-task-link" href="Typealiases.html#/s:11BTLEPlusIOS28BLEPlusSerialServiceMTU_Type">BLEPlusSerialServiceMTU_Type</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Typealiases.html#/s:11BTLEPlusIOS36BLEPlusSerialServiceMessageType_Type">BLEPlusSerialServiceMessageType_Type</a>
@@ -172,12 +162,9 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The default maximum transmission unit. By default this is set to UInt16.max.
-The first thing that happens when peers are connected is exchanging peer info.
-When the central passes this value to the peripheral the peripheral is required
-to respond with either an ack, or a smaller size to use. From the peripheral
-size, CBCentral has a property called maximumUpdateValueLength that should be
-returned to the central as the mtu size.</p>
+                        <p>The default maximum transmission unit. Upon connection, peers
+exchange their information and agree on an mtu and window size to use.
+It&rsquo;s likely that the agreed upon mtu will be a lot less.</p>
 
                       </div>
                       <div class="declaration">
@@ -185,33 +172,6 @@ returned to the central as the mtu size.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">BLEPlusSerialServiceDefaultMTU</span><span class="p">:</span><span class="kt">UInt16</span> <span class="o">=</span> <span class="kt">UInt16</span><span class="o">.</span><span class="n">max</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:v11BTLEPlusIOS27BLEPlusSerialServiceRealMTUVs6UInt16"></a>
-                    <a name="//apple_ref/swift/Global/BLEPlusSerialServiceRealMTU" class="dashAnchor"></a>
-                    <a class="token" href="#/s:v11BTLEPlusIOS27BLEPlusSerialServiceRealMTUVs6UInt16">BLEPlusSerialServiceRealMTU</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>This is the real payload mtu after headers are subtracted.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">BLEPlusSerialServiceRealMTU</span><span class="p">:</span><span class="kt">UInt16</span> <span class="o">=</span> <span class="kt"><a href="Global Variables.html#/s:v11BTLEPlusIOS30BLEPlusSerialServiceDefaultMTUVs6UInt16">BLEPlusSerialServiceDefaultMTU</a></span> <span class="o">-</span> <span class="kt">UInt16</span><span class="p">(</span><span class="kt"><a href="Classes.html#/s:C11BTLEPlusIOS34BLEPlusSerialServicePacketProvider">BLEPlusSerialServicePacketProvider</a></span><span class="o">.</span><span class="n">headerSize</span> <span class="o">+</span> <span class="kt"><a href="Classes/BLEPlusSerialServiceProtocolMessage.html">BLEPlusSerialServiceProtocolMessage</a></span><span class="o">.</span><span class="n">headerSize</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -231,14 +191,15 @@ returned to the central as the mtu size.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>This is the default MTU.</p>
+                        <p>The default window size. Window size is how many mtu buffers are available to send
+or receive. Total bytes in the window = windowSize * mtu.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">BLEPlusSerialServiceDefaultWindowSize</span><span class="p">:</span><span class="kt"><a href="Typealiases.html#/s:11BTLEPlusIOS35BLEPlusSerialServiceWindowSize_Type">BLEPlusSerialServiceWindowSize_Type</a></span> <span class="o">=</span> <span class="mi">32</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">BLEPlusSerialServiceDefaultWindowSize</span><span class="p">:</span><span class="kt"><a href="Typealiases.html#/s:11BTLEPlusIOS35BLEPlusSerialServiceWindowSize_Type">BLEPlusSerialServiceWindowSize_Type</a></span> <span class="o">=</span> <span class="mi">32</span></code></pre>
 
                         </div>
                       </div>
@@ -258,41 +219,15 @@ returned to the central as the mtu size.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The default max window size.</p>
+                        <p>The largest possible window size. This is use to clamp user provided window sizes
+which are not allowed to be larger than this.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">BLEPlusSerialServiceMaxWindowSize</span><span class="p">:</span><span class="kt"><a href="Typealiases.html#/s:11BTLEPlusIOS35BLEPlusSerialServiceWindowSize_Type">BLEPlusSerialServiceWindowSize_Type</a></span> <span class="o">=</span> <span class="mi">128</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:v11BTLEPlusIOS36BLEPlusSerialServiceMaxPacketCounterVs5UInt8"></a>
-                    <a name="//apple_ref/swift/Global/BLEPlusSerialServiceMaxPacketCounter" class="dashAnchor"></a>
-                    <a class="token" href="#/s:v11BTLEPlusIOS36BLEPlusSerialServiceMaxPacketCounterVs5UInt8">BLEPlusSerialServiceMaxPacketCounter</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The default max packet counter before it loops to zero.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">BLEPlusSerialServiceMaxPacketCounter</span><span class="p">:</span><span class="kt"><a href="Typealiases.html#/s:11BTLEPlusIOS35BLEPlusSerialServicePacketCountType">BLEPlusSerialServicePacketCountType</a></span> <span class="o">=</span> <span class="mi">128</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">BLEPlusSerialServiceMaxWindowSize</span><span class="p">:</span><span class="kt"><a href="Typealiases.html#/s:11BTLEPlusIOS35BLEPlusSerialServiceWindowSize_Type">BLEPlusSerialServiceWindowSize_Type</a></span> <span class="o">=</span> <span class="mi">128</span></code></pre>
 
                         </div>
                       </div>
@@ -319,7 +254,7 @@ returned to the central as the mtu size.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">BLEPlusSerialServiceMaxMessageId</span><span class="p">:</span><span class="kt"><a href="Typealiases.html#/s:11BTLEPlusIOS34BLEPLusSerialServiceMessageId_Type">BLEPLusSerialServiceMessageId_Type</a></span> <span class="o">=</span> <span class="mi">255</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">BLEPlusSerialServiceMaxMessageId</span><span class="p">:</span><span class="kt"><a href="Typealiases.html#/s:11BTLEPlusIOS34BLEPLusSerialServiceMessageId_Type">BLEPLusSerialServiceMessageId_Type</a></span> <span class="o">=</span> <span class="kt"><a href="Typealiases.html#/s:11BTLEPlusIOS34BLEPLusSerialServiceMessageId_Type">BLEPLusSerialServiceMessageId_Type</a></span><span class="o">.</span><span class="n">max</span></code></pre>
 
                         </div>
                       </div>
@@ -334,7 +269,7 @@ returned to the central as the mtu size.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-08)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-10)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

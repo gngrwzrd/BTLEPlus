@@ -13,7 +13,9 @@ class BLEPlusTestMessageReceiver_NSFileHandle : XCTestCase {
 	
 	func testTransferFileFromProviderToReceiver() {
 		let fileURL = NSBundle(forClass: self.dynamicType).URLForImageResource("IMG_5595")
-		let _provider = BLEPlusSerialServicePacketProvider.createWithFileURLForReading(fileURL!, mtu: 1024, windowSize: 25)
+		let _provider = BLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
+		_provider?.mtu = 1024
+		_provider?.windowSize = 25
 		let _receiver = BLEPlusSerialServicePacketReceiver.createWithTmpFileForWriting(25)
 		guard let receiver = _receiver else {
 			assert(false)

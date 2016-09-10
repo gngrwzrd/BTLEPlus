@@ -7,7 +7,11 @@ if [ -z "$JAZZY" ]; then
 fi
 
 echo "Generate BTLEPlus Framework Docs."
-jazzy jazzy --xcodebuild-arguments "-scheme,BTLEPlus,-workspace,BTLEPlus.xcworkspace" --theme="Jazzy/BTLEPlus/" --output="Docs/BTLEPlus"
+jazzy jazzy --xcodebuild-arguments \
+"-scheme,BTLEPlus,-workspace,BTLEPlus.xcworkspace" \
+--theme="Jazzy/BTLEPlus/" \
+--output="Docs/BTLEPlus" \
+--exclude="BTLEPlus/BTLEPlus/BLEPlusSerialServiceProtocolMessage-DocExclude.swift"
 
 echo "Generate BTLEPlusIOS Framework Docs"
 jazzy jazzy --xcodebuild-arguments "-scheme,BTLEPlusIOS,-workspace,BTLEPlus.xcworkspace" --theme="Jazzy/BTLEPlus/" --output="Docs/BTLEPlusIOS"

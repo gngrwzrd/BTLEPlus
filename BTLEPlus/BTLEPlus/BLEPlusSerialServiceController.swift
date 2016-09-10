@@ -10,66 +10,101 @@ import Foundation
 import CoreBluetooth
 
 /**
-BLEPlusSerialServiceControllerMode denotes which side of the
-connection the controller is operating as.
-
-- Central:		Central is the client in BTLE.
-- Peripheral:	Peripheral is the server in BTLE.
+BLEPlusSerialServiceControllerMode indicates which mode a BLEPlusSerialServiceController
+is running in.
 */
-@objc public enum BLEPlusSerialServiceControllerMode :UInt8 {
+@objc public enum BLEPlusSerialServiceRunMode :UInt8 {
+	/// Bluetooth LE Central - The client in BTLE.
 	case Central = 1
+	
+	/// Bluetooth LE Peripheral - The server in BTLE.
 	case Peripheral = 2
 }
 
-/// BLEPlusSerialServiceControllerDelegate is the protocol you can implement to receive callbacks.
+/**
+* BLEPlusSerialServiceControllerDelegate is the protocol you implement to received events
+* from a serial service controller.
+*/
 @objc public protocol BLEPlusSerialServiceControllerDelegate {
 	
 	/**
-	When the serial service controller needs to send data it asks the delegate to send it on it's bahalf.
+	When the serial service controller needs to send data it asks the delegate to send it.
 	
-	- parameter controller:			BLEPlusSerialServiceController.
-	- parameter wantsToSendData:	NSData.
+	- parameter controller:			BLEPlusSerialServiceController
+	- parameter wantsToSendData:	The data to send.
 	*/
 	func serialServiceController(controller:BLEPlusSerialServiceController, wantsToSendData data:NSData)
 	
 	/**
-	When a message was entirely sent and received by the peer.
+	When a message was entirely sent, and received by the peer.
 	
-	- parameter controller:	BLEPlusSerialServiceController.
-	- parameter message:		The user message that was sent.
+	- parameter controller: BLEPlusSerialServiceController
+	- parameter message:    The message that was sent.
 	*/
 	optional func serialServiceController(controller:BLEPlusSerialServiceController, sentMessage message:BLEPlusSerialServiceMessage)
 	
 	/**
 	When a message has been completely received.
 	
-	- parameter controller:	BLEPlusSerialServiceController.
-	- parameter message:		BLEPlusSerialServiceUserMessasge.
+	- parameter controller: BLEPlusSerialServiceController
+	- parameter message:    The message that was received.
 	*/
-	optional func serialServiceController(controller:BLEPlusSerialServiceController, receivedMessage message:BLEPlusSerialServiceMessage)
+	func serialServiceController(controller:BLEPlusSerialServiceController, receivedMessage message:BLEPlusSerialServiceMessage)
 }
 
 /**
-BLEPlusSerialServiceController is controller that implements logic to send
-and receive data using the binary BLEPlus Serial Service protocol.
+BLEPlusSerialServiceController objects are used to create and process packets
+for the binary serial service protocol. It relies on you to transmit data for it,
+and notify it when data is received. Serial service controllers operate as
+either a central, or a peripheral.
 
-It's implementation is independent of how the data is sent or received,
-leaving that up to the user.
+You implement the delegate and receive callbacks when it needs to _send data_,
+when it's _sent a complete message_ to it's peer, and when it's _received a
+complete message_ from it's peer.
 */
 @objc public class BLEPlusSerialServiceController : NSObject {
 	
-	//MARK: - Variables
+	//MARK: - Configuration
 	
-	/// A delegate to receive activity messages.
+	/// The delegate object that you want to receive serial service events.
 	public var delegate:BLEPlusSerialServiceControllerDelegate?
 	
 	/// The delegate callback queue.
 	private var delegateQueue:dispatch_queue_t
 	
-	/// Maximum transmission unit.
-	public var mtu:BLEPlusSerialServiceMTUType = BLEPlusSerialServiceDefaultMTU
+	/// The maximum data transmission length.
+	///
+	/// Changing this value triggers a peer information exchange and it's not
+	/// recommended to change this value frequently.
+	///
+	/// When it's changed the controller sends the new mtu to it's peer. The peer can
+	/// either accept and use the new mtu, or, if too large, the peer will send back
+	/// it's smaller mtu which the controller is required to use.
+	///
+	/// Because of the peer information exchange, it's not guaranteed that the mtu
+	/// you set will be used. If one of the peers requires a smaller mtu, that will
+	/// be used instead.
+	///
+	/// The peer information exchange will not happen immediately, it happens
+	/// after any messages being transmitted finish.
+	public var mtu:BLEPlusSerialServiceMTU_Type = BLEPlusSerialServiceDefaultMTU
 	
-	/// Window size. This is clamped between 0 and BLEPlusSerialServiceMaxWindowSize.
+	/// The number of open buffers to send or receive. Total bytes availabe to
+	/// send or receive is windowSize * mtu.
+	///
+	/// Changing this value triggers a peer information exchange and it's not
+	/// recommended to change this value frequently.
+	///
+	/// When it's changed the controller sends the new windowSize to it's peer. The peer can
+	/// either accept and use the new windowSize, or, if too large, the peer will send back
+	/// it's smaller windowSize which the controller is required to use.
+	///
+	/// Because of the peer information exchange, it's not guaranteed that the windowSize
+	/// you set will be used. If one of the peers requires a smaller windowSize, that will
+	/// be used instead.
+	///
+	/// The peer information exchange will not happen immediately, it happens
+	/// after any messages being transmitted finish.
 	public var windowSize:BLEPlusSerialServiceWindowSize_Type {
 		get {
 			return _windowSize
@@ -106,7 +141,7 @@ leaving that up to the user.
 	private var serialQueue:dispatch_queue_t
 	
 	/// Queue for sending user messages
-	public var messageQueue:[BLEPlusSerialServiceMessage]?
+	private var messageQueue:[BLEPlusSerialServiceMessage]?
 	
 	/// The current message being transmitted.
 	private var currentUserMessage:BLEPlusSerialServiceMessage?
@@ -121,18 +156,24 @@ leaving that up to the user.
 	private var resendCurrentControlTimer:NSTimer?
 	
 	/// The mode this controller is running as.
-	private var mode:BLEPlusSerialServiceControllerMode = .Central
+	private var mode:BLEPlusSerialServiceRunMode = .Central
 	
 	/// The mode for whoever's turn it is.
-	private var turnMode:BLEPlusSerialServiceControllerMode = .Central
+	private var turnMode:BLEPlusSerialServiceRunMode = .Central
 	
 	/// A timer that keeps track of when to offer the peer a turn.
 	private var offerTurnTimer:NSTimer?
 	
-	//MARK: - inits
+	//MARK: - Initializing a Serial Service Controller
 	
-	/// default init
-	public init(withMode mode:BLEPlusSerialServiceControllerMode) {
+	/**
+	Initialize a serial service controller with it's run mode.
+	
+	- parameter mode:	The run mode for the serial service.
+	
+	- returns: BLEPlusSerialServiceController
+	*/
+	public init(withRunMode mode:BLEPlusSerialServiceRunMode) {
 		self.mode = mode
 		messageQueue = []
 		serialQueue = dispatch_queue_create("com.bleplus.SerialServiceController", DISPATCH_QUEUE_SERIAL)
@@ -141,13 +182,15 @@ leaving that up to the user.
 	}
 	
 	/**
-	Initialize a BLEPlusSerialServiceController with a delegate queue.
+	Initialize a serial service with it's run mode and a custom delegate queue to receive
+	callbacks on.
 	
-	- parameter queue: The queue for delegate messages to callback on.
+	- parameter mode: The run mode for the serial service.
+	- parameter queue: A queue for delegate messages to callback on.
 	
 	- returns: BLEPlusSerialServiceController
 	*/
-	public init(withMode mode:BLEPlusSerialServiceControllerMode, delegateQueue queue:dispatch_queue_t) {
+	public init(withRunMode mode:BLEPlusSerialServiceRunMode, delegateQueue queue:dispatch_queue_t) {
 		messageQueue = []
 		self.mode = mode
 		serialQueue = dispatch_queue_create("com.bleplus.SerialServiceController", DISPATCH_QUEUE_SERIAL)
@@ -211,9 +254,12 @@ leaving that up to the user.
 		}
 	}
 	
-	//MARK: - Control
+	//MARK: - Controlling the Serial Service
 	
-	/// Call this when you are connected and ready to send or receive data.
+	/// Call this when you're connected to a peer and able to transmit data.
+	///
+	/// If the controller was previously paused, the controller will continue from
+	/// where it was paused.
 	public func resume() {
 		dispatch_async(serialQueue) {
 			print("resume: set isPaused = false")
@@ -227,9 +273,11 @@ leaving that up to the user.
 		}
 	}
 	
-	/// Call this when you have been disconnected. The currently active messages
-	/// packet counter is reset to resend the last window once resume is called
-	/// again.
+	/// Call this when you're no longer connected to a peer and want to pause processing
+	/// messages.
+	///
+	/// The current state of the controller is maintained and will continue where it
+	/// left off when _resume()_ is called.
 	public func pause() {
 		//pausePackets is specifically left out of the serial queue so that the loop
 		//in startSendingPackets will exit early if resume ever called while
@@ -244,9 +292,31 @@ leaving that up to the user.
 	}
 	
 	/**
+	Reset internal state of the controller.
+	
+	Any current messages being transmitted will be dropped. Messages already in the
+	send queue will remain.
+	
+	You can optionally delete all messages in the send queue.
+	
+	Calling this when running as a _Central_ will notify the _Peripheral_ to reset, but the
+	peripheral will only drop the current message.
+	
+	Calling this when running as a _Peripheral_ will notify the _Central_ to reset, including
+	the _deleteAllMessages_ flag.
+	
+	- parameter deleteAllMessages: Whether to delete the entire send queue.
+	*/
+	public func reset(deleteAllMessages:Bool = false) {
+		//TODO:
+	}
+	
+	//MARK: Sending Data
+	
+	/**
 	Queue a message to be sent.
 	
-	- parameter message:	BLEPlusSerialServiceMesssage
+	- parameter message:	The message to send.
 	*/
 	public func send(message:BLEPlusSerialServiceMessage) {
 		dispatch_async(serialQueue) {
@@ -455,54 +525,64 @@ leaving that up to the user.
 		self.sendControlMessage(resend, acceptFilter: [.Data,.EndMessage,.EndPart,.Abort])
 	}
 	
-	//MARK: - Receiving
+	//MARK: - Receiving Data
 	
-	/// When you receive data you must call this.
-	public func receivedData(packet:NSData) {
+	/**
+	Notify the serial service that data is available for processing.
+	
+	- parameter packet: Raw data received.
+	*/
+	public func receive(packet:NSData) {
 		dispatch_async(serialQueue) {
-			//create a message
-			let message = BLEPlusSerialServiceProtocolMessage(withData: packet)
 			
-			//check if incoming message protocol type is allowed.
-			if !self.acceptFilter.contains(message.protocolType) {
-				print("filtered control type, now allowing:",message.data?.bleplus_base16EncodedString())
-				return
-			}
-			
-			//we got something allowed so stop wait timer.
-			self.stopResendControlMessageTimer()
-			self.resumeBlock = nil
-			
-			switch message.protocolType {
-			case .Ack:
-				print("received ack:",packet.bleplus_base16EncodedString(uppercase:true))
-				self.receivedAck(message)
-			case .NewMessage:
-				print("received new message:",packet.bleplus_base16EncodedString(uppercase:true))
-				self.receivedNewMessageRequest(message)
-			case .NewFileMessage:
-				print("received new large:",packet.bleplus_base16EncodedString(uppercase:true))
-				self.receivedNewLargeMessageRequest(message)
-			case .EndPart:
-				print("received end part:",packet.bleplus_base16EncodedString(uppercase:true))
-				self.receivedEndPartMessage(message)
-			case .EndMessage:
-				print("received end message:",packet.bleplus_base16EncodedString(uppercase:true))
-				self.receivedEndMessage(message)
-			case .Resend:
-				print("received resend:",packet.bleplus_base16EncodedString(uppercase:true))
-				self.receivedResendMessage(message)
-			case .PeerInfo:
-				print("received peer info:",packet.bleplus_base16EncodedString(uppercase:true))
-				self.receivedPeerInfoMessage(message)
-			case .Data:
-				print("received data message:",packet.bleplus_base16EncodedString(uppercase:true))
-				self.receivedDataMessage(message)
-			case .TakeTurn:
-				print("received take turn message:",packet.bleplus_base16EncodedString(uppercase: true))
-				self.receivedTakeTurnMessage(message)
-			default:
-				break
+			//If it's a valid message process it otherwise ignore it and the peer
+			//should recover if it really should have been a valid packet.
+			if let message = BLEPlusSerialServiceProtocolMessage(withData: packet) {
+				
+				//Check if incoming message protocol type is allowed.
+				if !self.acceptFilter.contains(message.protocolType) {
+					print("filtered control type, now allowing:",message.data?.bleplus_base16EncodedString())
+					return
+				}
+				
+				self.stopResendControlMessageTimer()
+				
+				//clear the resume block as what it was set to is no longer valid. It will
+				//be set again in one of the upcoming function calls.
+				self.resumeBlock = nil
+				
+				//handle the message based on it's protocol type.
+				switch message.protocolType {
+				case .Ack:
+					print("received ack:",packet.bleplus_base16EncodedString(uppercase:true))
+					self.receivedAck(message)
+				case .NewMessage:
+					print("received new message:",packet.bleplus_base16EncodedString(uppercase:true))
+					self.receivedNewMessageRequest(message)
+				case .NewFileMessage:
+					print("received new large:",packet.bleplus_base16EncodedString(uppercase:true))
+					self.receivedNewLargeMessageRequest(message)
+				case .EndPart:
+					print("received end part:",packet.bleplus_base16EncodedString(uppercase:true))
+					self.receivedEndPartMessage(message)
+				case .EndMessage:
+					print("received end message:",packet.bleplus_base16EncodedString(uppercase:true))
+					self.receivedEndMessage(message)
+				case .Resend:
+					print("received resend:",packet.bleplus_base16EncodedString(uppercase:true))
+					self.receivedResendMessage(message)
+				case .PeerInfo:
+					print("received peer info:",packet.bleplus_base16EncodedString(uppercase:true))
+					self.receivedPeerInfoMessage(message)
+				case .Data:
+					print("received data message:",packet.bleplus_base16EncodedString(uppercase:true))
+					self.receivedDataMessage(message)
+				case .TakeTurn:
+					print("received take turn message:",packet.bleplus_base16EncodedString(uppercase: true))
+					self.receivedTakeTurnMessage(message)
+				default:
+					break
+				}
 			}
 		}
 	}
@@ -676,13 +756,13 @@ leaving that up to the user.
 				
 				if let data = data {
 					if let _message = BLEPlusSerialServiceMessage(withMessageType: messageType, messageId: messageId, data: data) {
-						self.delegate?.serialServiceController?(self, receivedMessage: _message)
+						self.delegate?.serialServiceController(self, receivedMessage: _message)
 					}
 				}
 				
 				if let fileURL = fileURL {
 					if let _message = BLEPlusSerialServiceMessage(withMessageType: messageType, messageId: messageId, fileURL: fileURL) {
-						self.delegate?.serialServiceController?(self, receivedMessage: _message)
+						self.delegate?.serialServiceController(self, receivedMessage: _message)
 					}
 				}
 				
@@ -702,7 +782,7 @@ leaving that up to the user.
 	}
 	
 	/// Received an ack.
-	public func receivedAck(message:BLEPlusSerialServiceProtocolMessage) {
+	func receivedAck(message:BLEPlusSerialServiceProtocolMessage) {
 		guard let csc = self.currentSendControl else {
 			return
 		}

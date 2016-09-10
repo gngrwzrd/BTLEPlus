@@ -1,48 +1,101 @@
 
 import CoreBluetooth
 
-/// The BLEPeripheral is a generic peripheral that once connected,
-/// will discover services, included services, characteristics,
-/// descriptors, and subscribe to required characteristic changes.
-///
-/// Each device goes through a setup process before it's considered ready.
-///
-/// Connect - This is the first step in the process.
-///
-/// Discovery - This is the second step in the process. It includes
-/// discovering services, included services, characteristics and
-/// descriptors.
-///
-/// Subscribe - This is the third step in the process. It includes
-/// subscribing to any characteristics that support notify.
-///
-/// Additional Setup -  This is an optional step in which you can include
-/// additional steps as part of the device setup process. You can override
-/// requiresAdditionalSetup() and performAdditionalSetup() to add your
-/// custom setup into the setup process. Just make sure to call deviceIsReady()
-///
-/// Ready - This is the last step and the device is considered ready.
-///
-/// Once the setup process is completed your device is considered `ready`.
-///
-/// Each step in the setup process has hooks you can use to override
-/// and change each step.
-///
-/// Each step also has variables to customize retries and timeouts before a retry.
-///
-/// After a device is ready, it's up to you to implement behavior with the peripheral.
+/**
+The BLEPeripheral object is a generic peripheral that allows you to customize
+the connection and setup process before it's considered ready to use.
+
+## Peripheral Setup
+
+Each peripheral goes through this setup process before it's considered ready
+to use. And must go through the same setup process if it's disconnected and
+then reconnected.
+
+Each step in the setup process has retries and timeouts you can customize.
+If something fails or times-out it will try the same step up to a specified
+max attemps.
+
+#### Connect Step
+
+This is the first step in the process and is handled by a BLECentralManager.
+After your central discovers peripherals, you connect to the desired peripheral with
+_myBLECentralManager.connect(peripheral:)_.
+
+#### Discovery Step
+
+This is the second step in the process. It includes _discovering services_, _discovering included services_,
+_discovering characteristics_ and _discovering descriptors_.
+
+#### Subscribe Step
+
+This is the third step in the process. It includes _subscribing to any characteristics that support notify_.
+
+#### Additional Setup Step
+
+This is an optional step in which you can include additional steps as part of the
+peripheral setup process. You can override requiresAdditionalSetup() and
+performAdditionalSetup() to add your custom setup into the setup process. You must
+call deviceIsReady() once your additional setup is complete.
+
+#### Ready Step
+
+This is the last step and the peripheral is considered ready. It's up
+to you to implement communication or specialized behavior with the peripheral after
+this point.
+
+## Device Prototypes
+
+Peripheral objects aren't created and used directly, instead you create
+a prototype object, and register it with a BTLECentralManager.
+
+When a BTLECentralManager discovers devices, it asks each registered BTLEPeripheral
+prototype if it knows how to respond to the advertised services. You can override
+respondsToAdvertisementData(), which tells the central manager if it should
+instantiate your peripheral.
+
+## Responding to Advertisement Data
+
+````
+class MyPeripheral : BLEPeripheral {
+	//override and decide if your peripheral understands the advertised data.
+	override public func respondsToAdvertisementData(data:BLEAdvertisementData) -> Bool {
+		//inspect advertisement data here.
+		return true or false.
+	}
+	//override and return a new instance of MyPeripheral. This is required.
+	override public func copy() -> AnyObject {
+		return MyPeripheral()
+	}
+}
+````
+
+##### Multiple Advertisement Packets
+
+At times Core Bluetooth will receive advertisement data in multiple parts. When this happens
+the advertisement data for a peripheral is collected using a BLEAdvertisementData
+object. Your peripheral prototype will be asked each time with the collected data if it
+responds to the advertisement data. This ensures you eventually get all of the advertisement
+data to properly decide if your prototype understands the advertised services.
+
+*/
 @objc public class BLEPeripheral : NSObject, CBPeripheralDelegate {
+	
+	//MARK: CBPeripheral
 	
 	/// The CBPeripheral this class monitors and manages.
 	public var cbPeripheral:CBPeripheral?
 	
-	/// Device name from
+	/// Local peripheral name.
 	public var name:String? {
 		return cbPeripheral?.name
 	}
 	
-	/// Device RSSI
-	private var _RSSI:NSNumber? = nil
+	/// Called when the peripheral name updated.
+	public func updatedName() {
+		
+	}
+	
+	/// Peripheral RSSI.
 	public var RSSI: NSNumber? {
 		get {
 			return _RSSI
@@ -50,8 +103,19 @@ import CoreBluetooth
 			_RSSI = new
 		}
 	}
+	private var _RSSI:NSNumber? = nil
 	
-	/// Device UUID
+	/// Called when the peripheral RSSI updated.
+	public func updatedRSSI() {
+		
+	}
+	
+	/// Called when RSSI update received an error.
+	public func updatedRSSIReceivedError(error:NSError?) {
+		
+	}
+	
+	/// Peripheral UUID.
 	public var UUID:NSUUID? {
 		if let peripheral = cbPeripheral {
 			return peripheral.identifier
@@ -59,11 +123,48 @@ import CoreBluetooth
 		return nil
 	}
 	
-	/// A custom tag to identify the device.
+	//MARK: - Configuration
+	
+	/// A custom tag to identify the peripheral.
 	public var tag:Int = 0
 	
-	/// A custom organization identifier for this device.
+	/// A custom organization identifier for this peripheral.
 	public var organization:String?
+	
+	/// Whether or not this device should be removed from it's BLECentralManager.
+	/// This is called when a device disconnects.
+	///
+	/// If false, the peripheral will remain in a disconnected state
+	/// within it's BLECentralManager.
+	///
+	/// If true it's removed from it's BLECentralManager and you'd have
+	/// to scan for the device again.
+	///
+	/// By default this is true.
+	///
+	/// This is an overrideable getter / setter.
+	public var canBeRemovedFromManager:Bool {
+		get {
+			return _canBeRemovedFromManager
+		} set(new) {
+			_canBeRemovedFromManager = new
+		}
+	}
+	private var _canBeRemovedFromManager = true
+	
+	/// Whether to reconnect when the peripheral is disconnected.
+	///
+	/// This is an overrideable getter / setter.
+	public var shouldReconnectOnDisconnect:Bool {
+		get {
+			return _reconnectOnDisconnect
+		} set(new) {
+			_reconnectOnDisconnect = new
+		}
+	}
+	private var _reconnectOnDisconnect = true
+	
+	//MARK: Timeouts and Retries
 	
 	/// The maximum tries to connect to the peripheral.
 	public var connectionMaxAttempts = 3
@@ -72,16 +173,16 @@ import CoreBluetooth
 	public var connectionTimeoutLength:NSTimeInterval = 5
 	
 	/// The maximum tries to discover services, included services, characteristics and descriptors.
-	public var discoveryPhaseMaxAttempts = 3
+	public var discoveryStepMaxAttempts = 3
 	
-	/// The discovery phase timeout length before retrying the discover phase.
-	public var discoveryPhaseTimeoutLength:NSTimeInterval = 5
+	/// The discovery step timeout length before retrying the discover step.
+	public var discoveryStepTimeoutLength:NSTimeInterval = 5
 	
 	/// The maximum tries to subscribe to a characteristic.
-	public var subscribePhaseMaxAttempts = 3
+	public var subscribeStepMaxAttempts = 3
 	
-	/// The subscribe phase timeout length before retrying the subscribe phase.
-	public var subscribePhaseTimeoutLength:NSTimeInterval = 5
+	/// The subscribe step timeout length before retrying the subscribe step.
+	public var subscribeStepTimeoutLength:NSTimeInterval = 5
 	
 	/// The maximum attempts to call performAdditionalSetup().
 	public var additionalSetupMaxAttempts = 3
@@ -89,33 +190,11 @@ import CoreBluetooth
 	/// The timeout for custom additional setup.
 	public var additionalSetupTimeout:NSTimeInterval = 5
 	
-	/// Whether to reconnect on disconnect. This is used inside of
-	/// shouldReconnectOnDisconnect which you can override and customize
-	/// if required.
-	public var reconnectOnDisconnect:Bool = true
-	
-	/// Whether or not to allow this device to be removed from the
-	/// manager after it's disconnected. This is used in the
-	/// canBeRemovedFromManager() method.
-	public var allowRemovalFromManager:Bool = false
-	
 	/// The BLECentralManager that currently is managing this device.
 	weak var bleCentralManager:BLECentralManager?
 	
 	/// The CBCentralManager for this device.
 	weak var btCentralManager:CBCentralManager?
-	
-	var _advertisementData:BLEAdvertisementData?
-	/// Initial advertisement data when device was discovered. Note that this
-	/// data can also come from user defaults when devices are retrieved from
-	/// core bluetooth.
-	public var advertisementData:BLEAdvertisementData? {
-		get {
-			return _advertisementData
-		} set(newAdvertisementData) {
-			_advertisementData = newAdvertisementData
-		}
-	}
 	
 	/// Utility variable for all retry logic that keeps track of how many more attempts are allowed.
 	var attempts = 0
@@ -123,17 +202,12 @@ import CoreBluetooth
 	/// Utility variable for any timeout required which would trigger another attempt.
 	var timeout:NSTimer?
 	
-	/// Whether or not the device is going through it's setup phase before it's considered ready.
+	/// Whether or not the device is going through it's setup step before it's considered ready.
 	/// This flag is needed in order to allow subclasses to override peripheral delegate methods properly.
-	var isInSetupPhase = false
+	var isInSetup = false
 	
-	/// Whether or not the discover phase of device setup is completed.
+	/// Whether or not the discover step of device setup is completed.
 	var discoveryRequirementsCompleted:Bool = false
-	
-	/// Whether or not this device is ready. BLEPeripheral uses this as a flag
-	/// in numerous places to skip parts of the discovery / subscribe
-	/// phase if subclasses set it to true.
-	public var deviceReady = false
 	
 	/// The number of services whos characteristics are being discovered.
 	var discoveringCharacteristics = 0
@@ -150,16 +224,26 @@ import CoreBluetooth
 	/// An error object to pass to listeners when the setup process completely fails.
 	var setupOutgoingError:NSError?
 	
-	/// The last error received from a disconnect. You can use this in your
-	/// shouldReconnectOnDisconnect() to possibly make a smart decision about
-	/// reconnection.
+	/// The last error received from a disconnect.
 	var lastDisconnectError:NSError?
 	
 	/// Whether the last disconnect was the result of a call to disconnect()
 	/// by the user, or an internal disconnect because of an outside condition.
 	var disconnectWasInternal:Bool = false
 	
-	//MARK: device setup
+	//MARK: Advertisement Data
+	
+	var _advertisementData:BLEAdvertisementData?
+	/// Initial advertisement data when device was discovered. Note that this
+	/// data can also come from user defaults when devices are retrieved from
+	/// core bluetooth.
+	public var advertisementData:BLEAdvertisementData? {
+		get {
+			return _advertisementData
+		} set(newAdvertisementData) {
+			_advertisementData = newAdvertisementData
+		}
+	}
 	
 	/// This is called when a new BLEPeripheral instance is created from a prototype copy.
 	func wasCopiedFromDevicePrototype(prototype:BLEPeripheral) {
@@ -172,25 +256,19 @@ import CoreBluetooth
 		return false
 	}
 	
-	//MARK: connectivity
-	
-	/// This is overrideable to provide custom logic that decides if a device should
-	/// reconnect immediately after it was disconnected.
-	public func shouldReconnectOnDisconnect() -> Bool {
-		if disconnectWasInternal || !reconnectOnDisconnect {
-			return false
+	/// Called when a device receives more advertisement data. This can happen
+	/// when device discovery is running. Core bluetooth will send multiple
+	/// device discovered for the same peripheral, but with more data.
+	func receivedMoreAdvertisementData(newData:BLEAdvertisementData) {
+		advertisementData?.append(newData)
+		if deviceReady {
+			bleCentralManager?.saveKnownDevice(self, advertisementData: advertisementData)
 		}
-		return true
 	}
 	
-	/// You can override this to be notified of when a device was discovered. It's
-	/// also called when a device is `retrieved` from core bluetooth and considered discovered.
-	public func wasDiscovered() {
-		bleCentralManager?.delegate?.bleCentralManagerDidDiscoverDevice?(bleCentralManager!, device: self)
-	}
+	//MARK: Restoring from Core Bluetooth
 	
-	/// You can override this to be notified of when a device was `retrieved` from
-	/// core bluetooth and considered discovered.
+	/// When a peripheral was retrieved from core bluetooth.
 	public func wasRetrieved() {
 		if cbPeripheral?.state == CBPeripheralState.Disconnected {
 			connect()
@@ -200,18 +278,16 @@ import CoreBluetooth
 		}
 	}
 	
-	/// Called when a device receives more advertisement data. This can happen
-	/// when device discovery is running. Core bluetooth will send multiple
-	/// device discovered for the same peripheral, but with more data.
-	public func receivedMoreAdvertisementData(newData:BLEAdvertisementData) {
-		advertisementData?.append(newData)
-		if deviceReady {
-			bleCentralManager?.saveKnownDevice(self, advertisementData: advertisementData)
-		}
+	//MARK: Connectivity
+	
+	/// You can override this to be notified of when a device was discovered. It's
+	/// also called when a device is `retrieved` from core bluetooth and considered discovered.
+	public func wasDiscovered() {
+		bleCentralManager?.delegate?.bleCentralManagerDidDiscoverDevice?(bleCentralManager!, device: self)
 	}
 	
 	/// This starts the connect process with core bluetooth.
-	public func connect() {
+	func connect() {
 		if let peripheral = cbPeripheral {
 			if peripheral.state == CBPeripheralState.Connecting || peripheral.state == CBPeripheralState.Connected {
 				return
@@ -219,7 +295,7 @@ import CoreBluetooth
 		}
 		attempts = connectionMaxAttempts
 		lastDisconnectError = nil
-		isInSetupPhase = true
+		isInSetup = true
 		retryConnect()
 	}
 	
@@ -275,10 +351,10 @@ import CoreBluetooth
 	
 	/// This is called when max connection attempts have been
 	/// made and it still won't connect.
-	public func connectFailed() {
+	func connectFailed() {
 		bleCentralManager?.delegate?.blePeripheralFailedToConnect?(bleCentralManager!, device: self, error: setupOutgoingError)
 		internal_disconnect()
-		if canBeRemovedFromManager() {
+		if canBeRemovedFromManager {
 			bleCentralManager?.removeDevice(self)
 		}
 	}
@@ -286,7 +362,7 @@ import CoreBluetooth
 	/// Disconnect this device. Once disconnected the device will be removed
 	/// from the BLECentralManager. You can optionally override `canBeRemovedFromManager()`
 	/// to allow the device to continue living in a disconnected state.
-	public func disconnect() {
+	func disconnect() {
 		disconnectWasInternal = false
 		if cbPeripheral?.state == CBPeripheralState.Disconnected {
 			return
@@ -308,36 +384,40 @@ import CoreBluetooth
 		}
 	}
 	
-	/// When the device is disconnected. You can override `shouldReconnectOnDisconnect()`
-	/// in order to reconnect immediately.
-	public func disconnected() {
+	/// Called when the peripheral is disconnected.
+	public func onDisconnected() {
 		bleCentralManager?.delegate?.blePeripheralDisconnected?(bleCentralManager!, device: self)
 		
-		isInSetupPhase = false
+		isInSetup = false
 		cbPeripheral?.delegate = nil
 		
-		if shouldReconnectOnDisconnect() {
+		if shouldReconnectOnDisconnect {
 			connect()
 		}
 		
-		if !shouldReconnectOnDisconnect() && canBeRemovedFromManager() {
+		if !shouldReconnectOnDisconnect && canBeRemovedFromManager {
 			bleCentralManager?.removeDevice(self)
 		}
 	}
 	
 	/// When the BLECentralManager receives a disconnect for this device.
 	func btCentralManagerReceivedDisconnect() {
-		disconnected()
+		onDisconnected()
 	}
 	
 	/// When the BLECentralManager receives a disconnect for this device and receives and error.
 	func btCentralManagerReceivedDisconnectError(error:NSError?) {
 		lastDisconnectError = error
 		setupOutgoingError = error
-		disconnected()
+		onDisconnected()
 	}
 	
-	//MARK: device rediness
+	//MARK: Peripheral Ready
+	
+	/// Whether or not this device is ready. BLEPeripheral uses this as a flag
+	/// in numerous places to skip parts of the discovery / subscribe
+	/// step if subclasses set it to true.
+	public var deviceReady = false
 	
 	/// Returns whether the device is considered ready. You can override this
 	/// to provide your own logic that decides of the device is ready.
@@ -349,51 +429,43 @@ import CoreBluetooth
 	public func deviceIsReady() {
 		timeout?.invalidate()
 		timeout = nil
-		isInSetupPhase = false
+		isInSetup = false
 		bleCentralManager?.saveKnownDevice(self,advertisementData: advertisementData)
 		bleCentralManager?.delegate?.blePeripheralIsReady?(bleCentralManager!, device: self)
 	}
 	
-	/// Called when the discovery phase is being retried.
-	func retryingDiscoveryPhase() {
+	/// Called when the discovery step is being retried.
+	func retryingDiscoveryStep() {
 		
 	}
 	
-	/// Called when the subscribe phase is being retried.
-	func retryingSubscribePhase() {
+	/// Called when the subscribe step is being retried.
+	func retryingSubscribeStep() {
 		
 	}
 	
-	/// Called when the discover phase failed after max discover attempts has passed.
-	func discoveryPhaseFailed() {
+	/// Called when the discover step failed after max discover attempts has passed.
+	func discoveryStepFailed() {
 		internal_disconnect()
 		bleCentralManager?.delegate?.blePeripheralSetupFailed?(bleCentralManager!, device: self, error: setupOutgoingError)
 	}
 	
 	/// Called when descriptor discovery completed.
-	func discoveryPhaseCompleted() {
+	func discoveryStepCompleted() {
 		startSubscribing()
 	}
 	
-	/// Called when the subscribe phase failed after max subscribe attempts has passed.
-	func subscribePhaseFailed() {
+	/// Called when the subscribe step failed after max subscribe attempts has passed.
+	func subscribeStepFailed() {
 		internal_disconnect()
 		bleCentralManager?.delegate?.blePeripheralSetupFailed?(bleCentralManager!, device: self, error: setupOutgoingError)
 	}
 	
-	/// Whether or not this device should be removed from it's BLECentralManager. This is called
-	/// when a device disconnects. If canBeRemovedFromManager returns false, then the device will
-	/// remain in a disconnected state with it's BLECentralManager. If it returns true it's
-	/// removed from it's BLECentralManager and you'd have to scan for the device again.
-	public func canBeRemovedFromManager() -> Bool {
-		return allowRemovalFromManager
-	}
-	
-	//MARK: service discovery
+	//MARK: Service Discovery
 	
 	/**
 	Returns whether or not a specific service CBUUID should be discovered as part of the
-	discovery phase. The passed uuid is taken directly from a peripherals advertisement data.
+	discovery step. The passed uuid is taken directly from a peripherals advertisement data.
 	
 	- parameter uuid: A service CBUUID.
 	- returns: Whether or not to discover the service.
@@ -402,10 +474,10 @@ import CoreBluetooth
 		return true
 	}
 	
-	/// Starts the discover services phase.
+	/// Starts the discover services step.
 	func discoverServices() {
 		var servicesToDiscover:[CBUUID] = []
-		isInSetupPhase = true
+		isInSetup = true
 		
 		//if we have uuid data from advertising data allow self to choose
 		//which services to discover
@@ -426,7 +498,7 @@ import CoreBluetooth
 		}
 		
 		if servicesToDiscover.count < 1 {
-			discoveryPhaseCompleted()
+			discoveryStepCompleted()
 			return
 		}
 		
@@ -442,8 +514,8 @@ import CoreBluetooth
 	/// Starts the timeout for service discovery.
 	func startTimeoutForDiscoverServices() {
 		timeout?.invalidate()
-		attempts = discoveryPhaseMaxAttempts
-		timeout = NSTimer.scheduledTimerWithTimeInterval(discoveryPhaseTimeoutLength, target: self, selector: #selector(BLEPeripheral.discoverServicesTimeout(_:)), userInfo: nil, repeats: false)
+		attempts = discoveryStepMaxAttempts
+		timeout = NSTimer.scheduledTimerWithTimeInterval(discoveryStepTimeoutLength, target: self, selector: #selector(BLEPeripheral.discoverServicesTimeout(_:)), userInfo: nil, repeats: false)
 	}
 	
 	/// service discovery received an error
@@ -467,12 +539,12 @@ import CoreBluetooth
 	
 	/// service discovery is retrying.
 	func discoverServicesIsRetrying() {
-		retryingDiscoveryPhase()
+		retryingDiscoveryStep()
 	}
 	
 	/// service discovery failed.
 	func discoverServicesFailed() {
-		discoveryPhaseFailed()
+		discoveryStepFailed()
 	}
 	
 	/// When services are invalidated, your device goes through the setup process
@@ -483,7 +555,7 @@ import CoreBluetooth
 		discoverServices()
 	}
 	
-	//MARK: included service discovery
+	//MARK: Included Service Discovery
 	
 	public func shouldDiscoverIncludedServices() -> Bool {
 		return false
@@ -502,11 +574,11 @@ import CoreBluetooth
 	
 	/// Starts the discovery of included services.
 	func discoverIncludedServices() {
-		isInSetupPhase = true
+		isInSetup = true
 		
 		if !shouldDiscoverIncludedServices() {
 			if discoveryRequirementsCompleted {
-				discoveryPhaseCompleted()
+				discoveryStepCompleted()
 			} else {
 				discoverCharacteristics()
 			}
@@ -545,8 +617,8 @@ import CoreBluetooth
 	
 	/// Starts the timeout for discoverying included services
 	func startTimeoutForDiscoverIncludedServices() {
-		attempts = discoveryPhaseMaxAttempts
-		timeout = NSTimer.scheduledTimerWithTimeInterval(discoveryPhaseTimeoutLength, target: self, selector: #selector(BLEPeripheral.discoverIncludedServicesTimeout(_:)), userInfo: nil, repeats: false)
+		attempts = discoveryStepMaxAttempts
+		timeout = NSTimer.scheduledTimerWithTimeInterval(discoveryStepTimeoutLength, target: self, selector: #selector(BLEPeripheral.discoverIncludedServicesTimeout(_:)), userInfo: nil, repeats: false)
 	}
 	
 	/// Timeout for included services discovery
@@ -568,12 +640,12 @@ import CoreBluetooth
 	
 	/// Called when discovering included services failed.
 	func discoverIncludedServicesFailed() {
-		discoveryPhaseFailed()
+		discoveryStepFailed()
 	}
 	
 	/// Called when discovering included services is retrying.
 	func discoverIncludedServicesIsRetrying() {
-		retryingDiscoveryPhase()
+		retryingDiscoveryStep()
 	}
 	
 	/// Called when discovered included services completed.
@@ -581,7 +653,7 @@ import CoreBluetooth
 		discoverCharacteristics()
 	}
 	
-	//MARK: characteristics discovery
+	//MARK: Characteristics Discovery
 	
 	/**
 	Whether or not to discover characteristics. Default is true.
@@ -623,11 +695,11 @@ import CoreBluetooth
 	
 	/// Starts the discovery of characteristics.
 	func discoverCharacteristics() {
-		isInSetupPhase = true
+		isInSetup = true
 		
 		if !shouldDiscoverCharacteristics() {
 			if discoveryRequirementsCompleted {
-				discoveryPhaseCompleted()
+				discoveryStepCompleted()
 			}
 			return
 		}
@@ -666,14 +738,14 @@ import CoreBluetooth
 		}
 		
 		if discoveringCharacteristics < 1 {
-			discoveryPhaseCompleted()
+			discoveryStepCompleted()
 		}
 	}
 	
 	/// Starts the timeout for characteristic discovery.
 	func startTimeoutForDiscoverCharacteristics() {
-		attempts = discoveryPhaseMaxAttempts
-		timeout = NSTimer.scheduledTimerWithTimeInterval(discoveryPhaseTimeoutLength, target: self, selector: #selector(BLEPeripheral.discoverCharacteristicsTimeout(_:)), userInfo: nil, repeats: false)
+		attempts = discoveryStepMaxAttempts
+		timeout = NSTimer.scheduledTimerWithTimeInterval(discoveryStepTimeoutLength, target: self, selector: #selector(BLEPeripheral.discoverCharacteristicsTimeout(_:)), userInfo: nil, repeats: false)
 	}
 	
 	/// Discovering characteristics timed out.
@@ -683,7 +755,7 @@ import CoreBluetooth
 	
 	/// Discover characteristics is retrying.
 	func discoverCharacteristicsIsRetrying() {
-		retryingDiscoveryPhase()
+		retryingDiscoveryStep()
 	}
 	
 	/// Discovering characteristics received an error.
@@ -699,8 +771,8 @@ import CoreBluetooth
 	}
 	
 	/// Called when characteristics discovery failed.
-	public func discoverCharacteristicsFailed() {
-		discoveryPhaseFailed()
+	func discoverCharacteristicsFailed() {
+		discoveryStepFailed()
 	}
 	
 	/// Successfully discovered characteristics.
@@ -708,7 +780,7 @@ import CoreBluetooth
 		discoverDescriptors()
 	}
 	
-	//MARK: descriptor discovery
+	//MARK: Descriptor Discovery
 	
 	/**
 	Whether or not descriptors should be discovered.
@@ -738,11 +810,11 @@ import CoreBluetooth
 	
 	/// Starts the descriptor discovery.
 	func discoverDescriptors() {
-		isInSetupPhase = true
+		isInSetup = true
 		
 		if !shouldDiscoverDescriptors() {
 			if discoveryRequirementsCompleted {
-				discoveryPhaseCompleted()
+				discoveryStepCompleted()
 			} else {
 				startSubscribing()
 			}
@@ -776,21 +848,21 @@ import CoreBluetooth
 			
 			if discoveringDescriptors == 0 {
 				if discoveryRequirementsCompleted {
-					discoveryPhaseCompleted()
+					discoveryStepCompleted()
 				}
 			}
 		}
 	}
 	
 	/// Called when descriptors were discovered.
-	func discoveredDescriptors() {
-		discoveryPhaseCompleted()
+	public func discoveredDescriptors() {
+		discoveryStepCompleted()
 	}
 	
 	/// Starts the timeout for descriptor discovery
 	func startTimeoutForDiscoverDescriptors() {
-		attempts = discoveryPhaseMaxAttempts
-		timeout = NSTimer.scheduledTimerWithTimeInterval(discoveryPhaseTimeoutLength, target: self, selector: #selector(BLEPeripheral.discoverDescriptorsTimeout(_:)), userInfo: nil, repeats: false)
+		attempts = discoveryStepMaxAttempts
+		timeout = NSTimer.scheduledTimerWithTimeInterval(discoveryStepTimeoutLength, target: self, selector: #selector(BLEPeripheral.discoverDescriptorsTimeout(_:)), userInfo: nil, repeats: false)
 	}
 	
 	/// Timeout of descriptor discovery
@@ -800,7 +872,7 @@ import CoreBluetooth
 	
 	/// Called when descriptor discovery failed
 	func discoverDescriptorsFailed() {
-		discoveryPhaseFailed()
+		discoveryStepFailed()
 	}
 	
 	/// Called when discovering a descriptor received an error
@@ -817,10 +889,10 @@ import CoreBluetooth
 	
 	/// Called when descriptor discovery is retrying
 	func descriptorDiscoveryIsRetrying() {
-		retryingDiscoveryPhase()
+		retryingDiscoveryStep()
 	}
 	
-	//MARK: subscribing to characteristics
+	//MARK: Subscribing
 	
 	/**
 	Override this to decide if any characteristics should be subscribed to.
@@ -835,10 +907,10 @@ import CoreBluetooth
 		return true
 	}
 	
-	/// Starts the subscribe phase
+	/// Starts the subscribe step
 	func startSubscribing() {
 		setNotifyCount = 0
-		isInSetupPhase = true
+		isInSetup = true
 		
 		if let services = cbPeripheral?.services {
 			for service in services {
@@ -872,19 +944,19 @@ import CoreBluetooth
 		}
 	}
 	
-	/// Start timeout for subscribe phase
-	func startTimerForSubscribePhase() {
+	/// Start timeout for subscribe step
+	func startTimerForSubscribeStep() {
 		timeout?.invalidate()
-		attempts = subscribePhaseMaxAttempts
-		timeout = NSTimer.scheduledTimerWithTimeInterval(subscribePhaseTimeoutLength, target: self, selector: #selector(BLEPeripheral.subscribingTimeout(_:)), userInfo: nil, repeats: false)
+		attempts = subscribeStepMaxAttempts
+		timeout = NSTimer.scheduledTimerWithTimeInterval(subscribeStepTimeoutLength, target: self, selector: #selector(BLEPeripheral.subscribingTimeout(_:)), userInfo: nil, repeats: false)
 	}
 	
-	/// Timeout for subscribe phase
+	/// Timeout for subscribe step
 	func subscribingTimeout(timer:NSTimer?) {
 		retrySubscribing()
 	}
 	
-	/// Retry subscribe phase
+	/// Retry subscribe step
 	func retrySubscribing() {
 		attempts = attempts - 1
 		if attempts < 1 {
@@ -895,9 +967,9 @@ import CoreBluetooth
 		startSubscribing()
 	}
 	
-	/// retrying for subscribe phase
+	/// retrying for subscribe step
 	func retryingSubscribing() {
-		retryingSubscribePhase()
+		retryingSubscribeStep()
 	}
 	
 	/// When a setNotify received an error
@@ -906,9 +978,9 @@ import CoreBluetooth
 		retrySubscribing()
 	}
 	
-	/// When the subscribe phase failed.
-	public func subscribingFailed() {
-		subscribePhaseFailed()
+	/// When the subscribe step failed.
+	func subscribingFailed() {
+		subscribeStepFailed()
 	}
 	
 	/// Subsribing finished successfully.
@@ -970,26 +1042,7 @@ import CoreBluetooth
 		bleCentralManager?.delegate?.blePeripheralSetupFailed?(bleCentralManager!, device: self, error: error)
 	}
 	
-	//MARK: RSSI
-	
-	/// Called anytime the peripheral has updated it's RSSI.
-	public func updatedRSSI() {
-		
-	}
-	
-	/// Called when RSSI received an error.
-	public func updatedRSSIReceivedError(error:NSError?) {
-		
-	}
-	
-	//MARK: device name
-	
-	/// Called when the peripheral name has been updated.
-	public func updatedName() {
-		
-	}
-	
-	//MARK: utils
+	//MARK: Utils
 	
 	/**
 	Find a service.
@@ -1028,12 +1081,12 @@ import CoreBluetooth
 		return nil
 	}
 	
-	// MARK: peripheral delegate
+	// MARK: CBPeripheral Delegate
 	
 	// Peripheral discovered it's services.
 	public func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
-		/// If we're not in setup phase, allow subclasses to do what they want.
-		if !isInSetupPhase {
+		/// If we're not in setup step, allow subclasses to do what they want.
+		if !isInSetup {
 			return
 		}
 		
@@ -1048,8 +1101,8 @@ import CoreBluetooth
 	//Discovered some included services for a service
 	public func peripheral(peripheral: CBPeripheral, didDiscoverIncludedServicesForService service: CBService, error: NSError?) {
 		
-		/// If we're not in setup phase, allow subclasses to do what they want.
-		if !isInSetupPhase {
+		/// If we're not in setup step, allow subclasses to do what they want.
+		if !isInSetup {
 			return
 		}
 		
@@ -1067,8 +1120,8 @@ import CoreBluetooth
 	// Discovered some characteristics for a service
 	public func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
 		
-		/// If we're not in setup phase, allow subclasses to do what they want.
-		if !isInSetupPhase {
+		/// If we're not in setup step, allow subclasses to do what they want.
+		if !isInSetup {
 			return
 		}
 		
@@ -1091,8 +1144,8 @@ import CoreBluetooth
 	//Discovered descriptors for a characteristic.
 	public func peripheral(peripheral: CBPeripheral, didDiscoverDescriptorsForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
 		
-		/// If we're not in setup phase, allow subclasses to do what they want.
-		if !isInSetupPhase {
+		/// If we're not in setup step, allow subclasses to do what they want.
+		if !isInSetup {
 			return
 		}
 		
@@ -1110,8 +1163,8 @@ import CoreBluetooth
 	//A characteristics notification state changed.
 	public func peripheral(peripheral: CBPeripheral, didUpdateNotificationStateForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
 		
-		/// If we're not in setup phase, allow subclasses to do what they want.
-		if !isInSetupPhase {
+		/// If we're not in setup step, allow subclasses to do what they want.
+		if !isInSetup {
 			return
 		}
 		

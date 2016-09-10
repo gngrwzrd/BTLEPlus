@@ -12,14 +12,14 @@ import Foundation
 /// based on maximum transmission unit and send window size.
 /// You can request the provider resends packets from a specific
 /// packet number, or resend the entire send window.
-@objc public class BLEPlusSerialServicePacketProvider : NSObject {
+@objc class BLEPlusSerialServicePacketProvider : NSObject {
 	
 	/// The header size for a packet from this provider.
 	/// Default value is currently 1 byte for the packet counter.
 	static var headerSize:UInt8 = 1
 	
 	/// Maximum transmission unit.
-	var mtu:BLEPlusSerialServiceMTUType = BLEPlusSerialServiceDefaultMTU
+	var mtu:BLEPlusSerialServiceMTU_Type = BLEPlusSerialServiceDefaultMTU
 	
 	/// Window size 
 	var windowSize:BLEPlusSerialServiceWindowSize_Type {

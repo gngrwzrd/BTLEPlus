@@ -1,57 +1,124 @@
 
 import CoreBluetooth
 
-//protocol for device manager delegate
+/**
+BLECentralManagerDelegate is the protocol you implement to receive
+events from a BLECentralManager.
+*/
 @objc public protocol BLECentralManagerDelegate {
 	
-	//Bluetooth was turned on
+	//MARK: - BLECentralManager Callbacks
+	
+	/**
+	Bluetooth was turned on.
+	
+	- parameter manager: BLECentralManager
+	*/
 	optional func bleCentralManagerDidTurnOnBluetooth(manager:BLECentralManager)
 	
-	//Bluetooth was turned off
+	/**
+	Bluetooth was turned off.
+	
+	- parameter manager: BLECentralManager
+	*/
 	optional func bleCentralManagerDidTurnOffBluetooth(manager:BLECentralManager)
 	
-	//Bluetooth is resetting
+	/**
+	Bluetooth is resetting.
+	
+	- parameter manager: BLECentralManager
+	*/
 	optional func bleCentralManagerBluetoothIsResetting(manager:BLECentralManager)
 	
-	//A device was discovered
+	/**
+	A perihperal was discovered.
+	
+	- parameter manager: BLECentralManager
+	- parameter device:  BLEPeripheral
+	*/
 	optional func bleCentralManagerDidDiscoverDevice(manager:BLECentralManager,device:BLEPeripheral)
 	
-	//Receive raw state updates from CBCentralManager
+	/**
+	Receive raw state updates from the internal CBCentralManager.
+	
+	- parameter manager:	BLECentralManager
+	- parameter state:   CBCentralManagerState
+	*/
 	optional func bleCentralManagerDidUpdateState(manager:BLECentralManager,state:CBCentralManagerState)
 	
-	/* device specific callbacks */
+	//MARK: BLEPeripheral Callbacks
 	
-	//A device connected successfully
+	/**
+	A peripheral connected successfully.
+	
+	- parameter manager: BLECentralManager
+	- parameter device:  BLEPeripheral
+	*/
 	optional func blePeripheralConnected(manager:BLECentralManager,device:BLEPeripheral)
 	
-	//A device failed to connect after trying BLECentralManager.MaxConnectionAttempts
+	/**
+	A peripheral failed to connect after BLEPeripheral.maxConnectionAttempts were tried.
+	
+	- parameter manager: BLECentralManager
+	- parameter device:  BLEPeripheral
+	- parameter error:   NSError
+	*/
 	optional func blePeripheralFailedToConnect(manager:BLECentralManager,device:BLEPeripheral,error:NSError?)
 	
-	//A connected device is no longer connected
+	/**
+	A peripheral disconnected.
+	
+	- parameter manager: BLECentralManager
+	- parameter device:  BLEPeripheral
+	*/
 	optional func blePeripheralDisconnected(manager:BLECentralManager,device:BLEPeripheral)
 	
-	//A device failed it's setup process.
+	/**
+	A peripheral failed it's setup process. See BLEPeripheral for more information about the
+	setup process.
+	
+	- parameter manager:	BLECentralManager
+	- parameter device:  BLEPeripheral
+	- parameter error:   NSError
+	*/
 	optional func blePeripheralSetupFailed(manager:BLECentralManager,device:BLEPeripheral,error:NSError?)
 	
-	//A device is ready to use
+	/**
+	A peripheral is ready to use.
+	
+	- parameter manager:	BLECentralManager
+	- parameter device:	BLEPeripheral
+	*/
 	optional func blePeripheralIsReady(manager:BLECentralManager,device:BLEPeripheral)
 }
 
-///
-/// The BLECentralManager discovers devices and maintains references to the devices found.
-///
-/// You need to subclass BLEPeripheral and register your own custom device
-/// prototypes with the BLECentralManager using registerDevicePrototype. Your device
-/// needs to override respondsToAdvertisementData which tells the manager
-/// when to create a new device that understands what was advertised.
-///
-/// The default behavior is to run the manager on a dispatch queue with high
-/// priority. You can customize the dispatch queue with init(withQueue:).
-///
-/// You can implement the delegate for notifications, as well as find devices
-/// by their uuids, tags or organization name.
-///
+/**
+The BLECentralManager class scans for peripherals and manages discovered peripherals.
+
+You need to subclass BLEPeripheral, and register a peripheral prototype in order for
+the manager to instantiate your peripheral instances.
+
+## Registering Peripheral Prototypes
+
+````
+//create a manager
+let myManager = BLECentralManager(withDelegate: self)
+//
+//create a prototype instance.
+let myPeripheral = MyBLEPeripheral()
+myPeripheral.tag = 1
+myPeripheral.organization = "com.example.MyBLEPeripheral"
+//
+//Register the prototype instance.
+myManager.registerPeripehralPrototype(myPeripheral)
+````
+
+You are required to subclass BLEPeripheral, and override _respondsToAdvertisementData()_
+so that the manager can instantiate a new peripheral based on your prototype.
+*/
 @objc public class BLECentralManager : NSObject, CBCentralManagerDelegate {
+	
+	//MARK: - Configuration
 	
 	/// Delegate that receives BLECentralManagerDelegate callbacks.
 	public var delegate:BLECentralManagerDelegate?
@@ -73,21 +140,33 @@ import CoreBluetooth
 	#endif
 	
 	/// The core bluetooth central manager.
-	private var btCentralManager:CBCentralManager?
+	var btCentralManager:CBCentralManager?
 	
 	/// The queue to use with the manager.
-	private var btCentralManagerQueue:dispatch_queue_t?
+	var btCentralManagerQueue:dispatch_queue_t?
 	
 	/// Prototype instances - these are copied when a prototype instance can respond and communicate with a peripheral.
-	private var devicePrototypes:[BLEPeripheral] = []
+	var devicePrototypes:[BLEPeripheral] = []
 	
 	/// All device instances known to BLECentralManager.
-	private var devices:[BLEPeripheral] = []
+	var devices:[BLEPeripheral] = []
 	
 	/// Advertisement data collected during scan phase. This is collected as multiple messages
 	/// are sent for each device. By collecting the advertisement data this makes sure
 	/// respondsToAdvertisementData can rely on it all being there at some point.
-	private var collectedAdvertisementData:[NSUUID:BLEAdvertisementData] = [:]
+	var collectedAdvertisementData:[NSUUID:BLEAdvertisementData] = [:]
+	
+	/**
+	Register a device prototype. Copies of device prototypes are created when a peripheral
+	is found, and a device prototype can respond to the peripheral.
+	
+	- parameter device: An instance of BLEPeripheral.
+	*/
+	public func registerDevicePrototype(device:BLEPeripheral) {
+		devicePrototypes.append(device)
+	}
+	
+	//MARK: - Initializers
 	
 	/**
 	Create a default BLECentralManager using a high priority queue.
@@ -108,9 +187,10 @@ import CoreBluetooth
 	
 	- returns: BLECentralManager
 	*/
-	public init(withQueue queue:dispatch_queue_t) {
+	public init(withDelegate delegate:BLECentralManagerDelegate, queue:dispatch_queue_t) {
 		btCentralManagerQueue = queue
 		super.init()
+		self.delegate = delegate
 		btCentralManager = CBCentralManager(delegate:self, queue:btCentralManagerQueue)
 	}
 	
@@ -124,10 +204,10 @@ import CoreBluetooth
 			newDevice.attempts = prototype.connectionMaxAttempts
 			newDevice.connectionMaxAttempts = prototype.connectionMaxAttempts
 			newDevice.connectionTimeoutLength = prototype.connectionTimeoutLength
-			newDevice.subscribePhaseMaxAttempts = prototype.subscribePhaseMaxAttempts
-			newDevice.subscribePhaseTimeoutLength = prototype.subscribePhaseTimeoutLength
-			newDevice.discoveryPhaseMaxAttempts = prototype.discoveryPhaseMaxAttempts
-			newDevice.discoveryPhaseTimeoutLength = prototype.discoveryPhaseTimeoutLength
+			newDevice.subscribeStepMaxAttempts = prototype.subscribeStepMaxAttempts
+			newDevice.subscribeStepTimeoutLength = prototype.subscribeStepTimeoutLength
+			newDevice.discoveryStepMaxAttempts = prototype.discoveryStepMaxAttempts
+			newDevice.discoveryStepTimeoutLength = prototype.discoveryStepTimeoutLength
 			newDevice.additionalSetupMaxAttempts = prototype.additionalSetupMaxAttempts
 			newDevice.additionalSetupTimeout = prototype.additionalSetupTimeout
 			newDevice.organization = prototype.organization
@@ -291,15 +371,7 @@ import CoreBluetooth
 		}
 	}
 	
-	/**
-	Register a device prototype. Copies of device prototypes are created when a peripheral
-	is found, and a device prototype can respond to the peripheral.
-	
-	- parameter device: An instance of BLEPeripheral.
-	*/
-	public func registerDevicePrototype(device:BLEPeripheral) {
-		devicePrototypes.append(device)
-	}
+	//MARK: - Peripheral Scanning
 	
 	/**
 	Start scanning for peripherals with services.
@@ -347,6 +419,8 @@ import CoreBluetooth
 		}
 		devices.append(device)
 	}
+	
+	//MARK: - Finding Discovered Devices
 	
 	/**
 	All current BLEPeripherals that BLECentralManager is managing.
@@ -440,6 +514,8 @@ import CoreBluetooth
 		return devices.filter({$0.organization == organization})
 	}
 	
+	//MARK: - Connectivity
+	
 	/**
 	Start the connection process for a device.
 	
@@ -457,6 +533,8 @@ import CoreBluetooth
 	public func disconnect(fromDevice:BLEPeripheral?) {
 		fromDevice?.disconnect()
 	}
+	
+	//MARK: - CBCentralManagerDelegate
 	
 	/**
 	Callback for CBCentralManager manager state updates.
@@ -506,7 +584,7 @@ import CoreBluetooth
 			updatedAdvData = true
 			advertisementDataObject?.appendAdvertisementData(advertisementData)
 		} else {
-			advertisementDataObject = BLEAdvertisementData(data: advertisementData)
+			advertisementDataObject = BLEAdvertisementData(discoveredData: advertisementData)
 			collectedAdvertisementData[peripheral.identifier] = advertisementDataObject
 		}
 		
@@ -559,7 +637,7 @@ import CoreBluetooth
 			device.btCentralManagerReceivedDisconnectError(error)
 			return
 		}
-		device.disconnected()
+		device.onDisconnected()
 	}
 	
 	/// CoreBluetooth is restoring state.

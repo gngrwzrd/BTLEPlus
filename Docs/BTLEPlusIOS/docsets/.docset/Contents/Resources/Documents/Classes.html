@@ -19,7 +19,7 @@
         <a class="header-link" href="index.html">
            Docs
         </a>
-         (75% documented)
+         (84% documented)
       </p>
     
     
@@ -47,9 +47,6 @@
                 <a class="nav-group-task-link" href="Classes/BLEHeartrate.html">BLEHeartrate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/BLEPLus.html">BLEPLus</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/BLEPeripheral.html">BLEPeripheral</a>
               </li>
               <li class="nav-group-task">
@@ -62,16 +59,10 @@
                 <a class="nav-group-task-link" href="Classes/BLEPlusSerialServiceMessage.html">BLEPlusSerialServiceMessage</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes.html#/s:C11BTLEPlusIOS34BLEPlusSerialServicePacketProvider">BLEPlusSerialServicePacketProvider</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/BLEPlusSerialServicePacketReceiver.html">BLEPlusSerialServicePacketReceiver</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/BLEPlusSerialServiceProtocolMessage.html">BLEPlusSerialServiceProtocolMessage</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/BLEPlusServiceSpec.html">BLEPlusServiceSpec</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/BTLEPlus.html">BTLEPlus</a>
               </li>
             </ul>
           </li>
@@ -88,13 +79,7 @@
                 <a class="nav-group-task-link" href="Global Variables.html#/s:v11BTLEPlusIOS32BLEPlusSerialServiceMaxMessageIdVs5UInt8">BLEPlusSerialServiceMaxMessageId</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Global Variables.html#/s:v11BTLEPlusIOS36BLEPlusSerialServiceMaxPacketCounterVs5UInt8">BLEPlusSerialServiceMaxPacketCounter</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Global Variables.html#/s:v11BTLEPlusIOS33BLEPlusSerialServiceMaxWindowSizeVs5UInt8">BLEPlusSerialServiceMaxWindowSize</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Global Variables.html#/s:v11BTLEPlusIOS27BLEPlusSerialServiceRealMTUVs6UInt16">BLEPlusSerialServiceRealMTU</a>
               </li>
             </ul>
           </li>
@@ -102,10 +87,15 @@
             <a class="nav-group-name-link" href="Enums.html">Enums</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/BLEPlusSerialServiceControllerMode.html">BLEPlusSerialServiceControllerMode</a>
+                <a class="nav-group-task-link" href="Enums/BLEPlusSerialServiceRunMode.html">BLEPlusSerialServiceRunMode</a>
               </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/BLEPlusSerialServiceProtocolMessageType.html">BLEPlusSerialServiceProtocolMessageType</a>
+                <a class="nav-group-task-link" href="Extensions/OptionSetType.html">OptionSetType</a>
               </li>
             </ul>
           </li>
@@ -127,7 +117,7 @@
                 <a class="nav-group-task-link" href="Typealiases.html#/s:11BTLEPlusIOS34BLEPLusSerialServiceMessageId_Type">BLEPLusSerialServiceMessageId_Type</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Typealiases.html#/s:11BTLEPlusIOS27BLEPlusSerialServiceMTUType">BLEPlusSerialServiceMTUType</a>
+                <a class="nav-group-task-link" href="Typealiases.html#/s:11BTLEPlusIOS28BLEPlusSerialServiceMTU_Type">BLEPlusSerialServiceMTU_Type</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Typealiases.html#/s:11BTLEPlusIOS36BLEPlusSerialServiceMessageType_Type">BLEPlusSerialServiceMessageType_Type</a>
@@ -172,12 +162,11 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The BLEAdvertisementData class wraps up advertised data from
-core bluetooth. It can convert advertised data between it&rsquo;s
-original discovered format and a serializable format.</p>
-
-<p>It provides some easier accessors to get and set advertisement
-data in the data dictionary.</p>
+                        <p>The BLEAdvertisementData class manages advertised data from
+Core Bluetooth. It can convert advertised data between it&rsquo;s
+original discovered format, a plist supported format, and a
+serializable format with NSCoding. It provides some easier
+accessors to get and set advertisement data.</p>
 
                         <a href="Classes/BLEAdvertisementData.html" class="slightly-smaller">See more</a>
                       </div>
@@ -209,18 +198,26 @@ data in the data dictionary.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The BLECentralManager discovers devices and maintains references to the devices found.</p>
+                        <p>The BLECentralManager class scans for peripherals and manages discovered peripherals.</p>
 
-<p>You need to subclass BLEPeripheral and register your own custom device
-prototypes with the BLECentralManager using registerDevicePrototype. Your device
-needs to override respondsToAdvertisementData which tells the manager
-when to create a new device that understands what was advertised.</p>
+<p>You need to subclass BLEPeripheral, and register a peripheral prototype in order for
+the manager to instantiate your peripheral instances.</p>
 
-<p>The default behavior is to run the manager on a dispatch queue with high
-priority. You can customize the dispatch queue with init(withQueue:).</p>
+<p><a href='#registering-peripheral-prototypes' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='registering-peripheral-prototypes'>Registering Peripheral Prototypes</h2>
+<pre class="highlight plaintext"><code>//create a manager
+let myManager = BLECentralManager(withDelegate: self)
+//
+//create a prototype instance.
+let myPeripheral = MyBLEPeripheral()
+myPeripheral.tag = 1
+myPeripheral.organization = <q>com.example.MyBLEPeripheral</q>
+//
+//Register the prototype instance.
+myManager.registerPeripehralPrototype(myPeripheral)
+</code></pre></p>
 
-<p>You can implement the delegate for notifications, as well as find devices
-by their uuids, tags or organization name.</p>
+<p>You are required to subclass BLEPeripheral, and override <em>respondsToAdvertisementData()</em>
+so that the manager can instantiate a new peripheral based on your prototype.</p>
 
                         <a href="Classes/BLECentralManager.html" class="slightly-smaller">See more</a>
                       </div>
@@ -252,36 +249,77 @@ by their uuids, tags or organization name.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The BLEPeripheral is a generic peripheral that once connected,
-will discover services, included services, characteristics,
-descriptors, and subscribe to required characteristic changes.</p>
+                        <p>The BLEPeripheral object is a generic peripheral that allows you to customize
+the connection and setup process before it&rsquo;s considered ready to use.</p>
 
-<p>Each device goes through a setup process before it&rsquo;s considered ready.</p>
+<p><a href='#peripheral-setup' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='peripheral-setup'>Peripheral Setup</h2></p>
 
-<p>Connect - This is the first step in the process.</p>
+<p>Each peripheral goes through this setup process before it&rsquo;s considered ready
+to use. And must go through the same setup process if it&rsquo;s disconnected and
+then reconnected.</p>
 
-<p>Discovery - This is the second step in the process. It includes
-discovering services, included services, characteristics and
-descriptors.</p>
+<p>Each step in the setup process has retries and timeouts you can customize.
+If something fails or times-out it will try the same step up to a specified
+max attemps.</p>
 
-<p>Subscribe - This is the third step in the process. It includes
-subscribing to any characteristics that support notify.</p>
+<p><a href='#connect-step' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='connect-step'>Connect Step</h4></p>
 
-<p>Additional Setup -  This is an optional step in which you can include
-additional steps as part of the device setup process. You can override
-requiresAdditionalSetup() and performAdditionalSetup() to add your
-custom setup into the setup process. Just make sure to call deviceIsReady()</p>
+<p>This is the first step in the process and is handled by a BLECentralManager.
+After your central discovers peripherals, you connect to the desired peripheral with
+<em>myBLECentralManager.connect(peripheral:)</em>.</p>
 
-<p>Ready - This is the last step and the device is considered ready.</p>
+<p><a href='#discovery-step' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='discovery-step'>Discovery Step</h4></p>
 
-<p>Once the setup process is completed your device is considered <code>ready</code>.</p>
+<p>This is the second step in the process. It includes <em>discovering services</em>, <em>discovering included services</em>,
+<em>discovering characteristics</em> and <em>discovering descriptors</em>.</p>
 
-<p>Each step in the setup process has hooks you can use to override
-and change each step.</p>
+<p><a href='#subscribe-step' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='subscribe-step'>Subscribe Step</h4></p>
 
-<p>Each step also has variables to customize retries and timeouts before a retry.</p>
+<p>This is the third step in the process. It includes <em>subscribing to any characteristics that support notify</em>.</p>
 
-<p>After a device is ready, it&rsquo;s up to you to implement behavior with the peripheral.</p>
+<p><a href='#additional-setup-step' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='additional-setup-step'>Additional Setup Step</h4></p>
+
+<p>This is an optional step in which you can include additional steps as part of the
+peripheral setup process. You can override requiresAdditionalSetup() and
+performAdditionalSetup() to add your custom setup into the setup process. You must
+call deviceIsReady() once your additional setup is complete.</p>
+
+<p><a href='#ready-step' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='ready-step'>Ready Step</h4></p>
+
+<p>This is the last step and the peripheral is considered ready. It&rsquo;s up
+to you to implement communication or specialized behavior with the peripheral after
+this point.</p>
+
+<p><a href='#device-prototypes' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='device-prototypes'>Device Prototypes</h2></p>
+
+<p>Peripheral objects aren&rsquo;t created and used directly, instead you create
+a prototype object, and register it with a BTLECentralManager.</p>
+
+<p>When a BTLECentralManager discovers devices, it asks each registered BTLEPeripheral
+prototype if it knows how to respond to the advertised services. You can override
+respondsToAdvertisementData(), which tells the central manager if it should
+instantiate your peripheral.</p>
+
+<p><a href='#responding-to-advertisement-data' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='responding-to-advertisement-data'>Responding to Advertisement Data</h2>
+<pre class="highlight plaintext"><code>class MyPeripheral : BLEPeripheral {
+    //override and decide if your peripheral understands the advertised data.
+    override public func respondsToAdvertisementData(data:BLEAdvertisementData) -&gt; Bool {
+        //inspect advertisement data here.
+        return true or false.
+    }
+    //override and return a new instance of MyPeripheral. This is required.
+    override public func copy() -&gt; AnyObject {
+        return MyPeripheral()
+    }
+}
+</code></pre>
+<a href='#multiple-advertisement-packets' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h5 id='multiple-advertisement-packets'>Multiple Advertisement Packets</h5></p>
+
+<p>At times Core Bluetooth will receive advertisement data in multiple parts. When this happens
+the advertisement data for a peripheral is collected using a BLEAdvertisementData
+object. Your peripheral prototype will be asked each time with the collected data if it
+responds to the advertisement data. This ensures you eventually get all of the advertisement
+data to properly decide if your prototype understands the advertised services.</p>
 
                         <a href="Classes/BLEPeripheral.html" class="slightly-smaller">See more</a>
                       </div>
@@ -303,9 +341,9 @@ and change each step.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:C11BTLEPlusIOS7BLEPLus"></a>
-                    <a name="//apple_ref/swift/Class/BLEPLus" class="dashAnchor"></a>
-                    <a class="token" href="#/s:C11BTLEPlusIOS7BLEPLus">BLEPLus</a>
+                    <a name="/s:C11BTLEPlusIOS8BTLEPlus"></a>
+                    <a name="//apple_ref/swift/Class/BTLEPlus" class="dashAnchor"></a>
+                    <a class="token" href="#/s:C11BTLEPlusIOS8BTLEPlus">BTLEPlus</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -315,7 +353,7 @@ and change each step.</p>
                       <div class="abstract">
                         <p>Undocumented</p>
 
-                        <a href="Classes/BLEPLus.html" class="slightly-smaller">See more</a>
+                        <a href="Classes/BTLEPlus.html" class="slightly-smaller">See more</a>
                       </div>
                     </section>
                   </div>
@@ -361,11 +399,14 @@ and change each step.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>BLEPlusSerialServiceController is controller that implements logic to send
-and receive data using the binary BLEPlus Serial Service protocol.</p>
+                        <p>BLEPlusSerialServiceController objects are used to create and process packets
+for the binary serial service protocol. It relies on you to transmit data for it,
+and notify it when data is received. Serial service controllers operate as
+either a central, or a peripheral.</p>
 
-<p>It&rsquo;s implementation is independent of how the data is sent or received,
-leaving that up to the user.</p>
+<p>You implement the delegate and receive callbacks when it needs to <em>send data</em>,
+when it&rsquo;s <em>sent a complete message</em> to it&rsquo;s peer, and when it&rsquo;s <em>received a
+complete message</em> from it&rsquo;s peer.</p>
 
                         <a href="Classes/BLEPlusSerialServiceController.html" class="slightly-smaller">See more</a>
                       </div>
@@ -397,12 +438,9 @@ leaving that up to the user.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>BLEPlusSerialServiceMessage is the base class for sending user defined
-messages over the BLEPlus Serial Service.</p>
-
-<p>The type property is automatically encoded for you in the transfer,
-on the peripheral or central side when you get a message callback you
-can inspect the type to figure out what message it is.</p>
+                        <p>The BLEPlusSerialServiceMessage class is the base class for all user defined
+messages that are sent over the serial service protocol. You pass instances of
+this to <em>BLEPlusSerialServiceController.send()</em>.</p>
 
                         <a href="Classes/BLEPlusSerialServiceMessage.html" class="slightly-smaller">See more</a>
                       </div>
@@ -411,107 +449,6 @@ can inspect the type to figure out what message it is.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BLEPlusSerialServiceMessage</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:C11BTLEPlusIOS34BLEPlusSerialServicePacketProvider"></a>
-                    <a name="//apple_ref/swift/Class/BLEPlusSerialServicePacketProvider" class="dashAnchor"></a>
-                    <a class="token" href="#/s:C11BTLEPlusIOS34BLEPlusSerialServicePacketProvider">BLEPlusSerialServicePacketProvider</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>BLEPlusSerialServicePacketProvider provides packets to send
-based on maximum transmission unit and send window size.
-You can request the provider resends packets from a specific
-packet number, or resend the entire send window.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BLEPlusSerialServicePacketProvider</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:C11BTLEPlusIOS34BLEPlusSerialServicePacketReceiver"></a>
-                    <a name="//apple_ref/swift/Class/BLEPlusSerialServicePacketReceiver" class="dashAnchor"></a>
-                    <a class="token" href="#/s:C11BTLEPlusIOS34BLEPlusSerialServicePacketReceiver">BLEPlusSerialServicePacketReceiver</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>BLEPlusSerialServicePacketReceiver handles incoming data from a paar
-and manages a packet counter. The receiver also figures out when
-packets need to be resent from missing packets.</p>
-
-                        <a href="Classes/BLEPlusSerialServicePacketReceiver.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BLEPlusSerialServicePacketReceiver</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:C11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage"></a>
-                    <a name="//apple_ref/swift/Class/BLEPlusSerialServiceProtocolMessage" class="dashAnchor"></a>
-                    <a class="token" href="#/s:C11BTLEPlusIOS35BLEPlusSerialServiceProtocolMessage">BLEPlusSerialServiceProtocolMessage</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>BLEPlusSerialServiceMessage is used over the control channel
-to communicate what&rsquo;s happening on the transfer channel.</p>
-
-                        <a href="Classes/BLEPlusSerialServiceProtocolMessage.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BLEPlusSerialServiceProtocolMessage</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
 
                         </div>
                       </div>
@@ -574,7 +511,7 @@ to communicate what&rsquo;s happening on the transfer channel.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-08)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-10)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

@@ -38,7 +38,7 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPl
 	}
 	
 	func setupBLEPlus() {
-		controller = BLEPlusSerialServiceController(withMode: .Peripheral)
+		controller = BLEPlusSerialServiceController(withRunMode: .Peripheral)
 		controller.delegate = self
 	}
 	
@@ -48,13 +48,27 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPl
 		let perms = CBAttributePermissions.WriteEncryptionRequired.rawValue | CBAttributePermissions.ReadEncryptionRequired.rawValue
 		let props2 = CBCharacteristicProperties.init(rawValue: props)
 		let perms2 = CBAttributePermissions.init(rawValue: perms)
+		
+		var test = CBAttributePermissions()
+		test.set(.ReadEncryptionRequired, on: true)
+		test.set(.WriteEncryptionRequired, on: true)
+		
+//		var test = CBAttributePermissions()
+//		test.setPermission(.ReadEncryptionRequired, on: true)
+//		test.setPermission(.WriteEncryptionRequired, on: true)
+
+//		let test = CBMutableCharacteristic(type: TestPeripheralServer.CharacteristicUUID, properties: .Read, value: nil, permissions: .ReadEncryptionRequired)
+//		test.setProperty(.Read, on: on)
+//		test.setProperty(.Write, on: on)
+//		test.setProperty(.WriteWithoutResponse, on: on)
+		
 		channel = CBMutableCharacteristic(type: TestPeripheralServer.CharacteristicUUID, properties: props2, value: nil, permissions: perms2)
 		service.characteristics = [channel]
 		pmanager.addService(service)
 		let ad = BLEAdvertisementData()
 		ad.serviceUUIDS = [service.UUID!]
 		ad.localName = "BLEPlusTestServer"
-		pmanager.startAdvertising(ad.data)
+		pmanager.startAdvertising(ad.discoveredData)
 	}
 	
 	public func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager) {
@@ -81,7 +95,7 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPl
 				pmanager.respondToRequest(request, withResult: CBATTError.InsufficientAuthentication)
 			} else {
 				if request.characteristic == channel {
-					controller.receivedData(request.value!)
+					controller.receive(request.value!)
 					pmanager.respondToRequest(request, withResult: CBATTError.Success)
 				} else {
 					pmanager.respondToRequest(request, withResult: CBATTError.Success)
@@ -103,7 +117,7 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPl
 		print("server: central subscribed")
 		
 		print("maxValue: ",central.maximumUpdateValueLength)
-		controller.mtu = BLEPlusSerialServiceMTUType(central.maximumUpdateValueLength)
+		controller.mtu = BLEPlusSerialServiceMTU_Type(central.maximumUpdateValueLength)
 		
 		if characteristic == channel {
 			controller.resume()
@@ -145,6 +159,10 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPl
 			print("received image")
 			print(message.fileURL)
 		}
+	}
+	
+	public func serialServiceController(controller: BLEPlusSerialServiceController, sentMessage message: BLEPlusSerialServiceMessage) {
+		
 	}
 	
 	func receivedHelloWorldRequest(request:BLEPlusSerialServiceMessage) {

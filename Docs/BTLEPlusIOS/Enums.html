@@ -19,7 +19,7 @@
         <a class="header-link" href="index.html">
            Docs
         </a>
-         (75% documented)
+         (84% documented)
       </p>
     
     
@@ -47,9 +47,6 @@
                 <a class="nav-group-task-link" href="Classes/BLEHeartrate.html">BLEHeartrate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/BLEPLus.html">BLEPLus</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/BLEPeripheral.html">BLEPeripheral</a>
               </li>
               <li class="nav-group-task">
@@ -62,16 +59,10 @@
                 <a class="nav-group-task-link" href="Classes/BLEPlusSerialServiceMessage.html">BLEPlusSerialServiceMessage</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes.html#/s:C11BTLEPlusIOS34BLEPlusSerialServicePacketProvider">BLEPlusSerialServicePacketProvider</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/BLEPlusSerialServicePacketReceiver.html">BLEPlusSerialServicePacketReceiver</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/BLEPlusSerialServiceProtocolMessage.html">BLEPlusSerialServiceProtocolMessage</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/BLEPlusServiceSpec.html">BLEPlusServiceSpec</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/BTLEPlus.html">BTLEPlus</a>
               </li>
             </ul>
           </li>
@@ -88,13 +79,7 @@
                 <a class="nav-group-task-link" href="Global Variables.html#/s:v11BTLEPlusIOS32BLEPlusSerialServiceMaxMessageIdVs5UInt8">BLEPlusSerialServiceMaxMessageId</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Global Variables.html#/s:v11BTLEPlusIOS36BLEPlusSerialServiceMaxPacketCounterVs5UInt8">BLEPlusSerialServiceMaxPacketCounter</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Global Variables.html#/s:v11BTLEPlusIOS33BLEPlusSerialServiceMaxWindowSizeVs5UInt8">BLEPlusSerialServiceMaxWindowSize</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Global Variables.html#/s:v11BTLEPlusIOS27BLEPlusSerialServiceRealMTUVs6UInt16">BLEPlusSerialServiceRealMTU</a>
               </li>
             </ul>
           </li>
@@ -102,10 +87,15 @@
             <a class="nav-group-name-link" href="Enums.html">Enums</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/BLEPlusSerialServiceControllerMode.html">BLEPlusSerialServiceControllerMode</a>
+                <a class="nav-group-task-link" href="Enums/BLEPlusSerialServiceRunMode.html">BLEPlusSerialServiceRunMode</a>
               </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/BLEPlusSerialServiceProtocolMessageType.html">BLEPlusSerialServiceProtocolMessageType</a>
+                <a class="nav-group-task-link" href="Extensions/OptionSetType.html">OptionSetType</a>
               </li>
             </ul>
           </li>
@@ -127,7 +117,7 @@
                 <a class="nav-group-task-link" href="Typealiases.html#/s:11BTLEPlusIOS34BLEPLusSerialServiceMessageId_Type">BLEPLusSerialServiceMessageId_Type</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Typealiases.html#/s:11BTLEPlusIOS27BLEPlusSerialServiceMTUType">BLEPlusSerialServiceMTUType</a>
+                <a class="nav-group-task-link" href="Typealiases.html#/s:11BTLEPlusIOS28BLEPlusSerialServiceMTU_Type">BLEPlusSerialServiceMTU_Type</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Typealiases.html#/s:11BTLEPlusIOS36BLEPlusSerialServiceMessageType_Type">BLEPlusSerialServiceMessageType_Type</a>
@@ -162,9 +152,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:O11BTLEPlusIOS34BLEPlusSerialServiceControllerMode"></a>
-                    <a name="//apple_ref/swift/Enum/BLEPlusSerialServiceControllerMode" class="dashAnchor"></a>
-                    <a class="token" href="#/s:O11BTLEPlusIOS34BLEPlusSerialServiceControllerMode">BLEPlusSerialServiceControllerMode</a>
+                    <a name="/s:O11BTLEPlusIOS27BLEPlusSerialServiceRunMode"></a>
+                    <a name="//apple_ref/swift/Enum/BLEPlusSerialServiceRunMode" class="dashAnchor"></a>
+                    <a class="token" href="#/s:O11BTLEPlusIOS27BLEPlusSerialServiceRunMode">BLEPlusSerialServiceRunMode</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -172,67 +162,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>BLEPlusSerialServiceControllerMode denotes which side of the
-connection the controller is operating as.</p>
+                        <p>BLEPlusSerialServiceControllerMode indicates which mode a BLEPlusSerialServiceController
+is running in.</p>
 
-<ul>
-<li>Central:      Central is the client in BTLE.</li>
-<li>Peripheral:   Peripheral is the server in BTLE.</li>
-</ul>
-
-                        <a href="Enums/BLEPlusSerialServiceControllerMode.html" class="slightly-smaller">See more</a>
+                        <a href="Enums/BLEPlusSerialServiceRunMode.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">enum</span> <span class="kt">BLEPlusSerialServiceControllerMode</span> <span class="p">:</span><span class="kt">UInt8</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:O11BTLEPlusIOS39BLEPlusSerialServiceProtocolMessageType"></a>
-                    <a name="//apple_ref/swift/Enum/BLEPlusSerialServiceProtocolMessageType" class="dashAnchor"></a>
-                    <a class="token" href="#/s:O11BTLEPlusIOS39BLEPlusSerialServiceProtocolMessageType">BLEPlusSerialServiceProtocolMessageType</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Control message types.</p>
-
-<ul>
-<li>None:              None.</li>
-<li>PeerInfo:          Peer transfer information.</li>
-<li>Ack:               Acknowledge.</li>
-<li>NewMessage:        Client or server is requesting to send a new message.</li>
-<li>NewFileMessage:    Client or server is requesting to send a new file message.</li>
-<li>EndPart:           End the current window.</li>
-<li>EndMessage:        End the current message.</li>
-<li>Resend:            Resend the current window.</li>
-<li>Data:              Data message.</li>
-<li>TakeTurn:          The peers turn to send messages.</li>
-<li>Abort:             Abort the current state and reset. Allow the central to start over.</li>
-</ul>
-
-                        <a href="Enums/BLEPlusSerialServiceProtocolMessageType.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">enum</span> <span class="kt">BLEPlusSerialServiceProtocolMessageType</span> <span class="p">:</span> <span class="kt"><a href="Typealiases.html#/s:11BTLEPlusIOS44BLEPlusSerialServiceProtocolMessageType_Type">BLEPlusSerialServiceProtocolMessageType_Type</a></span></code></pre>
+                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">enum</span> <span class="kt">BLEPlusSerialServiceRunMode</span> <span class="p">:</span><span class="kt">UInt8</span></code></pre>
 
                         </div>
                       </div>
@@ -247,7 +186,7 @@ connection the controller is operating as.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-08)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-10)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

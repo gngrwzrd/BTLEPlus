@@ -20,7 +20,7 @@
         <a class="header-link" href="../index.html">
            Docs
         </a>
-         (75% documented)
+         (84% documented)
       </p>
     
     
@@ -48,9 +48,6 @@
                 <a class="nav-group-task-link" href="../Classes/BLEHeartrate.html">BLEHeartrate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/BLEPLus.html">BLEPLus</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/BLEPeripheral.html">BLEPeripheral</a>
               </li>
               <li class="nav-group-task">
@@ -63,16 +60,10 @@
                 <a class="nav-group-task-link" href="../Classes/BLEPlusSerialServiceMessage.html">BLEPlusSerialServiceMessage</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes.html#/s:C8BTLEPlus34BLEPlusSerialServicePacketProvider">BLEPlusSerialServicePacketProvider</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/BLEPlusSerialServicePacketReceiver.html">BLEPlusSerialServicePacketReceiver</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/BLEPlusSerialServiceProtocolMessage.html">BLEPlusSerialServiceProtocolMessage</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/BLEPlusServiceSpec.html">BLEPlusServiceSpec</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLEPlus.html">BTLEPlus</a>
               </li>
             </ul>
           </li>
@@ -89,13 +80,7 @@
                 <a class="nav-group-task-link" href="../Global Variables.html#/s:v8BTLEPlus32BLEPlusSerialServiceMaxMessageIdVs5UInt8">BLEPlusSerialServiceMaxMessageId</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Global Variables.html#/s:v8BTLEPlus36BLEPlusSerialServiceMaxPacketCounterVs5UInt8">BLEPlusSerialServiceMaxPacketCounter</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Global Variables.html#/s:v8BTLEPlus33BLEPlusSerialServiceMaxWindowSizeVs5UInt8">BLEPlusSerialServiceMaxWindowSize</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Global Variables.html#/s:v8BTLEPlus27BLEPlusSerialServiceRealMTUVs6UInt16">BLEPlusSerialServiceRealMTU</a>
               </li>
             </ul>
           </li>
@@ -103,10 +88,15 @@
             <a class="nav-group-name-link" href="../Enums.html">Enums</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/BLEPlusSerialServiceControllerMode.html">BLEPlusSerialServiceControllerMode</a>
+                <a class="nav-group-task-link" href="../Enums/BLEPlusSerialServiceRunMode.html">BLEPlusSerialServiceRunMode</a>
               </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/BLEPlusSerialServiceProtocolMessageType.html">BLEPlusSerialServiceProtocolMessageType</a>
+                <a class="nav-group-task-link" href="../Extensions/OptionSetType.html">OptionSetType</a>
               </li>
             </ul>
           </li>
@@ -128,16 +118,10 @@
                 <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus34BLEPLusSerialServiceMessageId_Type">BLEPLusSerialServiceMessageId_Type</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus27BLEPlusSerialServiceMTUType">BLEPlusSerialServiceMTUType</a>
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus28BLEPlusSerialServiceMTU_Type">BLEPlusSerialServiceMTU_Type</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus36BLEPlusSerialServiceMessageType_Type">BLEPlusSerialServiceMessageType_Type</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus35BLEPlusSerialServicePacketCountType">BLEPlusSerialServicePacketCountType</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus44BLEPlusSerialServiceProtocolMessageType_Type">BLEPlusSerialServiceProtocolMessageType_Type</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus35BLEPlusSerialServiceWindowSize_Type">BLEPlusSerialServiceWindowSize_Type</a>
@@ -157,11 +141,14 @@
 
                 </div>
               </div>
-            <p>BLEPlusSerialServiceController is controller that implements logic to send
-and receive data using the binary BLEPlus Serial Service protocol.</p>
+            <p>BLEPlusSerialServiceController objects are used to create and process packets
+for the binary serial service protocol. It relies on you to transmit data for it,
+and notify it when data is received. Serial service controllers operate as
+either a central, or a peripheral.</p>
 
-<p>It&rsquo;s implementation is independent of how the data is sent or received,
-leaving that up to the user.</p>
+<p>You implement the delegate and receive callbacks when it needs to <em>send data</em>,
+when it&rsquo;s <em>sent a complete message</em> to it&rsquo;s peer, and when it&rsquo;s <em>received a
+complete message</em> from it&rsquo;s peer.</p>
 
           </div>
         </section>
@@ -170,10 +157,10 @@ leaving that up to the user.</p>
           <div class="section-content">
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Variables"></a>
-                <a name="//apple_ref/swift/Section/Variables" class="dashAnchor"></a>
-                <a href="#/Variables">
-                  <h3 class="section-name">Variables</h3>
+                <a name="/Configuration"></a>
+                <a name="//apple_ref/swift/Section/Configuration" class="dashAnchor"></a>
+                <a href="#/Configuration">
+                  <h3 class="section-name">Configuration</h3>
                 </a>
               </div>
               <ul class="item-container">
@@ -190,7 +177,7 @@ leaving that up to the user.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A delegate to receive activity messages.</p>
+                        <p>The delegate object that you want to receive serial service events.</p>
 
                       </div>
                       <div class="declaration">
@@ -217,14 +204,28 @@ leaving that up to the user.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Maximum transmission unit.</p>
+                        <p>The maximum data transmission length.</p>
+
+<p>Changing this value triggers a peer information exchange and it&rsquo;s not
+recommended to change this value frequently.</p>
+
+<p>When it&rsquo;s changed the controller sends the new mtu to it&rsquo;s peer. The peer can
+either accept and use the new mtu, or, if too large, the peer will send back
+it&rsquo;s smaller mtu which the controller is required to use.</p>
+
+<p>Because of the peer information exchange, it&rsquo;s not guaranteed that the mtu
+you set will be used. If one of the peers requires a smaller mtu, that will
+be used instead.</p>
+
+<p>The peer information exchange will not happen immediately, it happens
+after any messages being transmitted finish.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">mtu</span><span class="p">:</span><span class="kt"><a href="../Typealiases.html#/s:8BTLEPlus27BLEPlusSerialServiceMTUType">BLEPlusSerialServiceMTUType</a></span> <span class="o">=</span> <span class="kt"><a href="../Global Variables.html#/s:v8BTLEPlus30BLEPlusSerialServiceDefaultMTUVs6UInt16">BLEPlusSerialServiceDefaultMTU</a></span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">mtu</span><span class="p">:</span><span class="kt"><a href="../Typealiases.html#/s:8BTLEPlus28BLEPlusSerialServiceMTU_Type">BLEPlusSerialServiceMTU_Type</a></span> <span class="o">=</span> <span class="kt"><a href="../Global Variables.html#/s:v8BTLEPlus30BLEPlusSerialServiceDefaultMTUVs6UInt16">BLEPlusSerialServiceDefaultMTU</a></span></code></pre>
 
                         </div>
                       </div>
@@ -244,7 +245,22 @@ leaving that up to the user.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Window size. This is clamped between 0 and BLEPlusSerialServiceMaxWindowSize.</p>
+                        <p>The number of open buffers to send or receive. Total bytes availabe to
+send or receive is windowSize * mtu.</p>
+
+<p>Changing this value triggers a peer information exchange and it&rsquo;s not
+recommended to change this value frequently.</p>
+
+<p>When it&rsquo;s changed the controller sends the new windowSize to it&rsquo;s peer. The peer can
+either accept and use the new windowSize, or, if too large, the peer will send back
+it&rsquo;s smaller windowSize which the controller is required to use.</p>
+
+<p>Because of the peer information exchange, it&rsquo;s not guaranteed that the windowSize
+you set will be used. If one of the peers requires a smaller windowSize, that will
+be used instead.</p>
+
+<p>The peer information exchange will not happen immediately, it happens
+after any messages being transmitted finish.</p>
 
                       </div>
                       <div class="declaration">
@@ -258,50 +274,23 @@ leaving that up to the user.</p>
                     </section>
                   </div>
                 </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:vC8BTLEPlus30BLEPlusSerialServiceController12messageQueueGSqGSaCS_27BLEPlusSerialServiceMessage__"></a>
-                    <a name="//apple_ref/swift/Property/messageQueue" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC8BTLEPlus30BLEPlusSerialServiceController12messageQueueGSqGSaCS_27BLEPlusSerialServiceMessage__">messageQueue</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Queue for sending user messages</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">messageQueue</span><span class="p">:[</span><span class="kt"><a href="../Classes/BLEPlusSerialServiceMessage.html">BLEPlusSerialServiceMessage</a></span><span class="p">]?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
               </ul>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/inits"></a>
-                <a name="//apple_ref/swift/Section/inits" class="dashAnchor"></a>
-                <a href="#/inits">
-                  <h3 class="section-name">inits</h3>
+                <a name="/Initializing%20a%20Serial%20Service%20Controller"></a>
+                <a name="//apple_ref/swift/Section/Initializing a Serial Service Controller" class="dashAnchor"></a>
+                <a href="#/Initializing%20a%20Serial%20Service%20Controller">
+                  <h3 class="section-name">Initializing a Serial Service Controller</h3>
                 </a>
               </div>
               <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC8BTLEPlus30BLEPlusSerialServiceControllercFT8withModeOS_34BLEPlusSerialServiceControllerMode_S0_"></a>
-                    <a name="//apple_ref/swift/Method/init(withMode:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC8BTLEPlus30BLEPlusSerialServiceControllercFT8withModeOS_34BLEPlusSerialServiceControllerMode_S0_">init(withMode:)</a>
+                    <a name="/s:FC8BTLEPlus30BLEPlusSerialServiceControllercFT11withRunModeOS_27BLEPlusSerialServiceRunMode_S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(withRunMode:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus30BLEPlusSerialServiceControllercFT11withRunModeOS_27BLEPlusSerialServiceRunMode_S0_">init(withRunMode:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -309,41 +298,14 @@ leaving that up to the user.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>default init</p>
+                        <p>Initialize a serial service controller with it&rsquo;s run mode.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">withMode</span> <span class="nv">mode</span><span class="p">:</span><span class="kt"><a href="../Enums/BLEPlusSerialServiceControllerMode.html">BLEPlusSerialServiceControllerMode</a></span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC8BTLEPlus30BLEPlusSerialServiceControllercFT8withModeOS_34BLEPlusSerialServiceControllerMode13delegateQueuePSo17OS_dispatch_queue__S0_"></a>
-                    <a name="//apple_ref/swift/Method/init(withMode:delegateQueue:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC8BTLEPlus30BLEPlusSerialServiceControllercFT8withModeOS_34BLEPlusSerialServiceControllerMode13delegateQueuePSo17OS_dispatch_queue__S0_">init(withMode:delegateQueue:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Initialize a BLEPlusSerialServiceController with a delegate queue.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">withMode</span> <span class="nv">mode</span><span class="p">:</span><span class="kt"><a href="../Enums/BLEPlusSerialServiceControllerMode.html">BLEPlusSerialServiceControllerMode</a></span><span class="p">,</span> <span class="n">delegateQueue</span> <span class="nv">queue</span><span class="p">:</span><span class="n">dispatch_queue_t</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">withRunMode</span> <span class="nv">mode</span><span class="p">:</span><span class="kt"><a href="../Enums/BLEPlusSerialServiceRunMode.html">BLEPlusSerialServiceRunMode</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -354,12 +316,78 @@ leaving that up to the user.</p>
                             <tr>
                               <td>
                                 <code>
+                                <em>mode</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The run mode for the serial service.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>BLEPlusSerialServiceController</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus30BLEPlusSerialServiceControllercFT11withRunModeOS_27BLEPlusSerialServiceRunMode13delegateQueuePSo17OS_dispatch_queue__S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(withRunMode:delegateQueue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus30BLEPlusSerialServiceControllercFT11withRunModeOS_27BLEPlusSerialServiceRunMode13delegateQueuePSo17OS_dispatch_queue__S0_">init(withRunMode:delegateQueue:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialize a serial service with it&rsquo;s run mode and a custom delegate queue to receive
+callbacks on.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">withRunMode</span> <span class="nv">mode</span><span class="p">:</span><span class="kt"><a href="../Enums/BLEPlusSerialServiceRunMode.html">BLEPlusSerialServiceRunMode</a></span><span class="p">,</span> <span class="n">delegateQueue</span> <span class="nv">queue</span><span class="p">:</span><span class="n">dispatch_queue_t</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>mode</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The run mode for the serial service.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
                                 <em>queue</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The queue for delegate messages to callback on.</p>
+                                  <p>A queue for delegate messages to callback on.</p>
 
                                 </div>
                               </td>
@@ -379,10 +407,10 @@ leaving that up to the user.</p>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Control"></a>
-                <a name="//apple_ref/swift/Section/Control" class="dashAnchor"></a>
-                <a href="#/Control">
-                  <h3 class="section-name">Control</h3>
+                <a name="/Controlling%20the%20Serial%20Service"></a>
+                <a name="//apple_ref/swift/Section/Controlling the Serial Service" class="dashAnchor"></a>
+                <a href="#/Controlling%20the%20Serial%20Service">
+                  <h3 class="section-name">Controlling the Serial Service</h3>
                 </a>
               </div>
               <ul class="item-container">
@@ -399,7 +427,10 @@ leaving that up to the user.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Call this when you are connected and ready to send or receive data.</p>
+                        <p>Call this when you&rsquo;re connected to a peer and able to transmit data.</p>
+
+<p>If the controller was previously paused, the controller will continue from
+where it was paused.</p>
 
                       </div>
                       <div class="declaration">
@@ -426,9 +457,11 @@ leaving that up to the user.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Call this when you have been disconnected. The currently active messages
-packet counter is reset to resend the last window once resume is called
-again.</p>
+                        <p>Call this when you&rsquo;re no longer connected to a peer and want to pause processing
+messages.</p>
+
+<p>The current state of the controller is maintained and will continue where it
+left off when <em>resume()</em> is called.</p>
 
                       </div>
                       <div class="declaration">
@@ -442,6 +475,75 @@ again.</p>
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus30BLEPlusSerialServiceController5resetFTSb_T_"></a>
+                    <a name="//apple_ref/swift/Method/reset(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus30BLEPlusSerialServiceController5resetFTSb_T_">reset(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Reset internal state of the controller.</p>
+
+<p>Any current messages being transmitted will be dropped. Messages already in the
+send queue will remain.</p>
+
+<p>You can optionally delete all messages in the send queue.</p>
+
+<p>Calling this when running as a <em>Central</em> will notify the <em>Peripheral</em> to reset, but the
+peripheral will only drop the current message.</p>
+
+<p>Calling this when running as a <em>Peripheral</em> will notify the <em>Central</em> to reset, including
+the <em>deleteAllMessages</em> flag.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">reset</span><span class="p">(</span><span class="nv">deleteAllMessages</span><span class="p">:</span><span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>deleteAllMessages</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Whether to delete the entire send queue.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Sending%20Data"></a>
+                <a name="//apple_ref/swift/Section/Sending Data" class="dashAnchor"></a>
+                <a href="#/Sending%20Data">
+                  <h3 class="section-name">Sending Data</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -478,7 +580,7 @@ again.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>BLEPlusSerialServiceMesssage</p>
+                                  <p>The message to send.</p>
 
                                 </div>
                               </td>
@@ -493,19 +595,19 @@ again.</p>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Receiving"></a>
-                <a name="//apple_ref/swift/Section/Receiving" class="dashAnchor"></a>
-                <a href="#/Receiving">
-                  <h3 class="section-name">Receiving</h3>
+                <a name="/Receiving%20Data"></a>
+                <a name="//apple_ref/swift/Section/Receiving Data" class="dashAnchor"></a>
+                <a href="#/Receiving%20Data">
+                  <h3 class="section-name">Receiving Data</h3>
                 </a>
               </div>
               <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC8BTLEPlus30BLEPlusSerialServiceController12receivedDataFCSo6NSDataT_"></a>
-                    <a name="//apple_ref/swift/Method/receivedData(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC8BTLEPlus30BLEPlusSerialServiceController12receivedDataFCSo6NSDataT_">receivedData(_:)</a>
+                    <a name="/s:FC8BTLEPlus30BLEPlusSerialServiceController7receiveFCSo6NSDataT_"></a>
+                    <a name="//apple_ref/swift/Method/receive(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus30BLEPlusSerialServiceController7receiveFCSo6NSDataT_">receive(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -513,43 +615,36 @@ again.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>When you receive data you must call this.</p>
+                        <p>Notify the serial service that data is available for processing.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">receivedData</span><span class="p">(</span><span class="nv">packet</span><span class="p">:</span><span class="kt">NSData</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">receive</span><span class="p">(</span><span class="nv">packet</span><span class="p">:</span><span class="kt">NSData</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC8BTLEPlus30BLEPlusSerialServiceController11receivedAckFCS_35BLEPlusSerialServiceProtocolMessageT_"></a>
-                    <a name="//apple_ref/swift/Method/receivedAck(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC8BTLEPlus30BLEPlusSerialServiceController11receivedAckFCS_35BLEPlusSerialServiceProtocolMessageT_">receivedAck(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Received an ack.</p>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>packet</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Raw data received.</p>
 
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">receivedAck</span><span class="p">(</span><span class="nv">message</span><span class="p">:</span><span class="kt"><a href="../Classes/BLEPlusSerialServiceProtocolMessage.html">BLEPlusSerialServiceProtocolMessage</a></span><span class="p">)</span></code></pre>
-
-                        </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -562,7 +657,7 @@ again.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-08)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-10)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

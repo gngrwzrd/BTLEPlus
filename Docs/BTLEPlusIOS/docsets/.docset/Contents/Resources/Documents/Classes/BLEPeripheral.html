@@ -20,7 +20,7 @@
         <a class="header-link" href="../index.html">
            Docs
         </a>
-         (75% documented)
+         (84% documented)
       </p>
     
     
@@ -48,9 +48,6 @@
                 <a class="nav-group-task-link" href="../Classes/BLEHeartrate.html">BLEHeartrate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/BLEPLus.html">BLEPLus</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/BLEPeripheral.html">BLEPeripheral</a>
               </li>
               <li class="nav-group-task">
@@ -63,16 +60,10 @@
                 <a class="nav-group-task-link" href="../Classes/BLEPlusSerialServiceMessage.html">BLEPlusSerialServiceMessage</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes.html#/s:C11BTLEPlusIOS34BLEPlusSerialServicePacketProvider">BLEPlusSerialServicePacketProvider</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/BLEPlusSerialServicePacketReceiver.html">BLEPlusSerialServicePacketReceiver</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/BLEPlusSerialServiceProtocolMessage.html">BLEPlusSerialServiceProtocolMessage</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/BLEPlusServiceSpec.html">BLEPlusServiceSpec</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLEPlus.html">BTLEPlus</a>
               </li>
             </ul>
           </li>
@@ -89,13 +80,7 @@
                 <a class="nav-group-task-link" href="../Global Variables.html#/s:v11BTLEPlusIOS32BLEPlusSerialServiceMaxMessageIdVs5UInt8">BLEPlusSerialServiceMaxMessageId</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Global Variables.html#/s:v11BTLEPlusIOS36BLEPlusSerialServiceMaxPacketCounterVs5UInt8">BLEPlusSerialServiceMaxPacketCounter</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Global Variables.html#/s:v11BTLEPlusIOS33BLEPlusSerialServiceMaxWindowSizeVs5UInt8">BLEPlusSerialServiceMaxWindowSize</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Global Variables.html#/s:v11BTLEPlusIOS27BLEPlusSerialServiceRealMTUVs6UInt16">BLEPlusSerialServiceRealMTU</a>
               </li>
             </ul>
           </li>
@@ -103,10 +88,15 @@
             <a class="nav-group-name-link" href="../Enums.html">Enums</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/BLEPlusSerialServiceControllerMode.html">BLEPlusSerialServiceControllerMode</a>
+                <a class="nav-group-task-link" href="../Enums/BLEPlusSerialServiceRunMode.html">BLEPlusSerialServiceRunMode</a>
               </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/BLEPlusSerialServiceProtocolMessageType.html">BLEPlusSerialServiceProtocolMessageType</a>
+                <a class="nav-group-task-link" href="../Extensions/OptionSetType.html">OptionSetType</a>
               </li>
             </ul>
           </li>
@@ -128,7 +118,7 @@
                 <a class="nav-group-task-link" href="../Typealiases.html#/s:11BTLEPlusIOS34BLEPLusSerialServiceMessageId_Type">BLEPLusSerialServiceMessageId_Type</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Typealiases.html#/s:11BTLEPlusIOS27BLEPlusSerialServiceMTUType">BLEPlusSerialServiceMTUType</a>
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:11BTLEPlusIOS28BLEPlusSerialServiceMTU_Type">BLEPlusSerialServiceMTU_Type</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Typealiases.html#/s:11BTLEPlusIOS36BLEPlusSerialServiceMessageType_Type">BLEPlusSerialServiceMessageType_Type</a>
@@ -157,36 +147,77 @@
 
                 </div>
               </div>
-            <p>The BLEPeripheral is a generic peripheral that once connected,
-will discover services, included services, characteristics,
-descriptors, and subscribe to required characteristic changes.</p>
+            <p>The BLEPeripheral object is a generic peripheral that allows you to customize
+the connection and setup process before it&rsquo;s considered ready to use.</p>
 
-<p>Each device goes through a setup process before it&rsquo;s considered ready.</p>
+<p><a href='#peripheral-setup' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='peripheral-setup'>Peripheral Setup</h2></p>
 
-<p>Connect - This is the first step in the process.</p>
+<p>Each peripheral goes through this setup process before it&rsquo;s considered ready
+to use. And must go through the same setup process if it&rsquo;s disconnected and
+then reconnected.</p>
 
-<p>Discovery - This is the second step in the process. It includes
-discovering services, included services, characteristics and
-descriptors.</p>
+<p>Each step in the setup process has retries and timeouts you can customize.
+If something fails or times-out it will try the same step up to a specified
+max attemps.</p>
 
-<p>Subscribe - This is the third step in the process. It includes
-subscribing to any characteristics that support notify.</p>
+<p><a href='#connect-step' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='connect-step'>Connect Step</h4></p>
 
-<p>Additional Setup -  This is an optional step in which you can include
-additional steps as part of the device setup process. You can override
-requiresAdditionalSetup() and performAdditionalSetup() to add your
-custom setup into the setup process. Just make sure to call deviceIsReady()</p>
+<p>This is the first step in the process and is handled by a BLECentralManager.
+After your central discovers peripherals, you connect to the desired peripheral with
+<em>myBLECentralManager.connect(peripheral:)</em>.</p>
 
-<p>Ready - This is the last step and the device is considered ready.</p>
+<p><a href='#discovery-step' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='discovery-step'>Discovery Step</h4></p>
 
-<p>Once the setup process is completed your device is considered <code>ready</code>.</p>
+<p>This is the second step in the process. It includes <em>discovering services</em>, <em>discovering included services</em>,
+<em>discovering characteristics</em> and <em>discovering descriptors</em>.</p>
 
-<p>Each step in the setup process has hooks you can use to override
-and change each step.</p>
+<p><a href='#subscribe-step' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='subscribe-step'>Subscribe Step</h4></p>
 
-<p>Each step also has variables to customize retries and timeouts before a retry.</p>
+<p>This is the third step in the process. It includes <em>subscribing to any characteristics that support notify</em>.</p>
 
-<p>After a device is ready, it&rsquo;s up to you to implement behavior with the peripheral.</p>
+<p><a href='#additional-setup-step' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='additional-setup-step'>Additional Setup Step</h4></p>
+
+<p>This is an optional step in which you can include additional steps as part of the
+peripheral setup process. You can override requiresAdditionalSetup() and
+performAdditionalSetup() to add your custom setup into the setup process. You must
+call deviceIsReady() once your additional setup is complete.</p>
+
+<p><a href='#ready-step' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='ready-step'>Ready Step</h4></p>
+
+<p>This is the last step and the peripheral is considered ready. It&rsquo;s up
+to you to implement communication or specialized behavior with the peripheral after
+this point.</p>
+
+<p><a href='#device-prototypes' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='device-prototypes'>Device Prototypes</h2></p>
+
+<p>Peripheral objects aren&rsquo;t created and used directly, instead you create
+a prototype object, and register it with a BTLECentralManager.</p>
+
+<p>When a BTLECentralManager discovers devices, it asks each registered BTLEPeripheral
+prototype if it knows how to respond to the advertised services. You can override
+respondsToAdvertisementData(), which tells the central manager if it should
+instantiate your peripheral.</p>
+
+<p><a href='#responding-to-advertisement-data' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='responding-to-advertisement-data'>Responding to Advertisement Data</h2>
+<pre class="highlight plaintext"><code>class MyPeripheral : BLEPeripheral {
+    //override and decide if your peripheral understands the advertised data.
+    override public func respondsToAdvertisementData(data:BLEAdvertisementData) -&gt; Bool {
+        //inspect advertisement data here.
+        return true or false.
+    }
+    //override and return a new instance of MyPeripheral. This is required.
+    override public func copy() -&gt; AnyObject {
+        return MyPeripheral()
+    }
+}
+</code></pre>
+<a href='#multiple-advertisement-packets' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h5 id='multiple-advertisement-packets'>Multiple Advertisement Packets</h5></p>
+
+<p>At times Core Bluetooth will receive advertisement data in multiple parts. When this happens
+the advertisement data for a peripheral is collected using a BLEAdvertisementData
+object. Your peripheral prototype will be asked each time with the collected data if it
+responds to the advertisement data. This ensures you eventually get all of the advertisement
+data to properly decide if your prototype understands the advertised services.</p>
 
           </div>
         </section>
@@ -194,6 +225,13 @@ and change each step.</p>
         <section class="section">
           <div class="section-content">
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/CBPeripheral"></a>
+                <a name="//apple_ref/swift/Section/CBPeripheral" class="dashAnchor"></a>
+                <a href="#/CBPeripheral">
+                  <h3 class="section-name">CBPeripheral</h3>
+                </a>
+              </div>
               <ul class="item-container">
                 <li class="item">
                   <div>
@@ -235,7 +273,7 @@ and change each step.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Device name from</p>
+                        <p>Local peripheral name.</p>
 
                       </div>
                       <div class="declaration">
@@ -243,6 +281,33 @@ and change each step.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">name</span><span class="p">:</span><span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11BTLEPlusIOS13BLEPeripheral11updatedNameFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/updatedName()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral11updatedNameFT_T_">updatedName()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Called when the peripheral name updated.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updatedName</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -262,14 +327,68 @@ and change each step.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Peripheral RSSI.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BLEPeripheral</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">CBPeripheralDelegate</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">RSSI</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11BTLEPlusIOS13BLEPeripheral11updatedRSSIFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/updatedRSSI()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral11updatedRSSIFT_T_">updatedRSSI()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Called when the peripheral RSSI updated.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updatedRSSI</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11BTLEPlusIOS13BLEPeripheral24updatedRSSIReceivedErrorFGSqCSo7NSError_T_"></a>
+                    <a name="//apple_ref/swift/Method/updatedRSSIReceivedError(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral24updatedRSSIReceivedErrorFGSqCSo7NSError_T_">updatedRSSIReceivedError(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Called when RSSI update received an error.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updatedRSSIReceivedError</span><span class="p">(</span><span class="nv">error</span><span class="p">:</span><span class="kt">NSError</span><span class="p">?)</span></code></pre>
 
                         </div>
                       </div>
@@ -289,7 +408,7 @@ and change each step.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Device UUID</p>
+                        <p>Peripheral UUID.</p>
 
                       </div>
                       <div class="declaration">
@@ -303,6 +422,17 @@ and change each step.</p>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Configuration"></a>
+                <a name="//apple_ref/swift/Section/Configuration" class="dashAnchor"></a>
+                <a href="#/Configuration">
+                  <h3 class="section-name">Configuration</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -316,7 +446,7 @@ and change each step.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A custom tag to identify the device.</p>
+                        <p>A custom tag to identify the peripheral.</p>
 
                       </div>
                       <div class="declaration">
@@ -343,7 +473,7 @@ and change each step.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A custom organization identifier for this device.</p>
+                        <p>A custom organization identifier for this peripheral.</p>
 
                       </div>
                       <div class="declaration">
@@ -357,6 +487,84 @@ and change each step.</p>
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC11BTLEPlusIOS13BLEPeripheral23canBeRemovedFromManagerSb"></a>
+                    <a name="//apple_ref/swift/Property/canBeRemovedFromManager" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC11BTLEPlusIOS13BLEPeripheral23canBeRemovedFromManagerSb">canBeRemovedFromManager</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether or not this device should be removed from it&rsquo;s BLECentralManager.
+This is called when a device disconnects.</p>
+
+<p>If false, the peripheral will remain in a disconnected state
+within it&rsquo;s BLECentralManager.</p>
+
+<p>If true it&rsquo;s removed from it&rsquo;s BLECentralManager and you&rsquo;d have
+to scan for the device again.</p>
+
+<p>By default this is true.</p>
+
+<p>This is an overrideable getter / setter.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">canBeRemovedFromManager</span><span class="p">:</span><span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC11BTLEPlusIOS13BLEPeripheral27shouldReconnectOnDisconnectSb"></a>
+                    <a name="//apple_ref/swift/Property/shouldReconnectOnDisconnect" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC11BTLEPlusIOS13BLEPeripheral27shouldReconnectOnDisconnectSb">shouldReconnectOnDisconnect</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether to reconnect when the peripheral is disconnected.</p>
+
+<p>This is an overrideable getter / setter.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">shouldReconnectOnDisconnect</span><span class="p">:</span><span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Timeouts%20and%20Retries"></a>
+                <a name="//apple_ref/swift/Section/Timeouts and Retries" class="dashAnchor"></a>
+                <a href="#/Timeouts%20and%20Retries">
+                  <h3 class="section-name">Timeouts and Retries</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -414,9 +622,9 @@ and change each step.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vC11BTLEPlusIOS13BLEPeripheral25discoveryPhaseMaxAttemptsSi"></a>
-                    <a name="//apple_ref/swift/Property/discoveryPhaseMaxAttempts" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC11BTLEPlusIOS13BLEPeripheral25discoveryPhaseMaxAttemptsSi">discoveryPhaseMaxAttempts</a>
+                    <a name="/s:vC11BTLEPlusIOS13BLEPeripheral24discoveryStepMaxAttemptsSi"></a>
+                    <a name="//apple_ref/swift/Property/discoveryStepMaxAttempts" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC11BTLEPlusIOS13BLEPeripheral24discoveryStepMaxAttemptsSi">discoveryStepMaxAttempts</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -431,7 +639,7 @@ and change each step.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">discoveryPhaseMaxAttempts</span> <span class="o">=</span> <span class="mi">3</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">discoveryStepMaxAttempts</span> <span class="o">=</span> <span class="mi">3</span></code></pre>
 
                         </div>
                       </div>
@@ -441,9 +649,9 @@ and change each step.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vC11BTLEPlusIOS13BLEPeripheral27discoveryPhaseTimeoutLengthSd"></a>
-                    <a name="//apple_ref/swift/Property/discoveryPhaseTimeoutLength" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC11BTLEPlusIOS13BLEPeripheral27discoveryPhaseTimeoutLengthSd">discoveryPhaseTimeoutLength</a>
+                    <a name="/s:vC11BTLEPlusIOS13BLEPeripheral26discoveryStepTimeoutLengthSd"></a>
+                    <a name="//apple_ref/swift/Property/discoveryStepTimeoutLength" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC11BTLEPlusIOS13BLEPeripheral26discoveryStepTimeoutLengthSd">discoveryStepTimeoutLength</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -451,14 +659,14 @@ and change each step.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The discovery phase timeout length before retrying the discover phase.</p>
+                        <p>The discovery step timeout length before retrying the discover step.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">discoveryPhaseTimeoutLength</span><span class="p">:</span><span class="kt">NSTimeInterval</span> <span class="o">=</span> <span class="mi">5</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">discoveryStepTimeoutLength</span><span class="p">:</span><span class="kt">NSTimeInterval</span> <span class="o">=</span> <span class="mi">5</span></code></pre>
 
                         </div>
                       </div>
@@ -468,9 +676,9 @@ and change each step.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vC11BTLEPlusIOS13BLEPeripheral25subscribePhaseMaxAttemptsSi"></a>
-                    <a name="//apple_ref/swift/Property/subscribePhaseMaxAttempts" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC11BTLEPlusIOS13BLEPeripheral25subscribePhaseMaxAttemptsSi">subscribePhaseMaxAttempts</a>
+                    <a name="/s:vC11BTLEPlusIOS13BLEPeripheral24subscribeStepMaxAttemptsSi"></a>
+                    <a name="//apple_ref/swift/Property/subscribeStepMaxAttempts" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC11BTLEPlusIOS13BLEPeripheral24subscribeStepMaxAttemptsSi">subscribeStepMaxAttempts</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -485,7 +693,7 @@ and change each step.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">subscribePhaseMaxAttempts</span> <span class="o">=</span> <span class="mi">3</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">subscribeStepMaxAttempts</span> <span class="o">=</span> <span class="mi">3</span></code></pre>
 
                         </div>
                       </div>
@@ -495,9 +703,9 @@ and change each step.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vC11BTLEPlusIOS13BLEPeripheral27subscribePhaseTimeoutLengthSd"></a>
-                    <a name="//apple_ref/swift/Property/subscribePhaseTimeoutLength" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC11BTLEPlusIOS13BLEPeripheral27subscribePhaseTimeoutLengthSd">subscribePhaseTimeoutLength</a>
+                    <a name="/s:vC11BTLEPlusIOS13BLEPeripheral26subscribeStepTimeoutLengthSd"></a>
+                    <a name="//apple_ref/swift/Property/subscribeStepTimeoutLength" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC11BTLEPlusIOS13BLEPeripheral26subscribeStepTimeoutLengthSd">subscribeStepTimeoutLength</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -505,14 +713,14 @@ and change each step.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The subscribe phase timeout length before retrying the subscribe phase.</p>
+                        <p>The subscribe step timeout length before retrying the subscribe step.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">subscribePhaseTimeoutLength</span><span class="p">:</span><span class="kt">NSTimeInterval</span> <span class="o">=</span> <span class="mi">5</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">subscribeStepTimeoutLength</span><span class="p">:</span><span class="kt">NSTimeInterval</span> <span class="o">=</span> <span class="mi">5</span></code></pre>
 
                         </div>
                       </div>
@@ -573,64 +781,17 @@ and change each step.</p>
                     </section>
                   </div>
                 </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:vC11BTLEPlusIOS13BLEPeripheral21reconnectOnDisconnectSb"></a>
-                    <a name="//apple_ref/swift/Property/reconnectOnDisconnect" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC11BTLEPlusIOS13BLEPeripheral21reconnectOnDisconnectSb">reconnectOnDisconnect</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Whether to reconnect on disconnect. This is used inside of
-shouldReconnectOnDisconnect which you can override and customize
-if required.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">reconnectOnDisconnect</span><span class="p">:</span><span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:vC11BTLEPlusIOS13BLEPeripheral23allowRemovalFromManagerSb"></a>
-                    <a name="//apple_ref/swift/Property/allowRemovalFromManager" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC11BTLEPlusIOS13BLEPeripheral23allowRemovalFromManagerSb">allowRemovalFromManager</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Whether or not to allow this device to be removed from the
-manager after it&rsquo;s disconnected. This is used in the
-canBeRemovedFromManager() method.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">allowRemovalFromManager</span><span class="p">:</span><span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Advertisement%20Data"></a>
+                <a name="//apple_ref/swift/Section/Advertisement Data" class="dashAnchor"></a>
+                <a href="#/Advertisement%20Data">
+                  <h3 class="section-name">Advertisement Data</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -663,46 +824,6 @@ core bluetooth.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vC11BTLEPlusIOS13BLEPeripheral11deviceReadySb"></a>
-                    <a name="//apple_ref/swift/Property/deviceReady" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC11BTLEPlusIOS13BLEPeripheral11deviceReadySb">deviceReady</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Whether or not this device is ready. BLEPeripheral uses this as a flag
-in numerous places to skip parts of the discovery / subscribe
-phase if subclasses set it to true.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">deviceReady</span> <span class="o">=</span> <span class="kc">false</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/device%20setup"></a>
-                <a name="//apple_ref/swift/Section/device setup" class="dashAnchor"></a>
-                <a href="#/device%20setup">
-                  <h3 class="section-name">device setup</h3>
-                </a>
-              </div>
-              <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:FC11BTLEPlusIOS13BLEPeripheral27respondsToAdvertisementDataFCS_20BLEAdvertisementDataSb"></a>
                     <a name="//apple_ref/swift/Method/respondsToAdvertisementData(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral27respondsToAdvertisementDataFCS_20BLEAdvertisementDataSb">respondsToAdvertisementData(_:)</a>
@@ -732,19 +853,19 @@ responds to the advertisement data.</p>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/connectivity"></a>
-                <a name="//apple_ref/swift/Section/connectivity" class="dashAnchor"></a>
-                <a href="#/connectivity">
-                  <h3 class="section-name">connectivity</h3>
+                <a name="/Restoring%20from%20Core%20Bluetooth"></a>
+                <a name="//apple_ref/swift/Section/Restoring from Core Bluetooth" class="dashAnchor"></a>
+                <a href="#/Restoring%20from%20Core%20Bluetooth">
+                  <h3 class="section-name">Restoring from Core Bluetooth</h3>
                 </a>
               </div>
               <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC11BTLEPlusIOS13BLEPeripheral27shouldReconnectOnDisconnectFT_Sb"></a>
-                    <a name="//apple_ref/swift/Method/shouldReconnectOnDisconnect()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral27shouldReconnectOnDisconnectFT_Sb">shouldReconnectOnDisconnect()</a>
+                    <a name="/s:FC11BTLEPlusIOS13BLEPeripheral12wasRetrievedFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/wasRetrieved()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral12wasRetrievedFT_T_">wasRetrieved()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -752,21 +873,31 @@ responds to the advertisement data.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>This is overrideable to provide custom logic that decides if a device should
-reconnect immediately after it was disconnected.</p>
+                        <p>When a peripheral was retrieved from core bluetooth.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">shouldReconnectOnDisconnect</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">wasRetrieved</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Connectivity"></a>
+                <a name="//apple_ref/swift/Section/Connectivity" class="dashAnchor"></a>
+                <a href="#/Connectivity">
+                  <h3 class="section-name">Connectivity</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -798,9 +929,9 @@ also called when a device is <code>retrieved</code> from core bluetooth and cons
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC11BTLEPlusIOS13BLEPeripheral12wasRetrievedFT_T_"></a>
-                    <a name="//apple_ref/swift/Method/wasRetrieved()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral12wasRetrievedFT_T_">wasRetrieved()</a>
+                    <a name="/s:FC11BTLEPlusIOS13BLEPeripheral14onDisconnectedFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/onDisconnected()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral14onDisconnectedFT_T_">onDisconnected()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -808,156 +939,14 @@ also called when a device is <code>retrieved</code> from core bluetooth and cons
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>You can override this to be notified of when a device was <code>retrieved</code> from
-core bluetooth and considered discovered.</p>
+                        <p>Called when the peripheral is disconnected.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">wasRetrieved</span><span class="p">()</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC11BTLEPlusIOS13BLEPeripheral29receivedMoreAdvertisementDataFCS_20BLEAdvertisementDataT_"></a>
-                    <a name="//apple_ref/swift/Method/receivedMoreAdvertisementData(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral29receivedMoreAdvertisementDataFCS_20BLEAdvertisementDataT_">receivedMoreAdvertisementData(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Called when a device receives more advertisement data. This can happen
-when device discovery is running. Core bluetooth will send multiple
-device discovered for the same peripheral, but with more data.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">receivedMoreAdvertisementData</span><span class="p">(</span><span class="nv">newData</span><span class="p">:</span><span class="kt"><a href="../Classes/BLEAdvertisementData.html">BLEAdvertisementData</a></span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC11BTLEPlusIOS13BLEPeripheral7connectFT_T_"></a>
-                    <a name="//apple_ref/swift/Method/connect()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral7connectFT_T_">connect()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>This starts the connect process with core bluetooth.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">connect</span><span class="p">()</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC11BTLEPlusIOS13BLEPeripheral13connectFailedFT_T_"></a>
-                    <a name="//apple_ref/swift/Method/connectFailed()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral13connectFailedFT_T_">connectFailed()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>This is called when max connection attempts have been
-made and it still won&rsquo;t connect.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">connectFailed</span><span class="p">()</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC11BTLEPlusIOS13BLEPeripheral10disconnectFT_T_"></a>
-                    <a name="//apple_ref/swift/Method/disconnect()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral10disconnectFT_T_">disconnect()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Disconnect this device. Once disconnected the device will be removed
-from the BLECentralManager. You can optionally override <code><a href="../Classes/BLEPeripheral.html#/s:FC11BTLEPlusIOS13BLEPeripheral23canBeRemovedFromManagerFT_Sb">canBeRemovedFromManager()</a></code>
-to allow the device to continue living in a disconnected state.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">disconnect</span><span class="p">()</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC11BTLEPlusIOS13BLEPeripheral12disconnectedFT_T_"></a>
-                    <a name="//apple_ref/swift/Method/disconnected()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral12disconnectedFT_T_">disconnected()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>When the device is disconnected. You can override <code><a href="../Classes/BLEPeripheral.html#/s:FC11BTLEPlusIOS13BLEPeripheral27shouldReconnectOnDisconnectFT_Sb">shouldReconnectOnDisconnect()</a></code>
-in order to reconnect immediately.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">disconnected</span><span class="p">()</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">onDisconnected</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -968,13 +957,42 @@ in order to reconnect immediately.</p>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/device%20rediness"></a>
-                <a name="//apple_ref/swift/Section/device rediness" class="dashAnchor"></a>
-                <a href="#/device%20rediness">
-                  <h3 class="section-name">device rediness</h3>
+                <a name="/Peripheral%20Ready"></a>
+                <a name="//apple_ref/swift/Section/Peripheral Ready" class="dashAnchor"></a>
+                <a href="#/Peripheral%20Ready">
+                  <h3 class="section-name">Peripheral Ready</h3>
                 </a>
               </div>
               <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC11BTLEPlusIOS13BLEPeripheral11deviceReadySb"></a>
+                    <a name="//apple_ref/swift/Property/deviceReady" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC11BTLEPlusIOS13BLEPeripheral11deviceReadySb">deviceReady</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether or not this device is ready. BLEPeripheral uses this as a flag
+in numerous places to skip parts of the discovery / subscribe
+step if subclasses set it to true.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">deviceReady</span> <span class="o">=</span> <span class="kc">false</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -1030,44 +1048,14 @@ to provide your own logic that decides of the device is ready.</p>
                     </section>
                   </div>
                 </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC11BTLEPlusIOS13BLEPeripheral23canBeRemovedFromManagerFT_Sb"></a>
-                    <a name="//apple_ref/swift/Method/canBeRemovedFromManager()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral23canBeRemovedFromManagerFT_Sb">canBeRemovedFromManager()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Whether or not this device should be removed from it&rsquo;s BLECentralManager. This is called
-when a device disconnects. If canBeRemovedFromManager returns false, then the device will
-remain in a disconnected state with it&rsquo;s BLECentralManager. If it returns true it&rsquo;s
-removed from it&rsquo;s BLECentralManager and you&rsquo;d have to scan for the device again.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">canBeRemovedFromManager</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
               </ul>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/service%20discovery"></a>
-                <a name="//apple_ref/swift/Section/service discovery" class="dashAnchor"></a>
-                <a href="#/service%20discovery">
-                  <h3 class="section-name">service discovery</h3>
+                <a name="/Service%20Discovery"></a>
+                <a name="//apple_ref/swift/Section/Service Discovery" class="dashAnchor"></a>
+                <a href="#/Service%20Discovery">
+                  <h3 class="section-name">Service Discovery</h3>
                 </a>
               </div>
               <ul class="item-container">
@@ -1085,7 +1073,7 @@ removed from it&rsquo;s BLECentralManager and you&rsquo;d have to scan for the d
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Returns whether or not a specific service CBUUID should be discovered as part of the
-discovery phase. The passed uuid is taken directly from a peripherals advertisement data.</p>
+discovery step. The passed uuid is taken directly from a peripherals advertisement data.</p>
 
                       </div>
                       <div class="declaration">
@@ -1156,10 +1144,10 @@ again to discover services, included services, characteristics and descriptors.<
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/included%20service%20discovery"></a>
-                <a name="//apple_ref/swift/Section/included service discovery" class="dashAnchor"></a>
-                <a href="#/included%20service%20discovery">
-                  <h3 class="section-name">included service discovery</h3>
+                <a name="/Included%20Service%20Discovery"></a>
+                <a name="//apple_ref/swift/Section/Included Service Discovery" class="dashAnchor"></a>
+                <a href="#/Included%20Service%20Discovery">
+                  <h3 class="section-name">Included Service Discovery</h3>
                 </a>
               </div>
               <ul class="item-container">
@@ -1247,10 +1235,10 @@ which of the services should be discovered.</p>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/characteristics%20discovery"></a>
-                <a name="//apple_ref/swift/Section/characteristics discovery" class="dashAnchor"></a>
-                <a href="#/characteristics%20discovery">
-                  <h3 class="section-name">characteristics discovery</h3>
+                <a name="/Characteristics%20Discovery"></a>
+                <a name="//apple_ref/swift/Section/Characteristics Discovery" class="dashAnchor"></a>
+                <a href="#/Characteristics%20Discovery">
+                  <h3 class="section-name">Characteristics Discovery</h3>
                 </a>
               </div>
               <ul class="item-container">
@@ -1411,33 +1399,6 @@ If shouldDiscoverCharacteristics() returns false this won&rsquo;t be called.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC11BTLEPlusIOS13BLEPeripheral29discoverCharacteristicsFailedFT_T_"></a>
-                    <a name="//apple_ref/swift/Method/discoverCharacteristicsFailed()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral29discoverCharacteristicsFailedFT_T_">discoverCharacteristicsFailed()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Called when characteristics discovery failed.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">discoverCharacteristicsFailed</span><span class="p">()</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:FC11BTLEPlusIOS13BLEPeripheral25discoveredCharacteristicsFT_T_"></a>
                     <a name="//apple_ref/swift/Method/discoveredCharacteristics()" class="dashAnchor"></a>
                     <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral25discoveredCharacteristicsFT_T_">discoveredCharacteristics()</a>
@@ -1466,10 +1427,10 @@ If shouldDiscoverCharacteristics() returns false this won&rsquo;t be called.</p>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/descriptor%20discovery"></a>
-                <a name="//apple_ref/swift/Section/descriptor discovery" class="dashAnchor"></a>
-                <a href="#/descriptor%20discovery">
-                  <h3 class="section-name">descriptor discovery</h3>
+                <a name="/Descriptor%20Discovery"></a>
+                <a name="//apple_ref/swift/Section/Descriptor Discovery" class="dashAnchor"></a>
+                <a href="#/Descriptor%20Discovery">
+                  <h3 class="section-name">Descriptor Discovery</h3>
                 </a>
               </div>
               <ul class="item-container">
@@ -1576,14 +1537,41 @@ won&rsquo;t be called.</p>
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC11BTLEPlusIOS13BLEPeripheral21discoveredDescriptorsFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/discoveredDescriptors()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral21discoveredDescriptorsFT_T_">discoveredDescriptors()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Called when descriptors were discovered.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">discoveredDescriptors</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/subscribing%20to%20characteristics"></a>
-                <a name="//apple_ref/swift/Section/subscribing to characteristics" class="dashAnchor"></a>
-                <a href="#/subscribing%20to%20characteristics">
-                  <h3 class="section-name">subscribing to characteristics</h3>
+                <a name="/Subscribing"></a>
+                <a name="//apple_ref/swift/Section/Subscribing" class="dashAnchor"></a>
+                <a href="#/Subscribing">
+                  <h3 class="section-name">Subscribing</h3>
                 </a>
               </div>
               <ul class="item-container">
@@ -1650,33 +1638,6 @@ won&rsquo;t be called.</p>
                         <h4>Return Value</h4>
                         <p>Bool</p>
 
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC11BTLEPlusIOS13BLEPeripheral17subscribingFailedFT_T_"></a>
-                    <a name="//apple_ref/swift/Method/subscribingFailed()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral17subscribingFailedFT_T_">subscribingFailed()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>When the subscribe phase failed.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">subscribingFailed</span><span class="p">()</span></code></pre>
-
-                        </div>
                       </div>
                     </section>
                   </div>
@@ -1860,113 +1821,10 @@ additional setup tasks. Make sure to call super.performAdditionalSetup()</p>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/RSSI"></a>
-                <a name="//apple_ref/swift/Section/RSSI" class="dashAnchor"></a>
-                <a href="#/RSSI">
-                  <h3 class="section-name">RSSI</h3>
-                </a>
-              </div>
-              <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC11BTLEPlusIOS13BLEPeripheral11updatedRSSIFT_T_"></a>
-                    <a name="//apple_ref/swift/Method/updatedRSSI()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral11updatedRSSIFT_T_">updatedRSSI()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Called anytime the peripheral has updated it&rsquo;s RSSI.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updatedRSSI</span><span class="p">()</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC11BTLEPlusIOS13BLEPeripheral24updatedRSSIReceivedErrorFGSqCSo7NSError_T_"></a>
-                    <a name="//apple_ref/swift/Method/updatedRSSIReceivedError(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral24updatedRSSIReceivedErrorFGSqCSo7NSError_T_">updatedRSSIReceivedError(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Called when RSSI received an error.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updatedRSSIReceivedError</span><span class="p">(</span><span class="nv">error</span><span class="p">:</span><span class="kt">NSError</span><span class="p">?)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/device%20name"></a>
-                <a name="//apple_ref/swift/Section/device name" class="dashAnchor"></a>
-                <a href="#/device%20name">
-                  <h3 class="section-name">device name</h3>
-                </a>
-              </div>
-              <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC11BTLEPlusIOS13BLEPeripheral11updatedNameFT_T_"></a>
-                    <a name="//apple_ref/swift/Method/updatedName()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC11BTLEPlusIOS13BLEPeripheral11updatedNameFT_T_">updatedName()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Called when the peripheral name has been updated.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updatedName</span><span class="p">()</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/utils"></a>
-                <a name="//apple_ref/swift/Section/utils" class="dashAnchor"></a>
-                <a href="#/utils">
-                  <h3 class="section-name">utils</h3>
+                <a name="/Utils"></a>
+                <a name="//apple_ref/swift/Section/Utils" class="dashAnchor"></a>
+                <a href="#/Utils">
+                  <h3 class="section-name">Utils</h3>
                 </a>
               </div>
               <ul class="item-container">
@@ -2094,10 +1952,10 @@ additional setup tasks. Make sure to call super.performAdditionalSetup()</p>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/peripheral%20delegate"></a>
-                <a name="//apple_ref/swift/Section/peripheral delegate" class="dashAnchor"></a>
-                <a href="#/peripheral%20delegate">
-                  <h3 class="section-name">peripheral delegate</h3>
+                <a name="/CB%08Peripheral%20Delegate"></a>
+                <a name="//apple_ref/swift/Section/CBPeripheral Delegate" class="dashAnchor"></a>
+                <a href="#/CB%08Peripheral%20Delegate">
+                  <h3 class="section-name">CBPeripheral Delegate</h3>
                 </a>
               </div>
               <ul class="item-container">
@@ -2352,7 +2210,7 @@ additional setup tasks. Make sure to call super.performAdditionalSetup()</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-08)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-10)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

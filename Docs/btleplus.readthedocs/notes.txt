@@ -1,0 +1,36 @@
+# Being a Central
+
+BLEPeripheral
+
+Discovering Devices
+  Device Prototypes
+  Advertisement Data
+
+Device Setup
+  Connect
+  Discovery
+  Subscribe
+  Additional Setup
+  Ready
+
+Customizing Device Setup
+  Customizing Discovery
+  Customizing Subscribe
+  Providing Additional Setup
+
+# Being a Peripheral
+
+Services for BTLE Specification
+Using Service Specification Objects
+Heart-rate
+Battery
+
+
+# BTLEPlus Serial Service
+
+protocol so you can create your own requests / responses or 
+
+# Being a Central
+
+# Being a Peripheral
+using CBCentral.maximumUpdateValueLength

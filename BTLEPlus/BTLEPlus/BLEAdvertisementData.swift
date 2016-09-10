@@ -9,95 +9,99 @@
 import Foundation
 import CoreBluetooth
 
-/// The BLEAdvertisementData class wraps up advertised data from
-/// core bluetooth. It can convert advertised data between it's
-/// original discovered format and a serializable format.
-///
-/// It provides some easier accessors to get and set advertisement
-/// data in the data dictionary.
+/// The BLEAdvertisementData class manages advertised data from
+/// Core Bluetooth. It can convert advertised data between it's
+/// original discovered format, a plist supported format, and a
+/// serializable format with NSCoding. It provides some easier
+/// accessors to get and set advertisement data.
 @objc public class BLEAdvertisementData : NSObject, NSCoding {
 	
-	/// Advertisement data. This is the original discovered
-	/// format version of the data which includes CBUUIDs.
-	public var data:[String:AnyObject] = [:]
+	//MARK: - Advertisement Data
+	
+	/// Advertisement data in it's discovered format which includes CBUUIDs.
+	public var discoveredData:[String:AnyObject] = [:]
+	
+	//MARK: - CBAdvertisement Shortcuts
+	
+	/// Get or set CBAdvertisementDataIsConnectable.
+	public var isConnectable:NSNumber? {
+		get {
+			return discoveredData[CBAdvertisementDataIsConnectable] as? NSNumber
+		} set(new) {
+			discoveredData[CBAdvertisementDataIsConnectable] = new
+		}
+	}
 	
 	/// Get or set CBAdvertisementDataLocalNameKey.
 	public var localName:String? {
 		get {
-			if let ln = data[CBAdvertisementDataLocalNameKey] as? String {
+			if let ln = discoveredData[CBAdvertisementDataLocalNameKey] as? String {
 				return ln
 			}
 			return nil
 		} set(new) {
-			data[CBAdvertisementDataLocalNameKey] = new
-		}
-	}
-	
-	/// Get or set CBAdvertisementDataServiceUUIDsKey.
-	public var serviceUUIDS:[CBUUID]? {
-		get {
-			return data[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID]
-		} set(new) {
-			data[CBAdvertisementDataServiceUUIDsKey] = new
+			discoveredData[CBAdvertisementDataLocalNameKey] = new
 		}
 	}
 	
 	/// Get or set the CBAdvertisementDataManufacturerDataKey.
 	public var manufacturerData:NSData? {
 		get {
-			return data[CBAdvertisementDataManufacturerDataKey] as? NSData
+			return discoveredData[CBAdvertisementDataManufacturerDataKey] as? NSData
 		} set(new) {
-			data[CBAdvertisementDataManufacturerDataKey] = new
-		}
-	}
-	
-	/// Get or set the CBAdvertisementDataServiceDataKey.
-	public var serviceSpecificData:[CBUUID:NSData]? {
-		get {
-			return data[CBAdvertisementDataServiceDataKey] as? [CBUUID:NSData]
-		} set(new) {
-			data[CBAdvertisementDataServiceDataKey] = new
+			discoveredData[CBAdvertisementDataManufacturerDataKey] = new
 		}
 	}
 	
 	/// Get or set the CBAdvertisementDataOverflowServiceUUIDsKey.
 	public var overflowServiceUUIDs:[CBUUID]? {
 		get {
-			return data[CBAdvertisementDataOverflowServiceUUIDsKey] as? [CBUUID]
+			return discoveredData[CBAdvertisementDataOverflowServiceUUIDsKey] as? [CBUUID]
 		} set(new) {
-			data[CBAdvertisementDataOverflowServiceUUIDsKey] = new
+			discoveredData[CBAdvertisementDataOverflowServiceUUIDsKey] = new
 		}
 	}
 	
-	/// Get or set the CBAdvertisementDataTxPowerLevelKey.
-	public var txPowerLevel:NSNumber? {
+	/// Get or set the CBAdvertisementDataServiceDataKey.
+	public var serviceSpecificData:[CBUUID:NSData]? {
 		get {
-			return data[CBAdvertisementDataTxPowerLevelKey] as? NSNumber
+			return discoveredData[CBAdvertisementDataServiceDataKey] as? [CBUUID:NSData]
 		} set(new) {
-			data[CBAdvertisementDataTxPowerLevelKey] = new
+			discoveredData[CBAdvertisementDataServiceDataKey] = new
 		}
 	}
 	
-	/// Get or set CBAdvertisementDataIsConnectable.
-	public var isConnectable:NSNumber? {
+	/// Get or set CBAdvertisementDataServiceUUIDsKey.
+	public var serviceUUIDS:[CBUUID]? {
 		get {
-			return data[CBAdvertisementDataIsConnectable] as? NSNumber
+			return discoveredData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID]
 		} set(new) {
-			data[CBAdvertisementDataIsConnectable] = new
+			discoveredData[CBAdvertisementDataServiceUUIDsKey] = new
 		}
 	}
 	
 	/// Get or set CBAdvertisementDataSolicitedServiceUUIDsKey.
 	public var solicitedServices:[CBUUID]? {
 		get {
-			return data[CBAdvertisementDataSolicitedServiceUUIDsKey] as? [CBUUID]
+			return discoveredData[CBAdvertisementDataSolicitedServiceUUIDsKey] as? [CBUUID]
 		} set(new) {
-			data[CBAdvertisementDataSolicitedServiceUUIDsKey] = new
+			discoveredData[CBAdvertisementDataSolicitedServiceUUIDsKey] = new
 		}
 	}
 	
+	/// Get or set the CBAdvertisementDataTxPowerLevelKey.
+	public var txPowerLevel:NSNumber? {
+		get {
+			return discoveredData[CBAdvertisementDataTxPowerLevelKey] as? NSNumber
+		} set(new) {
+			discoveredData[CBAdvertisementDataTxPowerLevelKey] = new
+		}
+	}
+	
+	//MARK: - Initializers
+	
 	/**
-	Returns an empty BLEAdvertisementData object
+	Initialize an empty BLEAdvertisementData object.
 	
 	- returns: BLEAdvertisementData
 	*/
@@ -106,36 +110,20 @@ import CoreBluetooth
 	}
 	
 	/**
-	Create an instance with the discovered advertisement data.
+	Initialize a BLEAdvertisementData with the discovered advertisement data.
 	
 	- parameter data: Discovered advertisement data.
 	
 	- returns: BLEAdvertisementData
 	*/
-	public init(data:[String:AnyObject]) {
+	public init(discoveredData:[String:AnyObject]) {
 		super.init()
-		self.data = data
-	}
-	
-	/// Supports NSCoding
-	public func encodeWithCoder(aCoder: NSCoder) {
-		let plistFormat = self.toPlistFormat()
-		aCoder.encodeObject(plistFormat, forKey: "data")
-	}
-	
-	/// Supports NSCoding
-	required public init?(coder aDecoder: NSCoder) {
-		self.data = [:]
-		super.init()
-		if let d = aDecoder.decodeObjectForKey("data") as? [String:AnyObject] {
-			let discoveredFormat = BLEAdvertisementData.convertAdvertisementDataToDiscoveredFormat(d)
-			self.data = discoveredFormat
-		}
+		self.discoveredData = discoveredData
 	}
 	
 	/**
-	Class helper method to create a BLEAdvertisementData instance
-	with it's counterpart serialized NSData.
+	Create a BLEAdvertisementData instance from NSData that was serialized with
+	an NSKeyedArchiver.
 	
 	- parameter rawData: NSData Serialized form of BLEAdvertisementData
 	
@@ -148,54 +136,35 @@ import CoreBluetooth
 		return nil
 	}
 	
+	//MARK: - NSCoding
+	
 	/**
-	Convert advertisement data to a plist or serializeable format.
+	Encode advertisement data.
 	
-	- parameter data: The advertisement data.
-	
-	- returns: The same advertisement data but complies with NSCoding.
+	- parameter aCoder: NSCoder
 	*/
-	public class func convertAdvertisementDataToDefaultsFormat(data:[String:AnyObject]) -> [String:AnyObject] {
-		var dataCopy = data
-		
-		//convert service uuids to strings
-		var stringUUIDS:[String] = []
-		if let uuids = dataCopy[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] {
-			for uuid in uuids {
-				stringUUIDS.append( uuid.UUIDString )
-			}
-			dataCopy[CBAdvertisementDataServiceUUIDsKey] = stringUUIDS
-		}
-		
-		//convert service specific data keys to strings
-		if let serviceDatas = dataCopy[CBAdvertisementDataServiceDataKey] as? [CBUUID:NSData] {
-			var newServiceDatas:[String:NSData] = [:]
-			for (uuid,data) in serviceDatas {
-				newServiceDatas[ uuid.UUIDString ] = data
-			}
-			dataCopy[CBAdvertisementDataServiceDataKey] = newServiceDatas
-		}
-		
-		//overflow service uuids
-		if let overflowServiceUUIDS = dataCopy[CBAdvertisementDataOverflowServiceUUIDsKey] as? [CBUUID] {
-			var newOverflowServiceUUIDS:[String] = []
-			for uuid in overflowServiceUUIDS {
-				newOverflowServiceUUIDS.append( uuid.UUIDString )
-			}
-			dataCopy[CBAdvertisementDataOverflowServiceUUIDsKey] = newOverflowServiceUUIDS
-		}
-		
-		//solicited service uuids
-		if let solitedServiceUUIDS = dataCopy[CBAdvertisementDataSolicitedServiceUUIDsKey] as? [CBUUID] {
-			var newSolicitedServiceUUIDS:[String] = []
-			for uuid in solitedServiceUUIDS {
-				newSolicitedServiceUUIDS.append( uuid.UUIDString )
-			}
-			dataCopy[CBAdvertisementDataSolicitedServiceUUIDsKey] = newSolicitedServiceUUIDS
-		}
-		
-		return dataCopy
+	public func encodeWithCoder(aCoder: NSCoder) {
+		let plistFormat = self.toPlistFormat()
+		aCoder.encodeObject(plistFormat, forKey: "data")
 	}
+	
+	/**
+	Decode from a serialized format.
+	
+	- parameter aDecoder:	NSCoder
+	
+	- returns: BLEAdvertisementData
+	*/
+	required public init?(coder aDecoder: NSCoder) {
+		self.discoveredData = [:]
+		super.init()
+		if let d = aDecoder.decodeObjectForKey("data") as? [String:AnyObject] {
+			let discoveredFormat = BLEAdvertisementData.convertAdvertisementDataToDiscoveredFormat(d)
+			self.discoveredData = discoveredFormat
+		}
+	}
+	
+	//MARK: - Format Conversions
 	
 	/**
 	Convert advertisement data to the original discovered format.
@@ -248,12 +217,61 @@ import CoreBluetooth
 	}
 	
 	/**
+	Convert advertisement data to a format that can be saved with NSUserDefaults.
+	
+	- parameter data: The advertisement data.
+	
+	- returns: The same advertisement data but complies with NSCoding.
+	*/
+	public class func convertAdvertisementDataToUserDefaultsFormat(data:[String:AnyObject]) -> [String:AnyObject] {
+		var dataCopy = data
+		
+		//convert service uuids to strings
+		var stringUUIDS:[String] = []
+		if let uuids = dataCopy[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] {
+			for uuid in uuids {
+				stringUUIDS.append( uuid.UUIDString )
+			}
+			dataCopy[CBAdvertisementDataServiceUUIDsKey] = stringUUIDS
+		}
+		
+		//convert service specific data keys to strings
+		if let serviceDatas = dataCopy[CBAdvertisementDataServiceDataKey] as? [CBUUID:NSData] {
+			var newServiceDatas:[String:NSData] = [:]
+			for (uuid,data) in serviceDatas {
+				newServiceDatas[ uuid.UUIDString ] = data
+			}
+			dataCopy[CBAdvertisementDataServiceDataKey] = newServiceDatas
+		}
+		
+		//overflow service uuids
+		if let overflowServiceUUIDS = dataCopy[CBAdvertisementDataOverflowServiceUUIDsKey] as? [CBUUID] {
+			var newOverflowServiceUUIDS:[String] = []
+			for uuid in overflowServiceUUIDS {
+				newOverflowServiceUUIDS.append( uuid.UUIDString )
+			}
+			dataCopy[CBAdvertisementDataOverflowServiceUUIDsKey] = newOverflowServiceUUIDS
+		}
+		
+		//solicited service uuids
+		if let solitedServiceUUIDS = dataCopy[CBAdvertisementDataSolicitedServiceUUIDsKey] as? [CBUUID] {
+			var newSolicitedServiceUUIDS:[String] = []
+			for uuid in solitedServiceUUIDS {
+				newSolicitedServiceUUIDS.append( uuid.UUIDString )
+			}
+			dataCopy[CBAdvertisementDataSolicitedServiceUUIDsKey] = newSolicitedServiceUUIDS
+		}
+		
+		return dataCopy
+	}
+	
+	/**
 	Returns the advertisement data in the original discovered format.
 	
 	- returns: [String:AnyObject]?
 	*/
 	public func toAdvertisedFormat() -> [String:AnyObject]? {
-		return data
+		return discoveredData
 	}
 	
 	/**
@@ -262,8 +280,10 @@ import CoreBluetooth
 	- returns: [String:AnyObject]?
 	*/
 	public func toPlistFormat() -> [String:AnyObject]? {
-		return BLEAdvertisementData.convertAdvertisementDataToDefaultsFormat(data)
+		return BLEAdvertisementData.convertAdvertisementDataToUserDefaultsFormat(discoveredData)
 	}
+	
+	//MARK: - Appending Advertisement Data
 	
 	/**
 	Append another BLEAdvertisementData object to this one.
@@ -271,20 +291,20 @@ import CoreBluetooth
 	- parameter advertisementData: BLEAdvertisementData
 	*/
 	public func append(advertisementData:BLEAdvertisementData) {
-		appendAdvertisementData(advertisementData.data)
+		appendAdvertisementData(advertisementData.discoveredData)
 	}
 	
 	/**
 	Appends advertisement data to the collection of data.
 	
-	- parameter newData: New data in the original discovered format.
+	- parameter newData: New data in the discovered format from core bluetooth.
 	*/
 	public func appendAdvertisementData(newData:[String:AnyObject]) {
 		for (key,value) in newData {
 			
 			//don't allow service uuids to be removed.
 			if key == CBAdvertisementDataServiceUUIDsKey {
-				if let existingCBUUIDS = data[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] {
+				if let existingCBUUIDS = discoveredData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] {
 					if let value = value as? [CBUUID] {
 						if value.count < existingCBUUIDS.count {
 							continue
@@ -293,7 +313,7 @@ import CoreBluetooth
 				}
 			}
 			
-			data[key] = value
+			discoveredData[key] = value
 		}
 	}
 }

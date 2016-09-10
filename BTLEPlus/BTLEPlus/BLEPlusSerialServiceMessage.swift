@@ -8,35 +8,35 @@
 
 import Foundation
 
-/// BLEPlusSerialServiceMessage is the base class for sending user defined
-/// messages over the BLEPlus Serial Service.
-///
-/// The type property is automatically encoded for you in the transfer,
-/// on the peripheral or central side when you get a message callback you
-/// can inspect the type to figure out what message it is.
+/**
+The BLEPlusSerialServiceMessage class is the base class for all user defined
+messages that are sent over the serial service protocol. You pass instances of
+this to _BLEPlusSerialServiceController.send()_.
+*/
 @objc public class BLEPlusSerialServiceMessage : NSObject {
 	
-	/// A custom type you can use to indicate which type of user message is
-	/// being transfered.
+	/// A user defined type.
 	public var messageType:BLEPlusSerialServiceMessageType_Type = 0
 	
-	/// A message id for tracking request / response lifecycle.
+	/// A user defined message id for tracking the message when it's sent
+	/// from one peer to the other.
 	public var messageId:BLEPLusSerialServiceMessageId_Type = 0
 	
-	/// Data to send.
+	/// User defined data to send.
 	public var data:NSData?
 	
-	/// A file to send.
+	/// User defined file to send.
 	public var fileURL:NSURL?
 	
 	/// internal packet provider that the serial service controller uses.
 	var provider:BLEPlusSerialServicePacketProvider?
 	
 	/**
-	Init with data to send.
+	Initialize a BLEPlusSerialServiceMessage with it's message type, message id, and data.
 	
-	- parameter withType: BLEPlusSerialServiceWrapperUserType
-	- parameter data:     NSData
+	- parameter withMessageType: User defined message type.
+	- parameter messageId: User defined message id for tracking messages.
+	- parameter data: User defined data.
 	
 	- returns: BLEPlusSerialServiceMessage
 	*/

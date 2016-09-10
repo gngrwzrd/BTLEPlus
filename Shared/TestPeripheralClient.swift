@@ -24,7 +24,7 @@ public class TestPeripheralClient : BLEPeripheral, BLEPlusSerialServiceControlle
 	
 	override public init() {
 		super.init()
-		serialController = BLEPlusSerialServiceController(withMode: .Central)
+		serialController = BLEPlusSerialServiceController(withRunMode: .Central)
 		serialController.delegate = self
 	}
 	
@@ -42,13 +42,17 @@ public class TestPeripheralClient : BLEPeripheral, BLEPlusSerialServiceControlle
 		return false
 	}
 	
-	override public func shouldReconnectOnDisconnect() -> Bool {
-		return true
-	}
-	
 	override public func subscribingFinished() {
 		deviceReady = true
 		super.subscribingFinished()
+	}
+	
+	override public var canBeRemovedFromManager: Bool {
+		get {
+			return false
+		} set(new) {
+			super.canBeRemovedFromManager = new
+		}
 	}
 	
 	override public func peripheral(peripheral: CBPeripheral, didUpdateNotificationStateForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
@@ -56,8 +60,8 @@ public class TestPeripheralClient : BLEPeripheral, BLEPlusSerialServiceControlle
 		channel = characteristic
 	}
 	
-	override public func disconnected() {
-		super.disconnected()
+	override public func onDisconnected() {
+		super.onDisconnected()
 		serialController.pause()
 	}
 	
@@ -69,7 +73,7 @@ public class TestPeripheralClient : BLEPeripheral, BLEPlusSerialServiceControlle
 	func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
 		if characteristic == channel {
 			if let data = characteristic.value {
-				serialController.receivedData(data)
+				serialController.receive(data)
 			} else {
 				print("missing data?")
 				print(characteristic.value)

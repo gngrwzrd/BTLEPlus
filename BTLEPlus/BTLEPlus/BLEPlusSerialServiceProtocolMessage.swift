@@ -8,9 +8,6 @@
 
 import Foundation
 
-/// The type to use for protocol message type.
-public typealias BLEPlusSerialServiceProtocolMessageType_Type = UInt8
-
 /// The type to use for message type.
 public typealias BLEPlusSerialServiceMessageType_Type = UInt8
 
@@ -21,33 +18,23 @@ public typealias BLEPLusSerialServiceMessageId_Type = UInt8
 public typealias BLEPlusSerialServiceWindowSize_Type = UInt8
 
 /// The type to use for maximum transmission unit.
-public typealias BLEPlusSerialServiceMTUType = UInt16
+public typealias BLEPlusSerialServiceMTU_Type = UInt16
 
-/// The type to use for packet counting.
-public typealias BLEPlusSerialServicePacketCountType = UInt8
-
-/// The default maximum transmission unit. By default this is set to UInt16.max.
-/// The first thing that happens when peers are connected is exchanging peer info.
-/// When the central passes this value to the peripheral the peripheral is required
-/// to respond with either an ack, or a smaller size to use. From the peripheral
-/// size, CBCentral has a property called maximumUpdateValueLength that should be
-/// returned to the central as the mtu size.
+/// The default maximum transmission unit. Upon connection, peers
+/// exchange their information and agree on an mtu and window size to use.
+/// It's likely that the agreed upon mtu will be a lot less.
 public let BLEPlusSerialServiceDefaultMTU:UInt16 = UInt16.max
 
-/// This is the real payload mtu after headers are subtracted.
-public let BLEPlusSerialServiceRealMTU:UInt16 = BLEPlusSerialServiceDefaultMTU - UInt16(BLEPlusSerialServicePacketProvider.headerSize + BLEPlusSerialServiceProtocolMessage.headerSize)
+/// The default window size. Window size is how many mtu buffers are available to send
+/// or receive. Total bytes in the window = windowSize * mtu.
+public var BLEPlusSerialServiceDefaultWindowSize:BLEPlusSerialServiceWindowSize_Type = 32
 
-/// This is the default MTU.
-public let BLEPlusSerialServiceDefaultWindowSize:BLEPlusSerialServiceWindowSize_Type = 32
-
-/// The default max window size.
-public let BLEPlusSerialServiceMaxWindowSize:BLEPlusSerialServiceWindowSize_Type = 128
-
-/// The default max packet counter before it loops to zero.
-public let BLEPlusSerialServiceMaxPacketCounter:BLEPlusSerialServicePacketCountType = 128
+/// The largest possible window size. This is use to clamp user provided window sizes
+/// which are not allowed to be larger than this.
+public var BLEPlusSerialServiceMaxWindowSize:BLEPlusSerialServiceWindowSize_Type = 128
 
 /// The default max message id value before it loops to zero.
-public let BLEPlusSerialServiceMaxMessageId:BLEPLusSerialServiceMessageId_Type = 255
+public var BLEPlusSerialServiceMaxMessageId:BLEPLusSerialServiceMessageId_Type = BLEPLusSerialServiceMessageId_Type.max
 
 /// Returns a value as big endian order.
 func byteSwapToBigEndian<T>(value:T) -> T {
@@ -101,7 +88,6 @@ extension NSData {
 	}
 }
 
-
 /**
 Control message types.
 
@@ -117,7 +103,7 @@ Control message types.
 - TakeTurn:          The peers turn to send messages.
 - Abort:             Abort the current state and reset. Allow the central to start over.
 */
-@objc public enum BLEPlusSerialServiceProtocolMessageType : BLEPlusSerialServiceProtocolMessageType_Type {
+@objc enum BLEPlusSerialServiceProtocolMessageType : BLEPlusSerialServiceProtocolMessageType_Type {
 	case None = 0
 	case PeerInfo = 1
 	case Ack = 2
@@ -133,32 +119,32 @@ Control message types.
 
 /// BLEPlusSerialServiceMessage is used over the control channel
 /// to communicate what's happening on the transfer channel.
-@objc public class BLEPlusSerialServiceProtocolMessage : NSObject {
+@objc class BLEPlusSerialServiceProtocolMessage : NSObject {
 	
 	/// The size of the header for a BLEPlusSerialServiceMessage.
 	/// Default value is 1 byte for the message type.
-	public static var headerSize:UInt8 = 1
+	static var headerSize:UInt8 = 1
 	
 	/// Message type
-	public var protocolType:BLEPlusSerialServiceProtocolMessageType = .None
+	var protocolType:BLEPlusSerialServiceProtocolMessageType = .None
 	
 	/// A custom user message type.
-	public var messageType:UInt8 = 0
+	var messageType:UInt8 = 0
 	
 	/// A custom user message id.
-	public var messageId:BLEPLusSerialServiceMessageId_Type = 0
+	var messageId:BLEPLusSerialServiceMessageId_Type = 0
 	
 	/// Raw message data.
-	public var data:NSData? = nil
+	var data:NSData? = nil
 	
 	/// For data messages, this is the packet data stripped of the type header.
-	public var packetPayload:NSData?
+	var packetPayload:NSData?
 	
 	/// Maximum Transmission Unit
-	public var mtu:BLEPlusSerialServiceMTUType = 0
+	var mtu:BLEPlusSerialServiceMTU_Type = 0
 	
 	/// Window size. This is clamped between 0 and BLEPlusSerialServiceMaxWindowSize.
-	public var windowSize:BLEPlusSerialServiceWindowSize_Type {
+	var windowSize:BLEPlusSerialServiceWindowSize_Type {
 		get {
 			return _windowSize
 		} set(new) {
@@ -172,10 +158,10 @@ Control message types.
 	private var _windowSize:BLEPlusSerialServiceWindowSize_Type = BLEPlusSerialServiceDefaultWindowSize
 	
 	/// The packet to resend data from.
-	public var resendFromPacket:BLEPlusSerialServicePacketCountType = 0
+	var resendFromPacket:BLEPlusSerialServicePacketCountType = 0
 	
 	/// The expected message size.
-	public var messageSize:UInt64 = 0
+	var messageSize:UInt64 = 0
 	
 	/**
 	Initialize with the control type. This is only used when there is no other
@@ -185,7 +171,7 @@ Control message types.
 	
 	- returns: BLEPlusSerialServiceMessage
 	*/
-	public init(withType:BLEPlusSerialServiceProtocolMessageType) {
+	init(withType:BLEPlusSerialServiceProtocolMessageType) {
 		super.init()
 		self.protocolType = withType
 		let data = NSMutableData()
@@ -201,13 +187,11 @@ Control message types.
 	
 	- returns: BLEPlusSerialServiceMessage
 	*/
-	public init(withData:NSData?) {
+	init?(withData data:NSData) {
 		super.init()
-		guard let data = withData else {
-			return
-		}
-		self.data = withData
+		self.data = data
 		data.getBytes(&protocolType, range: NSRange.init(location:0, length: sizeof(protocolType.rawValue.dynamicType)))
+		
 		if isValidControlMessage() {
 			
 			if protocolType == .PeerInfo {
@@ -229,13 +213,16 @@ Control message types.
 				messageSize = byteSwapToHost(noMessageSize)
 			}
 			
-			if protocolType == .EndMessage {
+			if protocolType == .EndMessage || protocolType == .EndPart {
 				data.getBytes(&windowSize, range: NSRange.init(location: sizeof(protocolType.rawValue.dynamicType), length: sizeof(windowSize.dynamicType)))
 			}
 			
 			if protocolType == .Data {
 				packetPayload = data.subdataWithRange(NSRange.init(location: 1, length: data.length-1))
 			}
+			
+		} else {
+			return nil
 		}
 	}
 	
@@ -247,7 +234,7 @@ Control message types.
 	
 	- returns: BLEPlusSerialServiceMessage
 	*/
-	public init(peerInfoMessageWithMTU:BLEPlusSerialServiceMTUType, windowSize:BLEPlusSerialServiceWindowSize_Type) {
+	init(peerInfoMessageWithMTU:BLEPlusSerialServiceMTU_Type, windowSize:BLEPlusSerialServiceWindowSize_Type) {
 		super.init()
 		protocolType = .PeerInfo
 		mtu = peerInfoMessageWithMTU
@@ -267,7 +254,7 @@ Control message types.
 	
 	- returns: BLEPlusSerialServiceMessage
 	*/
-	public init(resendMessageWithStartFromPacket:BLEPlusSerialServicePacketCountType) {
+	init(resendMessageWithStartFromPacket:BLEPlusSerialServicePacketCountType) {
 		super.init()
 		protocolType = .Resend
 		resendFromPacket = resendMessageWithStartFromPacket
@@ -284,7 +271,7 @@ Control message types.
 	
 	- returns: BLEPlusSerialServiceMessage
 	*/
-	public init(endMessageWithWindowSize:BLEPlusSerialServiceWindowSize_Type) {
+	init(endMessageWithWindowSize:BLEPlusSerialServiceWindowSize_Type) {
 		super.init()
 		protocolType = .EndMessage
 		windowSize = endMessageWithWindowSize
@@ -301,7 +288,7 @@ Control message types.
 	
 	- returns: BLEPlusSerialServiceMessage
 	*/
-	public init(endPartWithWindowSize:BLEPlusSerialServiceWindowSize_Type) {
+	init(endPartWithWindowSize:BLEPlusSerialServiceWindowSize_Type) {
 		super.init()
 		protocolType = .EndPart
 		windowSize = endPartWithWindowSize
@@ -318,7 +305,7 @@ Control message types.
 	
 	- returns: BLEPlusSerialServiceMessage
 	*/
-	public init(newFileMessageWithExpectedSize:UInt64, messageType:BLEPlusSerialServiceMessageType_Type, messageId:BLEPLusSerialServiceMessageId_Type) {
+	init(newFileMessageWithExpectedSize:UInt64, messageType:BLEPlusSerialServiceMessageType_Type, messageId:BLEPLusSerialServiceMessageId_Type) {
 		super.init()
 		protocolType = .NewFileMessage
 		messageSize = newFileMessageWithExpectedSize
@@ -340,7 +327,7 @@ Control message types.
 	
 	- returns: BLEPlusSerialServiceMessage
 	*/
-	public init(newMessageWithExpectedSize:UInt64, messageType:BLEPlusSerialServiceMessageType_Type, messageId:BLEPLusSerialServiceMessageId_Type) {
+	init(newMessageWithExpectedSize:UInt64, messageType:BLEPlusSerialServiceMessageType_Type, messageId:BLEPLusSerialServiceMessageId_Type) {
 		super.init()
 		protocolType = .NewMessage
 		messageSize = newMessageWithExpectedSize
@@ -362,7 +349,7 @@ Control message types.
 	
 	- returns: BLEPlusSerialServiceMessage
 	*/
-	public init(dataMessageWithData:NSData?) {
+	init(dataMessageWithData:NSData?) {
 		protocolType = .Data
 		if let _data = dataMessageWithData {
 			let data = NSMutableData()
@@ -378,7 +365,7 @@ Control message types.
 	
 	- returns: Bool
 	*/
-	public func isValidControlMessage() -> Bool {
+	func isValidControlMessage() -> Bool {
 		return protocolType.rawValue <= BLEPlusSerialServiceProtocolMessageType.Abort.rawValue
 	}
 	
