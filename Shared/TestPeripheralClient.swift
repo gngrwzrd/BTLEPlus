@@ -43,7 +43,7 @@ public class TestPeripheralClient : BLEPeripheral, BLEPlusSerialServiceControlle
 	}
 	
 	override public func subscribingFinished() {
-		deviceReady = true
+		peripheralReady = true
 		super.subscribingFinished()
 	}
 	
@@ -65,8 +65,8 @@ public class TestPeripheralClient : BLEPeripheral, BLEPlusSerialServiceControlle
 		serialController.pause()
 	}
 	
-	override public func deviceIsReady() {
-		super.deviceIsReady()
+	override public func peripheralIsReady() {
+		super.peripheralIsReady()
 		serialController.resume()
 	}
 	

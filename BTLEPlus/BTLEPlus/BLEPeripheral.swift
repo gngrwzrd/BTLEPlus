@@ -35,7 +35,7 @@ This is the third step in the process. It includes _subscribing to any character
 This is an optional step in which you can include additional steps as part of the
 peripheral setup process. You can override requiresAdditionalSetup() and
 performAdditionalSetup() to add your custom setup into the setup process. You must
-call deviceIsReady() once your additional setup is complete.
+call peripheralIsReady() once your additional setup is complete.
 
 #### Ready Step
 
@@ -43,12 +43,12 @@ This is the last step and the peripheral is considered ready. It's up
 to you to implement communication or specialized behavior with the peripheral after
 this point.
 
-## Device Prototypes
+## Peripheral Prototypes
 
 Peripheral objects aren't created and used directly, instead you create
 a prototype object, and register it with a BTLECentralManager.
 
-When a BTLECentralManager discovers devices, it asks each registered BTLEPeripheral
+When a BTLECentralManager discovers peripherals, it asks each registered BTLEPeripheral
 prototype if it knows how to respond to the advertised services. You can override
 respondsToAdvertisementData(), which tells the central manager if it should
 instantiate your peripheral.
@@ -131,14 +131,14 @@ data to properly decide if your prototype understands the advertised services.
 	/// A custom organization identifier for this peripheral.
 	public var organization:String?
 	
-	/// Whether or not this device should be removed from it's BLECentralManager.
-	/// This is called when a device disconnects.
+	/// Whether or not this peripheral should be removed from it's BLECentralManager.
+	/// This is called when a peripheral disconnects.
 	///
 	/// If false, the peripheral will remain in a disconnected state
 	/// within it's BLECentralManager.
 	///
 	/// If true it's removed from it's BLECentralManager and you'd have
-	/// to scan for the device again.
+	/// to scan for the peripheral again.
 	///
 	/// By default this is true.
 	///
@@ -190,10 +190,10 @@ data to properly decide if your prototype understands the advertised services.
 	/// The timeout for custom additional setup.
 	public var additionalSetupTimeout:NSTimeInterval = 5
 	
-	/// The BLECentralManager that currently is managing this device.
+	/// The BLECentralManager that currently is managing this peripheral.
 	weak var bleCentralManager:BLECentralManager?
 	
-	/// The CBCentralManager for this device.
+	/// The CBCentralManager for this peripheral.
 	weak var btCentralManager:CBCentralManager?
 	
 	/// Utility variable for all retry logic that keeps track of how many more attempts are allowed.
@@ -202,11 +202,11 @@ data to properly decide if your prototype understands the advertised services.
 	/// Utility variable for any timeout required which would trigger another attempt.
 	var timeout:NSTimer?
 	
-	/// Whether or not the device is going through it's setup step before it's considered ready.
+	/// Whether or not the peripheral is going through it's setup step before it's considered ready.
 	/// This flag is needed in order to allow subclasses to override peripheral delegate methods properly.
 	var isInSetup = false
 	
-	/// Whether or not the discover step of device setup is completed.
+	/// Whether or not the discover step of peripheral setup is completed.
 	var discoveryRequirementsCompleted:Bool = false
 	
 	/// The number of services whos characteristics are being discovered.
@@ -234,8 +234,8 @@ data to properly decide if your prototype understands the advertised services.
 	//MARK: Advertisement Data
 	
 	var _advertisementData:BLEAdvertisementData?
-	/// Initial advertisement data when device was discovered. Note that this
-	/// data can also come from user defaults when devices are retrieved from
+	/// Initial advertisement data when peripheral was discovered. Note that this
+	/// data can also come from user defaults when peripherals are retrieved from
 	/// core bluetooth.
 	public var advertisementData:BLEAdvertisementData? {
 		get {
@@ -246,23 +246,23 @@ data to properly decide if your prototype understands the advertised services.
 	}
 	
 	/// This is called when a new BLEPeripheral instance is created from a prototype copy.
-	func wasCopiedFromDevicePrototype(prototype:BLEPeripheral) {
+	func wasCopiedFromPeripheralPrototype(prototype:BLEPeripheral) {
 		attempts = prototype.connectionMaxAttempts
 	}
 	
-	/// You must override this and implement logic that decides if your device
+	/// You must override this and implement logic that decides if your peripheral
 	/// responds to the advertisement data.
 	public func respondsToAdvertisementData(advertisementData:BLEAdvertisementData) -> Bool {
 		return false
 	}
 	
-	/// Called when a device receives more advertisement data. This can happen
-	/// when device discovery is running. Core bluetooth will send multiple
-	/// device discovered for the same peripheral, but with more data.
+	/// Called when a peripheral receives more advertisement data. This can happen
+	/// when peripheral discovery is running. Core bluetooth will send multiple
+	/// peripheral discovered for the same peripheral, but with more data.
 	func receivedMoreAdvertisementData(newData:BLEAdvertisementData) {
 		advertisementData?.append(newData)
-		if deviceReady {
-			bleCentralManager?.saveKnownDevice(self, advertisementData: advertisementData)
+		if peripheralReady {
+			bleCentralManager?.saveKnownPeripheral(self, advertisementData: advertisementData)
 		}
 	}
 	
@@ -280,10 +280,10 @@ data to properly decide if your prototype understands the advertised services.
 	
 	//MARK: Connectivity
 	
-	/// You can override this to be notified of when a device was discovered. It's
-	/// also called when a device is `retrieved` from core bluetooth and considered discovered.
+	/// You can override this to be notified of when a peripheral was discovered. It's
+	/// also called when a peripheral is `retrieved` from core bluetooth and considered discovered.
 	public func wasDiscovered() {
-		bleCentralManager?.delegate?.bleCentralManagerDidDiscoverDevice?(bleCentralManager!, device: self)
+		bleCentralManager?.delegate?.bleCentralManagerDidDiscoverPeripheral?(bleCentralManager!, peripheral: self)
 	}
 	
 	/// This starts the connect process with core bluetooth.
@@ -299,11 +299,11 @@ data to properly decide if your prototype understands the advertised services.
 		retryConnect()
 	}
 	
-	/// When the device is connected. The device has only been connected
+	/// When the peripheral is connected. The peripheral has only been connected
 	/// and not ready for use yet.
 	func connected() {
 		cbPeripheral?.delegate = self
-		bleCentralManager?.delegate?.blePeripheralConnected?(bleCentralManager!, device: self)
+		bleCentralManager?.delegate?.blePeripheralConnected?(bleCentralManager!, peripheral: self)
 		discoverServices()
 	}
 	
@@ -318,7 +318,7 @@ data to properly decide if your prototype understands the advertised services.
 		}
 		if let peripheral = self.cbPeripheral {
 			discoveryRequirementsCompleted = false
-			deviceReady = false
+			peripheralReady = false
 			startConnectTimeout()
 			btCentralManager?.connectPeripheral(peripheral, options: nil)
 		}
@@ -352,16 +352,16 @@ data to properly decide if your prototype understands the advertised services.
 	/// This is called when max connection attempts have been
 	/// made and it still won't connect.
 	func connectFailed() {
-		bleCentralManager?.delegate?.blePeripheralFailedToConnect?(bleCentralManager!, device: self, error: setupOutgoingError)
+		bleCentralManager?.delegate?.blePeripheralFailedToConnect?(bleCentralManager!, peripheral: self, error: setupOutgoingError)
 		internal_disconnect()
 		if canBeRemovedFromManager {
-			bleCentralManager?.removeDevice(self)
+			bleCentralManager?.removePeripheral(self)
 		}
 	}
 	
-	/// Disconnect this device. Once disconnected the device will be removed
+	/// Disconnect this peripheral. Once disconnected the peripheral will be removed
 	/// from the BLECentralManager. You can optionally override `canBeRemovedFromManager()`
-	/// to allow the device to continue living in a disconnected state.
+	/// to allow the peripheral to continue living in a disconnected state.
 	func disconnect() {
 		disconnectWasInternal = false
 		if cbPeripheral?.state == CBPeripheralState.Disconnected {
@@ -386,7 +386,7 @@ data to properly decide if your prototype understands the advertised services.
 	
 	/// Called when the peripheral is disconnected.
 	public func onDisconnected() {
-		bleCentralManager?.delegate?.blePeripheralDisconnected?(bleCentralManager!, device: self)
+		bleCentralManager?.delegate?.blePeripheralDisconnected?(bleCentralManager!, peripheral: self)
 		
 		isInSetup = false
 		cbPeripheral?.delegate = nil
@@ -396,16 +396,16 @@ data to properly decide if your prototype understands the advertised services.
 		}
 		
 		if !shouldReconnectOnDisconnect && canBeRemovedFromManager {
-			bleCentralManager?.removeDevice(self)
+			bleCentralManager?.removePeripheral(self)
 		}
 	}
 	
-	/// When the BLECentralManager receives a disconnect for this device.
+	/// When the BLECentralManager receives a disconnect for this peripheral.
 	func btCentralManagerReceivedDisconnect() {
 		onDisconnected()
 	}
 	
-	/// When the BLECentralManager receives a disconnect for this device and receives and error.
+	/// When the BLECentralManager receives a disconnect for this peripheral and receives and error.
 	func btCentralManagerReceivedDisconnectError(error:NSError?) {
 		lastDisconnectError = error
 		setupOutgoingError = error
@@ -414,24 +414,24 @@ data to properly decide if your prototype understands the advertised services.
 	
 	//MARK: Peripheral Ready
 	
-	/// Whether or not this device is ready. BLEPeripheral uses this as a flag
+	/// Whether or not this peripheral is ready. BLEPeripheral uses this as a flag
 	/// in numerous places to skip parts of the discovery / subscribe
 	/// step if subclasses set it to true.
-	public var deviceReady = false
+	public var peripheralReady = false
 	
-	/// Returns whether the device is considered ready. You can override this
-	/// to provide your own logic that decides of the device is ready.
-	public func isDeviceReady() -> Bool {
-		return deviceReady
+	/// Returns whether the peripheral is considered ready. You can override this
+	/// to provide your own logic that decides of the peripheral is ready.
+	public func isPeripheralReady() -> Bool {
+		return peripheralReady
 	}
 	
-	/// When the device is ready this is called.
-	public func deviceIsReady() {
+	/// When the peripheral is ready this is called.
+	public func peripheralIsReady() {
 		timeout?.invalidate()
 		timeout = nil
 		isInSetup = false
-		bleCentralManager?.saveKnownDevice(self,advertisementData: advertisementData)
-		bleCentralManager?.delegate?.blePeripheralIsReady?(bleCentralManager!, device: self)
+		bleCentralManager?.saveKnownPeripheral(self,advertisementData: advertisementData)
+		bleCentralManager?.delegate?.blePeripheralIsReady?(bleCentralManager!, peripheral: self)
 	}
 	
 	/// Called when the discovery step is being retried.
@@ -447,7 +447,7 @@ data to properly decide if your prototype understands the advertised services.
 	/// Called when the discover step failed after max discover attempts has passed.
 	func discoveryStepFailed() {
 		internal_disconnect()
-		bleCentralManager?.delegate?.blePeripheralSetupFailed?(bleCentralManager!, device: self, error: setupOutgoingError)
+		bleCentralManager?.delegate?.blePeripheralSetupFailed?(bleCentralManager!, peripheral: self, error: setupOutgoingError)
 	}
 	
 	/// Called when descriptor discovery completed.
@@ -458,7 +458,7 @@ data to properly decide if your prototype understands the advertised services.
 	/// Called when the subscribe step failed after max subscribe attempts has passed.
 	func subscribeStepFailed() {
 		internal_disconnect()
-		bleCentralManager?.delegate?.blePeripheralSetupFailed?(bleCentralManager!, device: self, error: setupOutgoingError)
+		bleCentralManager?.delegate?.blePeripheralSetupFailed?(bleCentralManager!, peripheral: self, error: setupOutgoingError)
 	}
 	
 	//MARK: Service Discovery
@@ -547,11 +547,11 @@ data to properly decide if your prototype understands the advertised services.
 		discoveryStepFailed()
 	}
 	
-	/// When services are invalidated, your device goes through the setup process
+	/// When services are invalidated, your peripheral goes through the setup process
 	/// again to discover services, included services, characteristics and descriptors.
 	public func servicesWereInvalidated() {
 		discoveryRequirementsCompleted = false
-		deviceReady = false
+		peripheralReady = false
 		discoverServices()
 	}
 	
@@ -992,15 +992,15 @@ data to properly decide if your prototype understands the advertised services.
 			return
 		}
 		
-		if isDeviceReady() {
-			deviceIsReady()
+		if isPeripheralReady() {
+			peripheralIsReady()
 		}
 	}
 	
 	//MARK: Additional setup
 	
 	/// You can override this if you require
-	/// additional work as part of the device setup process.
+	/// additional work as part of the peripheral setup process.
 	public func requiresAdditionalSetup() -> Bool {
 		return false
 	}
@@ -1039,7 +1039,7 @@ data to properly decide if your prototype understands the advertised services.
 	public func additionalSetupFailed() {
 		let userinfo = [NSLocalizedDescriptionKey:"Additional setup timed out."];
 		let error = NSError(domain: "ble", code: 0, userInfo: userinfo)
-		bleCentralManager?.delegate?.blePeripheralSetupFailed?(bleCentralManager!, device: self, error: error)
+		bleCentralManager?.delegate?.blePeripheralSetupFailed?(bleCentralManager!, peripheral: self, error: error)
 	}
 	
 	//MARK: Utils
