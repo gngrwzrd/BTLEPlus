@@ -5,7 +5,7 @@ import CoreBluetooth
 BLECentralManagerDelegate is the protocol you implement to receive
 events from a BLECentralManager.
 */
-@objc public protocol BLECentralManagerDelegate {
+@objc public protocol BTLECentralManagerDelegate {
 	
 	//MARK: - BLECentralManager Callbacks
 	
@@ -14,21 +14,21 @@ events from a BLECentralManager.
 	
 	- parameter manager: BLECentralManager
 	*/
-	optional func bleCentralManagerDidTurnOnBluetooth(manager:BLECentralManager)
+	optional func btleCentralManagerDidTurnOnBluetooth(manager:BTLECentralManager)
 	
 	/**
 	Bluetooth was turned off.
 	
 	- parameter manager: BLECentralManager
 	*/
-	optional func bleCentralManagerDidTurnOffBluetooth(manager:BLECentralManager)
+	optional func btleCentralManagerDidTurnOffBluetooth(manager:BTLECentralManager)
 	
 	/**
 	Bluetooth is resetting.
 	
 	- parameter manager: BLECentralManager
 	*/
-	optional func bleCentralManagerBluetoothIsResetting(manager:BLECentralManager)
+	optional func btleCentralManagerBluetoothIsResetting(manager:BTLECentralManager)
 	
 	/**
 	A perihperal was discovered.
@@ -36,7 +36,7 @@ events from a BLECentralManager.
 	- parameter manager: BLECentralManager
 	- parameter peripheral:  BLEPeripheral
 	*/
-	optional func bleCentralManagerDidDiscoverPeripheral(manager:BLECentralManager,peripheral:BLEPeripheral)
+	optional func btleCentralManagerDidDiscoverPeripheral(manager:BTLECentralManager,peripheral:BLEPeripheral)
 	
 	/**
 	Receive raw state updates from the internal CBCentralManager.
@@ -44,56 +44,56 @@ events from a BLECentralManager.
 	- parameter manager:	BLECentralManager
 	- parameter state:   CBCentralManagerState
 	*/
-	optional func bleCentralManagerDidUpdateState(manager:BLECentralManager,state:CBCentralManagerState)
+	optional func btleCentralManagerDidUpdateState(manager:BTLECentralManager,state:CBCentralManagerState)
 	
 	//MARK: BLEPeripheral Callbacks
 	
 	/**
 	A peripheral connected successfully.
 	
-	- parameter manager: BLECentralManager
+	- parameter manager: BTLECentralManager
 	- parameter peripheral:  BLEPeripheral
 	*/
-	optional func blePeripheralConnected(manager:BLECentralManager,peripheral:BLEPeripheral)
+	optional func btlePeripheralConnected(manager:BTLECentralManager,peripheral:BLEPeripheral)
 	
 	/**
 	A peripheral failed to connect after BLEPeripheral.maxConnectionAttempts were tried.
 	
-	- parameter manager: BLECentralManager
+	- parameter manager: BTLECentralManager
 	- parameter peripheral:  BLEPeripheral
 	- parameter error:   NSError
 	*/
-	optional func blePeripheralFailedToConnect(manager:BLECentralManager,peripheral:BLEPeripheral,error:NSError?)
+	optional func btlePeripheralFailedToConnect(manager:BTLECentralManager,peripheral:BLEPeripheral,error:NSError?)
 	
 	/**
 	A peripheral disconnected.
 	
-	- parameter manager: BLECentralManager
+	- parameter manager: BTLECentralManager
 	- parameter peripheral:  BLEPeripheral
 	*/
-	optional func blePeripheralDisconnected(manager:BLECentralManager,peripheral:BLEPeripheral)
+	optional func btlePeripheralDisconnected(manager:BTLECentralManager,peripheral:BLEPeripheral)
 	
 	/**
 	A peripheral failed it's setup process. See BLEPeripheral for more information about the
 	setup process.
 	
-	- parameter manager:	BLECentralManager
+	- parameter manager:	BTLECentralManager
 	- parameter peripheral:  BLEPeripheral
 	- parameter error:   NSError
 	*/
-	optional func blePeripheralSetupFailed(manager:BLECentralManager,peripheral:BLEPeripheral,error:NSError?)
+	optional func btlePeripheralSetupFailed(manager:BTLECentralManager,peripheral:BLEPeripheral,error:NSError?)
 	
 	/**
 	A peripheral is ready to use.
 	
-	- parameter manager:	BLECentralManager
+	- parameter manager:	BTLECentralManager
 	- parameter peripheral:	BLEPeripheral
 	*/
-	optional func blePeripheralIsReady(manager:BLECentralManager,peripheral:BLEPeripheral)
+	optional func btlePeripheralIsReady(manager:BTLECentralManager,peripheral:BLEPeripheral)
 }
 
 /**
-The BLECentralManager class scans for peripherals and manages discovered peripherals.
+The BTLECentralManager class scans for peripherals and manages discovered peripherals.
 
 You need to subclass BLEPeripheral, and register a peripheral prototype in order for
 the manager to instantiate your peripheral instances.
@@ -102,7 +102,7 @@ the manager to instantiate your peripheral instances.
 
 ````
 //create a manager
-let myManager = BLECentralManager(withDelegate: self)
+let myManager = BTLECentralManager(withDelegate: self)
 //
 //create a prototype instance.
 let myPeripheral = MyBLEPeripheral()
@@ -116,12 +116,12 @@ myManager.registerPeripehralPrototype(myPeripheral)
 You are required to subclass BLEPeripheral, and override _respondsToAdvertisementData()_
 so that the manager can instantiate a new peripheral based on your prototype.
 */
-@objc public class BLECentralManager : NSObject, CBCentralManagerDelegate {
+@objc public class BTLECentralManager : NSObject, CBCentralManagerDelegate {
 	
 	//MARK: - Configuration
 	
-	/// Delegate that receives BLECentralManagerDelegate callbacks.
-	public var delegate:BLECentralManagerDelegate?
+	/// Delegate that receives BTLECentralManagerDelegate callbacks.
+	public var delegate:BTLECentralManagerDelegate?
 	
 	/// Set this to change what the user defaults key is that stores known peripherals.
 	public var knownPeripheralsDefaultsKey = "BLEKnownPeripherals"
@@ -148,7 +148,7 @@ so that the manager can instantiate a new peripheral based on your prototype.
 	/// Prototype instances - these are copied when a prototype instance can respond and communicate with a peripheral.
 	var peripheralPrototypes:[BLEPeripheral] = []
 	
-	/// All peripheral instances known to BLECentralManager.
+	/// All peripheral instances known to BTLECentralManager.
 	var peripherals:[BLEPeripheral] = []
 	
 	/// Advertisement data collected during scan phase. This is collected as multiple messages
@@ -169,11 +169,11 @@ so that the manager can instantiate a new peripheral based on your prototype.
 	//MARK: - Initializers
 	
 	/**
-	Create a default BLECentralManager using a high priority queue.
+	Create a default BTLECentralManager using a high priority queue.
 	
-	- returns: BLECentralManager
+	- returns: BTLECentralManager
 	*/
-	public init(withDelegate delegate:BLECentralManagerDelegate) {
+	public init(withDelegate delegate:BTLECentralManagerDelegate) {
 		btCentralManagerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
 		super.init()
 		self.delegate = delegate
@@ -181,13 +181,13 @@ so that the manager can instantiate a new peripheral based on your prototype.
 	}
 	
 	/**
-	Create a BLECentralManager that runs on a custom dispatch queue.
+	Create a BTLECentralManager that runs on a custom dispatch queue.
 	
 	- parameter queue: the dispatch_queue_t
 	
-	- returns: BLECentralManager
+	- returns: BTLECentralManager
 	*/
-	public init(withDelegate delegate:BLECentralManagerDelegate, queue:dispatch_queue_t) {
+	public init(withDelegate delegate:BTLECentralManagerDelegate, queue:dispatch_queue_t) {
 		btCentralManagerQueue = queue
 		super.init()
 		self.delegate = delegate
@@ -197,7 +197,7 @@ so that the manager can instantiate a new peripheral based on your prototype.
 	//utility to copy a peripheral prototype
 	private func copyPrototype(prototype:BLEPeripheral, advertisementData:BLEAdvertisementData?, peripheral:CBPeripheral?) -> BLEPeripheral? {
 		if let newDevice = prototype.copy() as? BLEPeripheral {
-			newDevice.bleCentralManager = self
+			newDevice.btleCentralManager = self
 			newDevice.btCentralManager = btCentralManager
 			newDevice.advertisementData = advertisementData
 			newDevice.tag = prototype.tag
@@ -423,7 +423,7 @@ so that the manager can instantiate a new peripheral based on your prototype.
 	//MARK: - Finding Discovered Peripherals
 	
 	/**
-	All current BLEPeripherals that BLECentralManager is managing.
+	All current BLEPeripherals that BTLECentralManager is managing.
 	
 	- returns: Array of BLEPeripheral instances.
 	*/
@@ -560,17 +560,17 @@ so that the manager can instantiate a new peripheral based on your prototype.
 	
 	/// Called when bluetooth is powered on.
 	private func poweredOn() {
-		delegate?.bleCentralManagerDidTurnOnBluetooth?(self)
+		delegate?.btleCentralManagerDidTurnOnBluetooth?(self)
 	}
 	
 	/// Called when bluetooth is powered off.
 	private func poweredOff() {
-		delegate?.bleCentralManagerDidTurnOffBluetooth?(self)
+		delegate?.btleCentralManagerDidTurnOffBluetooth?(self)
 	}
 	
 	/// Called with bluetooth is resetting
 	private func resetting() {
-		delegate?.bleCentralManagerBluetoothIsResetting?(self)
+		delegate?.btleCentralManagerBluetoothIsResetting?(self)
 	}
 	
 	/// Called for decive discovery

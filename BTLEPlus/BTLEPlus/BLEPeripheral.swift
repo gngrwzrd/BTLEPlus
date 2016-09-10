@@ -17,9 +17,9 @@ max attemps.
 
 #### Connect Step
 
-This is the first step in the process and is handled by a BLECentralManager.
+This is the first step in the process and is handled by a BTLECentralManager.
 After your central discovers peripherals, you connect to the desired peripheral with
-_myBLECentralManager.connect(peripheral:)_.
+_myBTLECentralManager.connect(peripheral:)_.
 
 #### Discovery Step
 
@@ -131,11 +131,11 @@ data to properly decide if your prototype understands the advertised services.
 	/// A custom organization identifier for this peripheral.
 	public var organization:String?
 	
-	/// Whether or not this peripheral should be removed from it's BLECentralManager.
+	/// Whether or not this peripheral should be removed from it's BTLECentralManager.
 	/// This is called when a peripheral disconnects.
 	///
 	/// If false, the peripheral will remain in a disconnected state
-	/// within it's BLECentralManager.
+	/// within it's BTLECentralManager.
 	///
 	/// If true it's removed from it's BLECentralManager and you'd have
 	/// to scan for the peripheral again.
@@ -191,7 +191,7 @@ data to properly decide if your prototype understands the advertised services.
 	public var additionalSetupTimeout:NSTimeInterval = 5
 	
 	/// The BLECentralManager that currently is managing this peripheral.
-	weak var bleCentralManager:BLECentralManager?
+	weak var btleCentralManager:BTLECentralManager?
 	
 	/// The CBCentralManager for this peripheral.
 	weak var btCentralManager:CBCentralManager?
@@ -262,7 +262,7 @@ data to properly decide if your prototype understands the advertised services.
 	func receivedMoreAdvertisementData(newData:BLEAdvertisementData) {
 		advertisementData?.append(newData)
 		if peripheralReady {
-			bleCentralManager?.saveKnownPeripheral(self, advertisementData: advertisementData)
+			btleCentralManager?.saveKnownPeripheral(self, advertisementData: advertisementData)
 		}
 	}
 	
@@ -283,7 +283,7 @@ data to properly decide if your prototype understands the advertised services.
 	/// You can override this to be notified of when a peripheral was discovered. It's
 	/// also called when a peripheral is `retrieved` from core bluetooth and considered discovered.
 	public func wasDiscovered() {
-		bleCentralManager?.delegate?.bleCentralManagerDidDiscoverPeripheral?(bleCentralManager!, peripheral: self)
+		btleCentralManager?.delegate?.btleCentralManagerDidDiscoverPeripheral?(btleCentralManager!, peripheral: self)
 	}
 	
 	/// This starts the connect process with core bluetooth.
@@ -303,7 +303,7 @@ data to properly decide if your prototype understands the advertised services.
 	/// and not ready for use yet.
 	func connected() {
 		cbPeripheral?.delegate = self
-		bleCentralManager?.delegate?.blePeripheralConnected?(bleCentralManager!, peripheral: self)
+		btleCentralManager?.delegate?.btlePeripheralConnected?(btleCentralManager!, peripheral: self)
 		discoverServices()
 	}
 	
@@ -352,15 +352,15 @@ data to properly decide if your prototype understands the advertised services.
 	/// This is called when max connection attempts have been
 	/// made and it still won't connect.
 	func connectFailed() {
-		bleCentralManager?.delegate?.blePeripheralFailedToConnect?(bleCentralManager!, peripheral: self, error: setupOutgoingError)
+		btleCentralManager?.delegate?.btlePeripheralFailedToConnect?(btleCentralManager!, peripheral: self, error: setupOutgoingError)
 		internal_disconnect()
 		if canBeRemovedFromManager {
-			bleCentralManager?.removePeripheral(self)
+			btleCentralManager?.removePeripheral(self)
 		}
 	}
 	
 	/// Disconnect this peripheral. Once disconnected the peripheral will be removed
-	/// from the BLECentralManager. You can optionally override `canBeRemovedFromManager()`
+	/// from the BTLECentralManager. You can optionally override `canBeRemovedFromManager()`
 	/// to allow the peripheral to continue living in a disconnected state.
 	func disconnect() {
 		disconnectWasInternal = false
@@ -386,7 +386,7 @@ data to properly decide if your prototype understands the advertised services.
 	
 	/// Called when the peripheral is disconnected.
 	public func onDisconnected() {
-		bleCentralManager?.delegate?.blePeripheralDisconnected?(bleCentralManager!, peripheral: self)
+		btleCentralManager?.delegate?.btlePeripheralDisconnected?(btleCentralManager!, peripheral: self)
 		
 		isInSetup = false
 		cbPeripheral?.delegate = nil
@@ -396,16 +396,16 @@ data to properly decide if your prototype understands the advertised services.
 		}
 		
 		if !shouldReconnectOnDisconnect && canBeRemovedFromManager {
-			bleCentralManager?.removePeripheral(self)
+			btleCentralManager?.removePeripheral(self)
 		}
 	}
 	
-	/// When the BLECentralManager receives a disconnect for this peripheral.
+	/// When the BTLECentralManager receives a disconnect for this peripheral.
 	func btCentralManagerReceivedDisconnect() {
 		onDisconnected()
 	}
 	
-	/// When the BLECentralManager receives a disconnect for this peripheral and receives and error.
+	/// When the BTLECentralManager receives a disconnect for this peripheral and receives and error.
 	func btCentralManagerReceivedDisconnectError(error:NSError?) {
 		lastDisconnectError = error
 		setupOutgoingError = error
@@ -430,8 +430,8 @@ data to properly decide if your prototype understands the advertised services.
 		timeout?.invalidate()
 		timeout = nil
 		isInSetup = false
-		bleCentralManager?.saveKnownPeripheral(self,advertisementData: advertisementData)
-		bleCentralManager?.delegate?.blePeripheralIsReady?(bleCentralManager!, peripheral: self)
+		btleCentralManager?.saveKnownPeripheral(self,advertisementData: advertisementData)
+		btleCentralManager?.delegate?.btlePeripheralIsReady?(btleCentralManager!, peripheral: self)
 	}
 	
 	/// Called when the discovery step is being retried.
@@ -447,7 +447,7 @@ data to properly decide if your prototype understands the advertised services.
 	/// Called when the discover step failed after max discover attempts has passed.
 	func discoveryStepFailed() {
 		internal_disconnect()
-		bleCentralManager?.delegate?.blePeripheralSetupFailed?(bleCentralManager!, peripheral: self, error: setupOutgoingError)
+		btleCentralManager?.delegate?.btlePeripheralSetupFailed?(btleCentralManager!, peripheral: self, error: setupOutgoingError)
 	}
 	
 	/// Called when descriptor discovery completed.
@@ -458,7 +458,7 @@ data to properly decide if your prototype understands the advertised services.
 	/// Called when the subscribe step failed after max subscribe attempts has passed.
 	func subscribeStepFailed() {
 		internal_disconnect()
-		bleCentralManager?.delegate?.blePeripheralSetupFailed?(bleCentralManager!, peripheral: self, error: setupOutgoingError)
+		btleCentralManager?.delegate?.btlePeripheralSetupFailed?(btleCentralManager!, peripheral: self, error: setupOutgoingError)
 	}
 	
 	//MARK: Service Discovery
@@ -1039,7 +1039,7 @@ data to properly decide if your prototype understands the advertised services.
 	public func additionalSetupFailed() {
 		let userinfo = [NSLocalizedDescriptionKey:"Additional setup timed out."];
 		let error = NSError(domain: "ble", code: 0, userInfo: userinfo)
-		bleCentralManager?.delegate?.blePeripheralSetupFailed?(bleCentralManager!, peripheral: self, error: error)
+		btleCentralManager?.delegate?.btlePeripheralSetupFailed?(btleCentralManager!, peripheral: self, error: error)
 	}
 	
 	//MARK: Utils
