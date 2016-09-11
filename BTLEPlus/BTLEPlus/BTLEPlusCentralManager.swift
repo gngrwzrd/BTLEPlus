@@ -2,38 +2,38 @@
 import CoreBluetooth
 
 /**
-BLECentralManagerDelegate is the protocol you implement to receive
-events from a BLECentralManager.
+BTLEPlusCentralManagerDelegate is the protocol you implement to receive
+events from a BTLEPlusCentralManager.
 */
 @objc public protocol BTLEPlusCentralManagerDelegate {
 	
-	//MARK: - BLECentralManager Callbacks
+	//MARK: - BTLEPlusCentralManager Callbacks
 	
 	/**
 	Bluetooth was turned on.
 	
-	- parameter manager: BLECentralManager
+	- parameter manager: BTLEPlusCentralManager
 	*/
 	optional func btleCentralManagerDidTurnOnBluetooth(manager:BTLEPlusCentralManager)
 	
 	/**
 	Bluetooth was turned off.
 	
-	- parameter manager: BLECentralManager
+	- parameter manager: BTLEPlusCentralManager
 	*/
 	optional func btleCentralManagerDidTurnOffBluetooth(manager:BTLEPlusCentralManager)
 	
 	/**
 	Bluetooth is resetting.
 	
-	- parameter manager: BLECentralManager
+	- parameter manager: BTLEPlusCentralManager
 	*/
 	optional func btleCentralManagerBluetoothIsResetting(manager:BTLEPlusCentralManager)
 	
 	/**
 	A perihperal was discovered.
 	
-	- parameter manager: BLECentralManager
+	- parameter manager: BTLEPlusCentralManager
 	- parameter peripheral:  BTLEPlusPeripheral
 	*/
 	optional func btleCentralManagerDidDiscoverPeripheral(manager:BTLEPlusCentralManager,peripheral:BTLEPlusPeripheral)
@@ -41,7 +41,7 @@ events from a BLECentralManager.
 	/**
 	Receive raw state updates from the internal CBCentralManager.
 	
-	- parameter manager:	BLECentralManager
+	- parameter manager:	BTLEPlusCentralManager
 	- parameter state:   CBCentralManagerState
 	*/
 	optional func btleCentralManagerDidUpdateState(manager:BTLEPlusCentralManager,state:CBCentralManagerState)

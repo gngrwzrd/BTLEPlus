@@ -482,6 +482,7 @@ a delegate callback.
 			if expectingAck {
 				self.startResendControlMessageTimer()
 			} else {
+				self.currentSendControl = nil
 				self.stopResendControlMessageTimer()
 			}
 		}

@@ -1,3 +1,5 @@
+Make PeerInfo ack from both sides
+
 Can I take out discoverRequirementsCompleted in BLETPlusPeriperal?
 
 Impement Reset

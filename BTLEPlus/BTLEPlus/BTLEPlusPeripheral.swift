@@ -139,7 +139,7 @@ data to properly decide if your prototype understands the advertised services.
 	/// If false, the peripheral will remain in a disconnected state
 	/// within it's BTLECentralManager.
 	///
-	/// If true it's removed from it's BLECentralManager and you'd have
+	/// If true it's removed from it's BTLEPlusCentralManager and you'd have
 	/// to scan for the peripheral again.
 	///
 	/// Default is true.
@@ -176,7 +176,7 @@ data to properly decide if your prototype understands the advertised services.
 	/// The timeout length before retrying the current step.
 	public var attemptTimeoutLength:NSTimeInterval = 5
 	
-	/// The BLECentralManager that currently is managing this peripheral.
+	/// The BTLEPlusCentralManager that currently is managing this peripheral.
 	weak var btleCentralManager:BTLEPlusCentralManager?
 	
 	/// The CBCentralManager for this peripheral.

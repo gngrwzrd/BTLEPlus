@@ -37,8 +37,8 @@
 		078A35251D826643000CCBB1 /* BTLEPlusSerialServicePacketReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E71D8265A0000CCBB1 /* BTLEPlusSerialServicePacketReceiver.swift */; };
 		078A35261D826643000CCBB1 /* BTLEPlusSerialServiceProtocolMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E81D8265A0000CCBB1 /* BTLEPlusSerialServiceProtocolMessage.swift */; };
 		07E997911D82FDA1004E3624 /* OptionsSetType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E997901D82FDA1004E3624 /* OptionsSetType+Extensions.swift */; };
-		07E997931D839DAD004E3624 /* BTLEPlusSerialServiceProtocolMessage-DocExclude.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E997921D839DAD004E3624 /* BTLEPlusSerialServiceProtocolMessage-DocExclude.swift */; };
-		07E997941D83C5FD004E3624 /* BTLEPlusSerialServiceProtocolMessage-DocExclude.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E997921D839DAD004E3624 /* BTLEPlusSerialServiceProtocolMessage-DocExclude.swift */; };
+		07E997931D839DAD004E3624 /* BTLEPlusSerialServiceProtocolMessageExcludes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E997921D839DAD004E3624 /* BTLEPlusSerialServiceProtocolMessageExcludes.swift */; };
+		07E997941D83C5FD004E3624 /* BTLEPlusSerialServiceProtocolMessageExcludes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E997921D839DAD004E3624 /* BTLEPlusSerialServiceProtocolMessageExcludes.swift */; };
 		07E997951D83C5FD004E3624 /* OptionsSetType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E997901D82FDA1004E3624 /* OptionsSetType+Extensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -81,7 +81,7 @@
 		078A35181D826638000CCBB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		078A35891D826F7D000CCBB1 /* TODO.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = TODO.txt; path = ../TODO.txt; sourceTree = "<group>"; };
 		07E997901D82FDA1004E3624 /* OptionsSetType+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OptionsSetType+Extensions.swift"; sourceTree = "<group>"; };
-		07E997921D839DAD004E3624 /* BTLEPlusSerialServiceProtocolMessage-DocExclude.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BTLEPlusSerialServiceProtocolMessage-DocExclude.swift"; sourceTree = "<group>"; };
+		07E997921D839DAD004E3624 /* BTLEPlusSerialServiceProtocolMessageExcludes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTLEPlusSerialServiceProtocolMessageExcludes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,9 +136,9 @@
 			children = (
 				078A34C61D826580000CCBB1 /* BTLEPlus.h */,
 				078A35861D826E9D000CCBB1 /* DIscovery */,
-				078A35871D826EB5000CCBB1 /* Resources */,
 				078A35841D826E72000CCBB1 /* Serial Service */,
 				078A35881D826EF2000CCBB1 /* Utils */,
+				078A35871D826EB5000CCBB1 /* Resources */,
 			);
 			path = BTLEPlus;
 			sourceTree = "<group>";
@@ -177,8 +177,8 @@
 				078A34E51D8265A0000CCBB1 /* BTLEPlusSerialServiceMessage.swift */,
 				078A34E61D8265A0000CCBB1 /* BTLEPlusSerialServicePacketProvider.swift */,
 				078A34E71D8265A0000CCBB1 /* BTLEPlusSerialServicePacketReceiver.swift */,
-				07E997921D839DAD004E3624 /* BTLEPlusSerialServiceProtocolMessage-DocExclude.swift */,
 				078A34E81D8265A0000CCBB1 /* BTLEPlusSerialServiceProtocolMessage.swift */,
+				07E997921D839DAD004E3624 /* BTLEPlusSerialServiceProtocolMessageExcludes.swift */,
 			);
 			name = "Serial Service";
 			sourceTree = "<group>";
@@ -364,7 +364,7 @@
 				07E997911D82FDA1004E3624 /* OptionsSetType+Extensions.swift in Sources */,
 				078A34F21D8265A0000CCBB1 /* BTLEPlusSerialServiceController.swift in Sources */,
 				078A34F41D8265A0000CCBB1 /* BTLEPlusSerialServicePacketProvider.swift in Sources */,
-				07E997931D839DAD004E3624 /* BTLEPlusSerialServiceProtocolMessage-DocExclude.swift in Sources */,
+				07E997931D839DAD004E3624 /* BTLEPlusSerialServiceProtocolMessageExcludes.swift in Sources */,
 				078A34F51D8265A0000CCBB1 /* BTLEPlusSerialServicePacketReceiver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -388,7 +388,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				07E997941D83C5FD004E3624 /* BTLEPlusSerialServiceProtocolMessage-DocExclude.swift in Sources */,
+				07E997941D83C5FD004E3624 /* BTLEPlusSerialServiceProtocolMessageExcludes.swift in Sources */,
 				07E997951D83C5FD004E3624 /* OptionsSetType+Extensions.swift in Sources */,
 				078A351C1D826643000CCBB1 /* BTLEAdvertisementData.swift in Sources */,
 				078A351D1D826643000CCBB1 /* BTLEPlusCentralManager.swift in Sources */,
