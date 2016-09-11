@@ -11,7 +11,7 @@ jazzy jazzy --xcodebuild-arguments \
 "-scheme,BTLEPlus,-workspace,BTLEPlus.xcworkspace" \
 --theme="Jazzy/BTLEPlus/" \
 --output="Docs/BTLEPlus" \
---exclude="BTLEPlus/BTLEPlus/BLEPlusSerialServiceProtocolMessage-DocExclude.swift"
+--exclude="BTLEPlus/BTLEPlus/BTLEPlusSerialServiceProtocolMessage-DocExclude.swift"
 
 echo "Generate BTLEPlusIOS Framework Docs"
 jazzy jazzy --xcodebuild-arguments "-scheme,BTLEPlusIOS,-workspace,BTLEPlus.xcworkspace" --theme="Jazzy/BTLEPlus/" --output="Docs/BTLEPlusIOS"

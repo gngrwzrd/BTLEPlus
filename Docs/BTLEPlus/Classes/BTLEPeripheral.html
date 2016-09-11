@@ -1,0 +1,2203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>BTLEPeripheral Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Class/BTLEPeripheral" class="dashAnchor"></a>
+
+    <a title="BTLEPeripheral Class Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+           Docs
+        </a>
+         (90% documented)
+      </p>
+    
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html"> Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      BTLEPeripheral Class Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLEAdvertisementData.html">BTLEAdvertisementData</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLECentralManager.html">BTLECentralManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLEPeripheral.html">BTLEPeripheral</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLEPlus.html">BTLEPlus</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLEPlusSerialServiceController.html">BTLEPlusSerialServiceController</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLEPlusSerialServiceMessage.html">BTLEPlusSerialServiceMessage</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Global Variables.html">Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Global Variables.html#/s:v8BTLEPlus31BTLEPlusSerialServiceDefaultMTUVs6UInt16">BTLEPlusSerialServiceDefaultMTU</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Global Variables.html#/s:v8BTLEPlus38BTLEPlusSerialServiceDefaultWindowSizeVs5UInt8">BTLEPlusSerialServiceDefaultWindowSize</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Global Variables.html#/s:v8BTLEPlus33BTLEPlusSerialServiceMaxMessageIdVs5UInt8">BTLEPlusSerialServiceMaxMessageId</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Global Variables.html#/s:v8BTLEPlus34BTLEPlusSerialServiceMaxWindowSizeVs5UInt8">BTLEPlusSerialServiceMaxWindowSize</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/BTLEPlusSerialServiceRunMode.html">BTLEPlusSerialServiceRunMode</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/OptionSetType.html">OptionSetType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/BTLECentralManagerDelegate.html">BTLECentralManagerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/BTLEPlusSerialServiceControllerDelegate.html">BTLEPlusSerialServiceControllerDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Typealiases.html">Typealiases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus29BTLEPlusSerialServiceMTU_Type">BTLEPlusSerialServiceMTU_Type</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus35BTLEPlusSerialServiceMessageId_Type">BTLEPlusSerialServiceMessageId_Type</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus37BTLEPlusSerialServiceMessageType_Type">BTLEPlusSerialServiceMessageType_Type</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus36BTLEPlusSerialServiceWindowSize_Type">BTLEPlusSerialServiceWindowSize_Type</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>BTLEPeripheral</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BTLEPeripheral</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">CBPeripheralDelegate</span></code></pre>
+
+                </div>
+              </div>
+            <p>The BTLEPeripheral object is a generic peripheral that allows you to customize
+the connection and discovery process before it&rsquo;s considered ready to use.</p>
+
+<p><a href='#peripheral-setup' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='peripheral-setup'>Peripheral Setup</h2></p>
+
+<p>Each peripheral goes through this setup process before it&rsquo;s considered ready
+to use. And must go through the same setup process if it&rsquo;s disconnected and
+then reconnected.</p>
+
+<p>Each step in the setup process has retries and timeouts you can customize.
+If something fails or times-out it will try the same step up to a specified
+max attemps.</p>
+
+<p><a href='#connect-step' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='connect-step'>Connect Step</h4></p>
+
+<p>This is the first step in the process and is handled by a BTLECentralManager.
+After your central discovers peripherals, you connect to the desired peripheral with
+<em>myBTLECentralManager.connect(peripheral:)</em>.</p>
+
+<p><a href='#discovery-step' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='discovery-step'>Discovery Step</h4></p>
+
+<p>This is the second step in the process. It includes <em>discovering services</em>, <em>discovering included services</em>,
+<em>discovering characteristics</em> and <em>discovering descriptors</em>.</p>
+
+<p><a href='#subscribe-step' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='subscribe-step'>Subscribe Step</h4></p>
+
+<p>This is the third step in the process. It includes <em>subscribing to any characteristics that support notify</em>.</p>
+
+<p><a href='#additional-setup-step' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='additional-setup-step'>Additional Setup Step</h4></p>
+
+<p>This is an optional step in which you can include additional steps as part of the
+peripheral setup process. You can override requiresAdditionalSetup() and
+performAdditionalSetup() to add your custom setup into the setup process. You must
+call peripheralIsReady() once your additional setup is complete.</p>
+
+<p><a href='#ready-step' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h4 id='ready-step'>Ready Step</h4></p>
+
+<p>This is the last step and the peripheral is considered ready. It&rsquo;s up
+to you to implement communication or specialized behavior with the peripheral after
+this point.</p>
+
+<p><a href='#peripheral-prototypes' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='peripheral-prototypes'>Peripheral Prototypes</h2></p>
+
+<p>Peripheral objects aren&rsquo;t created and used directly, instead you create
+a prototype object, and register it with a BTLECentralManager.</p>
+
+<p>When a BTLECentralManager discovers peripherals, it asks each registered BTLEPeripheral
+prototype if it knows how to respond to the advertised services. You can override
+respondsToAdvertisementData(), which tells the central manager if it should
+instantiate your peripheral.</p>
+
+<p><a href='#responding-to-advertisement-data' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='responding-to-advertisement-data'>Responding to Advertisement Data</h2>
+<pre class="highlight plaintext"><code>class MyPeripheral : BTLEPeripheral {
+    //override and decide if your peripheral understands the advertised data.
+    override public func respondsToAdvertisementData(data:BTLEAdvertisementData) -&gt; Bool {
+        //inspect advertisement data here.
+        return true or false.
+    }
+    //override and return a new instance of MyPeripheral. This is required.
+    override public func copy() -&gt; AnyObject {
+        return MyPeripheral()
+    }
+}
+</code></pre>
+<a href='#multiple-advertisement-packets' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h5 id='multiple-advertisement-packets'>Multiple Advertisement Packets</h5></p>
+
+<p>At times Core Bluetooth will receive advertisement data in multiple parts. When this happens
+the advertisement data for a peripheral is collected using a BTLEAdvertisementData
+object. Your peripheral prototype will be asked each time with the collected data if it
+responds to the advertisement data. This ensures you eventually get all of the advertisement
+data to properly decide if your prototype understands the advertised services.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/CBPeripheral"></a>
+                <a name="//apple_ref/swift/Section/CBPeripheral" class="dashAnchor"></a>
+                <a href="#/CBPeripheral">
+                  <h3 class="section-name">CBPeripheral</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus14BTLEPeripheral12cbPeripheralGSqCSo12CBPeripheral_"></a>
+                    <a name="//apple_ref/swift/Property/cbPeripheral" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus14BTLEPeripheral12cbPeripheralGSqCSo12CBPeripheral_">cbPeripheral</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The CBPeripheral this class monitors and manages.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">cbPeripheral</span><span class="p">:</span><span class="kt">CBPeripheral</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus14BTLEPeripheral4nameGSqSS_"></a>
+                    <a name="//apple_ref/swift/Property/name" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus14BTLEPeripheral4nameGSqSS_">name</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Local peripheral name.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">name</span><span class="p">:</span><span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral11updatedNameFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/updatedName()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral11updatedNameFT_T_">updatedName()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Called when the peripheral name updated.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updatedName</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus14BTLEPeripheral4RSSIGSqCSo8NSNumber_"></a>
+                    <a name="//apple_ref/swift/Property/RSSI" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus14BTLEPeripheral4RSSIGSqCSo8NSNumber_">RSSI</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Peripheral RSSI.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">RSSI</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral11updatedRSSIFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/updatedRSSI()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral11updatedRSSIFT_T_">updatedRSSI()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Called when the peripheral RSSI updated.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updatedRSSI</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral24updatedRSSIReceivedErrorFGSqCSo7NSError_T_"></a>
+                    <a name="//apple_ref/swift/Method/updatedRSSIReceivedError(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral24updatedRSSIReceivedErrorFGSqCSo7NSError_T_">updatedRSSIReceivedError(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Called when RSSI update received an error.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updatedRSSIReceivedError</span><span class="p">(</span><span class="nv">error</span><span class="p">:</span><span class="kt">NSError</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus14BTLEPeripheral4UUIDGSqCSo6NSUUID_"></a>
+                    <a name="//apple_ref/swift/Property/UUID" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus14BTLEPeripheral4UUIDGSqCSo6NSUUID_">UUID</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Peripheral UUID.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">UUID</span><span class="p">:</span><span class="kt">NSUUID</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Configuration"></a>
+                <a name="//apple_ref/swift/Section/Configuration" class="dashAnchor"></a>
+                <a href="#/Configuration">
+                  <h3 class="section-name">Configuration</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus14BTLEPeripheral3tagSi"></a>
+                    <a name="//apple_ref/swift/Property/tag" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus14BTLEPeripheral3tagSi">tag</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A custom tag to identify the peripheral.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">tag</span><span class="p">:</span><span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus14BTLEPeripheral12organizationGSqSS_"></a>
+                    <a name="//apple_ref/swift/Property/organization" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus14BTLEPeripheral12organizationGSqSS_">organization</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A custom organization identifier for this peripheral.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">organization</span><span class="p">:</span><span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus14BTLEPeripheral23canBeRemovedFromManagerSb"></a>
+                    <a name="//apple_ref/swift/Property/canBeRemovedFromManager" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus14BTLEPeripheral23canBeRemovedFromManagerSb">canBeRemovedFromManager</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether or not this peripheral should be removed from it&rsquo;s BTLECentralManager.
+This is called when a peripheral disconnects.</p>
+
+<p>If false, the peripheral will remain in a disconnected state
+within it&rsquo;s BTLECentralManager.</p>
+
+<p>If true it&rsquo;s removed from it&rsquo;s BLECentralManager and you&rsquo;d have
+to scan for the peripheral again.</p>
+
+<p>By default this is true.</p>
+
+<p>This is an overrideable getter / setter.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">canBeRemovedFromManager</span><span class="p">:</span><span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus14BTLEPeripheral27shouldReconnectOnDisconnectSb"></a>
+                    <a name="//apple_ref/swift/Property/shouldReconnectOnDisconnect" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus14BTLEPeripheral27shouldReconnectOnDisconnectSb">shouldReconnectOnDisconnect</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether to reconnect when the peripheral is disconnected.</p>
+
+<p>This is an overrideable getter / setter.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">shouldReconnectOnDisconnect</span><span class="p">:</span><span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Timeouts%20and%20Retries"></a>
+                <a name="//apple_ref/swift/Section/Timeouts and Retries" class="dashAnchor"></a>
+                <a href="#/Timeouts%20and%20Retries">
+                  <h3 class="section-name">Timeouts and Retries</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus14BTLEPeripheral21connectionMaxAttemptsSi"></a>
+                    <a name="//apple_ref/swift/Property/connectionMaxAttempts" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus14BTLEPeripheral21connectionMaxAttemptsSi">connectionMaxAttempts</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The maximum tries to connect to the peripheral.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">connectionMaxAttempts</span> <span class="o">=</span> <span class="mi">3</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus14BTLEPeripheral23connectionTimeoutLengthSd"></a>
+                    <a name="//apple_ref/swift/Property/connectionTimeoutLength" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus14BTLEPeripheral23connectionTimeoutLengthSd">connectionTimeoutLength</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The timeout length before retrying to connect to the peripheral.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">connectionTimeoutLength</span><span class="p">:</span><span class="kt">NSTimeInterval</span> <span class="o">=</span> <span class="mi">5</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus14BTLEPeripheral24discoveryStepMaxAttemptsSi"></a>
+                    <a name="//apple_ref/swift/Property/discoveryStepMaxAttempts" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus14BTLEPeripheral24discoveryStepMaxAttemptsSi">discoveryStepMaxAttempts</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The maximum tries to discover services, included services, characteristics and descriptors.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">discoveryStepMaxAttempts</span> <span class="o">=</span> <span class="mi">3</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus14BTLEPeripheral26discoveryStepTimeoutLengthSd"></a>
+                    <a name="//apple_ref/swift/Property/discoveryStepTimeoutLength" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus14BTLEPeripheral26discoveryStepTimeoutLengthSd">discoveryStepTimeoutLength</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The discovery step timeout length before retrying the discover step.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">discoveryStepTimeoutLength</span><span class="p">:</span><span class="kt">NSTimeInterval</span> <span class="o">=</span> <span class="mi">5</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus14BTLEPeripheral24subscribeStepMaxAttemptsSi"></a>
+                    <a name="//apple_ref/swift/Property/subscribeStepMaxAttempts" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus14BTLEPeripheral24subscribeStepMaxAttemptsSi">subscribeStepMaxAttempts</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The maximum tries to subscribe to a characteristic.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">subscribeStepMaxAttempts</span> <span class="o">=</span> <span class="mi">3</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus14BTLEPeripheral26subscribeStepTimeoutLengthSd"></a>
+                    <a name="//apple_ref/swift/Property/subscribeStepTimeoutLength" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus14BTLEPeripheral26subscribeStepTimeoutLengthSd">subscribeStepTimeoutLength</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The subscribe step timeout length before retrying the subscribe step.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">subscribeStepTimeoutLength</span><span class="p">:</span><span class="kt">NSTimeInterval</span> <span class="o">=</span> <span class="mi">5</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus14BTLEPeripheral26additionalSetupMaxAttemptsSi"></a>
+                    <a name="//apple_ref/swift/Property/additionalSetupMaxAttempts" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus14BTLEPeripheral26additionalSetupMaxAttemptsSi">additionalSetupMaxAttempts</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The maximum attempts to call performAdditionalSetup().</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">additionalSetupMaxAttempts</span> <span class="o">=</span> <span class="mi">3</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus14BTLEPeripheral22additionalSetupTimeoutSd"></a>
+                    <a name="//apple_ref/swift/Property/additionalSetupTimeout" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus14BTLEPeripheral22additionalSetupTimeoutSd">additionalSetupTimeout</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The timeout for custom additional setup.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">additionalSetupTimeout</span><span class="p">:</span><span class="kt">NSTimeInterval</span> <span class="o">=</span> <span class="mi">5</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Advertisement%20Data"></a>
+                <a name="//apple_ref/swift/Section/Advertisement Data" class="dashAnchor"></a>
+                <a href="#/Advertisement%20Data">
+                  <h3 class="section-name">Advertisement Data</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus14BTLEPeripheral17advertisementDataGSqCS_21BTLEAdvertisementData_"></a>
+                    <a name="//apple_ref/swift/Property/advertisementData" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus14BTLEPeripheral17advertisementDataGSqCS_21BTLEAdvertisementData_">advertisementData</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initial advertisement data when peripheral was discovered. Note that this
+data can also come from user defaults when peripherals are retrieved from
+core bluetooth.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">advertisementData</span><span class="p">:</span><span class="kt"><a href="../Classes/BTLEAdvertisementData.html">BTLEAdvertisementData</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral27respondsToAdvertisementDataFCS_21BTLEAdvertisementDataSb"></a>
+                    <a name="//apple_ref/swift/Method/respondsToAdvertisementData(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral27respondsToAdvertisementDataFCS_21BTLEAdvertisementDataSb">respondsToAdvertisementData(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>You must override this and implement logic that decides if your peripheral
+responds to the advertisement data.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">respondsToAdvertisementData</span><span class="p">(</span><span class="nv">advertisementData</span><span class="p">:</span><span class="kt"><a href="../Classes/BTLEAdvertisementData.html">BTLEAdvertisementData</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Restoring%20from%20Core%20Bluetooth"></a>
+                <a name="//apple_ref/swift/Section/Restoring from Core Bluetooth" class="dashAnchor"></a>
+                <a href="#/Restoring%20from%20Core%20Bluetooth">
+                  <h3 class="section-name">Restoring from Core Bluetooth</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral12wasRetrievedFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/wasRetrieved()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral12wasRetrievedFT_T_">wasRetrieved()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When a peripheral was retrieved from core bluetooth.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">wasRetrieved</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Connectivity"></a>
+                <a name="//apple_ref/swift/Section/Connectivity" class="dashAnchor"></a>
+                <a href="#/Connectivity">
+                  <h3 class="section-name">Connectivity</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral13wasDiscoveredFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/wasDiscovered()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral13wasDiscoveredFT_T_">wasDiscovered()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>You can override this to be notified of when a peripheral was discovered. It&rsquo;s
+also called when a peripheral is <code>retrieved</code> from core bluetooth and considered discovered.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">wasDiscovered</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral14onDisconnectedFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/onDisconnected()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral14onDisconnectedFT_T_">onDisconnected()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Called when the peripheral is disconnected.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">onDisconnected</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Peripheral%20Ready"></a>
+                <a name="//apple_ref/swift/Section/Peripheral Ready" class="dashAnchor"></a>
+                <a href="#/Peripheral%20Ready">
+                  <h3 class="section-name">Peripheral Ready</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus14BTLEPeripheral15peripheralReadySb"></a>
+                    <a name="//apple_ref/swift/Property/peripheralReady" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus14BTLEPeripheral15peripheralReadySb">peripheralReady</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether or not this peripheral is ready. BTLEPeripheral uses this as a flag
+in numerous places to skip parts of the discovery / subscribe
+step if subclasses set it to true.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">peripheralReady</span> <span class="o">=</span> <span class="kc">false</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral17isPeripheralReadyFT_Sb"></a>
+                    <a name="//apple_ref/swift/Method/isPeripheralReady()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral17isPeripheralReadyFT_Sb">isPeripheralReady()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns whether the peripheral is considered ready. You can override this
+to provide your own logic that decides of the peripheral is ready.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">isPeripheralReady</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral17peripheralIsReadyFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/peripheralIsReady()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral17peripheralIsReadyFT_T_">peripheralIsReady()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When the peripheral is ready this is called.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">peripheralIsReady</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Service%20Discovery"></a>
+                <a name="//apple_ref/swift/Section/Service Discovery" class="dashAnchor"></a>
+                <a href="#/Service%20Discovery">
+                  <h3 class="section-name">Service Discovery</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral21shouldDiscoverServiceFCSo6CBUUIDSb"></a>
+                    <a name="//apple_ref/swift/Method/shouldDiscoverService(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral21shouldDiscoverServiceFCSo6CBUUIDSb">shouldDiscoverService(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns whether or not a specific service CBUUID should be discovered as part of the
+discovery step. The passed uuid is taken directly from a peripherals advertisement data.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">shouldDiscoverService</span><span class="p">(</span><span class="nv">uuid</span><span class="p">:</span><span class="kt">CBUUID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>uuid</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A service CBUUID.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Whether or not to discover the service.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral23servicesWereInvalidatedFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/servicesWereInvalidated()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral23servicesWereInvalidatedFT_T_">servicesWereInvalidated()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When services are invalidated, your peripheral goes through the setup process
+again to discover services, included services, characteristics and descriptors.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">servicesWereInvalidated</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Included%20Service%20Discovery"></a>
+                <a name="//apple_ref/swift/Section/Included Service Discovery" class="dashAnchor"></a>
+                <a href="#/Included%20Service%20Discovery">
+                  <h3 class="section-name">Included Service Discovery</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral30shouldDiscoverIncludedServicesFT_Sb"></a>
+                    <a name="//apple_ref/swift/Method/shouldDiscoverIncludedServices()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral30shouldDiscoverIncludedServicesFT_Sb">shouldDiscoverIncludedServices()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BTLEPeripheral</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">CBPeripheralDelegate</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral34discoverIncludedServicesForServiceFGSqCSo9CBService_GSqGSaCSo6CBUUID__"></a>
+                    <a name="//apple_ref/swift/Method/discoverIncludedServicesForService(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral34discoverIncludedServicesForServiceFGSqCSo9CBService_GSqGSaCSo6CBUUID__">discoverIncludedServicesForService(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Controls whether or not included services for a service should be discovered. And
+which of the services should be discovered.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">discoverIncludedServicesForService</span><span class="p">(</span><span class="nv">service</span><span class="p">:</span><span class="kt">CBService</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">CBUUID</span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>service</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The service who&rsquo;s included services should be discovered.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Returning [CBUUID,] means specific services, [] means all included services, nil means don&rsquo;t discover any included services</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Characteristics%20Discovery"></a>
+                <a name="//apple_ref/swift/Section/Characteristics Discovery" class="dashAnchor"></a>
+                <a href="#/Characteristics%20Discovery">
+                  <h3 class="section-name">Characteristics Discovery</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral29shouldDiscoverCharacteristicsFT_Sb"></a>
+                    <a name="//apple_ref/swift/Method/shouldDiscoverCharacteristics()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral29shouldDiscoverCharacteristicsFT_Sb">shouldDiscoverCharacteristics()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether or not to discover characteristics. Default is true.</p>
+
+<p>Default return value is true.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">shouldDiscoverCharacteristics</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Bool</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral33discoverCharacteristicsForServiceFGSqCSo9CBService_GSqGSaCSo6CBUUID__"></a>
+                    <a name="//apple_ref/swift/Method/discoverCharacteristicsForService(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral33discoverCharacteristicsForServiceFGSqCSo9CBService_GSqGSaCSo6CBUUID__">discoverCharacteristicsForService(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether or not all characteristics for a specific service should be discovered.
+If shouldDiscoverCharacteristics() returns false this won&rsquo;t be called.</p>
+
+<p>Default behavior is to discover all characteristics for a service.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">discoverCharacteristicsForService</span><span class="p">(</span><span class="nv">service</span><span class="p">:</span><span class="kt">CBService</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">CBUUID</span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>service</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The service who&rsquo;s characteristics will be discovered.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>[CBUUID,] means specific characteristic, [] means all characteristics, nil means don&rsquo;t discover any characteristics for this service.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral41discoverCharacteristicsForIncludedServiceFTGSqCSo9CBService_15includedServiceGSqS1___GSqGSaCSo6CBUUID__"></a>
+                    <a name="//apple_ref/swift/Method/discoverCharacteristicsForIncludedService(_:includedService:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral41discoverCharacteristicsForIncludedServiceFTGSqCSo9CBService_15includedServiceGSqS1___GSqGSaCSo6CBUUID__">discoverCharacteristicsForIncludedService(_:includedService:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether or not to discover characteristics for an included service of another service.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">discoverCharacteristicsForIncludedService</span><span class="p">(</span><span class="nv">service</span><span class="p">:</span><span class="kt">CBService</span><span class="p">?,</span> <span class="nv">includedService</span><span class="p">:</span><span class="kt">CBService</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">CBUUID</span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>service</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The root service.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>includedService</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The included service.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>[CBUUID,] means specific characteristic, [] means all characteristics, nil means don&rsquo;t discover any characteristics for this service.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral25discoveredCharacteristicsFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/discoveredCharacteristics()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral25discoveredCharacteristicsFT_T_">discoveredCharacteristics()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Successfully discovered characteristics.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">discoveredCharacteristics</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Descriptor%20Discovery"></a>
+                <a name="//apple_ref/swift/Section/Descriptor Discovery" class="dashAnchor"></a>
+                <a href="#/Descriptor%20Discovery">
+                  <h3 class="section-name">Descriptor Discovery</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral25shouldDiscoverDescriptorsFT_Sb"></a>
+                    <a name="//apple_ref/swift/Method/shouldDiscoverDescriptors()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral25shouldDiscoverDescriptorsFT_Sb">shouldDiscoverDescriptors()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether or not descriptors should be discovered.</p>
+
+<p>Default return value is false.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">shouldDiscoverDescriptors</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Bool</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral42shouldDiscoverDescriptorsForCharacteristicFTCSo16CBCharacteristic7serviceGSqCSo9CBService__Sb"></a>
+                    <a name="//apple_ref/swift/Method/shouldDiscoverDescriptorsForCharacteristic(_:service:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral42shouldDiscoverDescriptorsForCharacteristicFTCSo16CBCharacteristic7serviceGSqCSo9CBService__Sb">shouldDiscoverDescriptorsForCharacteristic(_:service:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Override this to customize which descriptors for a characteristics and service are
+going to be discovered. If shouldDiscoverDescriptors() returns false, this
+won&rsquo;t be called.</p>
+
+<p>Default behavior is to discover all descriptors.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">shouldDiscoverDescriptorsForCharacteristic</span><span class="p">(</span><span class="nv">characteristic</span><span class="p">:</span><span class="kt">CBCharacteristic</span><span class="p">,</span> <span class="nv">service</span><span class="p">:</span><span class="kt">CBService</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>characteristic</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The characteristic.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>service</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The service</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Bool</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral21discoveredDescriptorsFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/discoveredDescriptors()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral21discoveredDescriptorsFT_T_">discoveredDescriptors()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Called when descriptors were discovered.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">discoveredDescriptors</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Subscribing"></a>
+                <a name="//apple_ref/swift/Section/Subscribing" class="dashAnchor"></a>
+                <a href="#/Subscribing">
+                  <h3 class="section-name">Subscribing</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral31shouldSubscribeToCharacteristicFTGSqCSo16CBCharacteristic_7serviceGSqCSo9CBService__Sb"></a>
+                    <a name="//apple_ref/swift/Method/shouldSubscribeToCharacteristic(_:service:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral31shouldSubscribeToCharacteristicFTGSqCSo16CBCharacteristic_7serviceGSqCSo9CBService__Sb">shouldSubscribeToCharacteristic(_:service:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Override this to decide if any characteristics should be subscribed to.</p>
+
+<p>Default return value is true for any characteristic that implements the notify property.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">shouldSubscribeToCharacteristic</span><span class="p">(</span><span class="nv">character</span><span class="p">:</span><span class="kt">CBCharacteristic</span><span class="p">?,</span> <span class="nv">service</span><span class="p">:</span><span class="kt">CBService</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>character</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The characteristic</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>service</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The service</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Bool</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral19subscribingFinishedFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/subscribingFinished()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral19subscribingFinishedFT_T_">subscribingFinished()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Subsribing finished successfully.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">subscribingFinished</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Additional%20setup"></a>
+                <a name="//apple_ref/swift/Section/Additional setup" class="dashAnchor"></a>
+                <a href="#/Additional%20setup">
+                  <h3 class="section-name">Additional setup</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral23requiresAdditionalSetupFT_Sb"></a>
+                    <a name="//apple_ref/swift/Method/requiresAdditionalSetup()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral23requiresAdditionalSetupFT_Sb">requiresAdditionalSetup()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>You can override this if you require
+additional work as part of the peripheral setup process.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">requiresAdditionalSetup</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral22performAdditionalSetupFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/performAdditionalSetup()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral22performAdditionalSetupFT_T_">performAdditionalSetup()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>You must override this to perform your
+additional setup tasks. Make sure to call super.performAdditionalSetup()</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">performAdditionalSetup</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral25retryPerformAddionalSetupFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/retryPerformAddionalSetup()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral25retryPerformAddionalSetupFT_T_">retryPerformAddionalSetup()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BTLEPeripheral</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">CBPeripheralDelegate</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral23retryingAdditionalSetupFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/retryingAdditionalSetup()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral23retryingAdditionalSetupFT_T_">retryingAdditionalSetup()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BTLEPeripheral</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">CBPeripheralDelegate</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral21additionalSetupFailedFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/additionalSetupFailed()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral21additionalSetupFailedFT_T_">additionalSetupFailed()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BTLEPeripheral</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">CBPeripheralDelegate</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Utils"></a>
+                <a name="//apple_ref/swift/Section/Utils" class="dashAnchor"></a>
+                <a href="#/Utils">
+                  <h3 class="section-name">Utils</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral11findServiceFCSo6CBUUIDGSqCSo9CBService_"></a>
+                    <a name="//apple_ref/swift/Method/findService(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral11findServiceFCSo6CBUUIDGSqCSo9CBService_">findService(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Find a service.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">findService</span><span class="p">(</span><span class="nv">uuid</span><span class="p">:</span><span class="kt">CBUUID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CBService</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>uuid</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The service uuid.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>CBService?</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral18findCharacteristicFTGSqCSo9CBService_4uuidCSo6CBUUID_GSqCSo16CBCharacteristic_"></a>
+                    <a name="//apple_ref/swift/Method/findCharacteristic(_:uuid:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral18findCharacteristicFTGSqCSo9CBService_4uuidCSo6CBUUID_GSqCSo16CBCharacteristic_">findCharacteristic(_:uuid:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Find a characteristic from a service.
+- parameter service: The service.
+- parameter uuid:    Characteristic uuid.
+- returns: CBCharacteristic?</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">findCharacteristic</span><span class="p">(</span><span class="nv">service</span><span class="p">:</span><span class="kt">CBService</span><span class="p">?,</span> <span class="nv">uuid</span><span class="p">:</span><span class="kt">CBUUID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CBCharacteristic</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>service</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The service.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>uuid</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Characteristic uuid.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>CBCharacteristic?</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/CB%08Peripheral%20Delegate"></a>
+                <a name="//apple_ref/swift/Section/CBPeripheral Delegate" class="dashAnchor"></a>
+                <a href="#/CB%08Peripheral%20Delegate">
+                  <h3 class="section-name">CBPeripheral Delegate</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral10peripheralFTCSo12CBPeripheral19didDiscoverServicesGSqCSo7NSError__T_"></a>
+                    <a name="//apple_ref/swift/Method/peripheral(_:didDiscoverServices:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral10peripheralFTCSo12CBPeripheral19didDiscoverServicesGSqCSo7NSError__T_">peripheral(_:didDiscoverServices:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BTLEPeripheral</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">CBPeripheralDelegate</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral10peripheralFTCSo12CBPeripheral37didDiscoverIncludedServicesForServiceCSo9CBService5errorGSqCSo7NSError__T_"></a>
+                    <a name="//apple_ref/swift/Method/peripheral(_:didDiscoverIncludedServicesForService:error:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral10peripheralFTCSo12CBPeripheral37didDiscoverIncludedServicesForServiceCSo9CBService5errorGSqCSo7NSError__T_">peripheral(_:didDiscoverIncludedServicesForService:error:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BTLEPeripheral</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">CBPeripheralDelegate</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral10peripheralFTCSo12CBPeripheral36didDiscoverCharacteristicsForServiceCSo9CBService5errorGSqCSo7NSError__T_"></a>
+                    <a name="//apple_ref/swift/Method/peripheral(_:didDiscoverCharacteristicsForService:error:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral10peripheralFTCSo12CBPeripheral36didDiscoverCharacteristicsForServiceCSo9CBService5errorGSqCSo7NSError__T_">peripheral(_:didDiscoverCharacteristicsForService:error:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BTLEPeripheral</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">CBPeripheralDelegate</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral10peripheralFTCSo12CBPeripheral17didModifyServicesGSaCSo9CBService__T_"></a>
+                    <a name="//apple_ref/swift/Method/peripheral(_:didModifyServices:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral10peripheralFTCSo12CBPeripheral17didModifyServicesGSaCSo9CBService__T_">peripheral(_:didModifyServices:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BTLEPeripheral</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">CBPeripheralDelegate</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral10peripheralFTCSo12CBPeripheral39didDiscoverDescriptorsForCharacteristicCSo16CBCharacteristic5errorGSqCSo7NSError__T_"></a>
+                    <a name="//apple_ref/swift/Method/peripheral(_:didDiscoverDescriptorsForCharacteristic:error:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral10peripheralFTCSo12CBPeripheral39didDiscoverDescriptorsForCharacteristicCSo16CBCharacteristic5errorGSqCSo7NSError__T_">peripheral(_:didDiscoverDescriptorsForCharacteristic:error:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BTLEPeripheral</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">CBPeripheralDelegate</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral10peripheralFTCSo12CBPeripheral43didUpdateNotificationStateForCharacteristicCSo16CBCharacteristic5errorGSqCSo7NSError__T_"></a>
+                    <a name="//apple_ref/swift/Method/peripheral(_:didUpdateNotificationStateForCharacteristic:error:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral10peripheralFTCSo12CBPeripheral43didUpdateNotificationStateForCharacteristicCSo16CBCharacteristic5errorGSqCSo7NSError__T_">peripheral(_:didUpdateNotificationStateForCharacteristic:error:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BTLEPeripheral</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">CBPeripheralDelegate</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral31peripheralDidInvalidateServicesFCSo12CBPeripheralT_"></a>
+                    <a name="//apple_ref/swift/Method/peripheralDidInvalidateServices(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral31peripheralDidInvalidateServicesFCSo12CBPeripheralT_">peripheralDidInvalidateServices(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BTLEPeripheral</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">CBPeripheralDelegate</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral23peripheralDidUpdateNameFCSo12CBPeripheralT_"></a>
+                    <a name="//apple_ref/swift/Method/peripheralDidUpdateName(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral23peripheralDidUpdateNameFCSo12CBPeripheralT_">peripheralDidUpdateName(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BTLEPeripheral</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">CBPeripheralDelegate</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus14BTLEPeripheral23peripheralDidUpdateRSSIFTCSo12CBPeripheral5errorGSqCSo7NSError__T_"></a>
+                    <a name="//apple_ref/swift/Method/peripheralDidUpdateRSSI(_:error:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus14BTLEPeripheral23peripheralDidUpdateRSSIFTCSo12CBPeripheral5errorGSqCSo7NSError__T_">peripheralDidUpdateRSSI(_:error:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BTLEPeripheral</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">CBPeripheralDelegate</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-10)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

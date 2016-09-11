@@ -1,6 +1,6 @@
 //
-//  BLEPlusTestAdvertisementData.swift
-//  BLEPlus
+//  BTLEPlusTestAdvertisementData.swift
+//  BTLEPlus
 //
 //  Created by Aaron Smith on 8/26/16.
 //  Copyright © 2016 gngrwzrd. All rights reserved.
@@ -10,7 +10,7 @@ import XCTest
 import CoreBluetooth
 @testable import BTLEPlus
 
-class BLEPlusTestAdvertisementData : XCTestCase {
+class BTLEPlusTestAdvertisementData : XCTestCase {
 	
 	override func setUp() {
 		super.setUp()
@@ -24,12 +24,12 @@ class BLEPlusTestAdvertisementData : XCTestCase {
 	
 	func testLocalName1() {
 		let data = [CBAdvertisementDataLocalNameKey:"testLocalName"]
-		let adv = BLEAdvertisementData(data: data)
+		let adv = BTLEAdvertisementData(discoveredData: data)
 		assert(adv.localName! == "testLocalName")
 	}
 	
 	func testLocalName2() {
-		let adv = BLEAdvertisementData()
+		let adv = BTLEAdvertisementData()
 		adv.localName = "testLocalName"
 		assert(adv.localName! == "testLocalName")
 	}
@@ -37,13 +37,13 @@ class BLEPlusTestAdvertisementData : XCTestCase {
 	func testServiceUUIDs1() {
 		let cbuuid = CBUUID(string: "180D")
 		let data = [CBAdvertisementDataServiceUUIDsKey:[cbuuid]]
-		let adv = BLEAdvertisementData(data: data)
+		let adv = BTLEAdvertisementData(discoveredData: data)
 		assert(adv.serviceUUIDS!.count == 1)
 	}
 	
 	func testServiceUUIDs2() {
 		let cbuuid = CBUUID(string: "180D")
-		let adv = BLEAdvertisementData()
+		let adv = BTLEAdvertisementData()
 		adv.serviceUUIDS = [cbuuid]
 		assert(adv.serviceUUIDS!.count == 1)
 	}

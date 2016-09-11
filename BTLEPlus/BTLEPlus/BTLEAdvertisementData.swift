@@ -9,12 +9,12 @@
 import Foundation
 import CoreBluetooth
 
-/// The BLEAdvertisementData class manages advertised data from
+/// The BTLEAdvertisementData class manages advertised data from
 /// Core Bluetooth. It can convert advertised data between it's
 /// original discovered format, a plist supported format, and a
 /// serializable format with NSCoding. It provides some easier
 /// accessors to get and set advertisement data.
-@objc public class BLEAdvertisementData : NSObject, NSCoding {
+@objc public class BTLEAdvertisementData : NSObject, NSCoding {
 	
 	//MARK: - Advertisement Data
 	
@@ -101,20 +101,20 @@ import CoreBluetooth
 	//MARK: - Initializers
 	
 	/**
-	Initialize an empty BLEAdvertisementData object.
+	Initialize an empty BTLEAdvertisementData object.
 	
-	- returns: BLEAdvertisementData
+	- returns: BTLEAdvertisementData
 	*/
 	override public init() {
 		
 	}
 	
 	/**
-	Initialize a BLEAdvertisementData with the discovered advertisement data.
+	Initialize a BTLEAdvertisementData with the discovered advertisement data.
 	
 	- parameter data: Discovered advertisement data.
 	
-	- returns: BLEAdvertisementData
+	- returns: BTLEAdvertisementData
 	*/
 	public init(discoveredData:[String:AnyObject]) {
 		super.init()
@@ -122,16 +122,16 @@ import CoreBluetooth
 	}
 	
 	/**
-	Create a BLEAdvertisementData instance from NSData that was serialized with
+	Create a BTLEAdvertisementData instance from NSData that was serialized with
 	an NSKeyedArchiver.
 	
-	- parameter rawData: NSData Serialized form of BLEAdvertisementData
+	- parameter rawData: NSData Serialized form of BTLEAdvertisementData
 	
-	- returns: BLEAdvertisementData?
+	- returns: BTLEAdvertisementData?
 	*/
-	public class func createWithData(rawData:NSData?) -> BLEAdvertisementData? {
+	public class func createWithData(rawData:NSData?) -> BTLEAdvertisementData? {
 		if let rawData = rawData {
-			return NSKeyedUnarchiver.unarchiveObjectWithData(rawData) as? BLEAdvertisementData
+			return NSKeyedUnarchiver.unarchiveObjectWithData(rawData) as? BTLEAdvertisementData
 		}
 		return nil
 	}
@@ -153,13 +153,13 @@ import CoreBluetooth
 	
 	- parameter aDecoder:	NSCoder
 	
-	- returns: BLEAdvertisementData
+	- returns: BTLEAdvertisementData
 	*/
 	required public init?(coder aDecoder: NSCoder) {
 		self.discoveredData = [:]
 		super.init()
 		if let d = aDecoder.decodeObjectForKey("data") as? [String:AnyObject] {
-			let discoveredFormat = BLEAdvertisementData.convertAdvertisementDataToDiscoveredFormat(d)
+			let discoveredFormat = BTLEAdvertisementData.convertAdvertisementDataToDiscoveredFormat(d)
 			self.discoveredData = discoveredFormat
 		}
 	}
@@ -280,17 +280,17 @@ import CoreBluetooth
 	- returns: [String:AnyObject]?
 	*/
 	public func toPlistFormat() -> [String:AnyObject]? {
-		return BLEAdvertisementData.convertAdvertisementDataToUserDefaultsFormat(discoveredData)
+		return BTLEAdvertisementData.convertAdvertisementDataToUserDefaultsFormat(discoveredData)
 	}
 	
 	//MARK: - Appending Advertisement Data
 	
 	/**
-	Append another BLEAdvertisementData object to this one.
+	Append another BTLEAdvertisementData object to this one.
 	
-	- parameter advertisementData: BLEAdvertisementData
+	- parameter advertisementData: BTLEAdvertisementData
 	*/
-	public func append(advertisementData:BLEAdvertisementData) {
+	public func append(advertisementData:BTLEAdvertisementData) {
 		appendAdvertisementData(advertisementData.discoveredData)
 	}
 	

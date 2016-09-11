@@ -1,6 +1,6 @@
 //
-//  BLEPlusSerialServiceMessageSender.swift
-//  BLEPlus
+//  BTLEPlusSerialServiceMessageSender.swift
+//  BTLEPlus
 //
 //  Created by Aaron Smith on 8/24/16.
 //  Copyright © 2016 gngrwzrd. All rights reserved.
@@ -8,32 +8,32 @@
 
 import Foundation
 
-/// BLEPlusSerialServicePacketProvider provides packets to send
+/// BTLEPlusSerialServicePacketProvider provides packets to send
 /// based on maximum transmission unit and send window size.
 /// You can request the provider resends packets from a specific
 /// packet number, or resend the entire send window.
-@objc class BLEPlusSerialServicePacketProvider : NSObject {
+@objc class BTLEPlusSerialServicePacketProvider : NSObject {
 	
 	/// The header size for a packet from this provider.
 	/// Default value is currently 1 byte for the packet counter.
 	static var headerSize:UInt8 = 1
 	
 	/// Maximum transmission unit.
-	var mtu:BLEPlusSerialServiceMTU_Type = BLEPlusSerialServiceDefaultMTU
+	var mtu:BTLEPlusSerialServiceMTU_Type = BTLEPlusSerialServiceDefaultMTU
 	
 	/// Window size 
-	var windowSize:BLEPlusSerialServiceWindowSize_Type {
+	var windowSize:BTLEPlusSerialServiceWindowSize_Type {
 		get {
 			return _windowSize
 		} set(new) {
-			if new > BLEPlusSerialServiceMaxWindowSize || new < 0 {
-				_windowSize = BLEPlusSerialServiceMaxWindowSize
+			if new > BTLEPlusSerialServiceMaxWindowSize || new < 0 {
+				_windowSize = BTLEPlusSerialServiceMaxWindowSize
 			} else {
 				_windowSize = new
 			}
 		}
 	}
-	private var _windowSize:BLEPlusSerialServiceWindowSize_Type = BLEPlusSerialServiceMaxWindowSize
+	private var _windowSize:BTLEPlusSerialServiceWindowSize_Type = BTLEPlusSerialServiceMaxWindowSize
 	
 	/// The provider source when small messages are sending an NSData.
 	var data:NSData?
@@ -52,13 +52,13 @@ import Foundation
 	var bytesWritten:UInt64 = 0
 	
 	/// Send window. Size of the array is always windowSize.
-	var packets:[BLEPlusSerialServicePacketCountType:NSData]
+	var packets:[BTLEPlusSerialServicePacketCounter_Type:NSData]
 	
 	/// Packet counter.
-	var packetCounter:BLEPlusSerialServicePacketCountType = 0
+	var packetCounter:BTLEPlusSerialServicePacketCounter_Type = 0
 	
 	/// The number of packets returned from getPacket(). This is reset with fillWindow().
-	var gotPacketCount:BLEPlusSerialServicePacketCountType = 0
+	var gotPacketCount:BTLEPlusSerialServicePacketCounter_Type = 0
 	
 	/// Whether or not the current data in the send window is the last part of data.
 	var isEndOfMessage:Bool = false
@@ -66,7 +66,7 @@ import Foundation
 	/// The window size for the end of message. When a message reaches the
 	/// end the window size will generally not be full. This will return the smaller
 	/// window size that should be used.
-	var endOfMessageWindowSize:BLEPlusSerialServiceWindowSize_Type = 0
+	var endOfMessageWindowSize:BTLEPlusSerialServiceWindowSize_Type = 0
 	
 	/// The last packet counter value when fillWindow was called. This is set so that
 	/// resendWindow will reset the packet counter to this value.
@@ -81,7 +81,7 @@ import Foundation
 	
 	- parameter withData:	NSData to send.
 	
-	- returns: BLEPlusSerialServicePacketProvider
+	- returns: BTLEPlusSerialServicePacketProvider
 	*/
 	init?(withData:NSData) {
 		guard withData.length > 0 else {
@@ -99,7 +99,7 @@ import Foundation
 	- parameter withFileHandleForReading:	NSFileHandle for reading.
 	- parameter fileSize:						The size of the file.
 	
-	- returns: BLEPlusSerialServicePacketProvider
+	- returns: BTLEPlusSerialServicePacketProvider
 	*/
 	init?(withFileURLForReading:NSURL) {
 		guard let path = withFileURLForReading.path else {
@@ -131,14 +131,14 @@ import Foundation
 		gotPacketCount = 0
 		
 		var packet:NSData? = nil
-		var windowUsedCount:BLEPlusSerialServiceWindowSize_Type = 0
+		var windowUsedCount:BTLEPlusSerialServiceWindowSize_Type = 0
 		var wrappedPacket:NSMutableData? = nil
-		let mtuInt = Int(mtu) - Int(BLEPlusSerialServicePacketProvider.headerSize + BLEPlusSerialServiceProtocolMessage.headerSize)
+		let mtuInt = Int(mtu) - Int(BTLEPlusSerialServicePacketProvider.headerSize + BTLEPlusSerialServiceProtocolMessage.headerSize)
 		var loopPacketCounter = packetCounter
 		
 		while(true) {
 			
-			if loopPacketCounter == BLEPlusSerialServiceMaxPacketCounter {
+			if loopPacketCounter == BTLEPlusSerialServiceMaxPacketCounter {
 				loopPacketCounter = 0
 			}
 			
@@ -164,7 +164,7 @@ import Foundation
 				break
 			}
 			
-			wrappedPacket = NSMutableData(capacity: sizeof(BLEPlusSerialServicePacketCountType.self) + packet!.length)
+			wrappedPacket = NSMutableData(capacity: sizeof(BTLEPlusSerialServicePacketCounter_Type.self) + packet!.length)
 			wrappedPacket?.appendBytes(&loopPacketCounter, length: sizeof(loopPacketCounter.self.dynamicType))
 			wrappedPacket?.appendData(packet!)
 			packets[loopPacketCounter] = wrappedPacket
@@ -195,7 +195,7 @@ import Foundation
 	func getPacket() -> NSData {
 		let packet = packets[packetCounter]
 		packetCounter = packetCounter + 1
-		if packetCounter == BLEPlusSerialServiceMaxPacketCounter {
+		if packetCounter == BTLEPlusSerialServiceMaxPacketCounter {
 			packetCounter = 0
 		}
 		gotPacketCount = gotPacketCount + 1

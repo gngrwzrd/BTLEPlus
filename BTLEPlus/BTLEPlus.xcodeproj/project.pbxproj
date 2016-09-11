@@ -9,19 +9,14 @@
 /* Begin PBXBuildFile section */
 		078A34C71D826580000CCBB1 /* BTLEPlus.h in Headers */ = {isa = PBXBuildFile; fileRef = 078A34C61D826580000CCBB1 /* BTLEPlus.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		078A34CE1D826580000CCBB1 /* BTLEPlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 078A34C31D826580000CCBB1 /* BTLEPlus.framework */; };
-		078A34EB1D8265A0000CCBB1 /* BLEAdvertisementData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34DD1D8265A0000CCBB1 /* BLEAdvertisementData.swift */; };
-		078A34EC1D8265A0000CCBB1 /* BTLECentralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34DE1D8265A0000CCBB1 /* BTLECentralManager.swift */; };
-		078A34ED1D8265A0000CCBB1 /* BLEPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34DF1D8265A0000CCBB1 /* BLEPeripheral.swift */; };
-		078A34EF1D8265A0000CCBB1 /* BLEPlus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E11D8265A0000CCBB1 /* BLEPlus.swift */; };
-		078A34F01D8265A0000CCBB1 /* BLEPlusCharacteristicSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E21D8265A0000CCBB1 /* BLEPlusCharacteristicSpec.swift */; };
-		078A34F11D8265A0000CCBB1 /* BLEPlusHeartRateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E31D8265A0000CCBB1 /* BLEPlusHeartRateService.swift */; };
-		078A34F21D8265A0000CCBB1 /* BLEPlusSerialServiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E41D8265A0000CCBB1 /* BLEPlusSerialServiceController.swift */; };
-		078A34F31D8265A0000CCBB1 /* BLEPlusSerialServiceMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E51D8265A0000CCBB1 /* BLEPlusSerialServiceMessage.swift */; };
-		078A34F41D8265A0000CCBB1 /* BLEPlusSerialServicePacketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E61D8265A0000CCBB1 /* BLEPlusSerialServicePacketProvider.swift */; };
-		078A34F51D8265A0000CCBB1 /* BLEPlusSerialServicePacketReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E71D8265A0000CCBB1 /* BLEPlusSerialServicePacketReceiver.swift */; };
-		078A34F61D8265A0000CCBB1 /* BLEPlusSerialServiceProtocolMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E81D8265A0000CCBB1 /* BLEPlusSerialServiceProtocolMessage.swift */; };
-		078A34F71D8265A0000CCBB1 /* BLEPlusServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E91D8265A0000CCBB1 /* BLEPlusServiceSpec.swift */; };
-		078A34F81D8265A0000CCBB1 /* BLEServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34EA1D8265A0000CCBB1 /* BLEServices.swift */; };
+		078A34EB1D8265A0000CCBB1 /* BTLEAdvertisementData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34DD1D8265A0000CCBB1 /* BTLEAdvertisementData.swift */; };
+		078A34EC1D8265A0000CCBB1 /* BTLEPlusCentralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34DE1D8265A0000CCBB1 /* BTLEPlusCentralManager.swift */; };
+		078A34ED1D8265A0000CCBB1 /* BTLEPlusPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34DF1D8265A0000CCBB1 /* BTLEPlusPeripheral.swift */; };
+		078A34F21D8265A0000CCBB1 /* BTLEPlusSerialServiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E41D8265A0000CCBB1 /* BTLEPlusSerialServiceController.swift */; };
+		078A34F31D8265A0000CCBB1 /* BTLEPlusSerialServiceMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E51D8265A0000CCBB1 /* BTLEPlusSerialServiceMessage.swift */; };
+		078A34F41D8265A0000CCBB1 /* BTLEPlusSerialServicePacketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E61D8265A0000CCBB1 /* BTLEPlusSerialServicePacketProvider.swift */; };
+		078A34F51D8265A0000CCBB1 /* BTLEPlusSerialServicePacketReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E71D8265A0000CCBB1 /* BTLEPlusSerialServicePacketReceiver.swift */; };
+		078A34F61D8265A0000CCBB1 /* BTLEPlusSerialServiceProtocolMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E81D8265A0000CCBB1 /* BTLEPlusSerialServiceProtocolMessage.swift */; };
 		078A35041D8265CD000CCBB1 /* BLEPlusTestAdvertisementData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34F91D8265CD000CCBB1 /* BLEPlusTestAdvertisementData.swift */; };
 		078A35051D8265CD000CCBB1 /* BLEPlusTestMessageProvider_FileHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34FA1D8265CD000CCBB1 /* BLEPlusTestMessageProvider_FileHandle.swift */; };
 		078A35061D8265CD000CCBB1 /* BLEPlusTestMessageProvider_NSData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34FB1D8265CD000CCBB1 /* BLEPlusTestMessageProvider_NSData.swift */; };
@@ -33,23 +28,18 @@
 		078A350C1D8265CD000CCBB1 /* IMG_5543.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 078A35011D8265CD000CCBB1 /* IMG_5543.JPG */; };
 		078A350D1D8265CD000CCBB1 /* IMG_5595.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 078A35021D8265CD000CCBB1 /* IMG_5595.JPG */; };
 		078A35171D826638000CCBB1 /* BTLEPlusIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 078A35161D826638000CCBB1 /* BTLEPlusIOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		078A351C1D826643000CCBB1 /* BLEAdvertisementData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34DD1D8265A0000CCBB1 /* BLEAdvertisementData.swift */; };
-		078A351D1D826643000CCBB1 /* BTLECentralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34DE1D8265A0000CCBB1 /* BTLECentralManager.swift */; };
-		078A351E1D826643000CCBB1 /* BLEPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34DF1D8265A0000CCBB1 /* BLEPeripheral.swift */; };
-		078A351F1D826643000CCBB1 /* BLEPlus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E11D8265A0000CCBB1 /* BLEPlus.swift */; };
-		078A35201D826643000CCBB1 /* BLEPlusCharacteristicSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E21D8265A0000CCBB1 /* BLEPlusCharacteristicSpec.swift */; };
-		078A35211D826643000CCBB1 /* BLEPlusHeartRateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E31D8265A0000CCBB1 /* BLEPlusHeartRateService.swift */; };
-		078A35221D826643000CCBB1 /* BLEPlusSerialServiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E41D8265A0000CCBB1 /* BLEPlusSerialServiceController.swift */; };
-		078A35231D826643000CCBB1 /* BLEPlusSerialServiceMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E51D8265A0000CCBB1 /* BLEPlusSerialServiceMessage.swift */; };
-		078A35241D826643000CCBB1 /* BLEPlusSerialServicePacketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E61D8265A0000CCBB1 /* BLEPlusSerialServicePacketProvider.swift */; };
-		078A35251D826643000CCBB1 /* BLEPlusSerialServicePacketReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E71D8265A0000CCBB1 /* BLEPlusSerialServicePacketReceiver.swift */; };
-		078A35261D826643000CCBB1 /* BLEPlusSerialServiceProtocolMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E81D8265A0000CCBB1 /* BLEPlusSerialServiceProtocolMessage.swift */; };
-		078A35271D826643000CCBB1 /* BLEPlusServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E91D8265A0000CCBB1 /* BLEPlusServiceSpec.swift */; };
-		078A35281D826643000CCBB1 /* BLEServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34EA1D8265A0000CCBB1 /* BLEServices.swift */; };
-		07E997911D82FDA1004E3624 /* BTLEPlus-Swift+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E997901D82FDA1004E3624 /* BTLEPlus-Swift+Extensions.swift */; };
-		07E997931D839DAD004E3624 /* BLEPlusSerialServiceProtocolMessage-DocExclude.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E997921D839DAD004E3624 /* BLEPlusSerialServiceProtocolMessage-DocExclude.swift */; };
-		07E997941D83C5FD004E3624 /* BLEPlusSerialServiceProtocolMessage-DocExclude.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E997921D839DAD004E3624 /* BLEPlusSerialServiceProtocolMessage-DocExclude.swift */; };
-		07E997951D83C5FD004E3624 /* BTLEPlus-Swift+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E997901D82FDA1004E3624 /* BTLEPlus-Swift+Extensions.swift */; };
+		078A351C1D826643000CCBB1 /* BTLEAdvertisementData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34DD1D8265A0000CCBB1 /* BTLEAdvertisementData.swift */; };
+		078A351D1D826643000CCBB1 /* BTLEPlusCentralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34DE1D8265A0000CCBB1 /* BTLEPlusCentralManager.swift */; };
+		078A351E1D826643000CCBB1 /* BTLEPlusPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34DF1D8265A0000CCBB1 /* BTLEPlusPeripheral.swift */; };
+		078A35221D826643000CCBB1 /* BTLEPlusSerialServiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E41D8265A0000CCBB1 /* BTLEPlusSerialServiceController.swift */; };
+		078A35231D826643000CCBB1 /* BTLEPlusSerialServiceMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E51D8265A0000CCBB1 /* BTLEPlusSerialServiceMessage.swift */; };
+		078A35241D826643000CCBB1 /* BTLEPlusSerialServicePacketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E61D8265A0000CCBB1 /* BTLEPlusSerialServicePacketProvider.swift */; };
+		078A35251D826643000CCBB1 /* BTLEPlusSerialServicePacketReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E71D8265A0000CCBB1 /* BTLEPlusSerialServicePacketReceiver.swift */; };
+		078A35261D826643000CCBB1 /* BTLEPlusSerialServiceProtocolMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E81D8265A0000CCBB1 /* BTLEPlusSerialServiceProtocolMessage.swift */; };
+		07E997911D82FDA1004E3624 /* OptionsSetType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E997901D82FDA1004E3624 /* OptionsSetType+Extensions.swift */; };
+		07E997931D839DAD004E3624 /* BTLEPlusSerialServiceProtocolMessage-DocExclude.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E997921D839DAD004E3624 /* BTLEPlusSerialServiceProtocolMessage-DocExclude.swift */; };
+		07E997941D83C5FD004E3624 /* BTLEPlusSerialServiceProtocolMessage-DocExclude.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E997921D839DAD004E3624 /* BTLEPlusSerialServiceProtocolMessage-DocExclude.swift */; };
+		07E997951D83C5FD004E3624 /* OptionsSetType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E997901D82FDA1004E3624 /* OptionsSetType+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,19 +57,14 @@
 		078A34C61D826580000CCBB1 /* BTLEPlus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTLEPlus.h; sourceTree = "<group>"; };
 		078A34C81D826580000CCBB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		078A34CD1D826580000CCBB1 /* BTLEPlusTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BTLEPlusTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		078A34DD1D8265A0000CCBB1 /* BLEAdvertisementData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEAdvertisementData.swift; sourceTree = "<group>"; };
-		078A34DE1D8265A0000CCBB1 /* BTLECentralManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTLECentralManager.swift; sourceTree = "<group>"; };
-		078A34DF1D8265A0000CCBB1 /* BLEPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPeripheral.swift; sourceTree = "<group>"; };
-		078A34E11D8265A0000CCBB1 /* BLEPlus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPlus.swift; sourceTree = "<group>"; };
-		078A34E21D8265A0000CCBB1 /* BLEPlusCharacteristicSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPlusCharacteristicSpec.swift; sourceTree = "<group>"; };
-		078A34E31D8265A0000CCBB1 /* BLEPlusHeartRateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPlusHeartRateService.swift; sourceTree = "<group>"; };
-		078A34E41D8265A0000CCBB1 /* BLEPlusSerialServiceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPlusSerialServiceController.swift; sourceTree = "<group>"; };
-		078A34E51D8265A0000CCBB1 /* BLEPlusSerialServiceMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPlusSerialServiceMessage.swift; sourceTree = "<group>"; };
-		078A34E61D8265A0000CCBB1 /* BLEPlusSerialServicePacketProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPlusSerialServicePacketProvider.swift; sourceTree = "<group>"; };
-		078A34E71D8265A0000CCBB1 /* BLEPlusSerialServicePacketReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPlusSerialServicePacketReceiver.swift; sourceTree = "<group>"; };
-		078A34E81D8265A0000CCBB1 /* BLEPlusSerialServiceProtocolMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPlusSerialServiceProtocolMessage.swift; sourceTree = "<group>"; };
-		078A34E91D8265A0000CCBB1 /* BLEPlusServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPlusServiceSpec.swift; sourceTree = "<group>"; };
-		078A34EA1D8265A0000CCBB1 /* BLEServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEServices.swift; sourceTree = "<group>"; };
+		078A34DD1D8265A0000CCBB1 /* BTLEAdvertisementData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTLEAdvertisementData.swift; sourceTree = "<group>"; };
+		078A34DE1D8265A0000CCBB1 /* BTLEPlusCentralManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTLEPlusCentralManager.swift; sourceTree = "<group>"; };
+		078A34DF1D8265A0000CCBB1 /* BTLEPlusPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTLEPlusPeripheral.swift; sourceTree = "<group>"; };
+		078A34E41D8265A0000CCBB1 /* BTLEPlusSerialServiceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTLEPlusSerialServiceController.swift; sourceTree = "<group>"; };
+		078A34E51D8265A0000CCBB1 /* BTLEPlusSerialServiceMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTLEPlusSerialServiceMessage.swift; sourceTree = "<group>"; };
+		078A34E61D8265A0000CCBB1 /* BTLEPlusSerialServicePacketProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTLEPlusSerialServicePacketProvider.swift; sourceTree = "<group>"; };
+		078A34E71D8265A0000CCBB1 /* BTLEPlusSerialServicePacketReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTLEPlusSerialServicePacketReceiver.swift; sourceTree = "<group>"; };
+		078A34E81D8265A0000CCBB1 /* BTLEPlusSerialServiceProtocolMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTLEPlusSerialServiceProtocolMessage.swift; sourceTree = "<group>"; };
 		078A34F91D8265CD000CCBB1 /* BLEPlusTestAdvertisementData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPlusTestAdvertisementData.swift; sourceTree = "<group>"; };
 		078A34FA1D8265CD000CCBB1 /* BLEPlusTestMessageProvider_FileHandle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPlusTestMessageProvider_FileHandle.swift; sourceTree = "<group>"; };
 		078A34FB1D8265CD000CCBB1 /* BLEPlusTestMessageProvider_NSData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPlusTestMessageProvider_NSData.swift; sourceTree = "<group>"; };
@@ -95,8 +80,8 @@
 		078A35161D826638000CCBB1 /* BTLEPlusIOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTLEPlusIOS.h; sourceTree = "<group>"; };
 		078A35181D826638000CCBB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		078A35891D826F7D000CCBB1 /* TODO.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = TODO.txt; path = ../TODO.txt; sourceTree = "<group>"; };
-		07E997901D82FDA1004E3624 /* BTLEPlus-Swift+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BTLEPlus-Swift+Extensions.swift"; sourceTree = "<group>"; };
-		07E997921D839DAD004E3624 /* BLEPlusSerialServiceProtocolMessage-DocExclude.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BLEPlusSerialServiceProtocolMessage-DocExclude.swift"; sourceTree = "<group>"; };
+		07E997901D82FDA1004E3624 /* OptionsSetType+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OptionsSetType+Extensions.swift"; sourceTree = "<group>"; };
+		07E997921D839DAD004E3624 /* BTLEPlusSerialServiceProtocolMessage-DocExclude.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BTLEPlusSerialServiceProtocolMessage-DocExclude.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,12 +134,10 @@
 		078A34C51D826580000CCBB1 /* BTLEPlus */ = {
 			isa = PBXGroup;
 			children = (
-				078A34E11D8265A0000CCBB1 /* BLEPlus.swift */,
 				078A34C61D826580000CCBB1 /* BTLEPlus.h */,
 				078A35861D826E9D000CCBB1 /* DIscovery */,
 				078A35871D826EB5000CCBB1 /* Resources */,
 				078A35841D826E72000CCBB1 /* Serial Service */,
-				078A35851D826E7C000CCBB1 /* Service Specs */,
 				078A35881D826EF2000CCBB1 /* Utils */,
 			);
 			path = BTLEPlus;
@@ -190,32 +173,21 @@
 		078A35841D826E72000CCBB1 /* Serial Service */ = {
 			isa = PBXGroup;
 			children = (
-				078A34E41D8265A0000CCBB1 /* BLEPlusSerialServiceController.swift */,
-				078A34E51D8265A0000CCBB1 /* BLEPlusSerialServiceMessage.swift */,
-				078A34E61D8265A0000CCBB1 /* BLEPlusSerialServicePacketProvider.swift */,
-				078A34E71D8265A0000CCBB1 /* BLEPlusSerialServicePacketReceiver.swift */,
-				078A34E81D8265A0000CCBB1 /* BLEPlusSerialServiceProtocolMessage.swift */,
-				07E997921D839DAD004E3624 /* BLEPlusSerialServiceProtocolMessage-DocExclude.swift */,
+				078A34E41D8265A0000CCBB1 /* BTLEPlusSerialServiceController.swift */,
+				078A34E51D8265A0000CCBB1 /* BTLEPlusSerialServiceMessage.swift */,
+				078A34E61D8265A0000CCBB1 /* BTLEPlusSerialServicePacketProvider.swift */,
+				078A34E71D8265A0000CCBB1 /* BTLEPlusSerialServicePacketReceiver.swift */,
+				07E997921D839DAD004E3624 /* BTLEPlusSerialServiceProtocolMessage-DocExclude.swift */,
+				078A34E81D8265A0000CCBB1 /* BTLEPlusSerialServiceProtocolMessage.swift */,
 			);
 			name = "Serial Service";
-			sourceTree = "<group>";
-		};
-		078A35851D826E7C000CCBB1 /* Service Specs */ = {
-			isa = PBXGroup;
-			children = (
-				078A34E21D8265A0000CCBB1 /* BLEPlusCharacteristicSpec.swift */,
-				078A34E31D8265A0000CCBB1 /* BLEPlusHeartRateService.swift */,
-				078A34E91D8265A0000CCBB1 /* BLEPlusServiceSpec.swift */,
-				078A34EA1D8265A0000CCBB1 /* BLEServices.swift */,
-			);
-			name = "Service Specs";
 			sourceTree = "<group>";
 		};
 		078A35861D826E9D000CCBB1 /* DIscovery */ = {
 			isa = PBXGroup;
 			children = (
-				078A34DE1D8265A0000CCBB1 /* BTLECentralManager.swift */,
-				078A34DF1D8265A0000CCBB1 /* BLEPeripheral.swift */,
+				078A34DF1D8265A0000CCBB1 /* BTLEPlusPeripheral.swift */,
+				078A34DE1D8265A0000CCBB1 /* BTLEPlusCentralManager.swift */,
 			);
 			name = DIscovery;
 			sourceTree = "<group>";
@@ -231,8 +203,8 @@
 		078A35881D826EF2000CCBB1 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				078A34DD1D8265A0000CCBB1 /* BLEAdvertisementData.swift */,
-				07E997901D82FDA1004E3624 /* BTLEPlus-Swift+Extensions.swift */,
+				078A34DD1D8265A0000CCBB1 /* BTLEAdvertisementData.swift */,
+				07E997901D82FDA1004E3624 /* OptionsSetType+Extensions.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -384,21 +356,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				078A34F61D8265A0000CCBB1 /* BLEPlusSerialServiceProtocolMessage.swift in Sources */,
-				078A34EB1D8265A0000CCBB1 /* BLEAdvertisementData.swift in Sources */,
-				078A34F71D8265A0000CCBB1 /* BLEPlusServiceSpec.swift in Sources */,
-				078A34ED1D8265A0000CCBB1 /* BLEPeripheral.swift in Sources */,
-				078A34EC1D8265A0000CCBB1 /* BTLECentralManager.swift in Sources */,
-				078A34F31D8265A0000CCBB1 /* BLEPlusSerialServiceMessage.swift in Sources */,
-				07E997911D82FDA1004E3624 /* BTLEPlus-Swift+Extensions.swift in Sources */,
-				078A34F01D8265A0000CCBB1 /* BLEPlusCharacteristicSpec.swift in Sources */,
-				078A34F21D8265A0000CCBB1 /* BLEPlusSerialServiceController.swift in Sources */,
-				078A34F11D8265A0000CCBB1 /* BLEPlusHeartRateService.swift in Sources */,
-				078A34F41D8265A0000CCBB1 /* BLEPlusSerialServicePacketProvider.swift in Sources */,
-				07E997931D839DAD004E3624 /* BLEPlusSerialServiceProtocolMessage-DocExclude.swift in Sources */,
-				078A34F51D8265A0000CCBB1 /* BLEPlusSerialServicePacketReceiver.swift in Sources */,
-				078A34F81D8265A0000CCBB1 /* BLEServices.swift in Sources */,
-				078A34EF1D8265A0000CCBB1 /* BLEPlus.swift in Sources */,
+				078A34F61D8265A0000CCBB1 /* BTLEPlusSerialServiceProtocolMessage.swift in Sources */,
+				078A34EB1D8265A0000CCBB1 /* BTLEAdvertisementData.swift in Sources */,
+				078A34ED1D8265A0000CCBB1 /* BTLEPlusPeripheral.swift in Sources */,
+				078A34EC1D8265A0000CCBB1 /* BTLEPlusCentralManager.swift in Sources */,
+				078A34F31D8265A0000CCBB1 /* BTLEPlusSerialServiceMessage.swift in Sources */,
+				07E997911D82FDA1004E3624 /* OptionsSetType+Extensions.swift in Sources */,
+				078A34F21D8265A0000CCBB1 /* BTLEPlusSerialServiceController.swift in Sources */,
+				078A34F41D8265A0000CCBB1 /* BTLEPlusSerialServicePacketProvider.swift in Sources */,
+				07E997931D839DAD004E3624 /* BTLEPlusSerialServiceProtocolMessage-DocExclude.swift in Sources */,
+				078A34F51D8265A0000CCBB1 /* BTLEPlusSerialServicePacketReceiver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,21 +388,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				07E997941D83C5FD004E3624 /* BLEPlusSerialServiceProtocolMessage-DocExclude.swift in Sources */,
-				07E997951D83C5FD004E3624 /* BTLEPlus-Swift+Extensions.swift in Sources */,
-				078A351C1D826643000CCBB1 /* BLEAdvertisementData.swift in Sources */,
-				078A351D1D826643000CCBB1 /* BTLECentralManager.swift in Sources */,
-				078A351E1D826643000CCBB1 /* BLEPeripheral.swift in Sources */,
-				078A351F1D826643000CCBB1 /* BLEPlus.swift in Sources */,
-				078A35201D826643000CCBB1 /* BLEPlusCharacteristicSpec.swift in Sources */,
-				078A35211D826643000CCBB1 /* BLEPlusHeartRateService.swift in Sources */,
-				078A35221D826643000CCBB1 /* BLEPlusSerialServiceController.swift in Sources */,
-				078A35231D826643000CCBB1 /* BLEPlusSerialServiceMessage.swift in Sources */,
-				078A35241D826643000CCBB1 /* BLEPlusSerialServicePacketProvider.swift in Sources */,
-				078A35251D826643000CCBB1 /* BLEPlusSerialServicePacketReceiver.swift in Sources */,
-				078A35261D826643000CCBB1 /* BLEPlusSerialServiceProtocolMessage.swift in Sources */,
-				078A35271D826643000CCBB1 /* BLEPlusServiceSpec.swift in Sources */,
-				078A35281D826643000CCBB1 /* BLEServices.swift in Sources */,
+				07E997941D83C5FD004E3624 /* BTLEPlusSerialServiceProtocolMessage-DocExclude.swift in Sources */,
+				07E997951D83C5FD004E3624 /* OptionsSetType+Extensions.swift in Sources */,
+				078A351C1D826643000CCBB1 /* BTLEAdvertisementData.swift in Sources */,
+				078A351D1D826643000CCBB1 /* BTLEPlusCentralManager.swift in Sources */,
+				078A351E1D826643000CCBB1 /* BTLEPlusPeripheral.swift in Sources */,
+				078A35221D826643000CCBB1 /* BTLEPlusSerialServiceController.swift in Sources */,
+				078A35231D826643000CCBB1 /* BTLEPlusSerialServiceMessage.swift in Sources */,
+				078A35241D826643000CCBB1 /* BTLEPlusSerialServicePacketProvider.swift in Sources */,
+				078A35251D826643000CCBB1 /* BTLEPlusSerialServicePacketReceiver.swift in Sources */,
+				078A35261D826643000CCBB1 /* BTLEPlusSerialServiceProtocolMessage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

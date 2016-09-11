@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>BTLEAdvertisementData Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Class/BTLEAdvertisementData" class="dashAnchor"></a>
+
+    <a title="BTLEAdvertisementData Class Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+           Docs
+        </a>
+         (93% documented)
+      </p>
+    
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html"> Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      BTLEAdvertisementData Class Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLEAdvertisementData.html">BTLEAdvertisementData</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLEPlusCentralManager.html">BTLEPlusCentralManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLEPlusPeripheral.html">BTLEPlusPeripheral</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLEPlusSerialServiceController.html">BTLEPlusSerialServiceController</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLEPlusSerialServiceMessage.html">BTLEPlusSerialServiceMessage</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Global Variables.html">Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Global Variables.html#/s:v8BTLEPlus31BTLEPlusSerialServiceDefaultMTUVs6UInt16">BTLEPlusSerialServiceDefaultMTU</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Global Variables.html#/s:v8BTLEPlus38BTLEPlusSerialServiceDefaultWindowSizeVs5UInt8">BTLEPlusSerialServiceDefaultWindowSize</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Global Variables.html#/s:v8BTLEPlus33BTLEPlusSerialServiceMaxMessageIdVs5UInt8">BTLEPlusSerialServiceMaxMessageId</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Global Variables.html#/s:v8BTLEPlus34BTLEPlusSerialServiceMaxWindowSizeVs5UInt8">BTLEPlusSerialServiceMaxWindowSize</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/BTLEPlusSerialServiceRunMode.html">BTLEPlusSerialServiceRunMode</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/OptionSetType.html">OptionSetType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/BTLEPlusCentralManagerDelegate.html">BTLEPlusCentralManagerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/BTLEPlusSerialServiceControllerDelegate.html">BTLEPlusSerialServiceControllerDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Typealiases.html">Typealiases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus29BTLEPlusSerialServiceMTU_Type">BTLEPlusSerialServiceMTU_Type</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus35BTLEPlusSerialServiceMessageId_Type">BTLEPlusSerialServiceMessageId_Type</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus37BTLEPlusSerialServiceMessageType_Type">BTLEPlusSerialServiceMessageType_Type</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus36BTLEPlusSerialServiceWindowSize_Type">BTLEPlusSerialServiceWindowSize_Type</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>BTLEAdvertisementData</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BTLEAdvertisementData</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">NSCoding</span></code></pre>
+
+                </div>
+              </div>
+            <p>The BTLEAdvertisementData class manages advertised data from
+Core Bluetooth. It can convert advertised data between it&rsquo;s
+original discovered format, a plist supported format, and a
+serializable format with NSCoding. It provides some easier
+accessors to get and set advertisement data.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Advertisement%20Data"></a>
+                <a name="//apple_ref/swift/Section/Advertisement Data" class="dashAnchor"></a>
+                <a href="#/Advertisement%20Data">
+                  <h3 class="section-name">Advertisement Data</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus21BTLEAdvertisementData14discoveredDataGVs10DictionarySSPs9AnyObject__"></a>
+                    <a name="//apple_ref/swift/Property/discoveredData" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus21BTLEAdvertisementData14discoveredDataGVs10DictionarySSPs9AnyObject__">discoveredData</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Advertisement data in it&rsquo;s discovered format which includes CBUUIDs.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">discoveredData</span><span class="p">:[</span><span class="kt">String</span><span class="p">:</span><span class="kt">AnyObject</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/CBAdvertisement%20Shortcuts"></a>
+                <a name="//apple_ref/swift/Section/CBAdvertisement Shortcuts" class="dashAnchor"></a>
+                <a href="#/CBAdvertisement%20Shortcuts">
+                  <h3 class="section-name">CBAdvertisement Shortcuts</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus21BTLEAdvertisementData13isConnectableGSqCSo8NSNumber_"></a>
+                    <a name="//apple_ref/swift/Property/isConnectable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus21BTLEAdvertisementData13isConnectableGSqCSo8NSNumber_">isConnectable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Get or set CBAdvertisementDataIsConnectable.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isConnectable</span><span class="p">:</span><span class="kt">NSNumber</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus21BTLEAdvertisementData9localNameGSqSS_"></a>
+                    <a name="//apple_ref/swift/Property/localName" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus21BTLEAdvertisementData9localNameGSqSS_">localName</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Get or set CBAdvertisementDataLocalNameKey.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">localName</span><span class="p">:</span><span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus21BTLEAdvertisementData16manufacturerDataGSqCSo6NSData_"></a>
+                    <a name="//apple_ref/swift/Property/manufacturerData" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus21BTLEAdvertisementData16manufacturerDataGSqCSo6NSData_">manufacturerData</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Get or set the CBAdvertisementDataManufacturerDataKey.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">manufacturerData</span><span class="p">:</span><span class="kt">NSData</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus21BTLEAdvertisementData20overflowServiceUUIDsGSqGSaCSo6CBUUID__"></a>
+                    <a name="//apple_ref/swift/Property/overflowServiceUUIDs" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus21BTLEAdvertisementData20overflowServiceUUIDsGSqGSaCSo6CBUUID__">overflowServiceUUIDs</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Get or set the CBAdvertisementDataOverflowServiceUUIDsKey.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">overflowServiceUUIDs</span><span class="p">:[</span><span class="kt">CBUUID</span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus21BTLEAdvertisementData19serviceSpecificDataGSqGVs10DictionaryCSo6CBUUIDCSo6NSData__"></a>
+                    <a name="//apple_ref/swift/Property/serviceSpecificData" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus21BTLEAdvertisementData19serviceSpecificDataGSqGVs10DictionaryCSo6CBUUIDCSo6NSData__">serviceSpecificData</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Get or set the CBAdvertisementDataServiceDataKey.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">serviceSpecificData</span><span class="p">:[</span><span class="kt">CBUUID</span><span class="p">:</span><span class="kt">NSData</span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus21BTLEAdvertisementData12serviceUUIDSGSqGSaCSo6CBUUID__"></a>
+                    <a name="//apple_ref/swift/Property/serviceUUIDS" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus21BTLEAdvertisementData12serviceUUIDSGSqGSaCSo6CBUUID__">serviceUUIDS</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Get or set CBAdvertisementDataServiceUUIDsKey.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">serviceUUIDS</span><span class="p">:[</span><span class="kt">CBUUID</span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus21BTLEAdvertisementData17solicitedServicesGSqGSaCSo6CBUUID__"></a>
+                    <a name="//apple_ref/swift/Property/solicitedServices" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus21BTLEAdvertisementData17solicitedServicesGSqGSaCSo6CBUUID__">solicitedServices</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Get or set CBAdvertisementDataSolicitedServiceUUIDsKey.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">solicitedServices</span><span class="p">:[</span><span class="kt">CBUUID</span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vC8BTLEPlus21BTLEAdvertisementData12txPowerLevelGSqCSo8NSNumber_"></a>
+                    <a name="//apple_ref/swift/Property/txPowerLevel" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vC8BTLEPlus21BTLEAdvertisementData12txPowerLevelGSqCSo8NSNumber_">txPowerLevel</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Get or set the CBAdvertisementDataTxPowerLevelKey.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">txPowerLevel</span><span class="p">:</span><span class="kt">NSNumber</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Initializers"></a>
+                <a name="//apple_ref/swift/Section/Initializers" class="dashAnchor"></a>
+                <a href="#/Initializers">
+                  <h3 class="section-name">Initializers</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus21BTLEAdvertisementDatacFT_S0_"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus21BTLEAdvertisementDatacFT_S0_">init()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialize an empty BTLEAdvertisementData object.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">override</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>BTLEAdvertisementData</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus21BTLEAdvertisementDatacFT14discoveredDataGVs10DictionarySSPs9AnyObject___S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(discoveredData:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus21BTLEAdvertisementDatacFT14discoveredDataGVs10DictionarySSPs9AnyObject___S0_">init(discoveredData:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialize a BTLEAdvertisementData with the discovered advertisement data.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">discoveredData</span><span class="p">:[</span><span class="kt">String</span><span class="p">:</span><span class="kt">AnyObject</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>data</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Discovered advertisement data.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>BTLEAdvertisementData</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:ZFC8BTLEPlus21BTLEAdvertisementData14createWithDataFGSqCSo6NSData_GSqS0__"></a>
+                    <a name="//apple_ref/swift/Method/createWithData(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:ZFC8BTLEPlus21BTLEAdvertisementData14createWithDataFGSqCSo6NSData_GSqS0__">createWithData(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a BTLEAdvertisementData instance from NSData that was serialized with
+an NSKeyedArchiver.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">createWithData</span><span class="p">(</span><span class="nv">rawData</span><span class="p">:</span><span class="kt">NSData</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">BTLEAdvertisementData</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>rawData</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>NSData Serialized form of BTLEAdvertisementData</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>BTLEAdvertisementData?</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/NSCoding"></a>
+                <a name="//apple_ref/swift/Section/NSCoding" class="dashAnchor"></a>
+                <a href="#/NSCoding">
+                  <h3 class="section-name">NSCoding</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus21BTLEAdvertisementData15encodeWithCoderFCSo7NSCoderT_"></a>
+                    <a name="//apple_ref/swift/Method/encodeWithCoder(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus21BTLEAdvertisementData15encodeWithCoderFCSo7NSCoderT_">encodeWithCoder(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Encode advertisement data.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">encodeWithCoder</span><span class="p">(</span><span class="nv">aCoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>aCoder</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>NSCoder</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus21BTLEAdvertisementDatacFT5coderCSo7NSCoder_GSqS0__"></a>
+                    <a name="//apple_ref/swift/Method/init(coder:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus21BTLEAdvertisementDatacFT5coderCSo7NSCoder_GSqS0__">init(coder:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Decode from a serialized format.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">required</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>aDecoder</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>NSCoder</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>BTLEAdvertisementData</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Format%20Conversions"></a>
+                <a name="//apple_ref/swift/Section/Format Conversions" class="dashAnchor"></a>
+                <a href="#/Format%20Conversions">
+                  <h3 class="section-name">Format Conversions</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:ZFC8BTLEPlus21BTLEAdvertisementData42convertAdvertisementDataToDiscoveredFormatFGVs10DictionarySSPs9AnyObject__GS1_SSPS2___"></a>
+                    <a name="//apple_ref/swift/Method/convertAdvertisementDataToDiscoveredFormat(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:ZFC8BTLEPlus21BTLEAdvertisementData42convertAdvertisementDataToDiscoveredFormatFGVs10DictionarySSPs9AnyObject__GS1_SSPS2___">convertAdvertisementDataToDiscoveredFormat(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Convert advertisement data to the original discovered format.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">class</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">convertAdvertisementDataToDiscoveredFormat</span><span class="p">(</span><span class="nv">data</span><span class="p">:[</span><span class="kt">String</span><span class="p">:</span><span class="kt">AnyObject</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span><span class="kt">AnyObject</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>data</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The advertisement data.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The same advertisement data as discovered by core bluetooth.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:ZFC8BTLEPlus21BTLEAdvertisementData44convertAdvertisementDataToUserDefaultsFormatFGVs10DictionarySSPs9AnyObject__GS1_SSPS2___"></a>
+                    <a name="//apple_ref/swift/Method/convertAdvertisementDataToUserDefaultsFormat(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:ZFC8BTLEPlus21BTLEAdvertisementData44convertAdvertisementDataToUserDefaultsFormatFGVs10DictionarySSPs9AnyObject__GS1_SSPS2___">convertAdvertisementDataToUserDefaultsFormat(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Convert advertisement data to a format that can be saved with NSUserDefaults.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">convertAdvertisementDataToUserDefaultsFormat</span><span class="p">(</span><span class="nv">data</span><span class="p">:[</span><span class="kt">String</span><span class="p">:</span><span class="kt">AnyObject</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span><span class="kt">AnyObject</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>data</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The advertisement data.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The same advertisement data but complies with NSCoding.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus21BTLEAdvertisementData18toAdvertisedFormatFT_GSqGVs10DictionarySSPs9AnyObject___"></a>
+                    <a name="//apple_ref/swift/Method/toAdvertisedFormat()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus21BTLEAdvertisementData18toAdvertisedFormatFT_GSqGVs10DictionarySSPs9AnyObject___">toAdvertisedFormat()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the advertisement data in the original discovered format.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">toAdvertisedFormat</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span><span class="kt">AnyObject</span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>[String:AnyObject]?</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus21BTLEAdvertisementData13toPlistFormatFT_GSqGVs10DictionarySSPs9AnyObject___"></a>
+                    <a name="//apple_ref/swift/Method/toPlistFormat()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus21BTLEAdvertisementData13toPlistFormatFT_GSqGVs10DictionarySSPs9AnyObject___">toPlistFormat()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the advertisement data in plist format.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">toPlistFormat</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span><span class="kt">AnyObject</span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>[String:AnyObject]?</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Appending%20Advertisement%20Data"></a>
+                <a name="//apple_ref/swift/Section/Appending Advertisement Data" class="dashAnchor"></a>
+                <a href="#/Appending%20Advertisement%20Data">
+                  <h3 class="section-name">Appending Advertisement Data</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus21BTLEAdvertisementData6appendFS0_T_"></a>
+                    <a name="//apple_ref/swift/Method/append(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus21BTLEAdvertisementData6appendFS0_T_">append(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Append another BTLEAdvertisementData object to this one.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">append</span><span class="p">(</span><span class="nv">advertisementData</span><span class="p">:</span><span class="kt">BTLEAdvertisementData</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>advertisementData</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>BTLEAdvertisementData</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FC8BTLEPlus21BTLEAdvertisementData23appendAdvertisementDataFGVs10DictionarySSPs9AnyObject__T_"></a>
+                    <a name="//apple_ref/swift/Method/appendAdvertisementData(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC8BTLEPlus21BTLEAdvertisementData23appendAdvertisementDataFGVs10DictionarySSPs9AnyObject__T_">appendAdvertisementData(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Appends advertisement data to the collection of data.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">appendAdvertisementData</span><span class="p">(</span><span class="nv">newData</span><span class="p">:[</span><span class="kt">String</span><span class="p">:</span><span class="kt">AnyObject</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>newData</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>New data in the discovered format from core bluetooth.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-10)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

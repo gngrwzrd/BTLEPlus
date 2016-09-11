@@ -15,12 +15,12 @@ import BLEPlusIOS
 import BTLEPlus
 #endif
 
-public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPlusSerialServiceControllerDelegate {
+public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BTLEPlusSerialServiceControllerDelegate {
 	
 	public static let ServiceUUID = CBUUID(string: "6DC4B345-635C-4690-B51D-0D358D32D5EF")
 	public static let CharacteristicUUID = CBUUID(string: "CF8F353A-420C-423D-BEE8-BA36499335DF")
 	
-	var controller:BLEPlusSerialServiceController!
+	var controller:BTLEPlusSerialServiceController!
 	
 	var testPairing:Bool = false
 	var pmanager:CBPeripheralManager!
@@ -38,7 +38,7 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPl
 	}
 	
 	func setupBLEPlus() {
-		controller = BLEPlusSerialServiceController(withRunMode: .Peripheral)
+		controller = BTLEPlusSerialServiceController(withRunMode: .Peripheral)
 		controller.delegate = self
 	}
 	
@@ -65,7 +65,7 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPl
 		channel = CBMutableCharacteristic(type: TestPeripheralServer.CharacteristicUUID, properties: props2, value: nil, permissions: perms2)
 		service.characteristics = [channel]
 		pmanager.addService(service)
-		let ad = BLEAdvertisementData()
+		let ad = BTLEAdvertisementData()
 		ad.serviceUUIDS = [service.UUID!]
 		ad.localName = "BLEPlusTestServer"
 		pmanager.startAdvertising(ad.discoveredData)
@@ -117,7 +117,7 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPl
 		print("server: central subscribed")
 		
 		print("maxValue: ",central.maximumUpdateValueLength)
-		controller.mtu = BLEPlusSerialServiceMTU_Type(central.maximumUpdateValueLength)
+		controller.mtu = BTLEPlusSerialServiceMTU_Type(central.maximumUpdateValueLength)
 		
 		if characteristic == channel {
 			controller.resume()
@@ -131,7 +131,7 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPl
 		}
 	}
 	
-	public func serialServiceController(controller: BLEPlusSerialServiceController, wantsToSendData data: NSData) {
+	public func serialServiceController(controller: BTLEPlusSerialServiceController, wantsToSendData data: NSData) {
 		let didSend = self.pmanager.updateValue(data, forCharacteristic: self.channel, onSubscribedCentrals: nil)
 		if !didSend {
 			print("! did send:")
@@ -139,7 +139,7 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPl
 		}
 	}
 	
-	public func serialServiceController(controller: BLEPlusSerialServiceController, receivedMessage message: BLEPlusSerialServiceMessage) {
+	public func serialServiceController(controller: BTLEPlusSerialServiceController, receivedMessage message: BTLEPlusSerialServiceMessage) {
 		print("received complete message:", message.messageType)
 		
 		if message.messageType == HelloWorldRequest {
@@ -161,20 +161,20 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BLEPl
 		}
 	}
 	
-	public func serialServiceController(controller: BLEPlusSerialServiceController, sentMessage message: BLEPlusSerialServiceMessage) {
+	public func serialServiceController(controller: BTLEPlusSerialServiceController, sentMessage message: BTLEPlusSerialServiceMessage) {
 		
 	}
 	
-	func receivedHelloWorldRequest(request:BLEPlusSerialServiceMessage) {
+	func receivedHelloWorldRequest(request:BTLEPlusSerialServiceMessage) {
 		let s = String(data: request.data!, encoding: NSUTF8StringEncoding)
 		print(s)
 		let v = "Goodbye World"
 		let d = v.dataUsingEncoding(NSUTF8StringEncoding)
-		let response = BLEPlusSerialServiceMessage(withMessageType: HelloWorldResponse, messageId: request.messageId, data: d!)
+		let response = BTLEPlusSerialServiceMessage(withMessageType: HelloWorldResponse, messageId: request.messageId, data: d!)
 		controller.send(response!)
 	}
 	
-	func recievedHelloWorldResponse(request:BLEPlusSerialServiceMessage) {
+	func recievedHelloWorldResponse(request:BTLEPlusSerialServiceMessage) {
 		let s = String(data:request.data!, encoding: NSUTF8StringEncoding)
 		print("received hello world response:",s)
 	}

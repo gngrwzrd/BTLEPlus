@@ -14,5 +14,5 @@ import BTLEPlusIOS
 import BTLEPlus
 #endif
 
-public let HelloWorldRequest:BLEPlusSerialServiceMessageType_Type = 21
-public let HelloWorldResponse:BLEPlusSerialServiceMessageType_Type = 22
+public let HelloWorldRequest:BTLEPlusSerialServiceMessageType_Type = 21
+public let HelloWorldResponse:BTLEPlusSerialServiceMessageType_Type = 22

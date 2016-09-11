@@ -1,6 +1,6 @@
 //
-//  BLEPlusSerialServiceMessage.swift
-//  BLEPlus
+//  BTLEPlusSerialServiceMessage.swift
+//  BTLEPlus
 //
 //  Created by Aaron Smith on 8/22/16.
 //  Copyright © 2016 gngrwzrd. All rights reserved.
@@ -8,10 +8,10 @@
 
 import Foundation
 
-/// BLEPlusSerialServicePacketReceiver handles incoming data from a paar
+/// BTLEPlusSerialServicePacketReceiver handles incoming data from a paar
 /// and manages a packet counter. The receiver also figures out when
 /// packets need to be resent from missing packets.
-@objc class BLEPlusSerialServicePacketReceiver : NSObject {
+@objc class BTLEPlusSerialServicePacketReceiver : NSObject {
 	
 	/// Data for smaller messages.
 	var data:NSMutableData?
@@ -23,24 +23,24 @@ import Foundation
 	var fileURL:NSURL?
 	
 	/// The user identifieable message type.
-	var messageType:BLEPlusSerialServiceMessageType_Type = 0
+	var messageType:BTLEPlusSerialServiceMessageType_Type = 0
 	
 	/// Message id.
-	var messageId:BLEPLusSerialServiceMessageId_Type = 0
+	var messageId:BTLEPlusSerialServiceMessageId_Type = 0
 	
-	/// Window Size. This is clamped between 0 and BLEPlusSerialServiceMaxWindowSize.
-	var windowSize:BLEPlusSerialServiceWindowSize_Type {
+	/// Window Size. This is clamped between 0 and BTLEPlusSerialServiceMaxWindowSize.
+	var windowSize:BTLEPlusSerialServiceWindowSize_Type {
 		get {
 			return _windowSize
 		} set(new) {
-			if new > BLEPlusSerialServiceMaxWindowSize || new < 0 {
-				_windowSize = BLEPlusSerialServiceMaxWindowSize
+			if new > BTLEPlusSerialServiceMaxWindowSize || new < 0 {
+				_windowSize = BTLEPlusSerialServiceMaxWindowSize
 			} else {
 				_windowSize = new
 			}
 		}
 	}
-	private var _windowSize:BLEPlusSerialServiceWindowSize_Type = BLEPlusSerialServiceDefaultWindowSize
+	private var _windowSize:BTLEPlusSerialServiceWindowSize_Type = BTLEPlusSerialServiceDefaultWindowSize
 	
 	/// Whether or not this receiver needs packets resent from the client.
 	var needsPacketsResent:Bool = false
@@ -53,18 +53,18 @@ import Foundation
 	
 	/// The expected next packet. If the next packet isn't equal to this
 	/// resend flags are set.
-	private var expectedPacket:BLEPlusSerialServicePacketCountType = 0
+	private var expectedPacket:BTLEPlusSerialServicePacketCounter_Type = 0
 	
 	/// The packet count when a new window was started.
-	private var beginWindowPacketCount:BLEPlusSerialServicePacketCountType = 0
+	private var beginWindowPacketCount:BTLEPlusSerialServicePacketCounter_Type = 0
 	
 	/// Packets received. The size of this array is always windowSize.
-	private var packets:[BLEPlusSerialServicePacketCountType:NSData]
+	private var packets:[BTLEPlusSerialServicePacketCounter_Type:NSData]
 	
 	/**
 	Default init.
 	
-	- returns: BLEPlusSerialServicePacketReceiver
+	- returns: BTLEPlusSerialServicePacketReceiver
 	*/
 	override init() {
 		packets = [:]
@@ -72,29 +72,29 @@ import Foundation
 	}
 	
 	/**
-	Helper method to create a BLEPlusSerialServicePacketReceiver using a tmp file.
+	Helper method to create a BTLEPlusSerialServicePacketReceiver using a tmp file.
 	
 	- parameter windowSize:		Window size.
 	- parameter messageSize:	The expected message size.
 	*/
-	class func createWithTmpFileForWriting(windowSize:UInt8, messageSize:UInt64 = 0) -> BLEPlusSerialServicePacketReceiver? {
+	class func createWithTmpFileForWriting(windowSize:UInt8, messageSize:UInt64 = 0) -> BTLEPlusSerialServicePacketReceiver? {
 		if let tmpFileURL = getTempFileForWriting() {
 			print(tmpFileURL)
-			return  BLEPlusSerialServicePacketReceiver(withFileURLForWriting: tmpFileURL, windowSize: windowSize, messageSize: messageSize)
+			return  BTLEPlusSerialServicePacketReceiver(withFileURLForWriting: tmpFileURL, windowSize: windowSize, messageSize: messageSize)
 		}
 		return nil
 	}
 	
 	/**
-	Initialize a BLEPlusSerialServiceMessageRecever with maximum transmission unit
+	Initialize a BTLEPlusSerialServiceMessageRecever with maximum transmission unit
 	and windowSize
 	
 	- parameter windowSize:		The number of open positions to received data.
 	- parameter messageSize:	(Optional) The total message size in bytes.
 	
-	- returns: BLEPlusSerialServicePacketReceiver
+	- returns: BTLEPlusSerialServicePacketReceiver
 	*/
-	init?(withWindowSize:BLEPlusSerialServiceWindowSize_Type, messageSize:UInt64 = 0) {
+	init?(withWindowSize:BTLEPlusSerialServiceWindowSize_Type, messageSize:UInt64 = 0) {
 		guard withWindowSize > 0 else {
 			return nil
 		}
@@ -106,7 +106,7 @@ import Foundation
 	}
 	
 	/**
-	Initialize a BLEPlusSerialServicePacketReceiver with a file handle for writing,
+	Initialize a BTLEPlusSerialServicePacketReceiver with a file handle for writing,
 	maximum transmission unit and windowSize. Use this for starting a large message
 	that requires writing to a file as data is received.
 	
@@ -114,9 +114,9 @@ import Foundation
 	- parameter windowSize:						Window size.
 	- parameter messageSize:					(Optional) The total message size in bytes.
 	
-	- returns: BLEPlusSerialServicePacketReceiver
+	- returns: BTLEPlusSerialServicePacketReceiver
 	*/
-	init?(withFileURLForWriting:NSURL, windowSize:BLEPlusSerialServiceWindowSize_Type, messageSize:UInt64 = 0) {
+	init?(withFileURLForWriting:NSURL, windowSize:BTLEPlusSerialServiceWindowSize_Type, messageSize:UInt64 = 0) {
 		guard let path = withFileURLForWriting.path else {
 			return nil
 		}
@@ -135,10 +135,10 @@ import Foundation
 	
 	- parameter data:	NSData
 	
-	- returns: BLEPlusSerialServiceReceivedDataStatus
+	- returns: BTLEPlusSerialServiceReceivedDataStatus
 	*/
 	func receivedData(data:NSData) {
-		var packet:BLEPlusSerialServicePacketCountType = 0
+		var packet:BTLEPlusSerialServicePacketCounter_Type = 0
 		data.getBytes(&packet, range: NSRange.init(location: 0, length: sizeof(packet.dynamicType)))
 		if packet != expectedPacket {
 			needsPacketsResent = true
@@ -147,7 +147,7 @@ import Foundation
 		packets[packet] = payload
 		bytesReceived = bytesReceived + UInt64(payload.length)
 		expectedPacket = packet + 1
-		if expectedPacket == BLEPlusSerialServiceMaxPacketCounter {
+		if expectedPacket == BTLEPlusSerialServiceMaxPacketCounter {
 			expectedPacket = 0
 		}
 	}
@@ -157,9 +157,9 @@ import Foundation
 		needsPacketsResent = false
 		let part = NSMutableData()
 		var loopPacketCounter = beginWindowPacketCount
-		var writtenPackets:BLEPlusSerialServicePacketCountType = 0
+		var writtenPackets:BTLEPlusSerialServicePacketCounter_Type = 0
 		while(writtenPackets < windowSize) {
-			if loopPacketCounter == BLEPlusSerialServiceMaxPacketCounter {
+			if loopPacketCounter == BTLEPlusSerialServiceMaxPacketCounter {
 				loopPacketCounter = 0
 			}
 			if let packetData = packets[loopPacketCounter] {
@@ -180,11 +180,11 @@ import Foundation
 	}
 	
 	/// Returns the first missing packet from the current windowSize and packetCounter.
-	func resendFromPacket() ->BLEPlusSerialServicePacketCountType {
+	func resendFromPacket() ->BTLEPlusSerialServicePacketCounter_Type {
 		var loopPacketCounter = beginWindowPacketCount
-		var totalChecked:BLEPlusSerialServicePacketCountType = 0
+		var totalChecked:BTLEPlusSerialServicePacketCounter_Type = 0
 		while(totalChecked < windowSize) {
-			if loopPacketCounter == BLEPlusSerialServiceMaxPacketCounter {
+			if loopPacketCounter == BTLEPlusSerialServiceMaxPacketCounter {
 				loopPacketCounter = 0
 			}
 			let data = packets[loopPacketCounter]
@@ -194,7 +194,7 @@ import Foundation
 			loopPacketCounter = loopPacketCounter + 1
 			totalChecked = totalChecked + 1
 		}
-		return BLEPlusSerialServicePacketCountType.max
+		return BTLEPlusSerialServicePacketCounter_Type.max
 	}
 	
 	/**
@@ -203,7 +203,7 @@ import Foundation
 	- returns: NSFileHandle?
 	*/
 	class func getTempFileForWriting() -> NSURL? {
-		let templateString = "BLEPlusSerialService.XXXXXX"
+		let templateString = "BTLEPlusSerialService.XXXXXX"
 		let template = NSURL(fileURLWithPath:NSTemporaryDirectory()).URLByAppendingPathComponent(templateString)
 		var buffer = [Int8](count: Int(PATH_MAX), repeatedValue: 0)
 		template.getFileSystemRepresentation(&buffer, maxLength: buffer.count)

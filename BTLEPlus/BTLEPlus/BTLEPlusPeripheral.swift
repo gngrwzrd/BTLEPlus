@@ -2,8 +2,8 @@
 import CoreBluetooth
 
 /**
-The BLEPeripheral object is a generic peripheral that allows you to customize
-the connection and setup process before it's considered ready to use.
+The BTLEPlusPeripheral object is a generic peripheral that allows you to customize
+the connection and discovery process before it's considered ready to use.
 
 ## Peripheral Setup
 
@@ -45,20 +45,22 @@ this point.
 
 ## Peripheral Prototypes
 
-Peripheral objects aren't created and used directly, instead you create
+Peripheral objects aren't created by you and used directly, instead you create
 a prototype object, and register it with a BTLECentralManager.
 
-When a BTLECentralManager discovers peripherals, it asks each registered BTLEPeripheral
-prototype if it knows how to respond to the advertised services. You can override
-respondsToAdvertisementData(), which tells the central manager if it should
-instantiate your peripheral.
+When a BTLECentralManager discovers peripherals, it asks each registered BTLEPlusPeripheral
+prototype if it knows how to respond to the advertised services. If the peripheral
+understands the advertisement data, it's instantiated and considered discovered.
+
+You can override respondsToAdvertisementData(), which tells the central manager if it should
+instantiate your peripheral and consider it discovered.
 
 ## Responding to Advertisement Data
 
 ````
-class MyPeripheral : BLEPeripheral {
+class MyPeripheral : BTLEPlusPeripheral {
 	//override and decide if your peripheral understands the advertised data.
-	override public func respondsToAdvertisementData(data:BLEAdvertisementData) -> Bool {
+	override public func respondsToAdvertisementData(data:BTLEAdvertisementData) -> Bool {
 		//inspect advertisement data here.
 		return true or false.
 	}
@@ -72,18 +74,18 @@ class MyPeripheral : BLEPeripheral {
 ##### Multiple Advertisement Packets
 
 At times Core Bluetooth will receive advertisement data in multiple parts. When this happens
-the advertisement data for a peripheral is collected using a BLEAdvertisementData
+the advertisement data for a peripheral is collected using a BTLEAdvertisementData
 object. Your peripheral prototype will be asked each time with the collected data if it
 responds to the advertisement data. This ensures you eventually get all of the advertisement
 data to properly decide if your prototype understands the advertised services.
 
 */
-@objc public class BLEPeripheral : NSObject, CBPeripheralDelegate {
+@objc public class BTLEPlusPeripheral : NSObject, CBPeripheralDelegate {
 	
 	//MARK: CBPeripheral
 	
 	/// The CBPeripheral this class monitors and manages.
-	public var cbPeripheral:CBPeripheral?
+	var cbPeripheral:CBPeripheral?
 	
 	/// Local peripheral name.
 	public var name:String? {
@@ -132,7 +134,7 @@ data to properly decide if your prototype understands the advertised services.
 	public var organization:String?
 	
 	/// Whether or not this peripheral should be removed from it's BTLECentralManager.
-	/// This is called when a peripheral disconnects.
+	/// This is queried when a peripheral disconnects.
 	///
 	/// If false, the peripheral will remain in a disconnected state
 	/// within it's BTLECentralManager.
@@ -140,7 +142,7 @@ data to properly decide if your prototype understands the advertised services.
 	/// If true it's removed from it's BLECentralManager and you'd have
 	/// to scan for the peripheral again.
 	///
-	/// By default this is true.
+	/// Default is true.
 	///
 	/// This is an overrideable getter / setter.
 	public var canBeRemovedFromManager:Bool {
@@ -154,6 +156,8 @@ data to properly decide if your prototype understands the advertised services.
 	
 	/// Whether to reconnect when the peripheral is disconnected.
 	///
+	/// Default is true.
+	///
 	/// This is an overrideable getter / setter.
 	public var shouldReconnectOnDisconnect:Bool {
 		get {
@@ -166,32 +170,14 @@ data to properly decide if your prototype understands the advertised services.
 	
 	//MARK: Timeouts and Retries
 	
-	/// The maximum tries to connect to the peripheral.
-	public var connectionMaxAttempts = 3
+	/// The maximum tries for a step in the setup process.
+	public var maxAttempts = 3
 	
-	/// The timeout length before retrying to connect to the peripheral.
-	public var connectionTimeoutLength:NSTimeInterval = 5
-	
-	/// The maximum tries to discover services, included services, characteristics and descriptors.
-	public var discoveryStepMaxAttempts = 3
-	
-	/// The discovery step timeout length before retrying the discover step.
-	public var discoveryStepTimeoutLength:NSTimeInterval = 5
-	
-	/// The maximum tries to subscribe to a characteristic.
-	public var subscribeStepMaxAttempts = 3
-	
-	/// The subscribe step timeout length before retrying the subscribe step.
-	public var subscribeStepTimeoutLength:NSTimeInterval = 5
-	
-	/// The maximum attempts to call performAdditionalSetup().
-	public var additionalSetupMaxAttempts = 3
-	
-	/// The timeout for custom additional setup.
-	public var additionalSetupTimeout:NSTimeInterval = 5
+	/// The timeout length before retrying the current step.
+	public var attemptTimeoutLength:NSTimeInterval = 5
 	
 	/// The BLECentralManager that currently is managing this peripheral.
-	weak var btleCentralManager:BTLECentralManager?
+	weak var btleCentralManager:BTLEPlusCentralManager?
 	
 	/// The CBCentralManager for this peripheral.
 	weak var btCentralManager:CBCentralManager?
@@ -206,7 +192,7 @@ data to properly decide if your prototype understands the advertised services.
 	/// This flag is needed in order to allow subclasses to override peripheral delegate methods properly.
 	var isInSetup = false
 	
-	/// Whether or not the discover step of peripheral setup is completed.
+	/// Whether or not the discovery step of peripheral setup is completed.
 	var discoveryRequirementsCompleted:Bool = false
 	
 	/// The number of services whos characteristics are being discovered.
@@ -227,48 +213,52 @@ data to properly decide if your prototype understands the advertised services.
 	/// The last error received from a disconnect.
 	var lastDisconnectError:NSError?
 	
-	/// Whether the last disconnect was the result of a call to disconnect()
-	/// by the user, or an internal disconnect because of an outside condition.
-	var disconnectWasInternal:Bool = false
-	
 	//MARK: Advertisement Data
 	
-	var _advertisementData:BLEAdvertisementData?
-	/// Initial advertisement data when peripheral was discovered. Note that this
-	/// data can also come from user defaults when peripherals are retrieved from
-	/// core bluetooth.
-	public var advertisementData:BLEAdvertisementData? {
+	/// Advertisement data for the peripheral.
+	public var advertisementData:BTLEAdvertisementData? {
 		get {
 			return _advertisementData
 		} set(newAdvertisementData) {
 			_advertisementData = newAdvertisementData
 		}
 	}
+	var _advertisementData:BTLEAdvertisementData?
 	
-	/// This is called when a new BLEPeripheral instance is created from a prototype copy.
-	func wasCopiedFromPeripheralPrototype(prototype:BLEPeripheral) {
-		attempts = prototype.connectionMaxAttempts
-	}
+	/**
+	Whether or not your peripheral can uderstand the advertised data from
+	another peripheral.
 	
-	/// You must override this and implement logic that decides if your peripheral
-	/// responds to the advertisement data.
-	public func respondsToAdvertisementData(advertisementData:BLEAdvertisementData) -> Bool {
+	Override this and implement logic that decides if your peripheral understands
+	advertised data.
+	
+	- parameter advertisementData: The advertised data.
+	
+	- returns: Bool
+	*/
+	public func respondsToAdvertisementData(advertisementData:BTLEAdvertisementData) -> Bool {
+		print("override respondsToAdvertisementData")
 		return false
 	}
 	
 	/// Called when a peripheral receives more advertisement data. This can happen
-	/// when peripheral discovery is running. Core bluetooth will send multiple
-	/// peripheral discovered for the same peripheral, but with more data.
-	func receivedMoreAdvertisementData(newData:BLEAdvertisementData) {
+	/// when peripheral discovery is running. Core Bluetooth may send multiple packets
+	/// of advertisement data.
+	func receivedMoreAdvertisementData(newData:BTLEAdvertisementData) {
 		advertisementData?.append(newData)
 		if peripheralReady {
 			btleCentralManager?.saveKnownPeripheral(self, advertisementData: advertisementData)
 		}
 	}
 	
-	//MARK: Restoring from Core Bluetooth
+	//MARK: Connectivity
 	
-	/// When a peripheral was retrieved from core bluetooth.
+	/// When a peripheral was retrieved from Core Bluetooth.
+	///
+	/// If the discovered peripheral is not connected, it will connect for you.
+	///
+	/// If the discovered peripheral is already connected it will go through
+	/// the setup process.
 	public func wasRetrieved() {
 		if cbPeripheral?.state == CBPeripheralState.Disconnected {
 			connect()
@@ -278,30 +268,29 @@ data to properly decide if your prototype understands the advertised services.
 		}
 	}
 	
-	//MARK: Connectivity
-	
-	/// You can override this to be notified of when a peripheral was discovered. It's
-	/// also called when a peripheral is `retrieved` from core bluetooth and considered discovered.
+	/// You can override this to be notified of when a peripheral was discovered.
+	///
+	/// It's also called when a peripheral is _retrieved_ from Core Bluetooth
+	/// and considered discovered.
 	public func wasDiscovered() {
 		btleCentralManager?.delegate?.btleCentralManagerDidDiscoverPeripheral?(btleCentralManager!, peripheral: self)
 	}
 	
-	/// This starts the connect process with core bluetooth.
+	/// This starts the connect process with Core Bluetooth.
 	func connect() {
 		if let peripheral = cbPeripheral {
 			if peripheral.state == CBPeripheralState.Connecting || peripheral.state == CBPeripheralState.Connected {
 				return
 			}
 		}
-		attempts = connectionMaxAttempts
+		attempts = maxAttempts
 		lastDisconnectError = nil
 		isInSetup = true
 		retryConnect()
 	}
 	
-	/// When the peripheral is connected. The peripheral has only been connected
-	/// and not ready for use yet.
-	func connected() {
+	/// Called when peripheral is connected, but not yet ready to use.
+	public func onConnected() {
 		cbPeripheral?.delegate = self
 		btleCentralManager?.delegate?.btlePeripheralConnected?(btleCentralManager!, peripheral: self)
 		discoverServices()
@@ -327,7 +316,7 @@ data to properly decide if your prototype understands the advertised services.
 	/// Starts the connection timeout
 	func startConnectTimeout() {
 		timeout?.invalidate()
-		timeout = NSTimer.scheduledTimerWithTimeInterval(connectionTimeoutLength, target: self, selector: #selector(BLEPeripheral.connectTimeout(_:)), userInfo: nil, repeats: false)
+		timeout = NSTimer.scheduledTimerWithTimeInterval(attemptTimeoutLength, target: self, selector: #selector(BTLEPlusPeripheral.connectTimeout(_:)), userInfo: nil, repeats: false)
 	}
 	
 	/// On connection timeout
@@ -349,33 +338,17 @@ data to properly decide if your prototype understands the advertised services.
 		connectFailed()
 	}
 	
-	/// This is called when max connection attempts have been
-	/// made and it still won't connect.
+	/// Called after maxAttempts to connect failed.
 	func connectFailed() {
 		btleCentralManager?.delegate?.btlePeripheralFailedToConnect?(btleCentralManager!, peripheral: self, error: setupOutgoingError)
-		internal_disconnect()
+		disconnect()
 		if canBeRemovedFromManager {
 			btleCentralManager?.removePeripheral(self)
 		}
 	}
 	
-	/// Disconnect this peripheral. Once disconnected the peripheral will be removed
-	/// from the BTLECentralManager. You can optionally override `canBeRemovedFromManager()`
-	/// to allow the peripheral to continue living in a disconnected state.
+	/// Disconnect this peripheral.
 	func disconnect() {
-		disconnectWasInternal = false
-		if cbPeripheral?.state == CBPeripheralState.Disconnected {
-			return
-		}
-		if let peripheral = cbPeripheral {
-			btCentralManager?.cancelPeripheralConnection(peripheral)
-		}
-	}
-	
-	/// A private form of disconnect soley for setting the disconnectWasInternal
-	/// flag.
-	private func internal_disconnect() {
-		disconnectWasInternal = true
 		if cbPeripheral?.state == CBPeripheralState.Disconnected {
 			return
 		}
@@ -414,19 +387,28 @@ data to properly decide if your prototype understands the advertised services.
 	
 	//MARK: Peripheral Ready
 	
-	/// Whether or not this peripheral is ready. BLEPeripheral uses this as a flag
-	/// in numerous places to skip parts of the discovery / subscribe
-	/// step if subclasses set it to true.
+	/// Whether or not this peripheral is ready.
+	/// 
+	/// _isPeripheralReady()_ uses this value to query if the peripheral is ready.
 	public var peripheralReady = false
 	
-	/// Returns whether the peripheral is considered ready. You can override this
-	/// to provide your own logic that decides of the peripheral is ready.
+	/// Returns whether the peripheral is considered ready.
+	///
+	/// You can override this to provide your own logic that decides of the
+	/// peripheral is ready.
+	///
+	/// By default this returns the value of _peripheralReady_
+	///
+	/// - returns: Bool
 	public func isPeripheralReady() -> Bool {
 		return peripheralReady
 	}
 	
 	/// When the peripheral is ready this is called.
-	public func peripheralIsReady() {
+	///
+	/// You can also call this from your subclasses when you know your peripheral
+	/// is ready to use.
+	public func onPeripheralReady() {
 		timeout?.invalidate()
 		timeout = nil
 		isInSetup = false
@@ -446,7 +428,7 @@ data to properly decide if your prototype understands the advertised services.
 	
 	/// Called when the discover step failed after max discover attempts has passed.
 	func discoveryStepFailed() {
-		internal_disconnect()
+		disconnect()
 		btleCentralManager?.delegate?.btlePeripheralSetupFailed?(btleCentralManager!, peripheral: self, error: setupOutgoingError)
 	}
 	
@@ -457,15 +439,16 @@ data to properly decide if your prototype understands the advertised services.
 	
 	/// Called when the subscribe step failed after max subscribe attempts has passed.
 	func subscribeStepFailed() {
-		internal_disconnect()
+		disconnect()
 		btleCentralManager?.delegate?.btlePeripheralSetupFailed?(btleCentralManager!, peripheral: self, error: setupOutgoingError)
 	}
 	
 	//MARK: Service Discovery
 	
 	/**
-	Returns whether or not a specific service CBUUID should be discovered as part of the
-	discovery step. The passed uuid is taken directly from a peripherals advertisement data.
+	Override and decide which services you want discovered.
+	
+	Default is true.
 	
 	- parameter uuid: A service CBUUID.
 	- returns: Whether or not to discover the service.
@@ -507,15 +490,15 @@ data to properly decide if your prototype understands the advertised services.
 	}
 	
 	/// Called after services have been discovered.
-	func discoveredServices() {
+	public func onDiscoverServicesComplete() {
 		discoverIncludedServices()
 	}
 	
 	/// Starts the timeout for service discovery.
 	func startTimeoutForDiscoverServices() {
 		timeout?.invalidate()
-		attempts = discoveryStepMaxAttempts
-		timeout = NSTimer.scheduledTimerWithTimeInterval(discoveryStepTimeoutLength, target: self, selector: #selector(BLEPeripheral.discoverServicesTimeout(_:)), userInfo: nil, repeats: false)
+		attempts = maxAttempts
+		timeout = NSTimer.scheduledTimerWithTimeInterval(attemptTimeoutLength, target: self, selector: #selector(BTLEPlusPeripheral.discoverServicesTimeout(_:)), userInfo: nil, repeats: false)
 	}
 	
 	/// service discovery received an error
@@ -557,16 +540,22 @@ data to properly decide if your prototype understands the advertised services.
 	
 	//MARK: Included Service Discovery
 	
+	/**
+	Whether or not included services should be discovered.
+	
+	- returns: Bool
+	*/
 	public func shouldDiscoverIncludedServices() -> Bool {
 		return false
 	}
 	
 	/**
-	Controls whether or not included services for a service should be discovered. And
-	which of the services should be discovered.
+	Override to control which included services are discovered.
 	
 	- parameter service: The service who's included services should be discovered.
-	- returns: Returning [CBUUID,] means specific services, [] means all included services, nil means don't discover any included services
+	
+	- returns: Returning [CBUUID,] means specific services, [] means all included services,
+	nil means don't discover any included services. Default is nil.
 	*/
 	public func discoverIncludedServicesForService(service:CBService?) -> [CBUUID]? {
 		return nil
@@ -617,8 +606,8 @@ data to properly decide if your prototype understands the advertised services.
 	
 	/// Starts the timeout for discoverying included services
 	func startTimeoutForDiscoverIncludedServices() {
-		attempts = discoveryStepMaxAttempts
-		timeout = NSTimer.scheduledTimerWithTimeInterval(discoveryStepTimeoutLength, target: self, selector: #selector(BLEPeripheral.discoverIncludedServicesTimeout(_:)), userInfo: nil, repeats: false)
+		attempts = maxAttempts
+		timeout = NSTimer.scheduledTimerWithTimeInterval(attemptTimeoutLength, target: self, selector: #selector(BTLEPlusPeripheral.discoverIncludedServicesTimeout(_:)), userInfo: nil, repeats: false)
 	}
 	
 	/// Timeout for included services discovery
@@ -649,16 +638,16 @@ data to properly decide if your prototype understands the advertised services.
 	}
 	
 	/// Called when discovered included services completed.
-	func discoveredIncludedServices() {
+	public func onDiscoveredIncludedServicesComplete() {
 		discoverCharacteristics()
 	}
 	
 	//MARK: Characteristics Discovery
 	
 	/**
-	Whether or not to discover characteristics. Default is true.
+	Whether or not to discover characteristics.
 	
-	Default return value is true.
+	Default is true.
 	
 	- returns: Bool
 	*/
@@ -667,14 +656,14 @@ data to properly decide if your prototype understands the advertised services.
 	}
 	
 	/**
-	Whether or not all characteristics for a specific service should be discovered.
-	If shouldDiscoverCharacteristics() returns false this won't be called.
+	Override to control which characteristics are discovered.
 	
 	Default behavior is to discover all characteristics for a service.
 	
 	- parameter service: The service who's characteristics will be discovered.
-	- returns: [CBUUID,] means specific characteristic, [] means all characteristics, 
-	nil means don't discover any characteristics for this service.
+	
+	- returns: [CBUUID,] means specific characteristic, [] means all characteristics,
+	nil means don't discover any characteristics for the service.
 	*/
 	public func discoverCharacteristicsForService(service:CBService?) -> [CBUUID]? {
 		return []
@@ -744,8 +733,8 @@ data to properly decide if your prototype understands the advertised services.
 	
 	/// Starts the timeout for characteristic discovery.
 	func startTimeoutForDiscoverCharacteristics() {
-		attempts = discoveryStepMaxAttempts
-		timeout = NSTimer.scheduledTimerWithTimeInterval(discoveryStepTimeoutLength, target: self, selector: #selector(BLEPeripheral.discoverCharacteristicsTimeout(_:)), userInfo: nil, repeats: false)
+		attempts = maxAttempts
+		timeout = NSTimer.scheduledTimerWithTimeInterval(attemptTimeoutLength, target: self, selector: #selector(BTLEPlusPeripheral.discoverCharacteristicsTimeout(_:)), userInfo: nil, repeats: false)
 	}
 	
 	/// Discovering characteristics timed out.
@@ -776,7 +765,7 @@ data to properly decide if your prototype understands the advertised services.
 	}
 	
 	/// Successfully discovered characteristics.
-	public func discoveredCharacteristics() {
+	public func onDiscoverCharacteristicsComplete() {
 		discoverDescriptors()
 	}
 	
@@ -785,7 +774,7 @@ data to properly decide if your prototype understands the advertised services.
 	/**
 	Whether or not descriptors should be discovered.
 	
-	Default return value is false.
+	Default is false.
 	
 	- returns: Bool
 	*/
@@ -794,18 +783,16 @@ data to properly decide if your prototype understands the advertised services.
 	}
 	
 	/**
-	Override this to customize which descriptors for a characteristics and service are
-	going to be discovered. If shouldDiscoverDescriptors() returns false, this
-	won't be called.
+	Override to customize which descriptors are descovered.
 	
-	Default behavior is to discover all descriptors.
+	Default behavior is to not discover any descriptors.
 	
 	- parameter characteristic: The characteristic.
 	- parameter service:        The service
 	- returns: Bool
 	*/
 	public func shouldDiscoverDescriptorsForCharacteristic(characteristic:CBCharacteristic, service:CBService?) -> Bool {
-		return true
+		return false
 	}
 	
 	/// Starts the descriptor discovery.
@@ -855,14 +842,14 @@ data to properly decide if your prototype understands the advertised services.
 	}
 	
 	/// Called when descriptors were discovered.
-	public func discoveredDescriptors() {
+	public func onDiscoverDescriptorsComplete() {
 		discoveryStepCompleted()
 	}
 	
 	/// Starts the timeout for descriptor discovery
 	func startTimeoutForDiscoverDescriptors() {
-		attempts = discoveryStepMaxAttempts
-		timeout = NSTimer.scheduledTimerWithTimeInterval(discoveryStepTimeoutLength, target: self, selector: #selector(BLEPeripheral.discoverDescriptorsTimeout(_:)), userInfo: nil, repeats: false)
+		attempts = maxAttempts
+		timeout = NSTimer.scheduledTimerWithTimeInterval(attemptTimeoutLength, target: self, selector: #selector(BTLEPlusPeripheral.discoverDescriptorsTimeout(_:)), userInfo: nil, repeats: false)
 	}
 	
 	/// Timeout of descriptor discovery
@@ -897,7 +884,7 @@ data to properly decide if your prototype understands the advertised services.
 	/**
 	Override this to decide if any characteristics should be subscribed to.
 	
-	Default return value is true for any characteristic that implements the notify property.
+	Default behavior is to subscribe to any characteristic that supports notify.
 	
 	- parameter character: The characteristic
 	- parameter service:   The service
@@ -926,7 +913,7 @@ data to properly decide if your prototype understands the advertised services.
 			}
 			
 			if setNotifyCount < 1 {
-				subscribingFinished()
+				onSubscribeComplete()
 				return
 			}
 			
@@ -947,8 +934,8 @@ data to properly decide if your prototype understands the advertised services.
 	/// Start timeout for subscribe step
 	func startTimerForSubscribeStep() {
 		timeout?.invalidate()
-		attempts = subscribeStepMaxAttempts
-		timeout = NSTimer.scheduledTimerWithTimeInterval(subscribeStepTimeoutLength, target: self, selector: #selector(BLEPeripheral.subscribingTimeout(_:)), userInfo: nil, repeats: false)
+		attempts = maxAttempts
+		timeout = NSTimer.scheduledTimerWithTimeInterval(attemptTimeoutLength, target: self, selector: #selector(BTLEPlusPeripheral.subscribingTimeout(_:)), userInfo: nil, repeats: false)
 	}
 	
 	/// Timeout for subscribe step
@@ -984,7 +971,7 @@ data to properly decide if your prototype understands the advertised services.
 	}
 	
 	/// Subsribing finished successfully.
-	public func subscribingFinished() {
+	public func onSubscribeComplete() {
 		
 		////check if additional setup is required.
 		if requiresAdditionalSetup() {
@@ -993,33 +980,40 @@ data to properly decide if your prototype understands the advertised services.
 		}
 		
 		if isPeripheralReady() {
-			peripheralIsReady()
+			onPeripheralReady()
 		}
 	}
 	
 	//MARK: Additional setup
 	
-	/// You can override this if you require
-	/// additional work as part of the peripheral setup process.
+	/**
+	Whether or not your peripheral requires additional setup after
+	subscribing to characteristics.
+	
+	- returns: Bool
+	*/
 	public func requiresAdditionalSetup() -> Bool {
 		return false
 	}
 	
 	/// internal function that kicks off performAdditionalSetup
 	func internal_performAdditionalSetup() {
-		attempts = additionalSetupMaxAttempts
+		attempts = maxAttempts
 		performAdditionalSetup()
 	}
 	
-	/// You must override this to perform your
-	/// additional setup tasks. Make sure to call super.performAdditionalSetup()
+	/**
+	Override this to perform your additional setup tasks.
+	
+	**Make sure to call super.performAdditionalSetup()**
+	*/
 	public func performAdditionalSetup() {
 		attempts = attempts - 1
 		timeout?.invalidate()
-		timeout = NSTimer.scheduledTimerWithTimeInterval(additionalSetupTimeout, target: self, selector: #selector(BLEPeripheral.additionalSetupTimeout(_:)), userInfo: nil, repeats: false)
+		timeout = NSTimer.scheduledTimerWithTimeInterval(attemptTimeoutLength, target: self, selector: #selector(BTLEPlusPeripheral.additionalSetupTimeout(_:)), userInfo: nil, repeats: false)
 	}
 	
-	public func retryPerformAddionalSetup() {
+	func retryPerformAddionalSetup() {
 		attempts = attempts - 1
 		if attempts < 1 {
 			additionalSetupFailed()
@@ -1028,7 +1022,7 @@ data to properly decide if your prototype understands the advertised services.
 		performAdditionalSetup()
 	}
 	
-	public func retryingAdditionalSetup() {
+	func retryingAdditionalSetup() {
 		
 	}
 	
@@ -1036,7 +1030,7 @@ data to properly decide if your prototype understands the advertised services.
 		retryPerformAddionalSetup()
 	}
 	
-	public func additionalSetupFailed() {
+	func additionalSetupFailed() {
 		let userinfo = [NSLocalizedDescriptionKey:"Additional setup timed out."];
 		let error = NSError(domain: "ble", code: 0, userInfo: userinfo)
 		btleCentralManager?.delegate?.btlePeripheralSetupFailed?(btleCentralManager!, peripheral: self, error: error)
@@ -1047,7 +1041,7 @@ data to properly decide if your prototype understands the advertised services.
 	/**
 	Find a service.
 	
-	- parameter uuid: The service uuid.
+	- parameter uuid: The service CBUUID.
 	- returns: CBService?
 	*/
 	public func findService(uuid:CBUUID) -> CBService? {
@@ -1063,8 +1057,9 @@ data to properly decide if your prototype understands the advertised services.
 	
 	/**
 	Find a characteristic from a service.
-	- parameter service: The service.
-	- parameter uuid:    Characteristic uuid.
+	
+	- parameter service: A CBService that may contain a characteristic with uuid.
+	- parameter uuid: Characteristic uuid.
 	- returns: CBCharacteristic?
 	*/
 	public func findCharacteristic(service:CBService?, uuid:CBUUID) -> CBCharacteristic? {
@@ -1095,7 +1090,7 @@ data to properly decide if your prototype understands the advertised services.
 			return
 		}
 		
-		discoveredServices()
+		onDiscoverServicesComplete()
 	}
 	
 	//Discovered some included services for a service
@@ -1113,7 +1108,7 @@ data to properly decide if your prototype understands the advertised services.
 		
 		discoveringIncludedServices = discoveringIncludedServices - 1
 		if discoveringIncludedServices == 0 {
-			discoveredIncludedServices()
+			onDiscoveredIncludedServicesComplete()
 		}
 	}
 	
@@ -1132,7 +1127,7 @@ data to properly decide if your prototype understands the advertised services.
 		
 		discoveringCharacteristics = discoveringCharacteristics - 1
 		if discoveringCharacteristics == 0 {
-			discoveredCharacteristics()
+			onDiscoverCharacteristicsComplete()
 		}
 	}
 	
@@ -1156,7 +1151,7 @@ data to properly decide if your prototype understands the advertised services.
 		
 		discoveringDescriptors = discoveringDescriptors - 1
 		if discoveringDescriptors == 0 {
-			discoveredDescriptors()
+			onDiscoverDescriptorsComplete()
 		}
 	}
 	
@@ -1175,7 +1170,7 @@ data to properly decide if your prototype understands the advertised services.
 		
 		setNotifyCount = setNotifyCount - 1
 		if setNotifyCount == 0 {
-			subscribingFinished()
+			onSubscribeComplete()
 		}
 	}
 	

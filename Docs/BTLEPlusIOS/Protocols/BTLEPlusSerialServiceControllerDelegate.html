@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>BTLEPlusSerialServiceControllerDelegate Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Protocol/BTLEPlusSerialServiceControllerDelegate" class="dashAnchor"></a>
+
+    <a title="BTLEPlusSerialServiceControllerDelegate Protocol Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+           Docs
+        </a>
+         (93% documented)
+      </p>
+    
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html"> Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      BTLEPlusSerialServiceControllerDelegate Protocol Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLEAdvertisementData.html">BTLEAdvertisementData</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLEPlusCentralManager.html">BTLEPlusCentralManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLEPlusPeripheral.html">BTLEPlusPeripheral</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLEPlusSerialServiceController.html">BTLEPlusSerialServiceController</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLEPlusSerialServiceMessage.html">BTLEPlusSerialServiceMessage</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Global Variables.html">Global Variables</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Global Variables.html#/s:v11BTLEPlusIOS31BTLEPlusSerialServiceDefaultMTUVs6UInt16">BTLEPlusSerialServiceDefaultMTU</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Global Variables.html#/s:v11BTLEPlusIOS38BTLEPlusSerialServiceDefaultWindowSizeVs5UInt8">BTLEPlusSerialServiceDefaultWindowSize</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Global Variables.html#/s:v11BTLEPlusIOS33BTLEPlusSerialServiceMaxMessageIdVs5UInt8">BTLEPlusSerialServiceMaxMessageId</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Global Variables.html#/s:v11BTLEPlusIOS34BTLEPlusSerialServiceMaxWindowSizeVs5UInt8">BTLEPlusSerialServiceMaxWindowSize</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/BTLEPlusSerialServiceRunMode.html">BTLEPlusSerialServiceRunMode</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/OptionSetType.html">OptionSetType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/BTLEPlusCentralManagerDelegate.html">BTLEPlusCentralManagerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/BTLEPlusSerialServiceControllerDelegate.html">BTLEPlusSerialServiceControllerDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Typealiases.html">Typealiases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:11BTLEPlusIOS29BTLEPlusSerialServiceMTU_Type">BTLEPlusSerialServiceMTU_Type</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:11BTLEPlusIOS35BTLEPlusSerialServiceMessageId_Type">BTLEPlusSerialServiceMessageId_Type</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:11BTLEPlusIOS37BTLEPlusSerialServiceMessageType_Type">BTLEPlusSerialServiceMessageType_Type</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:11BTLEPlusIOS39BTLEPlusSerialServicePacketCounter_Type">BTLEPlusSerialServicePacketCounter_Type</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:11BTLEPlusIOS45BTLEPlusSerialServiceProtocolMessageType_Type">BTLEPlusSerialServiceProtocolMessageType_Type</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:11BTLEPlusIOS36BTLEPlusSerialServiceWindowSize_Type">BTLEPlusSerialServiceWindowSize_Type</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>BTLEPlusSerialServiceControllerDelegate</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">BTLEPlusSerialServiceControllerDelegate</span></code></pre>
+
+                </div>
+              </div>
+            <p>BTLEPlusSerialServiceControllerDelegate is the protocol you implement to
+receive events from a serial service controller.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FP11BTLEPlusIOS39BTLEPlusSerialServiceControllerDelegate23serialServiceControllerFTCS_31BTLEPlusSerialServiceController15wantsToSendDataCSo6NSData_T_"></a>
+                    <a name="//apple_ref/swift/Method/serialServiceController(_:wantsToSendData:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP11BTLEPlusIOS39BTLEPlusSerialServiceControllerDelegate23serialServiceControllerFTCS_31BTLEPlusSerialServiceController15wantsToSendDataCSo6NSData_T_">serialServiceController(_:wantsToSendData:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When the serial service controller needs to send
+data it asks the delegate to send it.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">serialServiceController</span><span class="p">(</span><span class="nv">controller</span><span class="p">:</span><span class="kt"><a href="../Classes/BTLEPlusSerialServiceController.html">BTLEPlusSerialServiceController</a></span><span class="p">,</span> <span class="n">wantsToSendData</span> <span class="nv">data</span><span class="p">:</span><span class="kt">NSData</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>controller</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>BLEPlusSerialServiceController</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>wantsToSendData</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The data to send.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FP11BTLEPlusIOS39BTLEPlusSerialServiceControllerDelegate23serialServiceControllerFTCS_31BTLEPlusSerialServiceController11sentMessageCS_28BTLEPlusSerialServiceMessage_T_"></a>
+                    <a name="//apple_ref/swift/Method/serialServiceController(_:sentMessage:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP11BTLEPlusIOS39BTLEPlusSerialServiceControllerDelegate23serialServiceControllerFTCS_31BTLEPlusSerialServiceController11sentMessageCS_28BTLEPlusSerialServiceMessage_T_">serialServiceController(_:sentMessage:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When a message was entirely sent, and received by the peer.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">optional</span> <span class="kd">func</span> <span class="nf">serialServiceController</span><span class="p">(</span><span class="nv">controller</span><span class="p">:</span><span class="kt"><a href="../Classes/BTLEPlusSerialServiceController.html">BTLEPlusSerialServiceController</a></span><span class="p">,</span> <span class="n">sentMessage</span> <span class="nv">message</span><span class="p">:</span><span class="kt"><a href="../Classes/BTLEPlusSerialServiceMessage.html">BTLEPlusSerialServiceMessage</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>controller</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>BLEPlusSerialServiceController</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>message</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The message that was sent.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FP11BTLEPlusIOS39BTLEPlusSerialServiceControllerDelegate23serialServiceControllerFTCS_31BTLEPlusSerialServiceController15receivedMessageCS_28BTLEPlusSerialServiceMessage_T_"></a>
+                    <a name="//apple_ref/swift/Method/serialServiceController(_:receivedMessage:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP11BTLEPlusIOS39BTLEPlusSerialServiceControllerDelegate23serialServiceControllerFTCS_31BTLEPlusSerialServiceController15receivedMessageCS_28BTLEPlusSerialServiceMessage_T_">serialServiceController(_:receivedMessage:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When a message has been completely received.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">serialServiceController</span><span class="p">(</span><span class="nv">controller</span><span class="p">:</span><span class="kt"><a href="../Classes/BTLEPlusSerialServiceController.html">BTLEPlusSerialServiceController</a></span><span class="p">,</span> <span class="n">receivedMessage</span> <span class="nv">message</span><span class="p">:</span><span class="kt"><a href="../Classes/BTLEPlusSerialServiceMessage.html">BTLEPlusSerialServiceMessage</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>controller</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>BLEPlusSerialServiceController</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>message</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The message that was received.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-10)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

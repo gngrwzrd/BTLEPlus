@@ -1,6 +1,6 @@
-docs rename 'device' to peripheral
+Can I take out discoverRequirementsCompleted in BLETPlusPeriperal?
 
-Impement Reset,
+Impement Reset
 
 Implement mtu/windowSize peerInfo triggering when changed. ??? Maybe instaed I make it so mtu/windowSize is required at init?
 changing mtu/windowSize seems like it should only happen during peer setup.
@@ -21,8 +21,6 @@ since request/response needs two types, maybe switch messageType to two bytes.
 progress needs to go backwards on resend window
 
 file resume logic.
-
-Rename everything to BTLEPlus
 
 Add randmized packet loss simulation for resend testing.
 

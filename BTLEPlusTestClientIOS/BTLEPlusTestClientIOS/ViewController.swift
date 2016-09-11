@@ -10,38 +10,38 @@ import UIKit
 import CoreBluetooth
 import BTLEPlusIOS
 
-class ViewController: UIViewController, BTLECentralManagerDelegate {
+class ViewController: UIViewController, BTLEPlusCentralManagerDelegate {
 	
-	var bleManager:BTLECentralManager!
+	var bleManager:BTLEPlusCentralManager!
 	var myPeripheral:TestPeripheralClient?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		bleManager = BTLECentralManager(withDelegate: self)
+		bleManager = BTLEPlusCentralManager(withDelegate: self)
 		bleManager.shouldRetrieveKnownPeripherals = false
 		let prototype = TestPeripheralClient()
 		bleManager.registerPeripheralPrototype(prototype)
 	}
 	
-	func btleCentralManagerDidTurnOnBluetooth(manager: BTLECentralManager) {
+	func btleCentralManagerDidTurnOnBluetooth(manager: BTLEPlusCentralManager) {
 		bleManager.startScanning([TestPeripheralClient.ScanForUUID])
 	}
 	
-	func btleCentralManagerDidDiscoverPeripheral(manager: BTLECentralManager, peripheral: BLEPeripheral) {
+	func btleCentralManagerDidDiscoverPeripheral(manager: BTLEPlusCentralManager, peripheral: BTLEPlusPeripheral) {
 		if let t = peripheral as? TestPeripheralClient {
 			bleManager.connect(t)
 		}
 	}
 	
-	func btlePeripheralConnected(manager:BTLECentralManager,peripheral:BLEPeripheral) {
+	func btlePeripheralConnected(manager:BTLEPlusCentralManager,peripheral:BTLEPlusPeripheral) {
 		print("connected")
 	}
 	
-	func btlePeripheralDisconnected(manager: BTLECentralManager, peripheral: BLEPeripheral) {
+	func btlePeripheralDisconnected(manager: BTLEPlusCentralManager, peripheral: BTLEPlusPeripheral) {
 		print("disconnected");
 	}
 	
-	func btlePeripheralIsReady(manager: BTLECentralManager, peripheral: BLEPeripheral) {
+	func btlePeripheralIsReady(manager: BTLEPlusCentralManager, peripheral: BTLEPlusPeripheral) {
 		if let p = peripheral as? TestPeripheralClient {
 			myPeripheral = p
 		}

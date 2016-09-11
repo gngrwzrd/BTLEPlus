@@ -1,6 +1,6 @@
 //
-//  BLEPlusSerialServiceMessage.swift
-//  BLEPlus
+//  BTLEPlusSerialServiceMessage.swift
+//  BTLEPlus
 //
 //  Created by Aaron Smith on 8/28/16.
 //  Copyright © 2016 gngrwzrd. All rights reserved.
@@ -9,18 +9,18 @@
 import Foundation
 
 /**
-The BLEPlusSerialServiceMessage class is the base class for all user defined
+The BTLEPlusSerialServiceMessage class is the base class for all user defined
 messages that are sent over the serial service protocol. You pass instances of
-this to _BLEPlusSerialServiceController.send()_.
+this to _BTLEPlusSerialServiceController.send()_.
 */
-@objc public class BLEPlusSerialServiceMessage : NSObject {
+@objc public class BTLEPlusSerialServiceMessage : NSObject {
 	
 	/// A user defined type.
-	public var messageType:BLEPlusSerialServiceMessageType_Type = 0
+	public var messageType:BTLEPlusSerialServiceMessageType_Type = 0
 	
 	/// A user defined message id for tracking the message when it's sent
 	/// from one peer to the other.
-	public var messageId:BLEPLusSerialServiceMessageId_Type = 0
+	public var messageId:BTLEPlusSerialServiceMessageId_Type = 0
 	
 	/// User defined data to send.
 	public var data:NSData?
@@ -29,25 +29,25 @@ this to _BLEPlusSerialServiceController.send()_.
 	public var fileURL:NSURL?
 	
 	/// internal packet provider that the serial service controller uses.
-	var provider:BLEPlusSerialServicePacketProvider?
+	var provider:BTLEPlusSerialServicePacketProvider?
 	
 	/**
-	Initialize a BLEPlusSerialServiceMessage with it's message type, message id, and data.
+	Initialize a BTLEPlusSerialServiceMessage with it's message type, message id, and data.
 	
 	- parameter withMessageType: User defined message type.
 	- parameter messageId: User defined message id for tracking messages.
 	- parameter data: User defined data.
 	
-	- returns: BLEPlusSerialServiceMessage
+	- returns: BTLEPlusSerialServiceMessage
 	*/
-	public init?(withMessageType:BLEPlusSerialServiceMessageType_Type, messageId:BLEPLusSerialServiceMessageId_Type, data:NSData) {
+	public init?(withMessageType:BTLEPlusSerialServiceMessageType_Type, messageId:BTLEPlusSerialServiceMessageId_Type, data:NSData) {
 		guard data.length > 0 else {
 			return nil
 		}
 		self.data = data
 		self.messageType = withMessageType
 		self.messageId = messageId
-		if let provider = BLEPlusSerialServicePacketProvider(withData: data) {
+		if let provider = BTLEPlusSerialServicePacketProvider(withData: data) {
 			self.provider = provider
 			return
 		}
@@ -57,12 +57,12 @@ this to _BLEPlusSerialServiceController.send()_.
 	/**
 	Init with a file URL to send.
 	
-	- parameter withType:     BLEPLusSerialServiceMessageId_Type
+	- parameter withType:     BTLEPlusSerialServiceMessageId_Type
 	- parameter withFileURL:  NSURL
 	
-	- returns: BLEPlusSerialServiceMessage
+	- returns: BTLEPlusSerialServiceMessage
 	*/
-	public init?(withMessageType:BLEPlusSerialServiceMessageType_Type, messageId:BLEPLusSerialServiceMessageId_Type, fileURL:NSURL) {
+	public init?(withMessageType:BTLEPlusSerialServiceMessageType_Type, messageId:BTLEPlusSerialServiceMessageId_Type, fileURL:NSURL) {
 		guard withMessageType > 0 else {
 			return nil
 		}
@@ -75,7 +75,7 @@ this to _BLEPlusSerialServiceController.send()_.
 		self.fileURL = fileURL
 		self.messageType = withMessageType
 		self.messageId = messageId
-		if let provider = BLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL) {
+		if let provider = BTLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL) {
 			self.provider = provider
 			return
 		}
