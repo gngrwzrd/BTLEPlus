@@ -13,8 +13,13 @@ import BTLEPlus
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 	@IBOutlet weak var window: NSWindow!
+	
 	var testPeripheral:TestPeripheralServer?
 	func applicationDidFinishLaunching(aNotification: NSNotification) {
 		testPeripheral = TestPeripheralServer()
+	}
+	
+	@IBAction func sendHelloWorldRequest(sender:AnyObject?) {
+		testPeripheral?.sendHelloWorldRequest()
 	}
 }

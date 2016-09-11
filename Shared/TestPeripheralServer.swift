@@ -21,7 +21,7 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BTLEP
 	public static let CharacteristicUUID = CBUUID(string: "CF8F353A-420C-423D-BEE8-BA36499335DF")
 	
 	var controller:BTLEPlusSerialServiceController!
-	
+	var messageIdCounter:BTLEPlusSerialServiceMessageId_Type = 0
 	var testPairing:Bool = false
 	var pmanager:CBPeripheralManager!
 	var channel:CBMutableCharacteristic!
@@ -165,6 +165,15 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BTLEP
 		
 	}
 	
+	func getMessageId() -> BTLEPlusSerialServiceMessageId_Type {
+		if messageIdCounter == BTLEPlusSerialServiceMaxMessageId {
+			messageIdCounter = 0
+			return messageIdCounter
+		}
+		messageIdCounter = messageIdCounter + 1
+		return messageIdCounter
+	}
+	
 	func receivedHelloWorldRequest(request:BTLEPlusSerialServiceMessage) {
 		let s = String(data: request.data!, encoding: NSUTF8StringEncoding)
 		print(s)
@@ -177,6 +186,13 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BTLEP
 	func recievedHelloWorldResponse(request:BTLEPlusSerialServiceMessage) {
 		let s = String(data:request.data!, encoding: NSUTF8StringEncoding)
 		print("received hello world response:",s)
+	}
+	
+	func sendHelloWorldRequest() {
+		let s = "Hello World"
+		let d = s.dataUsingEncoding(NSUTF8StringEncoding)
+		let message = BTLEPlusSerialServiceMessage(withMessageType:HelloWorldRequest, messageId: getMessageId(), data: d!)
+		controller.send(message!)
 	}
 }
 	

@@ -675,7 +675,20 @@
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gg2-is-vfK">
+                        <rect key="frame" x="14" y="312" width="118" height="32"/>
+                        <buttonCell key="cell" type="push" title="Hello World" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ajB-Rf-XWp">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="sendHelloWorldRequest" target="Voe-Tx-rLC" id="dSe-yc-3pH"/>
+                        </connections>
+                    </button>
+                </subviews>
             </view>
+            <point key="canvasLocation" x="253" y="397"/>
         </window>
     </objects>
 </document>
