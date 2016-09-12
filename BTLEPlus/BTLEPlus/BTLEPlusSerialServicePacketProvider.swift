@@ -51,6 +51,10 @@ import Foundation
 	/// the bytes were received by the server.
 	var bytesWritten:UInt64 = 0
 	
+	/// The total bytes written when fillWindow was called. This is used to
+	/// revert the total bytes written when a resend happens.
+	var bytesWrittenAtFill:UInt64 = 0
+	
 	/// Send window. Size of the array is always windowSize.
 	var packets:[BTLEPlusSerialServicePacketCounter_Type:NSData]
 	
@@ -125,6 +129,7 @@ import Foundation
 	func fillWindow() {
 		packets = [:]
 		lastPacketCounterStart = packetCounter
+		bytesWrittenAtFill = bytesWritten
 		if let fileHandle = fileHandle {
 			lastFileOffsetAtStart = fileHandle.offsetInFile
 		}
@@ -208,6 +213,7 @@ import Foundation
 			fileHandle.seekToFileOffset(lastFileOffsetAtStart)
 		}
 		packetCounter = lastPacketCounterStart
+		bytesWritten = bytesWrittenAtFill
 		gotPacketCount = 0
 	}
 	

@@ -31,6 +31,23 @@ this to _BTLEPlusSerialServiceController.send()_.
 	/// internal packet provider that the serial service controller uses.
 	var provider:BTLEPlusSerialServicePacketProvider?
 	
+	/// internal packet receiver that the serial service controller uses.
+	var receiver:BTLEPlusSerialServicePacketReceiver?
+	
+	/**
+	Initialize with messageType and messageId.
+	
+	- parameter messageType:	The message type.
+	- parameter messageId:		The message id.
+	
+	- returns: BTLEPlusSerialServiceMessage?
+	*/
+	init?(withMessageType messageType:BTLEPlusSerialServiceMessageType_Type, messageId:BTLEPlusSerialServiceMessageId_Type) {
+		super.init()
+		self.messageType = messageType
+		self.messageId = messageId
+	}
+	
 	/**
 	Initialize a BTLEPlusSerialServiceMessage with it's message type, message id, and data.
 	
@@ -38,7 +55,7 @@ this to _BTLEPlusSerialServiceController.send()_.
 	- parameter messageId: User defined message id for tracking messages.
 	- parameter data: User defined data.
 	
-	- returns: BTLEPlusSerialServiceMessage
+	- returns: BTLEPlusSerialServiceMessage?
 	*/
 	public init?(withMessageType:BTLEPlusSerialServiceMessageType_Type, messageId:BTLEPlusSerialServiceMessageId_Type, data:NSData) {
 		guard data.length > 0 else {
@@ -60,7 +77,7 @@ this to _BTLEPlusSerialServiceController.send()_.
 	- parameter withType:     BTLEPlusSerialServiceMessageId_Type
 	- parameter withFileURL:  NSURL
 	
-	- returns: BTLEPlusSerialServiceMessage
+	- returns: BTLEPlusSerialServiceMessage?
 	*/
 	public init?(withMessageType:BTLEPlusSerialServiceMessageType_Type, messageId:BTLEPlusSerialServiceMessageId_Type, fileURL:NSURL) {
 		guard withMessageType > 0 else {

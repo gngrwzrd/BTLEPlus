@@ -36,6 +36,17 @@
       <nav class="navigation">
         <ul class="nav-groups">
           <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Guides.html">Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../btleplus-serial-service-protocol.html">BTLEPlus Serial Service Protocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../btlepluscentralmanager-programming-guide.html">BTLEPlusCentralManager Programming Guide</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a class="nav-group-name-link" href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -110,6 +121,12 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus37BTLEPlusSerialServiceMessageType_Type">BTLEPlusSerialServiceMessageType_Type</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus39BTLEPlusSerialServicePacketCounter_Type">BTLEPlusSerialServicePacketCounter_Type</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus45BTLEPlusSerialServiceProtocolMessageType_Type">BTLEPlusSerialServiceProtocolMessageType_Type</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus36BTLEPlusSerialServiceWindowSize_Type">BTLEPlusSerialServiceWindowSize_Type</a>
@@ -463,7 +480,7 @@ This is queried when a peripheral disconnects.</p>
 <p>If false, the peripheral will remain in a disconnected state
 within it&rsquo;s BTLECentralManager.</p>
 
-<p>If true it&rsquo;s removed from it&rsquo;s BLECentralManager and you&rsquo;d have
+<p>If true it&rsquo;s removed from it&rsquo;s BTLEPlusCentralManager and you&rsquo;d have
 to scan for the peripheral again.</p>
 
 <p>Default is true.</p>
@@ -974,33 +991,6 @@ is ready to use.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC8BTLEPlus18BTLEPlusPeripheral26onDiscoverServicesCompleteFT_T_"></a>
-                    <a name="//apple_ref/swift/Method/onDiscoverServicesComplete()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC8BTLEPlus18BTLEPlusPeripheral26onDiscoverServicesCompleteFT_T_">onDiscoverServicesComplete()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Called after services have been discovered.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">onDiscoverServicesComplete</span><span class="p">()</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:FC8BTLEPlus18BTLEPlusPeripheral23servicesWereInvalidatedFT_T_"></a>
                     <a name="//apple_ref/swift/Method/servicesWereInvalidated()" class="dashAnchor"></a>
                     <a class="token" href="#/s:FC8BTLEPlus18BTLEPlusPeripheral23servicesWereInvalidatedFT_T_">servicesWereInvalidated()</a>
@@ -1117,33 +1107,6 @@ again to discover services, included services, characteristics and descriptors.<
                         <h4>Return Value</h4>
                         <p>Returning [CBUUID,] means specific services, [] means all included services, nil means don&rsquo;t discover any included services. Default is nil.</p>
 
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC8BTLEPlus18BTLEPlusPeripheral36onDiscoveredIncludedServicesCompleteFT_T_"></a>
-                    <a name="//apple_ref/swift/Method/onDiscoveredIncludedServicesComplete()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC8BTLEPlus18BTLEPlusPeripheral36onDiscoveredIncludedServicesCompleteFT_T_">onDiscoveredIncludedServicesComplete()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Called when discovered included services completed.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">onDiscoveredIncludedServicesComplete</span><span class="p">()</span></code></pre>
-
-                        </div>
                       </div>
                     </section>
                   </div>
@@ -1312,33 +1275,6 @@ again to discover services, included services, characteristics and descriptors.<
                     </section>
                   </div>
                 </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC8BTLEPlus18BTLEPlusPeripheral33onDiscoverCharacteristicsCompleteFT_T_"></a>
-                    <a name="//apple_ref/swift/Method/onDiscoverCharacteristicsComplete()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC8BTLEPlus18BTLEPlusPeripheral33onDiscoverCharacteristicsCompleteFT_T_">onDiscoverCharacteristicsComplete()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Successfully discovered characteristics.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">onDiscoverCharacteristicsComplete</span><span class="p">()</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
               </ul>
             </div>
             <div class="task-group">
@@ -1447,33 +1383,6 @@ again to discover services, included services, characteristics and descriptors.<
                         <h4>Return Value</h4>
                         <p>Bool</p>
 
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC8BTLEPlus18BTLEPlusPeripheral29onDiscoverDescriptorsCompleteFT_T_"></a>
-                    <a name="//apple_ref/swift/Method/onDiscoverDescriptorsComplete()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC8BTLEPlus18BTLEPlusPeripheral29onDiscoverDescriptorsCompleteFT_T_">onDiscoverDescriptorsComplete()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Called when descriptors were discovered.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">onDiscoverDescriptorsComplete</span><span class="p">()</span></code></pre>
-
-                        </div>
                       </div>
                     </section>
                   </div>
@@ -2046,7 +1955,7 @@ subscribing to characteristics.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-10)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-11)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

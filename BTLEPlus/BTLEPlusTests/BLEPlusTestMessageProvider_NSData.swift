@@ -14,14 +14,14 @@ class BLEPlusTestMessageProvider_NSData : XCTestCase {
 	func testProviderWithData() {
 		let fileURL = NSBundle(forClass: self.dynamicType).URLForImageResource("IMG_5543")
 		let data = NSData(contentsOfURL: fileURL!)
-		let provider = BLEPlusSerialServicePacketProvider(withData: data!)
+		let provider = BTLEPlusSerialServicePacketProvider(withData: data!)
 		assert(provider!.data != nil)
 	}
 	
 	func testAllParts() {
 		let fileURL = NSBundle(forClass: self.dynamicType).URLForImageResource("IMG_5543")
 		let data = NSData(contentsOfURL: fileURL!)
-		let _provider = BLEPlusSerialServicePacketProvider(withData: data!)
+		let _provider = BTLEPlusSerialServicePacketProvider(withData: data!)
 		_provider?.mtu = 1024
 		_provider?.windowSize = 25
 		guard let provider = _provider else {

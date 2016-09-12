@@ -72,20 +72,6 @@ import Foundation
 	}
 	
 	/**
-	Helper method to create a BTLEPlusSerialServicePacketReceiver using a tmp file.
-	
-	- parameter windowSize:		Window size.
-	- parameter messageSize:	The expected message size.
-	*/
-	class func createWithTmpFileForWriting(windowSize:UInt8, messageSize:UInt64 = 0) -> BTLEPlusSerialServicePacketReceiver? {
-		if let tmpFileURL = getTempFileForWriting() {
-			print(tmpFileURL)
-			return  BTLEPlusSerialServicePacketReceiver(withFileURLForWriting: tmpFileURL, windowSize: windowSize, messageSize: messageSize)
-		}
-		return nil
-	}
-	
-	/**
 	Initialize a BTLEPlusSerialServiceMessageRecever with maximum transmission unit
 	and windowSize
 	

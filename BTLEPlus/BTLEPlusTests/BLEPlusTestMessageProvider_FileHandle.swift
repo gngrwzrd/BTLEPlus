@@ -11,19 +11,19 @@ import XCTest
 
 class BLEPlusTestMessageProvider_FileHandle : XCTestCase {
 	
-	var testMTU:BLEPlusSerialServiceMTU_Type = 0
-	var testRealMTU:BLEPlusSerialServiceMTU_Type = 0
-	var testWindowSize:BLEPlusSerialServiceWindowSize_Type = 0
+	var testMTU:BTLEPlusSerialServiceMTU_Type = 0
+	var testRealMTU:BTLEPlusSerialServiceMTU_Type = 0
+	var testWindowSize:BTLEPlusSerialServiceWindowSize_Type = 0
 	
 	override func setUp() {
 		testMTU = 1024
-		testRealMTU = UInt16(testMTU - UInt16((BLEPlusSerialServicePacketProvider.headerSize + BLEPlusSerialServiceProtocolMessage.headerSize)))
+		testRealMTU = UInt16(testMTU - UInt16((BTLEPlusSerialServicePacketProvider.headerSize + BTLEPlusSerialServiceProtocolMessage.headerSize)))
 		testWindowSize = 25
 	}
 	
 	func testGetPacketLengthMatchesMTU() {
 		let fileURL = NSBundle(forClass: self.dynamicType).URLForImageResource("IMG_5543")
-		let _provider = BLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
+		let _provider = BTLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
 		_provider?.mtu = testMTU
 		_provider?.windowSize = testWindowSize
 		guard let provider = _provider else {
@@ -36,7 +36,7 @@ class BLEPlusTestMessageProvider_FileHandle : XCTestCase {
 	
 	func testGetPart() {
 		let fileURL = NSBundle(forClass: self.dynamicType).URLForImageResource("IMG_5543")
-		let _provider = BLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
+		let _provider = BTLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
 		_provider?.mtu = testMTU
 		_provider?.windowSize = testWindowSize
 		guard let provider = _provider else {
@@ -59,7 +59,7 @@ class BLEPlusTestMessageProvider_FileHandle : XCTestCase {
 	
 	func testGetMultipleParts() {
 		let fileURL = NSBundle(forClass: self.dynamicType).URLForImageResource("IMG_5543")
-		let _provider = BLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
+		let _provider = BTLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
 		_provider?.mtu = testMTU
 		_provider?.windowSize = testWindowSize
 		guard let provider = _provider else {
@@ -101,7 +101,7 @@ class BLEPlusTestMessageProvider_FileHandle : XCTestCase {
 	
 	func testResendFromPacket() {
 		let fileURL = NSBundle(forClass: self.dynamicType).URLForImageResource("IMG_5543")
-		let _provider = BLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
+		let _provider = BTLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
 		_provider?.mtu = testMTU
 		_provider?.windowSize = testWindowSize
 		guard let provider = _provider else {
@@ -124,7 +124,7 @@ class BLEPlusTestMessageProvider_FileHandle : XCTestCase {
 	
 	func testResendWindow() {
 		let fileURL = NSBundle(forClass: self.dynamicType).URLForImageResource("IMG_5543")
-		let _provider = BLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
+		let _provider = BTLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
 		_provider?.mtu = testMTU
 		_provider?.windowSize = testWindowSize
 		guard let provider = _provider else {
@@ -156,7 +156,7 @@ class BLEPlusTestMessageProvider_FileHandle : XCTestCase {
 	
 	func testAllParts() {
 		let fileURL = NSBundle(forClass: self.dynamicType).URLForImageResource("IMG_5543")
-		let _provider = BLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
+		let _provider = BTLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
 		_provider?.mtu = testMTU
 		_provider?.windowSize = testWindowSize
 		guard let provider = _provider else {
@@ -183,7 +183,7 @@ class BLEPlusTestMessageProvider_FileHandle : XCTestCase {
 	
 	func testPacketError() {
 		let fileURL = NSBundle(forClass: self.dynamicType).URLForImageResource("IMG_5543")
-		let _provider = BLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
+		let _provider = BTLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
 		_provider?.mtu = testMTU
 		_provider?.windowSize = testWindowSize
 		guard let provider = _provider else {
@@ -194,10 +194,10 @@ class BLEPlusTestMessageProvider_FileHandle : XCTestCase {
 	
 	func testWriteImageFromProvider() {
 		let fileURL = NSBundle(forClass: self.dynamicType).URLForImageResource("IMG_5543")
-		let _provider = BLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
+		let _provider = BTLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
 		_provider?.mtu = testMTU
 		_provider?.windowSize = testWindowSize
-		let outputImageURL = BLEPlusSerialServicePacketReceiver.getTempFileForWriting()
+		let outputImageURL = BTLEPlusSerialServicePacketReceiver.getTempFileForWriting()
 		print(outputImageURL)
 		let outputImage = NSFileHandle(forWritingAtPath: outputImageURL!.path!)
 		guard let provider = _provider else {

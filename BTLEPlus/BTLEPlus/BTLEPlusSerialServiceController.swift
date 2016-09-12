@@ -1,6 +1,6 @@
 //
-//  BLEPlusSerialServiceController.swift
-//  BLEPlus
+//  BTLEPlusSerialServiceController.swift
+//  BTLEPlus
 //
 //  Created by Aaron Smith on 8/27/16.
 //  Copyright © 2016 gngrwzrd. All rights reserved.
@@ -10,7 +10,7 @@ import Foundation
 import CoreBluetooth
 
 /**
-BLEPlusSerialServiceControllerMode indicates which mode a
+BTLEPlusSerialServiceControllerMode indicates which mode a
 serial service controller is running in.
 */
 @objc public enum BTLEPlusSerialServiceRunMode :UInt8 {
@@ -31,15 +31,54 @@ receive events from a serial service controller.
 	When the serial service controller needs to send
 	data it asks the delegate to send it.
 	
-	- parameter controller:			BLEPlusSerialServiceController
+	- parameter controller:			BTLEPlusSerialServiceController
 	- parameter wantsToSendData:	The data to send.
 	*/
 	func serialServiceController(controller:BTLEPlusSerialServiceController, wantsToSendData data:NSData)
 	
 	/**
+	Whether or not the serial service can continue accepting and processing
+	messages from it's peer.
+	
+	This is provided as a hook if you need to communicate to the peer that they
+	should wait before sending more messages.
+	
+	Returning _false_ will send a wait message to the peer. The peer will continue
+	trying to send new messages until this returns true.
+	
+	- parameter controller:	BTLEPlusSerialServiceController
+	
+	- returns: Bool
+	*/
+	optional func serialServiceControllerCanAcceptMoreMessages(controller:BTLEPlusSerialServiceController) -> Bool
+	
+	/**
+	Whether or not the serial service controller should offer a turn to the peer
+	so it can send it's queued messages.
+	
+	- parameter controller:	BTLEPlusSerialServiceController
+	
+	- returns: Bool
+	*/
+	optional func serialServiceControllerShouldOfferTurnToPeer(controller:BTLEPlusSerialServiceController) -> Bool
+	
+	/**
+	Called when an internal error occured an the current message that was
+	being transmitted had to be dropped in order to reset internal state.
+	
+	- parameter controller:							BTLEPlusSerialServiceController
+	- parameter droppedMessageFromPeerReset:	The message that was dropped.
+	*/
+	optional func serialServiceController(controller:BTLEPlusSerialServiceController, droppedMessageFromPeerReset message:BTLEPlusSerialServiceMessage)
+	
+	//TODO: I think this is how I can do file resume logic..
+	//func serialServiceController(controller:BTLEPlusSerialServiceController, fileForWritingMessage message:BTLEPlusSerialServiceMessage) -> NSFileHandle
+	//func serialServiceController(controller:BTLEPlusSerialServiceController, fileForReadingMessage message:BTLEPlusSerialServiceMessage) -> NSFileHandle
+	
+	/**
 	When a message was entirely sent, and received by the peer.
 	
-	- parameter controller: BLEPlusSerialServiceController
+	- parameter controller: BTLEPlusSerialServiceController
 	- parameter message:    The message that was sent.
 	*/
 	optional func serialServiceController(controller:BTLEPlusSerialServiceController, sentMessage message:BTLEPlusSerialServiceMessage)
@@ -47,7 +86,7 @@ receive events from a serial service controller.
 	/**
 	When a message has been completely received.
 	
-	- parameter controller: BLEPlusSerialServiceController
+	- parameter controller: BTLEPlusSerialServiceController
 	- parameter message:    The message that was received.
 	*/
 	func serialServiceController(controller:BTLEPlusSerialServiceController, receivedMessage message:BTLEPlusSerialServiceMessage)
@@ -172,22 +211,23 @@ a delegate callback.
 	private var messageQueue:[BTLEPlusSerialServiceMessage]?
 	
 	/// The current message being transmitted.
-	private var currentUserMessage:BTLEPlusSerialServiceMessage?
+	private var currentSendMessage:BTLEPlusSerialServiceMessage?
 	
 	/// Current control message that was sent.
 	private var currentSendControl:BTLEPlusSerialServiceProtocolMessage?
 	
 	/// The current message receiver that's receiving data from the client or server.
-	private var currentReceiver:BTLEPlusSerialServicePacketReceiver?
+	private var currentReceiveMessage:BTLEPlusSerialServiceMessage?
+	//private var currentReceiver:BTLEPlusSerialServicePacketReceiver?
 	
 	/// A timer to wait for responses like acks.
 	private var resendCurrentControlTimer:NSTimer?
 	
 	/// The mode this controller is running as.
-	private var mode:BTLEPlusSerialServiceRunMode = .Central
+	private var mode:BTLEPlusSerialServiceRunMode = .Peripheral
 	
 	/// The mode for whoever's turn it is.
-	private var turnMode:BTLEPlusSerialServiceRunMode = .Central
+	private var turnMode:BTLEPlusSerialServiceRunMode = .Peripheral
 	
 	/// A timer that keeps track of when to offer the peer a turn.
 	private var offerTurnTimer:NSTimer?
@@ -199,12 +239,12 @@ a delegate callback.
 	
 	- parameter mode:	The run mode for the serial service.
 	
-	- returns: BLEPlusSerialServiceController
+	- returns: BTLEPlusSerialServiceController
 	*/
 	public init(withRunMode mode:BTLEPlusSerialServiceRunMode) {
 		self.mode = mode
 		messageQueue = []
-		serialQueue = dispatch_queue_create("com.bleplus.SerialServiceController", DISPATCH_QUEUE_SERIAL)
+		serialQueue = dispatch_queue_create("com.btleplus.SerialServiceController", DISPATCH_QUEUE_SERIAL)
 		delegateQueue = dispatch_get_main_queue()
 		super.init()
 	}
@@ -216,12 +256,12 @@ a delegate callback.
 	- parameter mode: The run mode for the serial service.
 	- parameter queue: A queue for delegate messages to callback on.
 	
-	- returns: BLEPlusSerialServiceController
+	- returns: BTLEPlusSerialServiceController
 	*/
 	public init(withRunMode mode:BTLEPlusSerialServiceRunMode, delegateQueue queue:dispatch_queue_t) {
 		messageQueue = []
 		self.mode = mode
-		serialQueue = dispatch_queue_create("com.bleplus.SerialServiceController", DISPATCH_QUEUE_SERIAL)
+		serialQueue = dispatch_queue_create("com.btleplus.SerialServiceController", DISPATCH_QUEUE_SERIAL)
 		delegateQueue = queue
 		super.init()
 	}
@@ -249,11 +289,11 @@ a delegate callback.
 	func offerTurnTimeout(timer:NSTimer) {
 		dispatch_async(serialQueue) {
 			if self.turnMode == self.mode {
-				if self.mode == .Central && self.currentUserMessage == nil && self.currentSendControl == nil {
-					self.sendTakeTurnControlMessage(true, acceptFilter: [.TakeTurn,.Ack,.Abort])
+				if self.mode == .Central && self.currentSendMessage == nil && self.currentSendControl == nil {
+					self.sendTakeTurnControlMessage(true, acceptFilter: [.TakeTurn,.Ack,.Reset])
 				}
-				if self.mode == .Peripheral && self.currentReceiver == nil && self.currentSendControl == nil {
-					self.sendTakeTurnControlMessage(true, acceptFilter: [.TakeTurn,.Ack,.Abort])
+				if self.mode == .Peripheral && self.currentReceiveMessage == nil && self.currentSendControl == nil {
+					self.sendTakeTurnControlMessage(true, acceptFilter: [.TakeTurn,.Ack,.Reset])
 				}
 			}
 		}
@@ -314,8 +354,8 @@ a delegate callback.
 		dispatch_async(serialQueue) {
 			print("resume: set isPaused = true")
 			self.isPaused = true
-			self.currentUserMessage?.provider?.resendWindow()
-			self.currentReceiver?.resetWindowForReceiving()
+			self.currentSendMessage?.provider?.resendWindow()
+			self.currentReceiveMessage?.receiver?.resetWindowForReceiving()
 		}
 	}
 	
@@ -327,16 +367,50 @@ a delegate callback.
 	
 	You can optionally delete all messages in the send queue.
 	
-	Calling this when running as a _Central_ will notify the _Peripheral_ to reset, but the
-	peripheral will only drop the current message.
-	
 	Calling this when running as a _Peripheral_ will notify the _Central_ to reset, including
 	the _deleteAllMessages_ flag.
+	
+	Calling this when running as a _Central_ will notify the _Peripheral_ to reset, but the
+	peripheral will only drop the current message.
 	
 	- parameter deleteAllMessages: Whether to delete the entire send queue.
 	*/
 	public func reset(deleteAllMessages:Bool = false) {
 		//TODO:
+	}
+	
+	/**
+	Cancel the current message transfer between peers.
+	
+	You can optional cancel all messages in the send queue.
+	
+	_cancelAllMessages_ will only cancel the message queue for the running
+	serial controller, it will not effect it's peer.
+	
+	- parameter cancelAllMessages:	<#cancelAllMessages description#>
+	*/
+	public func cancel(cancelAllMessages:Bool = false) {
+		
+	}
+	
+	/// Get progress of current message.
+	///
+	/// If running as the central, this is the progress of bytes sent.
+	///
+	/// If running as the peripheral, this is the progress of bytes received
+	/// based on expected message size.
+	public var progress:Float {
+		if self.mode == .Central {
+			if let _provider = self.currentSendMessage?.provider {
+				return _provider.progress()
+			}
+		}
+		if self.mode == .Peripheral {
+			if let _receiver = self.currentReceiveMessage?.receiver {
+				return _receiver.progress()
+			}
+		}
+		return -1
 	}
 	
 	//MARK: Sending Data
@@ -360,13 +434,13 @@ a delegate callback.
 			self.startSending()
 		}
 		
-		if !self.hasDiscoverdPeerInfo && self.mode == .Central {
+		if !self.hasDiscoverdPeerInfo && self.mode == .Peripheral {
 			
 			//if we're the central and don't know the peers transfer info
 			//send a peer info message.
 			
 			self.startOfferTurnTimer()
-			self.sendPeerInfoControlRequest(true, acceptFilter: [.PeerInfo,.Ack,.Abort])
+			self.sendPeerInfoControlRequest(true, acceptFilter: [.PeerInfo,.Ack,.Reset])
 			
 		} else {
 			
@@ -379,12 +453,12 @@ a delegate callback.
 				return
 			}
 			
-			if self.currentUserMessage != nil {
+			if self.currentSendMessage != nil {
 				return
 			}
 			
 			print("my turn to send")
-			self.currentUserMessage = self.messageQueue?[0]
+			self.currentSendMessage = self.messageQueue?[0]
 			self.sendNewMessageControlRequest()
 		}
 	}
@@ -394,7 +468,7 @@ a delegate callback.
 		
 		dispatch_async(serialQueue) {
 			
-			guard let provider = self.currentUserMessage?.provider else {
+			guard let provider = self.currentSendMessage?.provider else {
 				return
 			}
 			
@@ -408,7 +482,7 @@ a delegate callback.
 				return
 			}
 			
-			self.acceptFilter = [.Resend,.Abort]
+			self.acceptFilter = [.Resend,.Reset]
 			var packet:NSData
 			var message:BTLEPlusSerialServiceProtocolMessage
 			
@@ -446,7 +520,7 @@ a delegate callback.
 				return
 			}
 			
-			print(self.currentUserMessage?.provider?.progress())
+			print(self.currentSendMessage?.provider?.progress())
 			
 			if provider.isEndOfMessage {
 				self.sendEndMessageControlRequest(provider.endOfMessageWindowSize)
@@ -521,37 +595,43 @@ a delegate callback.
 	
 	/// Send a new message control request.
 	func sendNewMessageControlRequest() {
-		guard let currentUserMessage = self.currentUserMessage else {
+		guard let currentSendMessage = self.currentSendMessage else {
 			return
 		}
-		guard let provider = currentUserMessage.provider else {
+		guard let provider = currentSendMessage.provider else {
 			return
 		}
 		var newMessage:BTLEPlusSerialServiceProtocolMessage
 		if provider.fileHandle != nil {
-			newMessage = BTLEPlusSerialServiceProtocolMessage(newFileMessageWithExpectedSize: provider.messageSize, messageType: currentUserMessage.messageType, messageId: currentUserMessage.messageId)
+			newMessage = BTLEPlusSerialServiceProtocolMessage(newFileMessageWithExpectedSize: provider.messageSize, messageType: currentSendMessage.messageType, messageId: currentSendMessage.messageId)
 		} else {
-			newMessage = BTLEPlusSerialServiceProtocolMessage(newMessageWithExpectedSize: provider.messageSize, messageType: currentUserMessage.messageType, messageId: currentUserMessage.messageId)
+			newMessage = BTLEPlusSerialServiceProtocolMessage(newMessageWithExpectedSize: provider.messageSize, messageType: currentSendMessage.messageType, messageId: currentSendMessage.messageId)
 		}
-		self.sendControlMessage(newMessage, acceptFilter:[.Ack,.Abort], expectingAck: true)
+		self.sendControlMessage(newMessage, acceptFilter:[.Wait,.Ack,.Reset], expectingAck: true)
 	}
 	
 	/// Send an end of message control request.
 	func sendEndMessageControlRequest(windowSize:BTLEPlusSerialServiceWindowSize_Type) {
 		let endMessage = BTLEPlusSerialServiceProtocolMessage(endMessageWithWindowSize: windowSize)
-		self.sendControlMessage(endMessage, acceptFilter: [.Ack,.Resend,.Abort], expectingAck: true)
+		self.sendControlMessage(endMessage, acceptFilter: [.Ack,.Resend,.Reset], expectingAck: true)
 	}
 	
 	/// Send an end part message control request.
 	func sendEndPartControlRequest(windowSize:BTLEPlusSerialServiceWindowSize_Type) {
 		let endPart = BTLEPlusSerialServiceProtocolMessage(endPartWithWindowSize: windowSize)
-		self.sendControlMessage(endPart, acceptFilter: [.Ack,.Resend,.Abort], expectingAck: true)
+		self.sendControlMessage(endPart, acceptFilter: [.Ack,.Resend,.Reset], expectingAck: true)
 	}
 	
 	/// Sends a resend transfer control request.
 	func sendResendControlMessage(resendFromPacket:BTLEPlusSerialServicePacketCounter_Type) {
 		let resend = BTLEPlusSerialServiceProtocolMessage(resendMessageWithStartFromPacket: resendFromPacket)
-		self.sendControlMessage(resend, acceptFilter: [.Data,.EndMessage,.EndPart,.Abort])
+		self.sendControlMessage(resend, acceptFilter: [.Data,.EndMessage,.EndPart,.Reset])
+	}
+	
+	/// Sends a wait control request.
+	func sendWaitControlMessage(acceptFilter:[BTLEPlusSerialServiceProtocolMessageType]) {
+		let wait = BTLEPlusSerialServiceProtocolMessage(withType: .Wait)
+		self.sendControlMessage(wait, acceptFilter: acceptFilter, expectingAck: false)
 	}
 	
 	//MARK: - Receiving Data
@@ -609,6 +689,12 @@ a delegate callback.
 				case .TakeTurn:
 					print("received take turn message:",packet.bleplus_base16EncodedString(uppercase: true))
 					self.receivedTakeTurnMessage(message)
+				case .Wait:
+					print("received wait message:",packet.bleplus_base16EncodedString(uppercase: true))
+					self.receivedWaitMessage(message)
+				case .Reset:
+					print("received reset message:",packet.bleplus_base16EncodedString(uppercase: true))
+					self.receivedResetMessage(message)
 				default:
 					break
 				}
@@ -616,42 +702,44 @@ a delegate callback.
 		}
 	}
 	
+	/// Received reset.
+	func receivedResetMessage(message:BTLEPlusSerialServiceProtocolMessage) {
+		if self.mode == .Central {
+			
+			if let cm = self.currentSendMessage {
+				cm.provider?.finishMessage()
+				self.currentSendMessage = nil
+				dispatch_async(delegateQueue, { 
+					self.delegate?.serialServiceController?(self, droppedMessageFromPeerReset: cm)
+				})
+			}
+		}
+		
+		if self.mode == .Peripheral {
+			
+		}
+		
+		self.sendAck([])
+	}
+	
+	/// Received a wait message.
+	func receivedWaitMessage(message:BTLEPlusSerialServiceProtocolMessage) {
+		self.startResendControlMessageTimer()
+	}
+	
 	/// Received a peer info message.
 	func receivedPeerInfoMessage(message:BTLEPlusSerialServiceProtocolMessage) {
-		print("peer info message details: ",message.mtu,message.windowSize)
 		
-		//If we're the central and received a peer info, in response to a peer info,
-		//it means the centrals' mtu/windowsize was too large, so use the provided
-		//info from the peripheral instead.
+		//Only the central receives peer info messages. Upon connection the peripheral
+		//sends it's transfer information.
 		if self.mode == .Central {
-			if self.currentSendControl?.protocolType == .PeerInfo {
-				self.currentSendControl = nil
-				self.hasDiscoverdPeerInfo = true
-				self.mtu = message.mtu
-				self.windowSize = message.windowSize
-				self.acceptFilter = [.TakeTurn,.Ack,.Abort]
-				self.startSending()
-			} else {
-				//TODO:
-				print("WILL THIS EVER GET CALLED?")
-				self.hasDiscoverdPeerInfo = true
-				self.mtu = message.mtu
-				self.windowSize = message.windowSize
-			}
+			print("peer info message details: ",message.mtu,message.windowSize)
+			self.mtu = message.mtu
+			self.windowSize = message.windowSize
+			self.sendAck([.TakeTurn,.NewMessage,.NewFileMessage,.Reset])
+			self.startOfferTurnTimer()
 		}
 		
-		//if we're the peripheral and we receive a peer info which has too large of mtu
-		//or window size, send back a peerinfo with our mtu window size, otherwise accept
-		//it and ack.
-		if self.mode == .Peripheral {
-			if message.mtu > self.mtu || message.windowSize > self.windowSize {
-				self.sendPeerInfoControlRequest(false, acceptFilter:[.TakeTurn,.NewMessage,.NewFileMessage,.Abort])
-			} else {
-				self.mtu = message.mtu
-				self.windowSize = message.windowSize
-				self.sendAck([.TakeTurn,.NewMessage,.NewFileMessage,.Abort])
-			}
-		}
 	}
 	
 	/// Received a take turn message.
@@ -663,7 +751,7 @@ a delegate callback.
 		if self.mode == .Central {
 			self.currentSendControl = nil
 			self.turnMode = .Central
-			self.sendAck([.Ack,.Abort])
+			self.sendAck([.Ack,.Reset])
 			self.startSending()
 			self.startOfferTurnTimer()
 		}
@@ -678,13 +766,13 @@ a delegate callback.
 				//no messages, give control back to central.
 				self.turnMode = .Central
 				self.stopOfferTurnTimer()
-				self.sendTakeTurnControlMessage(true, acceptFilter: [.TakeTurn,.Ack,.Abort])
+				self.sendTakeTurnControlMessage(true, acceptFilter: [.TakeTurn,.Ack,.Reset])
 				
 			} else {
 				
 				//peripheral has messages, ack to take control.
 				self.turnMode = .Peripheral
-				self.sendAck([.Ack,.Abort])
+				self.sendAck([.Ack,.Reset])
 				self.startSending()
 				self.startOfferTurnTimer()
 			}
@@ -695,31 +783,48 @@ a delegate callback.
 	/// that get appended to the current packet receiver.
 	func receivedDataMessage(message:BTLEPlusSerialServiceProtocolMessage) {
 		if let payload = message.packetPayload {
-			self.currentReceiver?.receivedData(payload)
+			self.currentReceiveMessage?.receiver?.receivedData(payload)
 		}
 	}
 	
 	/// Received a new message request.
 	func receivedNewMessageRequest(message:BTLEPlusSerialServiceProtocolMessage) {
-		if self.currentReceiver != nil || self.currentUserMessage != nil {
-			print("SHOULD ABORT")
+		
+		//check if we can accept more messages.
+		if let shouldAcceptMore = self.delegate?.serialServiceControllerCanAcceptMoreMessages?(self) {
+			if !shouldAcceptMore {
+				sendWaitControlMessage([.TakeTurn,.NewMessage,.NewFileMessage,.Reset])
+			}
+		}
+		
+		//If there's already a current receiver, there's an error so reset.
+		if self.currentReceiveMessage != nil {
+			
+			//TODO: send reset
 			return
 		}
 		
 		//setup new receiver
 		let windowSize = self.windowSize
 		let messageSize = message.messageSize
-		let receiver = BTLEPlusSerialServicePacketReceiver(withWindowSize: windowSize, messageSize: messageSize)
-		self.currentReceiver = receiver
-		self.currentReceiver?.messageType = message.messageType
-		self.currentReceiver?.messageId = message.messageId
-		self.sendAck([.Data,.Resend,.EndMessage,.EndPart,.Abort])
+		self.currentReceiveMessage = BTLEPlusSerialServiceMessage(withMessageType: message.messageType, messageId: message.messageId)
+		self.currentReceiveMessage?.receiver = BTLEPlusSerialServicePacketReceiver(withWindowSize: windowSize, messageSize: messageSize)
+		self.currentReceiveMessage?.receiver?.beginMessage()
+		self.currentReceiveMessage?.receiver?.beginWindow()
+		self.sendAck([.Data,.Resend,.EndMessage,.EndPart,.Reset])
 	}
 	
 	/// Receieved a new large message.
 	func receivedNewLargeMessageRequest(message:BTLEPlusSerialServiceProtocolMessage) {
-		if currentReceiver != nil {
-			print("SHOULD ABORT")
+		//check if we can accept more messages.
+		if let shouldAcceptMore = self.delegate?.serialServiceControllerCanAcceptMoreMessages?(self) {
+			if !shouldAcceptMore {
+				sendWaitControlMessage([.TakeTurn,.NewMessage,.NewFileMessage,.Reset])
+			}
+		}
+		
+		if currentReceiveMessage != nil {
+			print("SHOULD Reset")
 			return
 		}
 		
@@ -731,17 +836,14 @@ a delegate callback.
 		//setup a new receiver
 		let windowSize = self.windowSize
 		let messageSize = message.messageSize
-		let receiver = BTLEPlusSerialServicePacketReceiver(withFileURLForWriting: tmpFile, windowSize: windowSize, messageSize: messageSize)
-		self.currentReceiver = receiver
-		self.currentReceiver?.messageType = message.messageType
-		self.currentReceiver?.beginMessage()
-		self.currentReceiver?.beginWindow()
-		self.sendAck([.Data,.Resend,.EndMessage,.EndPart,.Abort])
+		self.currentReceiveMessage = BTLEPlusSerialServiceMessage(withMessageType: message.messageType, messageId: message.messageId)
+		self.currentReceiveMessage?.receiver = BTLEPlusSerialServicePacketReceiver(withFileURLForWriting: tmpFile, windowSize: windowSize, messageSize: messageSize)
+		self.sendAck([.Data,.Resend,.EndMessage,.EndPart,.Reset])
 	}
 	
 	/// Received an end part.
 	func receivedEndPartMessage(message:BTLEPlusSerialServiceProtocolMessage) {
-		guard let currentReceiver = self.currentReceiver else {
+		guard let currentReceiver = self.currentReceiveMessage?.receiver else {
 			return
 		}
 		currentReceiver.windowSize = message.windowSize
@@ -749,16 +851,16 @@ a delegate callback.
 		if currentReceiver.needsPacketsResent {
 			let packet = currentReceiver.resendFromPacket()
 			let resend = BTLEPlusSerialServiceProtocolMessage(resendMessageWithStartFromPacket: packet)
-			self.sendControlMessage(resend, acceptFilter: [.Data,.EndMessage,.EndPart,.Abort], expectingAck: false)
+			self.sendControlMessage(resend, acceptFilter: [.Data,.EndMessage,.EndPart,.Reset], expectingAck: false)
 		} else {
 			currentReceiver.beginWindow()
-			self.sendAck([.Data,.EndMessage,.EndPart,.Abort])
+			self.sendAck([.Data,.EndMessage,.EndPart,.Reset])
 		}
 	}
 	
 	/// Received an end message.
 	func receivedEndMessage(message:BTLEPlusSerialServiceProtocolMessage) {
-		guard let currentReceiver = self.currentReceiver else {
+		guard let currentReceiver = self.currentReceiveMessage?.receiver else {
 			return
 		}
 		
@@ -769,39 +871,29 @@ a delegate callback.
 			
 			let packet = currentReceiver.resendFromPacket()
 			let resend = BTLEPlusSerialServiceProtocolMessage(resendMessageWithStartFromPacket: packet)
-			self.sendControlMessage(resend, acceptFilter: [.Data,.EndMessage,.EndPart,.Abort])
+			self.sendControlMessage(resend, acceptFilter: [.Data,.EndMessage,.EndPart,.Reset])
 			
 		} else {
 			
-			let data = currentReceiver.data
-			let fileURL = currentReceiver.fileURL
-			let messageId = currentReceiver.messageId
-			let messageType = currentReceiver.messageType
-			self.currentReceiver?.finishMessage()
-			self.currentReceiver = nil
-			self.sendAck([.TakeTurn,.NewMessage,.NewFileMessage,.Abort])
+			let cm = currentReceiveMessage
+			cm?.data = cm?.receiver?.data
+			cm?.fileURL = cm?.receiver?.fileURL
 			
-			dispatch_async(self.delegateQueue, {
-				
-				if let data = data {
-					if let _message = BTLEPlusSerialServiceMessage(withMessageType: messageType, messageId: messageId, data: data) {
-						self.delegate?.serialServiceController(self, receivedMessage: _message)
-					}
+			self.currentReceiveMessage?.receiver?.finishMessage()
+			self.currentReceiveMessage = nil
+			self.sendAck([.TakeTurn,.NewMessage,.NewFileMessage,.Reset])
+			
+			dispatch_async(self.delegateQueue) {
+				if let cm = cm {
+					self.delegate?.serialServiceController(self, receivedMessage: cm)
 				}
-				
-				if let fileURL = fileURL {
-					if let _message = BTLEPlusSerialServiceMessage(withMessageType: messageType, messageId: messageId, fileURL: fileURL) {
-						self.delegate?.serialServiceController(self, receivedMessage: _message)
-					}
-				}
-				
-			})
+			}
 		}
 	}
 	
 	/// Received a resend control
 	func receivedResendMessage(message:BTLEPlusSerialServiceProtocolMessage) {
-		guard let provider = self.currentUserMessage?.provider else {
+		guard let provider = self.currentSendMessage?.provider else {
 			return
 		}
 		//TODO: fix resend from packet.
@@ -851,23 +943,23 @@ a delegate callback.
 	
 	/// Ack end message
 	func receivedAckForEndMessage() {
-		let cm = self.currentUserMessage
+		let cm = self.currentSendMessage
 		dispatch_async(self.delegateQueue) {
 			if let cm = cm {
 				self.delegate?.serialServiceController?(self, sentMessage: cm)
 			}
 		}
 		
-		self.currentUserMessage?.provider?.finishMessage()
-		self.currentUserMessage = nil
+		self.currentSendMessage?.provider?.finishMessage()
+		self.currentSendMessage = nil
 		self.messageQueue?.removeAtIndex(0)
 		
 		if self.turnMode == self.mode && self.messageQueue?.count < 1 {
-			self.sendTakeTurnControlMessage(true, acceptFilter: [.TakeTurn,.Ack,.Abort])
+			self.sendTakeTurnControlMessage(true, acceptFilter: [.TakeTurn,.Ack,.Reset])
 			return
 		}
 		
-		self.acceptFilter = [.TakeTurn,.Ack,.Abort]
+		self.acceptFilter = [.TakeTurn,.Ack,.Reset]
 		self.startSending()
 	}
 	
@@ -875,20 +967,21 @@ a delegate callback.
 	func receivedAckForTakeTurn() {
 		if self.mode == .Central {
 			self.turnMode = .Peripheral
-			self.acceptFilter = [.TakeTurn,.NewMessage,.NewFileMessage,.Abort]
+			self.acceptFilter = [.TakeTurn,.NewMessage,.NewFileMessage,.Reset]
 			self.stopOfferTurnTimer()
 		}
 		if self.mode == .Peripheral {
 			self.turnMode = .Central
-			self.acceptFilter = [.TakeTurn,.NewMessage,.NewFileMessage,.Abort]
+			self.acceptFilter = [.TakeTurn,.NewMessage,.NewFileMessage,.Reset]
 			self.stopOfferTurnTimer()
 		}
 	}
 	
 	/// When an ack was received for a peer info message.
 	func receivedAckForPeerInfo() {
-		self.hasDiscoverdPeerInfo = true
-		self.acceptFilter = [.TakeTurn,.Ack,.Abort]
-		self.startSending()
+		if self.mode == .Peripheral {
+			self.hasDiscoverdPeerInfo = true
+			self.acceptFilter = [.TakeTurn,.NewMessage,.NewFileMessage,.Reset]
+		}
 	}
 }

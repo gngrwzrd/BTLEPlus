@@ -192,9 +192,6 @@ data to properly decide if your prototype understands the advertised services.
 	/// This flag is needed in order to allow subclasses to override peripheral delegate methods properly.
 	var isInSetup = false
 	
-	/// Whether or not the discovery step of peripheral setup is completed.
-	var discoveryRequirementsCompleted:Bool = false
-	
 	/// The number of services whos characteristics are being discovered.
 	var discoveringCharacteristics = 0
 	
@@ -306,7 +303,6 @@ data to properly decide if your prototype understands the advertised services.
 			return
 		}
 		if let peripheral = self.cbPeripheral {
-			discoveryRequirementsCompleted = false
 			peripheralReady = false
 			startConnectTimeout()
 			btCentralManager?.connectPeripheral(peripheral, options: nil)
@@ -432,11 +428,6 @@ data to properly decide if your prototype understands the advertised services.
 		btleCentralManager?.delegate?.btlePeripheralSetupFailed?(btleCentralManager!, peripheral: self, error: setupOutgoingError)
 	}
 	
-	/// Called when descriptor discovery completed.
-	func discoveryStepCompleted() {
-		startSubscribing()
-	}
-	
 	/// Called when the subscribe step failed after max subscribe attempts has passed.
 	func subscribeStepFailed() {
 		disconnect()
@@ -481,17 +472,12 @@ data to properly decide if your prototype understands the advertised services.
 		}
 		
 		if servicesToDiscover.count < 1 {
-			discoveryStepCompleted()
+			startSubscribing()
 			return
 		}
 		
 		startTimeoutForDiscoverServices()
 		cbPeripheral?.discoverServices(servicesToDiscover)
-	}
-	
-	/// Called after services have been discovered.
-	public func onDiscoverServicesComplete() {
-		discoverIncludedServices()
 	}
 	
 	/// Starts the timeout for service discovery.
@@ -506,7 +492,7 @@ data to properly decide if your prototype understands the advertised services.
 		attempts = attempts - 1
 		if attempts < 1 {
 			setupOutgoingError = error
-			discoverServicesFailed()
+			discoveryStepFailed()
 			return
 		}
 		discoverServicesIsRetrying()
@@ -525,15 +511,9 @@ data to properly decide if your prototype understands the advertised services.
 		retryingDiscoveryStep()
 	}
 	
-	/// service discovery failed.
-	func discoverServicesFailed() {
-		discoveryStepFailed()
-	}
-	
 	/// When services are invalidated, your peripheral goes through the setup process
 	/// again to discover services, included services, characteristics and descriptors.
 	public func servicesWereInvalidated() {
-		discoveryRequirementsCompleted = false
 		peripheralReady = false
 		discoverServices()
 	}
@@ -566,11 +546,7 @@ data to properly decide if your prototype understands the advertised services.
 		isInSetup = true
 		
 		if !shouldDiscoverIncludedServices() {
-			if discoveryRequirementsCompleted {
-				discoveryStepCompleted()
-			} else {
-				discoverCharacteristics()
-			}
+			discoverCharacteristics()
 			return
 		}
 		
@@ -620,26 +596,16 @@ data to properly decide if your prototype understands the advertised services.
 		attempts = attempts - 1
 		if attempts < 1 {
 			setupOutgoingError = error
-			discoverIncludedServicesFailed()
+			discoveryStepFailed()
 			return
 		}
 		discoverIncludedServicesIsRetrying()
 		discoverIncludedServices()
 	}
 	
-	/// Called when discovering included services failed.
-	func discoverIncludedServicesFailed() {
-		discoveryStepFailed()
-	}
-	
 	/// Called when discovering included services is retrying.
 	func discoverIncludedServicesIsRetrying() {
 		retryingDiscoveryStep()
-	}
-	
-	/// Called when discovered included services completed.
-	public func onDiscoveredIncludedServicesComplete() {
-		discoverCharacteristics()
 	}
 	
 	//MARK: Characteristics Discovery
@@ -687,9 +653,7 @@ data to properly decide if your prototype understands the advertised services.
 		isInSetup = true
 		
 		if !shouldDiscoverCharacteristics() {
-			if discoveryRequirementsCompleted {
-				discoveryStepCompleted()
-			}
+			startSubscribing()
 			return
 		}
 		
@@ -727,7 +691,7 @@ data to properly decide if your prototype understands the advertised services.
 		}
 		
 		if discoveringCharacteristics < 1 {
-			discoveryStepCompleted()
+			startSubscribing()
 		}
 	}
 	
@@ -752,21 +716,11 @@ data to properly decide if your prototype understands the advertised services.
 		attempts = attempts - 1
 		if attempts < 1 {
 			setupOutgoingError = error
-			discoverCharacteristicsFailed()
+			discoveryStepFailed()
 			return
 		}
 		discoverCharacteristicsIsRetrying()
 		discoverCharacteristics()
-	}
-	
-	/// Called when characteristics discovery failed.
-	func discoverCharacteristicsFailed() {
-		discoveryStepFailed()
-	}
-	
-	/// Successfully discovered characteristics.
-	public func onDiscoverCharacteristicsComplete() {
-		discoverDescriptors()
 	}
 	
 	//MARK: Descriptor Discovery
@@ -800,11 +754,7 @@ data to properly decide if your prototype understands the advertised services.
 		isInSetup = true
 		
 		if !shouldDiscoverDescriptors() {
-			if discoveryRequirementsCompleted {
-				discoveryStepCompleted()
-			} else {
-				startSubscribing()
-			}
+			startSubscribing()
 			return
 		}
 		
@@ -834,16 +784,9 @@ data to properly decide if your prototype understands the advertised services.
 			}
 			
 			if discoveringDescriptors == 0 {
-				if discoveryRequirementsCompleted {
-					discoveryStepCompleted()
-				}
+				startSubscribing()
 			}
 		}
-	}
-	
-	/// Called when descriptors were discovered.
-	public func onDiscoverDescriptorsComplete() {
-		discoveryStepCompleted()
 	}
 	
 	/// Starts the timeout for descriptor discovery
@@ -857,17 +800,12 @@ data to properly decide if your prototype understands the advertised services.
 		discoverDescriptorsReceivedError(nil)
 	}
 	
-	/// Called when descriptor discovery failed
-	func discoverDescriptorsFailed() {
-		discoveryStepFailed()
-	}
-	
 	/// Called when discovering a descriptor received an error
 	func discoverDescriptorsReceivedError(error:NSError?) {
 		attempts = attempts - 1
 		if attempts < 1 {
 			setupOutgoingError = error
-			discoverDescriptorsFailed()
+			discoveryStepFailed()
 			return
 		}
 		descriptorDiscoveryIsRetrying()
@@ -947,7 +885,7 @@ data to properly decide if your prototype understands the advertised services.
 	func retrySubscribing() {
 		attempts = attempts - 1
 		if attempts < 1 {
-			subscribingFailed()
+			subscribeStepFailed()
 			return
 		}
 		retryingSubscribing()
@@ -963,11 +901,6 @@ data to properly decide if your prototype understands the advertised services.
 	func subscribingReceivedError(error:NSError?) {
 		setupOutgoingError = error
 		retrySubscribing()
-	}
-	
-	/// When the subscribe step failed.
-	func subscribingFailed() {
-		subscribeStepFailed()
 	}
 	
 	/// Subsribing finished successfully.
@@ -1090,7 +1023,7 @@ data to properly decide if your prototype understands the advertised services.
 			return
 		}
 		
-		onDiscoverServicesComplete()
+		discoverIncludedServices()
 	}
 	
 	//Discovered some included services for a service
@@ -1108,7 +1041,7 @@ data to properly decide if your prototype understands the advertised services.
 		
 		discoveringIncludedServices = discoveringIncludedServices - 1
 		if discoveringIncludedServices == 0 {
-			onDiscoveredIncludedServicesComplete()
+			discoverCharacteristics()
 		}
 	}
 	
@@ -1127,7 +1060,7 @@ data to properly decide if your prototype understands the advertised services.
 		
 		discoveringCharacteristics = discoveringCharacteristics - 1
 		if discoveringCharacteristics == 0 {
-			onDiscoverCharacteristicsComplete()
+			discoverDescriptors()
 		}
 	}
 	
@@ -1151,7 +1084,7 @@ data to properly decide if your prototype understands the advertised services.
 		
 		discoveringDescriptors = discoveringDescriptors - 1
 		if discoveringDescriptors == 0 {
-			onDiscoverDescriptorsComplete()
+			startSubscribing()
 		}
 	}
 	

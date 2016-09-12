@@ -1,33 +1,26 @@
-Make PeerInfo ack from both sides
+The take turn requirements are backwards. Make the peripheral have control by default.
 
-Can I take out discoverRequirementsCompleted in BLETPlusPeriperal?
+Switch the serial service controll receiver to use BTLEPlusSerialServiceMessage.receiver. in order to easily
+pass around a message object that is currently the receiver. i might be able to use currentMessage for both
+send/receive since only one is happening at once..
+Can take out messageType and messageId off of the packet receiver.
 
-Impement Reset
+peerDroppedMessageFromReset??
 
-Implement mtu/windowSize peerInfo triggering when changed. ??? Maybe instaed I make it so mtu/windowSize is required at init?
-changing mtu/windowSize seems like it should only happen during peer setup.
+Implement Cancel, Reset, Wait.
+Reset should only be internal as a way to reset state upon errors and retry the current message from byte 0. Rename abort to Reset.
+  use delegate method droppedMessageBecauseOfReset to notify user.
+Cancel only cancels the current message transfer for both peers.
+Wait is a response to new messages when the user requires a wait.
 
-Expose bytesSent / bytesReceived on serial controller.
+Make mtu/window size not changeable after init??
 
-Wondering if I should have the delegate ask for a message to start accepting
-packets, this would be much easier to delegate resume logic to the user..
+File resume logic is going to have to be done by the user as there has to be a request
+for how many bytes the peer has, so the other peer can seek to the right position.
 
-rename abort to Reset which is what it actually is.
-Implement Reset logic - I took it out to simplify for now.
 
-For file handling, change the producer/receiver to only require file handles,
-this way I can add delegate methods that return a file handle for me. This
-will allow easier file resume handling and allow the user to do it themselves.
-
-since request/response needs two types, maybe switch messageType to two bytes.
-progress needs to go backwards on resend window
-
-file resume logic.
 
 Add randmized packet loss simulation for resend testing.
-
 fix resend from packet?
-
 Add streaming BLEPlusSerialServiceStreamingMessage - provides and receives packets.
-
 Write a tester app to automate a complete test of every feature.

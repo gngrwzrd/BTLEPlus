@@ -12,8 +12,8 @@ import XCTest
 class BLEPlusTestMessageReceiver : XCTestCase {
 	
 	func testWindowSizeMax() {
-		let _receiver = BLEPlusSerialServicePacketReceiver(withWindowSize: 200)
-		assert(_receiver!.windowSize == BLEPlusSerialServiceMaxWindowSize)
+		let _receiver = BTLEPlusSerialServicePacketReceiver(withWindowSize: 200)
+		assert(_receiver!.windowSize == BTLEPlusSerialServiceMaxWindowSize)
 	}
 	
 }

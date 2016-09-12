@@ -9,7 +9,7 @@
 import Foundation
 
 /// The type to use for message type.
-public typealias BTLEPlusSerialServiceMessageType_Type = UInt8
+public typealias BTLEPlusSerialServiceMessageType_Type = UInt16
 
 /// The type to use for message id.
 public typealias BTLEPlusSerialServiceMessageId_Type = UInt8
@@ -65,6 +65,7 @@ Control message types.
 - Resend:            Resend the current window.
 - Data:              Data message.
 - TakeTurn:          The peers turn to send messages.
+- Wait:              The peer should wait and try again to send new messages.
 - Abort:             Abort the current state and reset. Allow the central to start over.
 */
 @objc enum BTLEPlusSerialServiceProtocolMessageType : BTLEPlusSerialServiceProtocolMessageType_Type {
@@ -78,7 +79,9 @@ Control message types.
 	case Data = 7
 	case Resend = 8
 	case TakeTurn = 9
-	case Abort = 10
+	case Wait = 10
+	case Cancel = 11
+	case Reset = 12
 }
 
 /// BTLEPlusSerialServiceMessage is used over the control channel
@@ -93,7 +96,7 @@ Control message types.
 	var protocolType:BTLEPlusSerialServiceProtocolMessageType = .None
 	
 	/// A custom user message type.
-	var messageType:UInt8 = 0
+	var messageType:BTLEPlusSerialServiceMessageType_Type = 0
 	
 	/// A custom user message id.
 	var messageId:BTLEPlusSerialServiceMessageId_Type = 0
@@ -170,7 +173,9 @@ Control message types.
 			}
 			
 			if protocolType == .NewMessage || protocolType == .NewFileMessage {
-				data.getBytes(&messageType, range: NSRange.init(location: sizeof(protocolType.rawValue.dynamicType), length: sizeof(messageType.dynamicType)))
+				var noMessageType:UInt16 = 0
+				data.getBytes(&noMessageType, range: NSRange.init(location: sizeof(protocolType.rawValue.dynamicType), length: sizeof(messageType.dynamicType)))
+				messageType = CFSwapInt16BigToHost(noMessageType)
 				data.getBytes(&messageId, range: NSRange.init(location: sizeof(protocolType.rawValue.dynamicType) + sizeof(messageType.dynamicType), length: sizeof(messageId.self.dynamicType)))
 				var noMessageSize:UInt64 = 0
 				data.getBytes(&noMessageSize, range: NSRange.init(location: sizeof(protocolType.rawValue.dynamicType) + sizeof(messageType.dynamicType) + sizeof(messageId.self.dynamicType), length: sizeof(messageSize.dynamicType)))
@@ -273,12 +278,13 @@ Control message types.
 		super.init()
 		protocolType = .NewFileMessage
 		messageSize = newFileMessageWithExpectedSize
-		var noMessageSize = CFSwapInt64HostToBig(messageSize)
 		self.messageType = messageType
 		self.messageId = messageId
+		var noMessageSize = CFSwapInt64HostToBig(messageSize)
+		var noMessageType = CFSwapInt16HostToBig(messageType)
 		let data = NSMutableData()
 		data.appendBytes(&protocolType, length: sizeof(protocolType.rawValue.dynamicType))
-		data.appendBytes(&self.messageType, length: sizeof(messageType.self.dynamicType))
+		data.appendBytes(&noMessageType, length: sizeof(messageType.self.dynamicType))
 		data.appendBytes(&self.messageId, length: sizeof(self.messageId.self.dynamicType))
 		data.appendBytes(&noMessageSize, length: sizeof(messageSize.self.dynamicType))
 		self.data = data
@@ -295,12 +301,13 @@ Control message types.
 		super.init()
 		protocolType = .NewMessage
 		messageSize = newMessageWithExpectedSize
-		var noMessageSize = CFSwapInt64HostToBig(messageSize)
 		self.messageType = messageType
 		self.messageId = messageId
+		var noMessageSize = CFSwapInt64HostToBig(messageSize)
+		var noMessageType = CFSwapInt16HostToBig(messageType)
 		let data = NSMutableData()
 		data.appendBytes(&protocolType, length: sizeof(protocolType.rawValue.dynamicType))
-		data.appendBytes(&self.messageType, length: sizeof(self.messageType.self.dynamicType))
+		data.appendBytes(&noMessageType, length: sizeof(self.messageType.self.dynamicType))
 		data.appendBytes(&self.messageId, length: sizeof(self.messageId.self.dynamicType))
 		data.appendBytes(&noMessageSize, length: sizeof(messageSize.self.dynamicType))
 		self.data = data
@@ -330,7 +337,7 @@ Control message types.
 	- returns: Bool
 	*/
 	func isValidControlMessage() -> Bool {
-		return protocolType.rawValue <= BTLEPlusSerialServiceProtocolMessageType.Abort.rawValue
+		return protocolType.rawValue <= BTLEPlusSerialServiceProtocolMessageType.Reset.rawValue
 	}
 	
 }
