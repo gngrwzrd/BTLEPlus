@@ -63,13 +63,22 @@ receive events from a serial service controller.
 	optional func serialServiceControllerShouldOfferTurnToPeer(controller:BTLEPlusSerialServiceController) -> Bool
 	
 	/**
-	Called when an internal error occured an the current message that was
-	being transmitted had to be dropped in order to reset internal state.
+	Called when a peer reset and dropped the current message.
 	
 	- parameter controller:							BTLEPlusSerialServiceController
 	- parameter droppedMessageFromPeerReset:	The message that was dropped.
 	*/
 	optional func serialServiceController(controller:BTLEPlusSerialServiceController, droppedMessageFromPeerReset message:BTLEPlusSerialServiceMessage)
+	
+	/**
+	Called when the current message was reset and dropped.
+	
+	Calling reset() will trigger a message drop and call this method.
+	
+	- parameter controller:	BTLEPlusSerialServiceController
+	- parameter message:		The message that was dropped.
+	*/
+	optional func serialServiceController(controller:BTLEPlusSerialServiceController, droppedMessageFromReset message:BTLEPlusSerialServiceMessage)
 	
 	//TODO: I think this is how I can do file resume logic..
 	//func serialServiceController(controller:BTLEPlusSerialServiceController, fileForWritingMessage message:BTLEPlusSerialServiceMessage) -> NSFileHandle
