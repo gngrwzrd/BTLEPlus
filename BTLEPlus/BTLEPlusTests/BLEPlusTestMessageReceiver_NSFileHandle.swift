@@ -65,7 +65,7 @@ class BLEPlusTestMessageReceiver_NSFileHandle : XCTestCase {
 		data?.replaceBytesInRange(NSRange.init(location: 1, length: 1), withBytes: &garbage)
 		receiver.receivedData(data!)
 		assert(receiver.needsPacketsResent)
-		assert(receiver.resendFromPacket() == 0)
+		assert(receiver.resendFromPacket == 0)
 	}
 	
 	func testResendPacketFrom2() {
@@ -80,7 +80,7 @@ class BLEPlusTestMessageReceiver_NSFileHandle : XCTestCase {
 		data?.replaceBytesInRange(NSRange.init(location: 1, length: 1), withBytes: &garbage)
 		receiver.receivedData(data!)
 		assert(receiver.needsPacketsResent)
-		assert(receiver.resendFromPacket() == 0)
+		assert(receiver.resendFromPacket == 0)
 	}
 	
 }

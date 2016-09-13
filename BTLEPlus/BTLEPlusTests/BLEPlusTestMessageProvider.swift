@@ -26,4 +26,14 @@ class BLEPlusTestMessageProvider : XCTestCase {
 		assert(provider == nil)
 	}
 	
+	func testResendFromPacket() {
+		let _provider = BTLEPlusSerialServicePacketProvider()
+		_provider.windowSize = 32
+		_provider.mtu = 1024
+		_provider.lastPacketCounterStart = 18
+		_provider.resendFromPacket(10)
+		assert(_provider.packetCounter == 10)
+		assert(_provider.gotPacketCount == 9)
+	}
+	
 }

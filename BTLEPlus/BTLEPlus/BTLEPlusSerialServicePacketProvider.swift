@@ -80,6 +80,11 @@ import Foundation
 	/// resendWindow will reset the file position at the right offset.
 	var lastFileOffsetAtStart:UInt64 = 0
 	
+	override init() {
+		self.packets = [:]
+		
+	}
+	
 	/**
 	Init with data to send.
 	
@@ -91,7 +96,6 @@ import Foundation
 		guard withData.length > 0 else {
 			return nil
 		}
-		self.mtu = 0
 		self.data = withData
 		messageSize = UInt64(withData.length)
 		packets = [:]
@@ -219,9 +223,31 @@ import Foundation
 	
 	/// Reset the packet counter to resend from a specific packet.
 	func resendFromPacket(packetCount:BTLEPlusSerialServicePacketCounter_Type) {
-		//gotPacketCount = (packetCount - lastPacketCounterStart)
-		isEndOfMessage = false
 		packetCounter = packetCount
+		gotPacketCount = 0
+		isEndOfMessage = false
+		
+		//loop and add how many packets were sent.
+		var packet = lastPacketCounterStart
+		while packet < windowSize  {
+			if packet ==  BTLEPlusSerialServiceMaxPacketCounter {
+				packet = 0
+			}
+			if packet == packetCount {
+				break
+			}
+			packet += 1
+			gotPacketCount += 1
+		}
+		
+		//subtract from bytes written for packets that had to be resent.
+		
+		let diff:UInt64 = UInt64((UInt16(windowSize) - UInt16(gotPacketCount)) * mtu)
+		if bytesWritten > diff {
+			bytesWritten -= UInt64((UInt16(windowSize) -  UInt16(gotPacketCount)) * mtu)
+		} else {
+			bytesWritten = 0
+		}
 	}
 	
 	/// Send progress. This is the progress of how many total bytes have been written

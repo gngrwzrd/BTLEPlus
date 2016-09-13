@@ -15,4 +15,4 @@ typealias BTLEPlusSerialServiceProtocolMessageType_Type = UInt8
 typealias BTLEPlusSerialServicePacketCounter_Type = UInt8
 
 /// The default max packet counter before it loops to zero.
-let BTLEPlusSerialServiceMaxPacketCounter:BTLEPlusSerialServicePacketCounter_Type = 128
+var BTLEPlusSerialServiceMaxPacketCounter:BTLEPlusSerialServicePacketCounter_Type = 128
