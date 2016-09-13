@@ -8,19 +8,19 @@
 
 import Foundation
 
-/// BTLEPlusSerialServicePacketReceiver handles incoming data from a paar
-/// and manages a packet counter. The receiver also figures out when
-/// packets need to be resent from missing packets.
+/// BTLEPlusSerialServicePacketReceiver handles incoming data from a peer
+/// and manages a packet counter. The receiver also figures out when packets
+/// need to be resent from missing packets.
 @objc class BTLEPlusSerialServicePacketReceiver : NSObject {
 	
 	/// Data for smaller messages.
 	var data:NSMutableData?
 	
-	/// File handle for larger messages.
-	var fileHandle:NSFileHandle?
-	
 	/// The file url.
 	var fileURL:NSURL?
+	
+	/// File handle for larger messages.
+	var fileHandle:NSFileHandle?
 	
 	/// Window Size. This is clamped between 0 and BTLEPlusSerialServiceMaxWindowSize.
 	var windowSize:BTLEPlusSerialServiceWindowSize_Type {
@@ -39,8 +39,14 @@ import Foundation
 	/// Whether or not this receiver needs packets resent from the client.
 	var needsPacketsResent:Bool = false
 	
+	/// The packet to resend from.
+	var resendFromPacket:BTLEPlusSerialServicePacketCounter_Type = 0
+	
 	/// The total bytes received.
 	var bytesReceived:UInt64 = 0
+	
+	/// The total bytes received before committing packet data.
+	var bytesReceivedBeforeCommit:UInt64 = 0
 	
 	/// Total bytes in this message.
 	private var messageSize:UInt64 = 0
@@ -125,7 +131,7 @@ import Foundation
 		}
 		let payload = data.subdataWithRange(NSRange.init(location: sizeof(packet.dynamicType), length: data.length-sizeof(packet.dynamicType)))
 		packets[packet] = payload
-		bytesReceived = bytesReceived + UInt64(payload.length)
+		bytesReceivedBeforeCommit = bytesReceivedBeforeCommit + UInt64(payload.length)
 		expectedPacket = packet + 1
 		if expectedPacket == BTLEPlusSerialServiceMaxPacketCounter {
 			expectedPacket = 0
@@ -145,36 +151,21 @@ import Foundation
 			if let packetData = packets[loopPacketCounter] {
 				part.appendData(packetData)
 			} else {
+				resendFromPacket = loopPacketCounter
 				needsPacketsResent = true
 				return
 			}
 			writtenPackets = writtenPackets + 1
 			loopPacketCounter = loopPacketCounter + 1
 		}
+		bytesReceived = bytesReceivedBeforeCommit
+		bytesReceivedBeforeCommit = 0
 		if let fileHandle = fileHandle {
 			fileHandle.writeData(part)
 		}
 		else if let data = data {
 			data.appendData(part)
 		}
-	}
-	
-	/// Returns the first missing packet from the current windowSize and packetCounter.
-	func resendFromPacket() ->BTLEPlusSerialServicePacketCounter_Type {
-		var loopPacketCounter = beginWindowPacketCount
-		var totalChecked:BTLEPlusSerialServicePacketCounter_Type = 0
-		while(totalChecked < windowSize) {
-			if loopPacketCounter == BTLEPlusSerialServiceMaxPacketCounter {
-				loopPacketCounter = 0
-			}
-			let data = packets[loopPacketCounter]
-			if data == nil {
-				return loopPacketCounter
-			}
-			loopPacketCounter = loopPacketCounter + 1
-			totalChecked = totalChecked + 1
-		}
-		return BTLEPlusSerialServicePacketCounter_Type.max
 	}
 	
 	/**
@@ -240,7 +231,7 @@ import Foundation
 	/// if it's a large message.
 	func progress() -> Float {
 		if messageSize > 0 {
-			return Float(bytesReceived) / Float(messageSize)
+			return (Float(bytesReceived) + Float(bytesReceivedBeforeCommit)) / Float(messageSize)
 		}
 		return -1
 	}

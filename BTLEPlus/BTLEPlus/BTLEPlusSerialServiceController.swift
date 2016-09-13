@@ -918,7 +918,7 @@ a delegate callback.
 		currentReceiver.windowSize = message.windowSize
 		currentReceiver.commitPacketData()
 		if currentReceiver.needsPacketsResent {
-			let packet = currentReceiver.resendFromPacket()
+			let packet = currentReceiver.resendFromPacket
 			let resend = BTLEPlusSerialServiceProtocolMessage(resendMessageWithStartFromPacket: packet)
 			self.sendControlMessage(resend, acceptFilter: [.Data,.EndMessage,.EndPart,.Reset], expectingAck: false)
 		} else {
@@ -938,7 +938,7 @@ a delegate callback.
 		
 		if currentReceiver.needsPacketsResent {
 			
-			let packet = currentReceiver.resendFromPacket()
+			let packet = currentReceiver.resendFromPacket
 			let resend = BTLEPlusSerialServiceProtocolMessage(resendMessageWithStartFromPacket: packet)
 			self.sendControlMessage(resend, acceptFilter: [.Data,.EndMessage,.EndPart,.Reset])
 			

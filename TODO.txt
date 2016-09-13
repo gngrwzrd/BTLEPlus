@@ -1,3 +1,7 @@
+Fix resend from packet. Currently it resends entire window. I fixed the receiver
+to use loopPacketCounter to get where to send from.
+Need to fix provider and the resendFromPacket() method.
+
 Need to check that acceptFilter is set properly in all reset cases.
 Should I add Cancel, which is basically reset as it is now?
 Should Reset behave differently, maybe it only resets and starts sending current message from byte 0
@@ -6,10 +10,10 @@ Try and find as many places where I can take out optionals. Like startScanning o
 
 Make mtu/window size not changeable after init??
 
-File resume logic is going to have to be done by the user as there has to be a request
-for how many bytes the peer has, so the other peer can seek to the right position.
+File resume logic is going to have to be done by the user as there has to be a request for how many bytes the peer has, so the other peer can seek to the right position.
 
-Add randmized packet loss simulation for resend testing.
-fix resend from packet?
 Add streaming BLEPlusSerialServiceStreamingMessage - provides and receives packets.
+
+TESTS:
+Add randmized packet loss simulation for resend testing.
 Write a tester app to automate a complete test of every feature.

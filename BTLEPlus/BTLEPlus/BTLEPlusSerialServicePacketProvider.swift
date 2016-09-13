@@ -218,9 +218,9 @@ import Foundation
 	}
 	
 	/// Reset the packet counter to resend from a specific packet.
-	func resendFromPacket(packetCount:UInt8) {
+	func resendFromPacket(packetCount:BTLEPlusSerialServicePacketCounter_Type) {
 		//gotPacketCount = (packetCount - lastPacketCounterStart)
-		//isEndOfMessage = false
+		isEndOfMessage = false
 		packetCounter = packetCount
 	}
 	
