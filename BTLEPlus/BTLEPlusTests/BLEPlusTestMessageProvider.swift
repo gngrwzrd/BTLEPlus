@@ -30,10 +30,17 @@ class BLEPlusTestMessageProvider : XCTestCase {
 		let _provider = BTLEPlusSerialServicePacketProvider()
 		_provider.windowSize = 32
 		_provider.mtu = 1024
-		_provider.lastPacketCounterStart = 18
+		_provider.lastPacketCounterStart = 0
 		_provider.resendFromPacket(10)
 		assert(_provider.packetCounter == 10)
-		assert(_provider.gotPacketCount == 9)
+		assert(_provider.gotPacketCount == 10)
+		
+		//when packet counter loops
+		_provider.lastPacketCounterStart = 124
+		_provider.resendFromPacket(4)
+		assert(_provider.packetCounter == 4)
+		assert(_provider.gotPacketCount == 8)
+		
 	}
 	
 }

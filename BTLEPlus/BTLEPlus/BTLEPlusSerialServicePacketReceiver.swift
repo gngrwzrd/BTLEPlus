@@ -131,7 +131,7 @@ import Foundation
 		}
 		let payload = data.subdataWithRange(NSRange.init(location: sizeof(packet.dynamicType), length: data.length-sizeof(packet.dynamicType)))
 		packets[packet] = payload
-		bytesReceivedBeforeCommit = bytesReceivedBeforeCommit + UInt64(payload.length)
+		bytesReceivedBeforeCommit += UInt64(payload.length)
 		expectedPacket = packet + 1
 		if expectedPacket == BTLEPlusSerialServiceMaxPacketCounter {
 			expectedPacket = 0
@@ -158,7 +158,7 @@ import Foundation
 			writtenPackets = writtenPackets + 1
 			loopPacketCounter = loopPacketCounter + 1
 		}
-		bytesReceived = bytesReceivedBeforeCommit
+		bytesReceived += bytesReceivedBeforeCommit
 		bytesReceivedBeforeCommit = 0
 		if let fileHandle = fileHandle {
 			fileHandle.writeData(part)
@@ -208,6 +208,7 @@ import Foundation
 	
 	/// Starts a new receive window.
 	func beginWindow() {
+		bytesReceivedBeforeCommit = 0
 		beginWindowPacketCount = expectedPacket
 		packets = [:]
 	}

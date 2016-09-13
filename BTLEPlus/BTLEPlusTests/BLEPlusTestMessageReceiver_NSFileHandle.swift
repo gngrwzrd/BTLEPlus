@@ -12,44 +12,55 @@ import XCTest
 class BLEPlusTestMessageReceiver_NSFileHandle : XCTestCase {
 	
 	func testTransferFileFromProviderToReceiver() {
+		
+		//setup provider
 		let fileURL = NSBundle(forClass: self.dynamicType).URLForImageResource("IMG_5595")
 		let _provider = BTLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
 		_provider?.mtu = 1024
 		_provider?.windowSize = 25
+		
+		//setup receiver
 		let _fileWrite = BTLEPlusSerialServicePacketReceiver.getTempFileForWriting()
 		let _receiver = BTLEPlusSerialServicePacketReceiver(withFileURLForWriting: _fileWrite!, windowSize: 25)
+		
 		guard let receiver = _receiver else {
 			assert(false)
 		}
+		
 		guard let provider = _provider else {
 			assert(false)
 		}
+		
 		var packet:NSData? = nil
 		receiver.beginMessage()
+		
 		while(true) {
 			if provider.isEndOfMessage {
 				break
 			}
+			
 			provider.fillWindow()
 			receiver.beginWindow()
 			receiver.windowSize = provider.windowSize
+			
 			if provider.isEndOfMessage {
 				receiver.windowSize = provider.endOfMessageWindowSize
 			}
+			
 			while provider.hasPackets() {
 				packet = provider.getPacket()
 				receiver.receivedData(packet!)
 			}
+			
 			assert(receiver.needsPacketsResent == false)
 			receiver.commitPacketData()
 		}
+		
 		if provider.isEndOfMessage {
-			receiver.windowSize = provider.windowSize
+			receiver.windowSize = provider.endOfMessageWindowSize
 			receiver.commitPacketData()
 			assert(provider.bytesWritten == receiver.bytesReceived)
 			provider.finishMessage()
-			receiver.commitPacketData()
-			receiver.finishMessage()
 		}
 	}
 	

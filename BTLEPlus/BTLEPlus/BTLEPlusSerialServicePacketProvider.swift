@@ -229,7 +229,7 @@ import Foundation
 		
 		//loop and add how many packets were sent.
 		var packet = lastPacketCounterStart
-		while packet < windowSize  {
+		while gotPacketCount < windowSize  {
 			if packet ==  BTLEPlusSerialServiceMaxPacketCounter {
 				packet = 0
 			}

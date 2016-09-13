@@ -965,9 +965,8 @@ a delegate callback.
 		guard let provider = self.currentMessage?.provider else {
 			return
 		}
-		//TODO: fix resend from packet.
-		//provider.resendFromPacket(message.resendFromPacket)
-		provider.resendWindow()
+		provider.resendFromPacket(message.resendFromPacket)
+		//provider.resendWindow()
 		self.startSendingPackets(false)
 	}
 	
