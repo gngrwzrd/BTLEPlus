@@ -22,12 +22,6 @@ import Foundation
 	/// The file url.
 	var fileURL:NSURL?
 	
-	/// The user identifieable message type.
-	var messageType:BTLEPlusSerialServiceMessageType_Type = 0
-	
-	/// Message id.
-	var messageId:BTLEPlusSerialServiceMessageId_Type = 0
-	
 	/// Window Size. This is clamped between 0 and BTLEPlusSerialServiceMaxWindowSize.
 	var windowSize:BTLEPlusSerialServiceWindowSize_Type {
 		get {

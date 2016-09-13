@@ -155,42 +155,31 @@
 <a href='#protocol-control-messages' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='protocol-control-messages'>Protocol Control Messages</h2>
 
 <p>Protocol messages are used to control the flow of data and are exchanged between the central and peripheral peers.</p>
-<a href='#protocol-types' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h5 id='protocol-types'>Protocol Types</h5>
-<pre class="highlight plaintext"><code>PeerInfo           = 1
-Ack                = 2
-NewMessage         = 3
-NewFileMessage     = 4
-EndPart            = 5
-EndMessage         = 6
-Data               = 7
-Resend             = 8
-TakeTurn           = 9
-Abort              = 10
-</code></pre>
-<a href='#protocol-control-message-formats' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h5 id='protocol-control-message-formats'>Protocol Control Message Formats</h5>
 
 <p>Protocol message fields are stored in network order - big endian.</p>
 
 <p>Sizes are in bytes:</p>
 <pre class="highlight plaintext"><code>Ack:            [protocolType:1]
 PeerInfo:       [protocolType:1, mtu:2, windowSize:1]
-NewMessage:     [protocolType:1, messageType:1, messageId: 1, expectedSize:8]
-NewFileMessage: [protocolType:1, messageType:1, messageId: 1, expectedSize:8]
+NewMessage:     [protocolType:1, messageType:2, messageId: 1, expectedSize:8]
+NewFileMessage: [protocolType:1, messageType:2, messageId: 1, expectedSize:8]
 EndMessage:     [protocolType:1, endMessageWindowSize:1]
 EndPart:        [protocolType:1, endPartWindowSize:1]
 Resend:         [protocolType:1]
 Data:           [protocolType:1, packetCount:1, data:18]
 TakeTurn:       [protocolType:1]
+Reset:          [protocolType:1]
 Abort:          [protocolType:1]
 </code></pre>
 <a href='#responsibilities' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='responsibilities'>Responsibilities</h2>
 
-<p>By default the central is in control and initiates messages. The central must offer the peripheral a turn to send it&rsquo;s messages by sending TakeTurn messages. See the flow examples below to see how the message exchange works.</p>
-<a href='#messages' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='messages'>Messages</h2>
-<a href='#peer-info' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='peer-info'>Peer Info</h3>
+<p>By default the peripheral is in control and initiates messages. The peripheral must offer the central a turn to send it&rsquo;s messages by sending TakeTurn control messages.</p>
+<a href='#peerinfo-control-message' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='peerinfo-control-message'>PeerInfo Control Message</h3>
 
-<p>The peer info message contains mtu and window size. When first connected the peripheral sends a peer info message with it&rsquo;s mtu and window size to the central. The central must accept the mtu and window sizes for sending and receiving messages.</p>
-<a href='#peer-info-exchange-examples' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h5 id='peer-info-exchange-examples'>Peer Info Exchange Examples</h5>
+<p>The peer info message contains mtu and window size. When first connected the peripheral sends a peer info message with it&rsquo;s mtu and window size to the central.</p>
+
+<p><strong>The central must accept the mtu and window sizes for sending and receiving messages.</strong></p>
+<a href='#peerinfo-control-message-exchange-examples' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h5 id='peerinfo-control-message-exchange-examples'>PeerInfo Control Message Exchange Examples</h5>
 
 <p>Peripheral sends peer info, and central accepts.</p>
 
@@ -209,16 +198,16 @@ Abort:          [protocolType:1]
 <td style="text-align: left"></td>
 </tr>
 </tbody></table>
-<a href='#take-turn-message' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='take-turn-message'>Take Turn Message</h3>
+<a href='#taketurn-control-message' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='taketurn-control-message'>TakeTurn Control Message</h3>
 
-<p>Each peer, the central and peripheral, require a turn to send it&rsquo;s own queued messages. By default the central is in control, and must offer the peripheral it&rsquo;s turn to send it&rsquo;s messages.</p>
+<p>Each peer, the central and peripheral, require a turn to send it&rsquo;s own queued messages. By default the peripheral is in control, and must offer the central it&rsquo;s turn to send it&rsquo;s messages.</p>
 
-<p>If a peripheral accepts and takes control, it can send it&rsquo;s own queued messages, and must offer the turn back to the central.</p>
+<p>If a central accepts and takes control, it can send it&rsquo;s own queued messages, and must offer the turn back to the peripheral.</p>
 
-<p>When the central receives a take turn message it is required to take control back. If it has no messages to send then it must continue to send take turn messages to the peripheral.</p>
-<a href='#take-turn-message-examples' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h5 id='take-turn-message-examples'>Take Turn Message Examples</h5>
+<p>When the peripheral receives a take turn message it is required to take control back. If it has no messages to send then it must continue to send take turn messages to the central.</p>
+<a href='#taketurn-control-message-exchange-examples' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h5 id='taketurn-control-message-exchange-examples'>TakeTurn Control Message Exchange Examples</h5>
 
-<p>The central offers a turn to the peripheral, because the peripheral has messages it accepts and takes control.</p>
+<p>The peripheral offers a turn to the central, the central has messages to send so it acknowledges the turn and can start sending it&rsquo;s messages.</p>
 
 <table><thead>
 <tr>
@@ -226,6 +215,28 @@ Abort:          [protocolType:1]
 <th style="text-align: left">Peripheral</th>
 </tr>
 </thead><tbody>
+<tr>
+<td style="text-align: right"></td>
+<td style="text-align: left">&lt;- TakeTurn</td>
+</tr>
+<tr>
+<td style="text-align: right">Ack -&gt;</td>
+<td style="text-align: left"></td>
+</tr>
+</tbody></table>
+
+<p>The peripheral offers a turn to the central, but the central doesn&rsquo;t have any messages to send so it responds with a take turn message that the peripheral must accept.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: right">Central</th>
+<th style="text-align: left">Peripheral</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: right"></td>
+<td style="text-align: left">&lt;- TakeTurn</td>
+</tr>
 <tr>
 <td style="text-align: right">TakeTurn -&gt;</td>
 <td style="text-align: left"></td>
@@ -235,32 +246,10 @@ Abort:          [protocolType:1]
 <td style="text-align: left">&lt;- Ack</td>
 </tr>
 </tbody></table>
+<a href='#newmessage-control-message' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='newmessage-control-message'>NewMessage Control Message</h3>
 
-<p>The central offers a turn to the peripheral, but the peripheral doesn&rsquo;t have any messages to send to it responds with a take turn message that the central must accept.</p>
-
-<table><thead>
-<tr>
-<th style="text-align: right">Central</th>
-<th style="text-align: left">Peripheral</th>
-</tr>
-</thead><tbody>
-<tr>
-<td style="text-align: right">TakeTurn -&gt;</td>
-<td style="text-align: left"></td>
-</tr>
-<tr>
-<td style="text-align: right"></td>
-<td style="text-align: left">&lt;- Take Turn</td>
-</tr>
-<tr>
-<td style="text-align: right">Ack -&gt;</td>
-<td style="text-align: left"></td>
-</tr>
-</tbody></table>
-<a href='#new-messages' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='new-messages'>New Messages</h3>
-
-<p>Transferring messages between peers must first be agreed upon. New message requests indicate to the central and peripheral that they should set their internal state to start sending, or start receiving packets.</p>
-<a href='#new-message-examples' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h5 id='new-message-examples'>New Message Examples</h5>
+<p>Transferring user messages between peers must first be agreed upon. When a peer has it&rsquo;s turn, it can request to send it&rsquo;s next message.</p>
+<a href='#newmessage-control-message-exchange-examples' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h6 id='newmessage-control-message-exchange-examples'>NewMessage Control Message Exchange Examples</h6>
 
 <p>The central initiates a new message, the peripheral accepts.</p>
 
@@ -270,6 +259,64 @@ Abort:          [protocolType:1]
 <th style="text-align: left">Peripheral</th>
 </tr>
 </thead><tbody>
+<tr>
+<td style="text-align: right">NewMessage -&gt;</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: right"></td>
+<td style="text-align: left">&lt;- Ack</td>
+</tr>
+</tbody></table>
+
+<p>The peripheral requests a new message, the central accepts.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: right">Central</th>
+<th style="text-align: left">Peripheral</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: right"></td>
+<td style="text-align: left">&lt;- NewMessage</td>
+</tr>
+<tr>
+<td style="text-align: right">Ack -&gt;</td>
+<td style="text-align: left"></td>
+</tr>
+</tbody></table>
+<a href='#wait-control-message' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='wait-control-message'>Wait Control Message</h3>
+
+<p>If a peer won&rsquo;t allow a new message, it can indicate to the other peer that it should wait and try again.</p>
+<a href='#wait-control-message-exchange-examples' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h6 id='wait-control-message-exchange-examples'>Wait Control Message Exchange Examples</h6>
+
+<p>Here the central has it&rsquo;s turn, but the peripheral won&rsquo;t allow the new message and requires the central to wait longer.</p>
+
+<p>After some time, the new message is tried again, and acknowledged so the central can send it&rsquo;s message.</p>
+
+<table><thead>
+<tr>
+<th style="text-align: right">Central</th>
+<th style="text-align: left">Peripheral</th>
+</tr>
+</thead><tbody>
+<tr>
+<td style="text-align: right">NewMessage -&gt;</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: right"></td>
+<td style="text-align: left">&lt;- Wait</td>
+</tr>
+<tr>
+<td style="text-align: right">Ack -&gt;</td>
+<td style="text-align: left"></td>
+</tr>
+<tr>
+<td style="text-align: right">&hellip;&hellip;&hellip;&hellip;..</td>
+<td style="text-align: left"></td>
+</tr>
 <tr>
 <td style="text-align: right">NewMessage -&gt;</td>
 <td style="text-align: left"></td>
@@ -392,7 +439,7 @@ Abort:          [protocolType:1]
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-11)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-12)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

@@ -162,7 +162,15 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BTLEP
 	}
 	
 	public func serialServiceController(controller: BTLEPlusSerialServiceController, sentMessage message: BTLEPlusSerialServiceMessage) {
-		
+		print("sent message:",message.messageType)
+	}
+	
+	public func serialServiceController(controller: BTLEPlusSerialServiceController, droppedMessageFromReset message: BTLEPlusSerialServiceMessage) {
+		print("dropped message",message.messageType)
+	}
+	
+	public func serialServiceController(controller: BTLEPlusSerialServiceController, droppedMessageFromPeerReset message: BTLEPlusSerialServiceMessage) {
+		print("dropped message",message.messageType)
 	}
 	
 	func getMessageId() -> BTLEPlusSerialServiceMessageId_Type {

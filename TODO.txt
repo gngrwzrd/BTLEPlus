@@ -1,24 +1,13 @@
-The take turn requirements are backwards. Make the peripheral have control by default.
+Need to check that acceptFilter is set properly in all reset cases.
+Should I add Cancel, which is basically reset as it is now?
+Should Reset behave differently, maybe it only resets and starts sending current message from byte 0
 
-Switch the serial service controll receiver to use BTLEPlusSerialServiceMessage.receiver. in order to easily
-pass around a message object that is currently the receiver. i might be able to use currentMessage for both
-send/receive since only one is happening at once..
-Can take out messageType and messageId off of the packet receiver.
-
-peerDroppedMessageFromReset??
-
-Implement Cancel, Reset, Wait.
-Reset should only be internal as a way to reset state upon errors and retry the current message from byte 0. Rename abort to Reset.
-  use delegate method droppedMessageBecauseOfReset to notify user.
-Cancel only cancels the current message transfer for both peers.
-Wait is a response to new messages when the user requires a wait.
+Try and find as many places where I can take out optionals. Like startScanning on central manager.
 
 Make mtu/window size not changeable after init??
 
 File resume logic is going to have to be done by the user as there has to be a request
 for how many bytes the peer has, so the other peer can seek to the right position.
-
-
 
 Add randmized packet loss simulation for resend testing.
 fix resend from packet?

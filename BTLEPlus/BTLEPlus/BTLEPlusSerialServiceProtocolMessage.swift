@@ -12,7 +12,7 @@ import Foundation
 public typealias BTLEPlusSerialServiceMessageType_Type = UInt16
 
 /// The type to use for message id.
-public typealias BTLEPlusSerialServiceMessageId_Type = UInt8
+public typealias BTLEPlusSerialServiceMessageId_Type = UInt16
 
 /// The type to use for window size.
 public typealias BTLEPlusSerialServiceWindowSize_Type = UInt8
@@ -80,8 +80,7 @@ Control message types.
 	case Resend = 8
 	case TakeTurn = 9
 	case Wait = 10
-	case Cancel = 11
-	case Reset = 12
+	case Reset = 11
 }
 
 /// BTLEPlusSerialServiceMessage is used over the control channel
@@ -173,10 +172,14 @@ Control message types.
 			}
 			
 			if protocolType == .NewMessage || protocolType == .NewFileMessage {
-				var noMessageType:UInt16 = 0
+				var noMessageType:BTLEPlusSerialServiceMessageType_Type = 0
 				data.getBytes(&noMessageType, range: NSRange.init(location: sizeof(protocolType.rawValue.dynamicType), length: sizeof(messageType.dynamicType)))
 				messageType = CFSwapInt16BigToHost(noMessageType)
-				data.getBytes(&messageId, range: NSRange.init(location: sizeof(protocolType.rawValue.dynamicType) + sizeof(messageType.dynamicType), length: sizeof(messageId.self.dynamicType)))
+				
+				var noMessageId:BTLEPlusSerialServiceMessageId_Type = 0
+				data.getBytes(&noMessageId, range: NSRange.init(location: sizeof(protocolType.rawValue.dynamicType) + sizeof(messageType.dynamicType), length: sizeof(messageId.self.dynamicType)))
+				messageId = CFSwapInt16BigToHost(noMessageId)
+				
 				var noMessageSize:UInt64 = 0
 				data.getBytes(&noMessageSize, range: NSRange.init(location: sizeof(protocolType.rawValue.dynamicType) + sizeof(messageType.dynamicType) + sizeof(messageId.self.dynamicType), length: sizeof(messageSize.dynamicType)))
 				messageSize = CFSwapInt64BigToHost(noMessageSize)
@@ -282,10 +285,11 @@ Control message types.
 		self.messageId = messageId
 		var noMessageSize = CFSwapInt64HostToBig(messageSize)
 		var noMessageType = CFSwapInt16HostToBig(messageType)
+		var noMessageId = CFSwapInt16HostToBig(messageId)
 		let data = NSMutableData()
 		data.appendBytes(&protocolType, length: sizeof(protocolType.rawValue.dynamicType))
 		data.appendBytes(&noMessageType, length: sizeof(messageType.self.dynamicType))
-		data.appendBytes(&self.messageId, length: sizeof(self.messageId.self.dynamicType))
+		data.appendBytes(&noMessageId, length: sizeof(self.messageId.self.dynamicType))
 		data.appendBytes(&noMessageSize, length: sizeof(messageSize.self.dynamicType))
 		self.data = data
 	}
@@ -305,10 +309,11 @@ Control message types.
 		self.messageId = messageId
 		var noMessageSize = CFSwapInt64HostToBig(messageSize)
 		var noMessageType = CFSwapInt16HostToBig(messageType)
+		var noMessageId = CFSwapInt16HostToBig(messageId)
 		let data = NSMutableData()
 		data.appendBytes(&protocolType, length: sizeof(protocolType.rawValue.dynamicType))
 		data.appendBytes(&noMessageType, length: sizeof(self.messageType.self.dynamicType))
-		data.appendBytes(&self.messageId, length: sizeof(self.messageId.self.dynamicType))
+		data.appendBytes(&noMessageId, length: sizeof(self.messageId.self.dynamicType))
 		data.appendBytes(&noMessageSize, length: sizeof(messageSize.self.dynamicType))
 		self.data = data
 	}

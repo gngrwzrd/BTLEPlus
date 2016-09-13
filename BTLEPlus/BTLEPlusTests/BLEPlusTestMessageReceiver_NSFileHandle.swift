@@ -16,7 +16,8 @@ class BLEPlusTestMessageReceiver_NSFileHandle : XCTestCase {
 		let _provider = BTLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
 		_provider?.mtu = 1024
 		_provider?.windowSize = 25
-		let _receiver = BTLEPlusSerialServicePacketReceiver.createWithTmpFileForWriting(25)
+		let _fileWrite = BTLEPlusSerialServicePacketReceiver.getTempFileForWriting()
+		let _receiver = BTLEPlusSerialServicePacketReceiver(withFileURLForWriting: _fileWrite!, windowSize: 25)
 		guard let receiver = _receiver else {
 			assert(false)
 		}

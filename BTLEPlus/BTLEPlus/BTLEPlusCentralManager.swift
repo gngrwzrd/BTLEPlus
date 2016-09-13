@@ -93,28 +93,46 @@ events from a BTLEPlusCentralManager.
 }
 
 /**
-The BTLECentralManager class scans for peripherals and manages discovered peripherals.
+The BTLECentralManager class scans for peripherals, manages discovered
+peripherals, and notifies you of bluetooth events via the delegate.
 
-You need to subclass BTLEPeripheral, and register a peripheral prototype in order for
-the manager to instantiate your peripheral instances.
+Do not start scanning until you've received the delegate event
+for bluetooth being turned on:
+
+````
+func btleCentralManagerDidTurnOnBluetooth(central:BTLEPlusCentralManager) {
+    //safe to start scanning here.
+}
+````
 
 ## Registering Peripheral Prototypes
+
+You register peripheral prototypes with this class, which extend BTLEPlusPeripheral.
+
+When Core Bluetooth discovers a peripheral, the manager tries to find a prototype
+peripheral that understands the advertised data.
 
 ````
 //create a manager
 let myManager = BTLECentralManager(withDelegate: self)
-//
+
 //create a prototype instance.
 let myPeripheral = MyBTLEPeripheral()
 myPeripheral.tag = 1
 myPeripheral.organization = "com.example.MyBTLEPeripheral"
-//
+
 //Register the prototype instance.
 myManager.registerPeripehralPrototype(myPeripheral)
 ````
 
-You are required to subclass BTLEPeripheral, and override _respondsToAdvertisementData()_
-so that the manager can instantiate a new peripheral based on your prototype.
+You're notified via the delegate that a peripheral was discovered. The peripheral
+you receive has already been verified that it understands the advertised data.
+
+Refer to BTLEPlusPeripheral, and BTLEPlusPeripheral.respondsToAdvertisementData
+for more information about responding to advertisement data.
+
+## Restoring Core Bluetooth State on iOS
+
 */
 @objc public class BTLEPlusCentralManager : NSObject, CBCentralManagerDelegate {
 	
@@ -133,11 +151,11 @@ so that the manager can instantiate a new peripheral based on your prototype.
 	/// from Core Bluetooth documentation.
 	public var scanOptions:[String:AnyObject] = [CBCentralManagerScanOptionAllowDuplicatesKey:true]
 	
-	#if os(iOS)
+	//#if os(iOS)
 	/// Whether to start scanning when core bluetooth restores from a background state.
 	/// This only has effects for iOS.
 	public var shouldScanAfterRestore = false
-	#endif
+	//#endif
 	
 	/// The core bluetooth central manager.
 	var btCentralManager:CBCentralManager?
@@ -157,8 +175,9 @@ so that the manager can instantiate a new peripheral based on your prototype.
 	var collectedAdvertisementData:[NSUUID:BTLEAdvertisementData] = [:]
 	
 	/**
-	Register a peripheral prototype. Copies of peripheral prototypes are created when a peripheral
-	is found, and a peripheral prototype can respond to the peripheral.
+	Register a peripheral prototype. Copies of peripheral prototypes are
+	created when a peripheral is found, and a peripheral prototype can respond
+	to the peripheral.
 	
 	- parameter peripheral: An instance of BTLEPlusPeripheral.
 	*/
@@ -237,7 +256,7 @@ so that the manager can instantiate a new peripheral based on your prototype.
 	
 	- returns: BTLEPlusPeripheral?
 	*/
-	private func newPrototypeInstance(peripheral:CBPeripheral?, advertisementData:BTLEAdvertisementData?) -> BTLEPlusPeripheral? {
+	private func newPrototypeInstance(peripheral:CBPeripheral, advertisementData:BTLEAdvertisementData?) -> BTLEPlusPeripheral? {
 		guard let advData = advertisementData else {
 			return nil
 		}
@@ -355,7 +374,7 @@ so that the manager can instantiate a new peripheral based on your prototype.
 		guard let advertisementData = advertisementData else {
 			return
 		}
-		if var knownPeripherals = NSUserDefaults.standardUserDefaults().objectForKey(knownPeripheralsDefaultsKey) as? [String:NSData]{
+		if var knownPeripherals = NSUserDefaults.standardUserDefaults().objectForKey(knownPeripheralsDefaultsKey) as? [String:NSData] {
 			let data = NSKeyedArchiver.archivedDataWithRootObject(advertisementData)
 			if let identifier = peripheral.cbPeripheral?.identifier.UUIDString {
 				knownPeripherals[identifier] = data
@@ -371,16 +390,13 @@ so that the manager can instantiate a new peripheral based on your prototype.
 	
 	- parameter services: Official BLE service UUIDs can be found here https://www.bluetooth.com/specifications/gatt/services.
 	*/
-	public func startScanning(services:[CBUUID]?) {
+	public func startScanning(services:[CBUUID]) {
 		collectedAdvertisementData = [:]
-		if let services = services {
-			if services.count < 1 {
-				return
-			}
-			
-			btCentralManager?.scanForPeripheralsWithServices(services, options: [CBCentralManagerScanOptionAllowDuplicatesKey: true])
-			discoverKnownPeripherals(services)
+		if services.count < 1 {
+			return
 		}
+		btCentralManager?.scanForPeripheralsWithServices(services, options: [CBCentralManagerScanOptionAllowDuplicatesKey: true])
+		discoverKnownPeripherals(services)
 	}
 	
 	/// Stop scanning for peripherals
@@ -420,7 +436,7 @@ so that the manager can instantiate a new peripheral based on your prototype.
 	
 	- returns: Array of BTLEPlusPeripheral instances.
 	*/
-	public func allPeripherals() -> [BTLEPlusPeripheral]? {
+	public func allPeripherals() -> [BTLEPlusPeripheral] {
 		return peripherals
 	}
 	
@@ -431,7 +447,7 @@ so that the manager can instantiate a new peripheral based on your prototype.
 	
 	- returns: Array of BTLEPlusPeripheral or nil
 	*/
-	public func peripheralsForTag(tag:Int) -> [BTLEPlusPeripheral]? {
+	public func peripheralsForTag(tag:Int) -> [BTLEPlusPeripheral] {
 		return peripherals.filter({$0.tag == tag})
 	}
 	
@@ -503,7 +519,7 @@ so that the manager can instantiate a new peripheral based on your prototype.
 	
 	- returns: [BTLEPlusPeripheral]?
 	*/
-	public func peripheralsForOrganization(organization:String?) -> [BTLEPlusPeripheral]? {
+	public func peripheralsForOrganization(organization:String?) -> [BTLEPlusPeripheral] {
 		return peripherals.filter({$0.organization == organization})
 	}
 	
@@ -514,8 +530,8 @@ so that the manager can instantiate a new peripheral based on your prototype.
 	
 	- parameter peripheral: BTLEPlusPeripheral The peripheral to connect to.
 	*/
-	public func connect(peripheral:BTLEPlusPeripheral?) {
-		peripheral?.connect()
+	public func connect(peripheral:BTLEPlusPeripheral) {
+		peripheral.connect()
 	}
 	
 	/**
@@ -523,8 +539,8 @@ so that the manager can instantiate a new peripheral based on your prototype.
 	
 	- parameter peripheraal: The peripheral to disconnect from.
 	*/
-	public func disconnect(peripheral:BTLEPlusPeripheral?) {
-		peripheral?.disconnect()
+	public func disconnect(peripheral:BTLEPlusPeripheral) {
+		peripheral.disconnect()
 	}
 	
 	//MARK: - CBCentralManagerDelegate
@@ -561,7 +577,7 @@ so that the manager can instantiate a new peripheral based on your prototype.
 		delegate?.btleCentralManagerDidTurnOffBluetooth?(self)
 	}
 	
-	/// Called with bluetooth is resetting
+	/// Called when bluetooth is resetting
 	private func resetting() {
 		delegate?.btleCentralManagerBluetoothIsResetting?(self)
 	}

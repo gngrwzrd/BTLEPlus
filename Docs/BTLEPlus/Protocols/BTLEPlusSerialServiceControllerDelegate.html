@@ -193,7 +193,7 @@ data it asks the delegate to send it.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>BLEPlusSerialServiceController</p>
+                                  <p>BTLEPlusSerialServiceController</p>
 
                                 </div>
                               </td>
@@ -217,6 +217,262 @@ data it asks the delegate to send it.</p>
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FP8BTLEPlus39BTLEPlusSerialServiceControllerDelegate44serialServiceControllerCanAcceptMoreMessagesFCS_31BTLEPlusSerialServiceControllerSb"></a>
+                    <a name="//apple_ref/swift/Method/serialServiceControllerCanAcceptMoreMessages(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP8BTLEPlus39BTLEPlusSerialServiceControllerDelegate44serialServiceControllerCanAcceptMoreMessagesFCS_31BTLEPlusSerialServiceControllerSb">serialServiceControllerCanAcceptMoreMessages(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether or not the serial service can continue accepting
+and processing messages from it&rsquo;s peer.</p>
+
+<p>This is a hook that gets called everytime a new message is
+being requested by the peer.</p>
+
+<p>It allows you to communicate to the peer that it should wait
+and try again.</p>
+
+<p>This will continue to be called every time the peer retries
+sending it&rsquo;s messages.</p>
+
+<p>Returning <strong>false</strong> will send a wait message to the peer.</p>
+
+<p>Returning <strong>true</strong> will allow the serial service controller
+to accept and process more messages.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">optional</span> <span class="kd">func</span> <span class="nf">serialServiceControllerCanAcceptMoreMessages</span><span class="p">(</span><span class="nv">controller</span><span class="p">:</span><span class="kt"><a href="../Classes/BTLEPlusSerialServiceController.html">BTLEPlusSerialServiceController</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>controller</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>BTLEPlusSerialServiceController</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Bool</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FP8BTLEPlus39BTLEPlusSerialServiceControllerDelegate44serialServiceControllerShouldOfferTurnToPeerFCS_31BTLEPlusSerialServiceControllerSb"></a>
+                    <a name="//apple_ref/swift/Method/serialServiceControllerShouldOfferTurnToPeer(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP8BTLEPlus39BTLEPlusSerialServiceControllerDelegate44serialServiceControllerShouldOfferTurnToPeerFCS_31BTLEPlusSerialServiceControllerSb">serialServiceControllerShouldOfferTurnToPeer(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether or not the serial service controller should offer
+a turn to the peer so it can send it&rsquo;s queued messages.</p>
+
+<p>This is intended to be used when some exceptional condition is
+happening and you don&rsquo;t want to offer a turn to the peer.
+But most of the time you should return true.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">optional</span> <span class="kd">func</span> <span class="nf">serialServiceControllerShouldOfferTurnToPeer</span><span class="p">(</span><span class="nv">controller</span><span class="p">:</span><span class="kt"><a href="../Classes/BTLEPlusSerialServiceController.html">BTLEPlusSerialServiceController</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>controller</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>BTLEPlusSerialServiceController</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Bool</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FP8BTLEPlus39BTLEPlusSerialServiceControllerDelegate23serialServiceControllerFTCS_31BTLEPlusSerialServiceController27droppedMessageFromPeerResetCS_28BTLEPlusSerialServiceMessage_T_"></a>
+                    <a name="//apple_ref/swift/Method/serialServiceController(_:droppedMessageFromPeerReset:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP8BTLEPlus39BTLEPlusSerialServiceControllerDelegate23serialServiceControllerFTCS_31BTLEPlusSerialServiceController27droppedMessageFromPeerResetCS_28BTLEPlusSerialServiceMessage_T_">serialServiceController(_:droppedMessageFromPeerReset:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Called when a peer reset and dropped the current message.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">optional</span> <span class="kd">func</span> <span class="nf">serialServiceController</span><span class="p">(</span><span class="nv">controller</span><span class="p">:</span><span class="kt"><a href="../Classes/BTLEPlusSerialServiceController.html">BTLEPlusSerialServiceController</a></span><span class="p">,</span> <span class="n">droppedMessageFromPeerReset</span> <span class="nv">message</span><span class="p">:</span><span class="kt"><a href="../Classes/BTLEPlusSerialServiceMessage.html">BTLEPlusSerialServiceMessage</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>controller</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>BTLEPlusSerialServiceController</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>droppedMessageFromPeerReset</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The message that was dropped.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FP8BTLEPlus39BTLEPlusSerialServiceControllerDelegate23serialServiceControllerFTCS_31BTLEPlusSerialServiceController23droppedMessageFromResetCS_28BTLEPlusSerialServiceMessage_T_"></a>
+                    <a name="//apple_ref/swift/Method/serialServiceController(_:droppedMessageFromReset:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP8BTLEPlus39BTLEPlusSerialServiceControllerDelegate23serialServiceControllerFTCS_31BTLEPlusSerialServiceController23droppedMessageFromResetCS_28BTLEPlusSerialServiceMessage_T_">serialServiceController(_:droppedMessageFromReset:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Called when a reset was called locally which drops the
+current message.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">optional</span> <span class="kd">func</span> <span class="nf">serialServiceController</span><span class="p">(</span><span class="nv">controller</span><span class="p">:</span><span class="kt"><a href="../Classes/BTLEPlusSerialServiceController.html">BTLEPlusSerialServiceController</a></span><span class="p">,</span> <span class="n">droppedMessageFromReset</span> <span class="nv">message</span><span class="p">:</span><span class="kt"><a href="../Classes/BTLEPlusSerialServiceMessage.html">BTLEPlusSerialServiceMessage</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>controller</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>BTLEPlusSerialServiceController</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>message</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The message that was dropped.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/TODO:%20I%20think%20this%20is%20how%20I%20can%20do%20file%20resume%20logic.."></a>
+                <a name="//apple_ref/swift/Section/TODO: I think this is how I can do file resume logic.." class="dashAnchor"></a>
+                <a href="#/TODO:%20I%20think%20this%20is%20how%20I%20can%20do%20file%20resume%20logic..">
+                  <h3 class="section-name">TODO: I think this is how I can do file resume logic..</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -253,7 +509,7 @@ data it asks the delegate to send it.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>BLEPlusSerialServiceController</p>
+                                  <p>BTLEPlusSerialServiceController</p>
 
                                 </div>
                               </td>
@@ -313,7 +569,7 @@ data it asks the delegate to send it.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>BLEPlusSerialServiceController</p>
+                                  <p>BTLEPlusSerialServiceController</p>
 
                                 </div>
                               </td>
@@ -345,7 +601,7 @@ data it asks the delegate to send it.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-11)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-12)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

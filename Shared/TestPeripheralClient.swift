@@ -103,6 +103,23 @@ public class TestPeripheralClient : BTLEPlusPeripheral, BTLEPlusSerialServiceCon
 		}
 	}
 	
+	public func serialServiceController(controller: BTLEPlusSerialServiceController, droppedMessageFromReset message: BTLEPlusSerialServiceMessage) {
+		print("dropped message",message.messageType)
+	}
+	
+	public func serialServiceController(controller: BTLEPlusSerialServiceController, droppedMessageFromPeerReset message: BTLEPlusSerialServiceMessage) {
+		print("dropped message",message.messageType)
+	}
+	
+	var testWait = 0
+	public func serialServiceControllerCanAcceptMoreMessages(controller: BTLEPlusSerialServiceController) -> Bool {
+		if testWait < 2 {
+			testWait = testWait + 1
+			return false
+		}
+		return true
+	}
+	
 	func receivedHelloWorldResponse(message:BTLEPlusSerialServiceMessage) {
 		let s = String(data:message.data!, encoding: NSUTF8StringEncoding)
 		print("received hello world response")
@@ -152,5 +169,9 @@ public class TestPeripheralClient : BTLEPlusPeripheral, BTLEPlusSerialServiceCon
 		let d = s.dataUsingEncoding(NSUTF8StringEncoding)
 		let message = BTLEPlusSerialServiceMessage(withMessageType:HelloWorldRequest, messageId: getMessageId(), data: d!)
 		serialController.send(message!)
+	}
+	
+	func sendReset() {
+		serialController.reset(false)
 	}
 }

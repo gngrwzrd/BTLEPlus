@@ -146,26 +146,43 @@
 
                 </div>
               </div>
-            <p>The BTLECentralManager class scans for peripherals and manages discovered peripherals.</p>
+            <p>The BTLECentralManager class scans for peripherals, manages discovered
+peripherals, and notifies you of bluetooth events via the delegate.</p>
 
-<p>You need to subclass BTLEPeripheral, and register a peripheral prototype in order for
-the manager to instantiate your peripheral instances.</p>
+<p>Do not start scanning until you&rsquo;ve received the delegate event
+for bluetooth being turned on:</p>
 
-<p><a href='#registering-peripheral-prototypes' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='registering-peripheral-prototypes'>Registering Peripheral Prototypes</h2>
+<pre class="highlight plaintext"><code>func btleCentralManagerDidTurnOnBluetooth(central:BTLEPlusCentralManager) {
+    //safe to start scanning here.
+}
+</code></pre>
+
+<p><a href='#registering-peripheral-prototypes' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='registering-peripheral-prototypes'>Registering Peripheral Prototypes</h2></p>
+
+<p>You register peripheral prototypes with this class, which extend BTLEPlusPeripheral.</p>
+
+<p>When Core Bluetooth discovers a peripheral, the manager tries to find a prototype
+peripheral that understands the advertised data.</p>
+
 <pre class="highlight plaintext"><code>//create a manager
 let myManager = BTLECentralManager(withDelegate: self)
-//
+
 //create a prototype instance.
 let myPeripheral = MyBTLEPeripheral()
 myPeripheral.tag = 1
-myPeripheral.organization = <q>com.example.MyBTLEPeripheral</q>
-//
+myPeripheral.organization = "com.example.MyBTLEPeripheral"
+
 //Register the prototype instance.
 myManager.registerPeripehralPrototype(myPeripheral)
-</code></pre></p>
+</code></pre>
 
-<p>You are required to subclass BTLEPeripheral, and override <em>respondsToAdvertisementData()</em>
-so that the manager can instantiate a new peripheral based on your prototype.</p>
+<p>You&rsquo;re notified via the delegate that a peripheral was discovered. The peripheral
+you receive has already been verified that it understands the advertised data.</p>
+
+<p>Refer to BTLEPlusPeripheral, and BTLEPlusPeripheral.respondsToAdvertisementData
+for more information about responding to advertisement data.</p>
+
+<p><a href='#restoring-core-bluetooth-state-on-ios' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='restoring-core-bluetooth-state-on-ios'>Restoring Core Bluetooth State on iOS</h2></p>
 
           </div>
         </section>
@@ -293,9 +310,9 @@ from Core Bluetooth documentation.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/"></a>
+                    <a name="/s:vC8BTLEPlus22BTLEPlusCentralManager22shouldScanAfterRestoreSb"></a>
                     <a name="//apple_ref/swift/Property/shouldScanAfterRestore" class="dashAnchor"></a>
-                    <a class="token" href="#/">shouldScanAfterRestore</a>
+                    <a class="token" href="#/s:vC8BTLEPlus22BTLEPlusCentralManager22shouldScanAfterRestoreSb">shouldScanAfterRestore</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -303,14 +320,15 @@ from Core Bluetooth documentation.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Whether to start scanning when core bluetooth restores from a background state.
+This only has effects for iOS.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">BTLEPlusCentralManager</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">CBCentralManagerDelegate</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">shouldScanAfterRestore</span> <span class="o">=</span> <span class="kc">false</span></code></pre>
 
                         </div>
                       </div>
@@ -474,9 +492,9 @@ is found, and a peripheral prototype can respond to the peripheral.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC8BTLEPlus22BTLEPlusCentralManager13startScanningFGSqGSaCSo6CBUUID__T_"></a>
+                    <a name="/s:FC8BTLEPlus22BTLEPlusCentralManager13startScanningFGSaCSo6CBUUID_T_"></a>
                     <a name="//apple_ref/swift/Method/startScanning(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC8BTLEPlus22BTLEPlusCentralManager13startScanningFGSqGSaCSo6CBUUID__T_">startScanning(_:)</a>
+                    <a class="token" href="#/s:FC8BTLEPlus22BTLEPlusCentralManager13startScanningFGSaCSo6CBUUID_T_">startScanning(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -491,7 +509,7 @@ is found, and a peripheral prototype can respond to the peripheral.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">startScanning</span><span class="p">(</span><span class="nv">services</span><span class="p">:[</span><span class="kt">CBUUID</span><span class="p">]?)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">startScanning</span><span class="p">(</span><span class="nv">services</span><span class="p">:[</span><span class="kt">CBUUID</span><span class="p">])</span></code></pre>
 
                         </div>
                       </div>
@@ -1151,7 +1169,7 @@ If multiple peripherals are found nil is returned.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-11)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-12)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

@@ -16,23 +16,6 @@ It's a turn based message system where both the central and peripheral are given
 
 Protocol messages are used to control the flow of data and are exchanged between the central and peripheral peers.
 
-##### Protocol Types
-
-````
-PeerInfo           = 1
-Ack                = 2
-NewMessage         = 3
-NewFileMessage     = 4
-EndPart            = 5
-EndMessage         = 6
-Data               = 7
-Resend             = 8
-TakeTurn           = 9
-Abort              = 10
-````
-
-##### Protocol Control Message Formats
-
 Protocol message fields are stored in network order - big endian.
 
 Sizes are in bytes:
@@ -47,20 +30,21 @@ EndPart:        [protocolType:1, endPartWindowSize:1]
 Resend:         [protocolType:1]
 Data:           [protocolType:1, packetCount:1, data:18]
 TakeTurn:       [protocolType:1]
+Reset:          [protocolType:1]
 Abort:          [protocolType:1]
 ````
 
 ## Responsibilities
 
-By default the central is in control and initiates messages. The central must offer the peripheral a turn to send it's messages by sending TakeTurn messages. See the flow examples below to see how the message exchange works.
+By default the peripheral is in control and initiates messages. The peripheral must offer the central a turn to send it's messages by sending TakeTurn control messages.
 
-## Messages
+### PeerInfo Control Message
 
-### Peer Info
+The peer info message contains mtu and window size. When first connected the peripheral sends a peer info message with it's mtu and window size to the central.
 
-The peer info message contains mtu and window size. When first connected the peripheral sends a peer info message with it's mtu and window size to the central. The central must accept the mtu and window sizes for sending and receiving messages.
+**The central must accept the mtu and window sizes for sending and receiving messages.**
 
-##### Peer Info Exchange Examples
+##### PeerInfo Control Message Exchange Examples
 
 Peripheral sends peer info, and central accepts.
 
@@ -69,41 +53,67 @@ Peripheral sends peer info, and central accepts.
 |              | <- PeerInfo |
 |       Ack -> |             |
 
-### Take Turn Message
+### TakeTurn Control Message
 
-Each peer, the central and peripheral, require a turn to send it's own queued messages. By default the central is in control, and must offer the peripheral it's turn to send it's messages.
+Each peer, the central and peripheral, require a turn to send it's own queued messages. By default the peripheral is in control, and must offer the central it's turn to send it's messages.
 
-If a peripheral accepts and takes control, it can send it's own queued messages, and must offer the turn back to the central.
+If a central accepts and takes control, it can send it's own queued messages, and must offer the turn back to the peripheral.
 
-When the central receives a take turn message it is required to take control back. If it has no messages to send then it must continue to send take turn messages to the peripheral.
+When the peripheral receives a take turn message it is required to take control back. If it has no messages to send then it must continue to send take turn messages to the central.
 
-##### Take Turn Message Examples
+##### TakeTurn Control Message Exchange Examples
 
-The central offers a turn to the peripheral, because the peripheral has messages it accepts and takes control.
+The peripheral offers a turn to the central, the central has messages to send so it acknowledges the turn and can start sending it's messages.
 
-|      Central|Peripheral  |
-|------------:|:-----------|
-| TakeTurn -> |            |
-|             | <- Ack     |
+|      Central|Peripheral   |
+|------------:|:------------|
+|             | <- TakeTurn |
+|      Ack -> |             |
 
-The central offers a turn to the peripheral, but the peripheral doesn't have any messages to send to it responds with a take turn message that the central must accept.
+The peripheral offers a turn to the central, but the central doesn't have any messages to send so it responds with a take turn message that the peripheral must accept.
 
-|      Central|Peripheral    |
-|------------:|:-------------|
-| TakeTurn -> |              |
-|             | <- Take Turn |
-|      Ack -> |              |
+|      Central|Peripheral   |
+|------------:|:------------|
+|             | <- TakeTurn |
+| TakeTurn -> |             |
+|             | <- Ack      |
 
-### New Messages
+### NewMessage Control Message
 
-Transferring messages between peers must first be agreed upon. New message requests indicate to the central and peripheral that they should set their internal state to start sending, or start receiving packets.
+Transferring user messages between peers must first be agreed upon. When a peer has it's turn, it can request to send it's next message.
 
-##### New Message Examples
+###### NewMessage Control Message Exchange Examples
 
 The central initiates a new message, the peripheral accepts.
 
 |         Central|Peripheral  |
 |---------------:|:-----------|
+|  NewMessage -> |            |
+|                | <- Ack     |
+
+The peripheral requests a new message, the central accepts.
+
+|         Central|Peripheral     |
+|---------------:|:--------------|
+|                | <- NewMessage |
+|         Ack -> |               |
+
+### Wait Control Message
+
+If a peer won't allow a new message, it can indicate to the other peer that it should wait and try again.
+
+###### Wait Control Message Exchange Examples
+
+Here the central has it's turn, but the peripheral won't allow the new message and requires the central to wait longer.
+
+After some time, the new message is tried again, and acknowledged so the central can send it's message.
+
+|         Central|Peripheral  |
+|---------------:|:-----------|
+|  NewMessage -> |            |
+|                | <- Wait    |
+|         Ack -> |            |
+| .............. |            |
 |  NewMessage -> |            |
 |                | <- Ack     |
 

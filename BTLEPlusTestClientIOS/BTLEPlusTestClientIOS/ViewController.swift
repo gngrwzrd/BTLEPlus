@@ -62,5 +62,9 @@ class ViewController: UIViewController, BTLEPlusCentralManagerDelegate {
 	@IBAction func sendHelloWorldRequest() {
 		myPeripheral?.sendHelloWorldRequest()
 	}
+	
+	@IBAction func sendReset() {
+		myPeripheral?.sendReset()
+	}
 }
 

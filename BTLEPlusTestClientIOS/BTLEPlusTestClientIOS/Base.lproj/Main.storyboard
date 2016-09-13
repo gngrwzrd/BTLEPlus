@@ -57,14 +57,27 @@
                                     <action selector="sendHelloWorldRequest" destination="BYZ-38-t0r" eventType="touchUpInside" id="IwJ-KY-Oe1"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rxp-EV-ERc">
+                                <rect key="frame" x="261" y="194" width="79" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="79" id="BV0-Bc-AwK"/>
+                                    <constraint firstAttribute="height" constant="30" id="N5y-ls-cBQ"/>
+                                </constraints>
+                                <state key="normal" title="Send Reset"/>
+                                <connections>
+                                    <action selector="sendReset" destination="BYZ-38-t0r" eventType="touchUpInside" id="gyJ-hL-1Mn"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="rU8-SE-dys" firstAttribute="top" secondItem="aDg-8O-zVJ" secondAttribute="bottom" constant="8" id="2Wz-Ns-BnS"/>
+                            <constraint firstItem="rxp-EV-ERc" firstAttribute="top" secondItem="VlX-iX-4AN" secondAttribute="bottom" constant="8" id="504-V5-Oj2"/>
                             <constraint firstItem="iSt-U4-p1x" firstAttribute="top" secondItem="rU8-SE-dys" secondAttribute="bottom" constant="8" id="7wA-zK-8zJ"/>
                             <constraint firstItem="VlX-iX-4AN" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="136" id="8cL-np-JiI"/>
                             <constraint firstItem="aDg-8O-zVJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="G3C-63-ITr"/>
                             <constraint firstItem="VlX-iX-4AN" firstAttribute="top" secondItem="iSt-U4-p1x" secondAttribute="bottom" constant="8" id="Kfz-8E-uvE"/>
+                            <constraint firstItem="rxp-EV-ERc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Lcu-2q-XjS"/>
                             <constraint firstItem="aDg-8O-zVJ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="22" id="PmU-TS-Tq0"/>
                             <constraint firstItem="VlX-iX-4AN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="QSb-dv-7dR"/>
                             <constraint firstItem="iSt-U4-p1x" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rUU-xD-Kur"/>
