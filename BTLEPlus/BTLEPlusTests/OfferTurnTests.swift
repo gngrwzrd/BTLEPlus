@@ -11,7 +11,6 @@ import XCTest
 
 class OfferTurnTests : BTLEPlusSerialServiceControllerBaseTests {
 	
-	var hasSentTakeTurn:Bool = false
 	var expectedMessages:[BTLEPlusSerialServiceProtocolMessageType] = [.PeerInfo,.Ack,.TakeTurn,.TakeTurn,.Ack]
 	var done:Bool = false
 	
@@ -32,9 +31,8 @@ class OfferTurnTests : BTLEPlusSerialServiceControllerBaseTests {
 	
 	func testDefaultOfferTurn() {
 		centralController?.resume()
-		centralController?.offerTurnInterval = UInt64( Double(NSEC_PER_SEC) * 0.2)
 		periphController?.resume()
-		periphController?.offerTurnInterval = UInt64( Double(NSEC_PER_SEC) * 0.2)
+		periphController?.offerTurnInterval = UInt64( Double(NSEC_PER_SEC) * 0.01)
 		while(!done) {}
 	}
 }

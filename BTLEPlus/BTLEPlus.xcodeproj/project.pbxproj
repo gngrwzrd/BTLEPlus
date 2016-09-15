@@ -39,6 +39,8 @@
 		0791EBB51D8A49CC0097DC72 /* BTLEPlus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0791EBB41D8A49CC0097DC72 /* BTLEPlus.swift */; };
 		0791EBB61D8A4A650097DC72 /* BTLEPlus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0791EBB41D8A49CC0097DC72 /* BTLEPlus.swift */; };
 		0791EBB81D8A4EFE0097DC72 /* OfferTurnTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0791EBB71D8A4EFE0097DC72 /* OfferTurnTests.swift */; };
+		0791EBBA1D8A55A80097DC72 /* NewMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0791EBB91D8A55A80097DC72 /* NewMessageTests.swift */; };
+		0791EBBC1D8A59F50097DC72 /* WaitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0791EBBB1D8A59F50097DC72 /* WaitTests.swift */; };
 		07AF65401D8A109F0014BB1B /* BTLEPlusSerialServiceControllerBaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AF653F1D8A109F0014BB1B /* BTLEPlusSerialServiceControllerBaseTests.swift */; };
 		07AF65431D8A13DC0014BB1B /* PeerInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AF65421D8A13DC0014BB1B /* PeerInfoTests.swift */; };
 		07AF65491D8A19280014BB1B /* NSFileManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AF65481D8A19280014BB1B /* NSFileManager+Extensions.swift */; };
@@ -90,6 +92,8 @@
 		078A35891D826F7D000CCBB1 /* TODO.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = TODO.txt; path = ../TODO.txt; sourceTree = "<group>"; };
 		0791EBB41D8A49CC0097DC72 /* BTLEPlus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTLEPlus.swift; sourceTree = "<group>"; };
 		0791EBB71D8A4EFE0097DC72 /* OfferTurnTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferTurnTests.swift; sourceTree = "<group>"; };
+		0791EBB91D8A55A80097DC72 /* NewMessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMessageTests.swift; sourceTree = "<group>"; };
+		0791EBBB1D8A59F50097DC72 /* WaitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitTests.swift; sourceTree = "<group>"; };
 		07AF653F1D8A109F0014BB1B /* BTLEPlusSerialServiceControllerBaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTLEPlusSerialServiceControllerBaseTests.swift; sourceTree = "<group>"; };
 		07AF65421D8A13DC0014BB1B /* PeerInfoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerInfoTests.swift; sourceTree = "<group>"; };
 		07AF65481D8A19280014BB1B /* NSFileManager+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSFileManager+Extensions.swift"; sourceTree = "<group>"; };
@@ -231,6 +235,8 @@
 				07AF653F1D8A109F0014BB1B /* BTLEPlusSerialServiceControllerBaseTests.swift */,
 				07AF65421D8A13DC0014BB1B /* PeerInfoTests.swift */,
 				0791EBB71D8A4EFE0097DC72 /* OfferTurnTests.swift */,
+				0791EBB91D8A55A80097DC72 /* NewMessageTests.swift */,
+				0791EBBB1D8A59F50097DC72 /* WaitTests.swift */,
 			);
 			name = SerialService;
 			sourceTree = "<group>";
@@ -411,6 +417,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0791EBBC1D8A59F50097DC72 /* WaitTests.swift in Sources */,
 				078A350B1D8265CD000CCBB1 /* BTLEPlusTestProtocolMssage.swift in Sources */,
 				078A350A1D8265CD000CCBB1 /* BTLEPlusTestMessageReceiver.swift in Sources */,
 				078A35081D8265CD000CCBB1 /* BTLEPlusTestMessageReceiver_NSData.swift in Sources */,
@@ -419,6 +426,7 @@
 				0791EBB81D8A4EFE0097DC72 /* OfferTurnTests.swift in Sources */,
 				078A35051D8265CD000CCBB1 /* BTLEPlusTestMessageProvider_FileHandle.swift in Sources */,
 				078A35041D8265CD000CCBB1 /* BLEPlusTestAdvertisementData.swift in Sources */,
+				0791EBBA1D8A55A80097DC72 /* NewMessageTests.swift in Sources */,
 				07AF65431D8A13DC0014BB1B /* PeerInfoTests.swift in Sources */,
 				07AF65401D8A109F0014BB1B /* BTLEPlusSerialServiceControllerBaseTests.swift in Sources */,
 				078A35061D8265CD000CCBB1 /* BTLEPlusTestMessageProvider_NSData.swift in Sources */,
