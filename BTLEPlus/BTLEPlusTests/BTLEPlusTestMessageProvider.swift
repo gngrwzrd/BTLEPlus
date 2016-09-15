@@ -9,7 +9,7 @@
 import XCTest
 @testable import BTLEPlus
 
-class BLEPlusTestMessageProvider : XCTestCase {
+class BTLEPlusTestMessageProvider : XCTestCase {
 	
 	func testWindowSizeMax() {
 		let fileURL = NSBundle(forClass: self.dynamicType).URLForImageResource("IMG_5543")
@@ -27,7 +27,14 @@ class BLEPlusTestMessageProvider : XCTestCase {
 	}
 	
 	func testResendFromPacket() {
-		let _provider = BTLEPlusSerialServicePacketProvider()
+		//s / d is just junk here
+		let s = "FE88CE32-6863-4C13-A6E0-543C087315E3"
+		let d = s.dataUsingEncoding(NSUTF8StringEncoding)
+		
+		let provider = BTLEPlusSerialServicePacketProvider(withData: d!)
+		guard let _provider = provider else {
+			assert(false)
+		}
 		_provider.windowSize = 32
 		_provider.mtu = 1024
 		_provider.lastPacketCounterStart = 0
@@ -40,7 +47,17 @@ class BLEPlusTestMessageProvider : XCTestCase {
 		_provider.resendFromPacket(4)
 		assert(_provider.packetCounter == 4)
 		assert(_provider.gotPacketCount == 8)
-		
 	}
 	
+	func testBadURL() {
+		let url = NSURL()
+		let _provider = BTLEPlusSerialServicePacketProvider(withFileURLForReading: url)
+		assert(_provider == nil)
+	}
+	
+	func testZeroData() {
+		let data = NSMutableData()
+		let _provider = BTLEPlusSerialServicePacketProvider(withData: data)
+		assert(_provider == nil)
+	}
 }

@@ -9,7 +9,7 @@
 import XCTest
 @testable import BTLEPlus
 
-class BLEPlusTestMessageProvider_NSData : XCTestCase {
+class BTLEPlusTestMessageProvider_NSData : XCTestCase {
 	
 	func testProviderWithData() {
 		let fileURL = NSBundle(forClass: self.dynamicType).URLForImageResource("IMG_5543")

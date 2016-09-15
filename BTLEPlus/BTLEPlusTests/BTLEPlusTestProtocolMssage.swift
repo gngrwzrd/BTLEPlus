@@ -9,7 +9,15 @@
 import XCTest
 @testable import BTLEPlus
 
-class BLEPlusTestUserMessage : XCTestCase {
+class BTLEPlusTestProtocolMessage : XCTestCase {
+	
+	func testIsValid() {
+		let data = NSMutableData()
+		var type:UInt8  = 20
+		data.appendBytes(&type, length: 1)
+		let message = BTLEPlusSerialServiceProtocolMessage(withData: data)
+		assert(message == nil)
+	}
 	
 	func testWindowSizeMax() {
 		let message = BTLEPlusSerialServiceProtocolMessage(withType: .Ack)

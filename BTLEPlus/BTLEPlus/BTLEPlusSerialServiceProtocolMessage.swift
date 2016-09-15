@@ -69,7 +69,7 @@ Control message types.
 - Abort:             Abort the current state and reset. Allow the central to start over.
 */
 @objc enum BTLEPlusSerialServiceProtocolMessageType : BTLEPlusSerialServiceProtocolMessageType_Type {
-	case None = 0
+	case Invalid = 0
 	case PeerInfo = 1
 	case Ack = 2
 	case NewMessage = 3
@@ -92,7 +92,7 @@ Control message types.
 	static var headerSize:UInt8 = 1
 	
 	/// Message type
-	var protocolType:BTLEPlusSerialServiceProtocolMessageType = .None
+	var protocolType:BTLEPlusSerialServiceProtocolMessageType = .Invalid
 	
 	/// A custom user message type.
 	var messageType:BTLEPlusSerialServiceMessageType_Type = 0
@@ -342,6 +342,9 @@ Control message types.
 	- returns: Bool
 	*/
 	func isValidControlMessage() -> Bool {
+		if protocolType.rawValue < 1 {
+			return false
+		}
 		return protocolType.rawValue <= BTLEPlusSerialServiceProtocolMessageType.Reset.rawValue
 	}
 	

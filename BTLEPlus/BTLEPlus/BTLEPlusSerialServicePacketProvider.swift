@@ -80,11 +80,6 @@ import Foundation
 	/// resendWindow will reset the file position at the right offset.
 	var lastFileOffsetAtStart:UInt64 = 0
 	
-	override init() {
-		self.packets = [:]
-		
-	}
-	
 	/**
 	Init with data to send.
 	
@@ -119,17 +114,16 @@ import Foundation
 		fileURL = withFileURLForReading
 		fileHandle = NSFileHandle(forReadingAtPath: path)
 		packets = [:]
-		if let attributes = try? NSFileManager.defaultManager().attributesOfItemAtPath(fileURL!.path!) {
+		let attributes = try? NSFileManager.defaultManager().attributesOfItemAtPath(fileURL!.path!)
+		if let attributes = attributes {
 			let size = attributes[NSFileSize] as? NSNumber
 			messageSize = size!.unsignedLongLongValue
-		} else {
-			return nil
 		}
 	}
 	
 	/// Fills the send window with packets. This must be called before using getPacket().
-	/// Beware that this automically resets the send window, don't call this before knowing
-	/// all packets have been received.
+	/// This automically resets the send window, don't call this before knowing all
+	/// packets have been received.
 	func fillWindow() {
 		packets = [:]
 		lastPacketCounterStart = packetCounter
@@ -168,10 +162,10 @@ import Foundation
 				isEndOfMessage = true
 			}
 			
-			if packet!.length < 1 {
-				isEndOfMessage = true
-				break
-			}
+//			if packet!.length < 1 {
+//				isEndOfMessage = true
+//				break
+//			}
 			
 			wrappedPacket = NSMutableData(capacity: sizeof(BTLEPlusSerialServicePacketCounter_Type.self) + packet!.length)
 			wrappedPacket?.appendBytes(&loopPacketCounter, length: sizeof(loopPacketCounter.self.dynamicType))
@@ -241,10 +235,9 @@ import Foundation
 		}
 		
 		//subtract from bytes written for packets that had to be resent.
-		
 		let diff:UInt64 = UInt64((UInt16(windowSize) - UInt16(gotPacketCount)) * mtu)
 		if bytesWritten > diff {
-			bytesWritten -= UInt64((UInt16(windowSize) -  UInt16(gotPacketCount)) * mtu)
+			bytesWritten -= diff
 		} else {
 			bytesWritten = 0
 		}

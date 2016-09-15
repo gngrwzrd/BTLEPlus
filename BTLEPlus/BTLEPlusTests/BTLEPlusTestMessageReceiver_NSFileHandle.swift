@@ -9,7 +9,7 @@
 import XCTest
 @testable import BTLEPlus
 
-class BLEPlusTestMessageReceiver_NSFileHandle : XCTestCase {
+class BTLEPlusTestMessageReceiver_NSFileHandle : XCTestCase {
 	
 	func testTransferFileFromProviderToReceiver() {
 		
@@ -20,7 +20,7 @@ class BLEPlusTestMessageReceiver_NSFileHandle : XCTestCase {
 		_provider?.windowSize = 25
 		
 		//setup receiver
-		let _fileWrite = BTLEPlusSerialServicePacketReceiver.getTempFileForWriting()
+		let _fileWrite = NSFileManager.defaultManager().getTempFileForWriting()
 		let _receiver = BTLEPlusSerialServicePacketReceiver(withFileURLForWriting: _fileWrite!, windowSize: 25)
 		
 		guard let receiver = _receiver else {

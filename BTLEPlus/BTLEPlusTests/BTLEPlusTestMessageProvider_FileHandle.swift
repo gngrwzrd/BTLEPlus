@@ -197,7 +197,7 @@ class BLEPlusTestMessageProvider_FileHandle : XCTestCase {
 		let _provider = BTLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
 		_provider?.mtu = testMTU
 		_provider?.windowSize = testWindowSize
-		let outputImageURL = BTLEPlusSerialServicePacketReceiver.getTempFileForWriting()
+		let outputImageURL = NSFileManager.defaultManager().getTempFileForWriting()
 		print(outputImageURL)
 		let outputImage = NSFileHandle(forWritingAtPath: outputImageURL!.path!)
 		guard let provider = _provider else {

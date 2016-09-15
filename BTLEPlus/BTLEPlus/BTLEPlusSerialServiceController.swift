@@ -91,10 +91,6 @@ receive events from a serial service controller.
 	*/
 	optional func serialServiceController(controller:BTLEPlusSerialServiceController, droppedMessageFromReset message:BTLEPlusSerialServiceMessage)
 	
-	//TODO: I think this is how I can do file resume logic..
-	//func serialServiceController(controller:BTLEPlusSerialServiceController, fileForWritingMessage message:BTLEPlusSerialServiceMessage) -> NSFileHandle
-	//func serialServiceController(controller:BTLEPlusSerialServiceController, fileForReadingMessage message:BTLEPlusSerialServiceMessage) -> NSFileHandle
-	
 	/**
 	When a message was entirely sent, and received by the peer.
 	
@@ -104,12 +100,21 @@ receive events from a serial service controller.
 	optional func serialServiceController(controller:BTLEPlusSerialServiceController, sentMessage message:BTLEPlusSerialServiceMessage)
 	
 	/**
+	When data is received via receive(), it is wrapped in protocol control data, you
+	can use this as a hook to receive the unwrapped, raw user message data.
+	
+	- parameter controller:	BTLEPlusSerialServiceController
+	- parameter data:			NSData
+	*/
+	//optional func serialServiceController(controller:BTLEPlusSerialServiceController, receivedMessagePayload data:NSData)
+	
+	/**
 	When a message has been completely received.
 	
 	- parameter controller: BTLEPlusSerialServiceController
 	- parameter message:    The message that was received.
 	*/
-	func serialServiceController(controller:BTLEPlusSerialServiceController, receivedMessage message:BTLEPlusSerialServiceMessage)
+	optional func serialServiceController(controller:BTLEPlusSerialServiceController, receivedMessage message:BTLEPlusSerialServiceMessage)
 }
 
 /**
@@ -365,7 +370,6 @@ a delegate callback.
 	/// where it was paused.
 	public func resume() {
 		dispatch_async(serialQueue) {
-			print("resume: set isPaused = false")
 			self.isPaused = false
 			self.pausePackets = false
 			if self.resumeBlock != nil {
@@ -387,11 +391,25 @@ a delegate callback.
 		//that loop is running.
 		pausePackets = true
 		dispatch_async(serialQueue) {
-			print("resume: set isPaused = true")
 			self.isPaused = true
-			self.currentMessage?.provider?.resendWindow()
-			self.currentMessage?.receiver?.resetWindowForReceiving()
 		}
+	}
+	
+	/**
+	Start a stream of bytes that sends to the peer.
+	
+	You can use this to stream data from the serial service controller to it's peer.
+	You implement the delegate method that requests more stream buffer data.
+	*/
+	public func startStreaming(bufferLength:UInt16) -> Bool {
+		return false
+	}
+	
+	/**
+	Stop streaming.
+	*/
+	public func stopStreaming() {
+		
 	}
 	
 	/**
@@ -693,7 +711,8 @@ a delegate callback.
 	/// Sends a resend transfer control request.
 	func sendResendControlMessage(resendFromPacket:BTLEPlusSerialServicePacketCounter_Type) {
 		let resend = BTLEPlusSerialServiceProtocolMessage(resendMessageWithStartFromPacket: resendFromPacket)
-		self.sendControlMessage(resend, acceptFilter: [.Data,.EndMessage,.EndPart,.Reset])
+		self.currentMessage?.receiver?.expectedPacket = resendFromPacket
+		self.sendControlMessage(resend, acceptFilter: [.Data,.EndMessage,.EndPart,.Reset], expectingAck: false)
 	}
 	
 	/// Sends a wait control request.
@@ -897,7 +916,7 @@ a delegate callback.
 			return
 		}
 		
-		let tmpFileURL = BTLEPlusSerialServicePacketReceiver.getTempFileForWriting()
+		let tmpFileURL = NSFileManager.defaultManager().getTempFileForWriting()
 		guard let tmpFile = tmpFileURL else {
 			return
 		}
@@ -918,9 +937,7 @@ a delegate callback.
 		currentReceiver.windowSize = message.windowSize
 		currentReceiver.commitPacketData()
 		if currentReceiver.needsPacketsResent {
-			let packet = currentReceiver.resendFromPacket
-			let resend = BTLEPlusSerialServiceProtocolMessage(resendMessageWithStartFromPacket: packet)
-			self.sendControlMessage(resend, acceptFilter: [.Data,.EndMessage,.EndPart,.Reset], expectingAck: false)
+			self.sendResendControlMessage(currentReceiver.resendFromPacket)
 		} else {
 			currentReceiver.beginWindow()
 			self.sendAck([.Data,.EndMessage,.EndPart,.Reset])
@@ -937,11 +954,7 @@ a delegate callback.
 		currentReceiver.commitPacketData()
 		
 		if currentReceiver.needsPacketsResent {
-			
-			let packet = currentReceiver.resendFromPacket
-			let resend = BTLEPlusSerialServiceProtocolMessage(resendMessageWithStartFromPacket: packet)
-			self.sendControlMessage(resend, acceptFilter: [.Data,.EndMessage,.EndPart,.Reset])
-			
+			self.sendResendControlMessage(currentReceiver.resendFromPacket)
 		} else {
 			
 			let cm = currentMessage
@@ -954,7 +967,7 @@ a delegate callback.
 			
 			dispatch_async(self.delegateQueue) {
 				if let cm = cm {
-					self.delegate?.serialServiceController(self, receivedMessage: cm)
+					self.delegate?.serialServiceController?(self, receivedMessage: cm)
 				}
 			}
 		}

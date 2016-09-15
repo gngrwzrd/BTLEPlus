@@ -34,7 +34,7 @@ import Foundation
 			}
 		}
 	}
-	private var _windowSize:BTLEPlusSerialServiceWindowSize_Type = BTLEPlusSerialServiceDefaultWindowSize
+	var _windowSize:BTLEPlusSerialServiceWindowSize_Type = BTLEPlusSerialServiceDefaultWindowSize
 	
 	/// Whether or not this receiver needs packets resent from the client.
 	var needsPacketsResent:Bool = false
@@ -49,27 +49,17 @@ import Foundation
 	var bytesReceivedBeforeCommit:UInt64 = 0
 	
 	/// Total bytes in this message.
-	private var messageSize:UInt64 = 0
+	var messageSize:UInt64 = 0
 	
 	/// The expected next packet. If the next packet isn't equal to this
 	/// resend flags are set.
-	private var expectedPacket:BTLEPlusSerialServicePacketCounter_Type = 0
+	var expectedPacket:BTLEPlusSerialServicePacketCounter_Type = 0
 	
 	/// The packet count when a new window was started.
-	private var beginWindowPacketCount:BTLEPlusSerialServicePacketCounter_Type = 0
+	var beginWindowPacketCount:BTLEPlusSerialServicePacketCounter_Type = 0
 	
 	/// Packets received. The size of this array is always windowSize.
-	private var packets:[BTLEPlusSerialServicePacketCounter_Type:NSData]
-	
-	/**
-	Default init.
-	
-	- returns: BTLEPlusSerialServicePacketReceiver
-	*/
-	override init() {
-		packets = [:]
-		super.init()
-	}
+	var packets:[BTLEPlusSerialServicePacketCounter_Type:NSData]
 	
 	/**
 	Initialize a BTLEPlusSerialServiceMessageRecever with maximum transmission unit
@@ -107,6 +97,9 @@ import Foundation
 			return nil
 		}
 		guard NSFileManager.defaultManager().fileExistsAtPath(path) else {
+			return nil
+		}
+		guard windowSize > 0 else {
 			return nil
 		}
 		packets = [:]
@@ -168,24 +161,6 @@ import Foundation
 		}
 	}
 	
-	/**
-	Utility for getting a tmp file as an NSFileHandle for writing.
-	
-	- returns: NSFileHandle?
-	*/
-	class func getTempFileForWriting() -> NSURL? {
-		let templateString = "BTLEPlusSerialService.XXXXXX"
-		let template = NSURL(fileURLWithPath:NSTemporaryDirectory()).URLByAppendingPathComponent(templateString)
-		var buffer = [Int8](count: Int(PATH_MAX), repeatedValue: 0)
-		template.getFileSystemRepresentation(&buffer, maxLength: buffer.count)
-		let fd = mkstemp(&buffer)
-		if fd != -1 {
-			close(fd)
-			return NSURL(fileURLWithFileSystemRepresentation: buffer, isDirectory: false, relativeToURL: nil)
-		}
-		return nil
-	}
-	
 	/// Resets internal vars and empties out the receive window.
 	func reset() {
 		needsPacketsResent = false
@@ -198,12 +173,6 @@ import Foundation
 			data = NSMutableData()
 		}
 		reset()
-	}
-	
-	// Sets the expected packet counter back to the expected packet
-	// count when the active window was started
-	func resetWindowForReceiving() {
-		expectedPacket = beginWindowPacketCount
 	}
 	
 	/// Starts a new receive window.
@@ -234,6 +203,6 @@ import Foundation
 		if messageSize > 0 {
 			return (Float(bytesReceived) + Float(bytesReceivedBeforeCommit)) / Float(messageSize)
 		}
-		return -1
+		return 0
 	}
 }
