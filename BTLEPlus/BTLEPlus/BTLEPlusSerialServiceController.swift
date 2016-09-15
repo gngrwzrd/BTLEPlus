@@ -210,12 +210,6 @@ a delegate callback.
 	}
 	private var _windowSize:BTLEPlusSerialServiceWindowSize_Type = BTLEPlusSerialServiceDefaultWindowSize
 	
-	/// The repeat interval to offer turns to the peer.
-	public var offerTurnInterval:NSTimeInterval = 1
-	
-	/// The timeout before resending any waiting control packets.
-	public var resendTimeout:NSTimeInterval = 3
-	
 	/// When resume is called if this block is set it's called.
 	private var resumeBlock:(()->Void)?
 	
@@ -250,17 +244,39 @@ a delegate callback.
 	/// The current message receiver that's receiving data from the client or server.
 	//private var currentReceiveMessage:BTLEPlusSerialServiceMessage?
 	
+	/// A libdispatch timer.
+	var offerTurnDispatchTimer:dispatch_source_t?
+	
+	/// The repeat interval to offer turns to the peer. The unit of time
+	/// here is nanoseconds. libdispatch's timers require nanoseconds.
+	/// You can use NSEC_PER_SECONDS to calculate this value.
+	///
+	/// Default value is 1 seconds.
+	///
+	/// Example: 2 seconds: 2 * NSEC_PER_SEC
+	/// Example: .5 seconds: .5 * NSEC_PER_SEC
+	/// Example: .25 seconds: .25 * NSEC_PER_SEC
+	public var offerTurnInterval:UInt64 = NSEC_PER_SEC
+	
+	/// The timeout before resending any waiting control packets. The unit of time
+	/// here is nanoseconds. libdispatch's timers require nanoseconds.
+	/// You can use NSEC_PER_SECONDS to calculate this value.
+	///
+	/// Default value is 1 seconds.
+	///
+	/// Example: 2 seconds: 2 * NSEC_PER_SEC
+	/// Example: .5 seconds: .5 * NSEC_PER_SEC
+	/// Example: .25 seconds: .25 * NSEC_PER_SEC
+	public var resendTimeout:UInt64 = 1 * NSEC_PER_SEC
+	
 	/// A timer to wait for responses like acks.
-	private var resendCurrentControlTimer:NSTimer?
+	private var resendCurrentControlTimer:dispatch_source_t?
 	
 	/// The mode this controller is running as.
 	private var mode:BTLEPlusSerialServiceRunMode = .Peripheral
 	
 	/// The mode for whoever's turn it is.
 	private var turnMode:BTLEPlusSerialServiceRunMode = .Peripheral
-	
-	/// A timer that keeps track of when to offer the peer a turn.
-	private var offerTurnTimer:NSTimer?
 	
 	//MARK: - Initializing a Serial Service Controller
 	
@@ -300,23 +316,28 @@ a delegate callback.
 	
 	/// Start the offer turn timer.
 	func startOfferTurnTimer() {
-		if self.offerTurnTimer != nil {
+		if offerTurnDispatchTimer != nil {
 			return
 		}
 		print("startOfferTurnTimer")
-		let timer = NSTimer(timeInterval: offerTurnInterval, target: self, selector: #selector(BTLEPlusSerialServiceController.offerTurnTimeout(_:)), userInfo: nil, repeats: true)
-		self.offerTurnTimer = timer
-		NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
+		offerTurnDispatchTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))
+		dispatch_source_set_timer(offerTurnDispatchTimer!, dispatch_walltime(nil, Int64(offerTurnInterval)), offerTurnInterval, 0)
+		dispatch_source_set_event_handler(offerTurnDispatchTimer!) {
+			self.offerTurnTimeout()
+		}
+		dispatch_resume(offerTurnDispatchTimer!)
 	}
 	
 	// Stops the offer turn timer
 	func stopOfferTurnTimer() {
-		self.offerTurnTimer?.invalidate()
-		self.offerTurnTimer = nil
+		if let offerTurnDispatchTimer = self.offerTurnDispatchTimer {
+			dispatch_source_cancel(offerTurnDispatchTimer)
+			self.offerTurnDispatchTimer = nil
+		}
 	}
 	
 	/// When offer turn timer expires.
-	func offerTurnTimeout(timer:NSTimer) {
+	func offerTurnTimeout() {
 		dispatch_async(serialQueue) {
 			if self.turnMode == self.mode {
 				
@@ -341,20 +362,27 @@ a delegate callback.
 	
 	/// Starts the wait timer.
 	func startResendControlMessageTimer() {
-		resendCurrentControlTimer?.invalidate()
-		let timer = NSTimer(timeInterval: resendTimeout, target: self, selector: #selector(BTLEPlusSerialServiceController.resendControlMessageTimerTimeout(_:)), userInfo: nil, repeats: false)
-		resendCurrentControlTimer = timer
-		NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
+		if let resendCurrentControlTimer = resendCurrentControlTimer {
+			dispatch_source_cancel(resendCurrentControlTimer)
+		}
+		print("startResendTimer")
+		resendCurrentControlTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))
+		dispatch_source_set_timer(resendCurrentControlTimer!, dispatch_walltime(nil, Int64(resendTimeout)), resendTimeout, 0)
+		dispatch_source_set_event_handler(resendCurrentControlTimer!) {
+			self.resendTimerTimeout()
+		}
+		dispatch_resume(resendCurrentControlTimer!)
 	}
 	
 	/// Stop the resend control timer.
 	func stopResendControlMessageTimer() {
-		resendCurrentControlTimer?.invalidate()
-		resendCurrentControlTimer = nil
+		if let resendCurrentControlTimer = resendCurrentControlTimer {
+			dispatch_source_cancel(resendCurrentControlTimer)
+		}
 	}
 	
 	/// Wait timer timeout.
-	func resendControlMessageTimerTimeout(timer:NSTimer?) {
+	func resendTimerTimeout() {
 		dispatch_async(serialQueue) {
 			if let currentSendControl = self.currentSendControl {
 				self.delegate?.serialServiceController(self, wantsToSendData: currentSendControl.data!)

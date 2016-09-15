@@ -36,6 +36,9 @@
 		078A35241D826643000CCBB1 /* BTLEPlusSerialServicePacketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E61D8265A0000CCBB1 /* BTLEPlusSerialServicePacketProvider.swift */; };
 		078A35251D826643000CCBB1 /* BTLEPlusSerialServicePacketReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E71D8265A0000CCBB1 /* BTLEPlusSerialServicePacketReceiver.swift */; };
 		078A35261D826643000CCBB1 /* BTLEPlusSerialServiceProtocolMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E81D8265A0000CCBB1 /* BTLEPlusSerialServiceProtocolMessage.swift */; };
+		0791EBB51D8A49CC0097DC72 /* BTLEPlus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0791EBB41D8A49CC0097DC72 /* BTLEPlus.swift */; };
+		0791EBB61D8A4A650097DC72 /* BTLEPlus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0791EBB41D8A49CC0097DC72 /* BTLEPlus.swift */; };
+		0791EBB81D8A4EFE0097DC72 /* OfferTurnTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0791EBB71D8A4EFE0097DC72 /* OfferTurnTests.swift */; };
 		07AF65401D8A109F0014BB1B /* BTLEPlusSerialServiceControllerBaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AF653F1D8A109F0014BB1B /* BTLEPlusSerialServiceControllerBaseTests.swift */; };
 		07AF65431D8A13DC0014BB1B /* PeerInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AF65421D8A13DC0014BB1B /* PeerInfoTests.swift */; };
 		07AF65491D8A19280014BB1B /* NSFileManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AF65481D8A19280014BB1B /* NSFileManager+Extensions.swift */; };
@@ -85,6 +88,8 @@
 		078A35161D826638000CCBB1 /* BTLEPlusIOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTLEPlusIOS.h; sourceTree = "<group>"; };
 		078A35181D826638000CCBB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		078A35891D826F7D000CCBB1 /* TODO.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = TODO.txt; path = ../TODO.txt; sourceTree = "<group>"; };
+		0791EBB41D8A49CC0097DC72 /* BTLEPlus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTLEPlus.swift; sourceTree = "<group>"; };
+		0791EBB71D8A4EFE0097DC72 /* OfferTurnTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferTurnTests.swift; sourceTree = "<group>"; };
 		07AF653F1D8A109F0014BB1B /* BTLEPlusSerialServiceControllerBaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTLEPlusSerialServiceControllerBaseTests.swift; sourceTree = "<group>"; };
 		07AF65421D8A13DC0014BB1B /* PeerInfoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerInfoTests.swift; sourceTree = "<group>"; };
 		07AF65481D8A19280014BB1B /* NSFileManager+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSFileManager+Extensions.swift"; sourceTree = "<group>"; };
@@ -148,6 +153,7 @@
 				078A35841D826E72000CCBB1 /* Serial Service */,
 				078A35881D826EF2000CCBB1 /* Utils */,
 				078A35871D826EB5000CCBB1 /* Resources */,
+				0791EBB41D8A49CC0097DC72 /* BTLEPlus.swift */,
 			);
 			path = BTLEPlus;
 			sourceTree = "<group>";
@@ -155,11 +161,17 @@
 		078A34D11D826580000CCBB1 /* BTLEPlusTests */ = {
 			isa = PBXGroup;
 			children = (
+				078A34F91D8265CD000CCBB1 /* BLEPlusTestAdvertisementData.swift */,
+				078A34FA1D8265CD000CCBB1 /* BTLEPlusTestMessageProvider_FileHandle.swift */,
+				078A34FB1D8265CD000CCBB1 /* BTLEPlusTestMessageProvider_NSData.swift */,
+				078A34FC1D8265CD000CCBB1 /* BTLEPlusTestMessageProvider.swift */,
+				078A34FD1D8265CD000CCBB1 /* BTLEPlusTestMessageReceiver_NSData.swift */,
+				078A34FE1D8265CD000CCBB1 /* BTLEPlusTestMessageReceiver_NSFileHandle.swift */,
+				078A34FF1D8265CD000CCBB1 /* BTLEPlusTestMessageReceiver.swift */,
+				078A35001D8265CD000CCBB1 /* BTLEPlusTestProtocolMssage.swift */,
+				07AF654B1D8A197C0014BB1B /* NSFileManager+ExtensionTests.swift */,
+				07AF654D1D8A21AC0014BB1B /* Resources */,
 				07AF653D1D8A103A0014BB1B /* SerialService */,
-				07AF653E1D8A10500014BB1B /* Utils */,
-				078A35011D8265CD000CCBB1 /* IMG_5543.JPG */,
-				078A35021D8265CD000CCBB1 /* IMG_5595.JPG */,
-				078A35031D8265CD000CCBB1 /* Info.plist */,
 			);
 			path = BTLEPlusTests;
 			sourceTree = SOURCE_ROOT;
@@ -216,34 +228,21 @@
 		07AF653D1D8A103A0014BB1B /* SerialService */ = {
 			isa = PBXGroup;
 			children = (
-				07AF65411D8A13D20014BB1B /* Protocol */,
 				07AF653F1D8A109F0014BB1B /* BTLEPlusSerialServiceControllerBaseTests.swift */,
-				078A34FA1D8265CD000CCBB1 /* BTLEPlusTestMessageProvider_FileHandle.swift */,
-				078A34FB1D8265CD000CCBB1 /* BTLEPlusTestMessageProvider_NSData.swift */,
-				078A34FC1D8265CD000CCBB1 /* BTLEPlusTestMessageProvider.swift */,
-				078A34FD1D8265CD000CCBB1 /* BTLEPlusTestMessageReceiver_NSData.swift */,
-				078A34FE1D8265CD000CCBB1 /* BTLEPlusTestMessageReceiver_NSFileHandle.swift */,
-				078A34FF1D8265CD000CCBB1 /* BTLEPlusTestMessageReceiver.swift */,
-				078A35001D8265CD000CCBB1 /* BTLEPlusTestProtocolMssage.swift */,
-				07AF654B1D8A197C0014BB1B /* NSFileManager+ExtensionTests.swift */,
+				07AF65421D8A13DC0014BB1B /* PeerInfoTests.swift */,
+				0791EBB71D8A4EFE0097DC72 /* OfferTurnTests.swift */,
 			);
 			name = SerialService;
 			sourceTree = "<group>";
 		};
-		07AF653E1D8A10500014BB1B /* Utils */ = {
+		07AF654D1D8A21AC0014BB1B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				078A34F91D8265CD000CCBB1 /* BLEPlusTestAdvertisementData.swift */,
+				078A35011D8265CD000CCBB1 /* IMG_5543.JPG */,
+				078A35021D8265CD000CCBB1 /* IMG_5595.JPG */,
+				078A35031D8265CD000CCBB1 /* Info.plist */,
 			);
-			name = Utils;
-			sourceTree = "<group>";
-		};
-		07AF65411D8A13D20014BB1B /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-				07AF65421D8A13DC0014BB1B /* PeerInfoTests.swift */,
-			);
-			name = Protocol;
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -401,6 +400,7 @@
 				07E997911D82FDA1004E3624 /* OptionsSetType+Extensions.swift in Sources */,
 				078A34F21D8265A0000CCBB1 /* BTLEPlusSerialServiceController.swift in Sources */,
 				07AF65491D8A19280014BB1B /* NSFileManager+Extensions.swift in Sources */,
+				0791EBB51D8A49CC0097DC72 /* BTLEPlus.swift in Sources */,
 				078A34F41D8265A0000CCBB1 /* BTLEPlusSerialServicePacketProvider.swift in Sources */,
 				07E997931D839DAD004E3624 /* BTLEPlusSerialServiceProtocolMessageExcludes.swift in Sources */,
 				078A34F51D8265A0000CCBB1 /* BTLEPlusSerialServicePacketReceiver.swift in Sources */,
@@ -416,6 +416,7 @@
 				078A35081D8265CD000CCBB1 /* BTLEPlusTestMessageReceiver_NSData.swift in Sources */,
 				078A35071D8265CD000CCBB1 /* BTLEPlusTestMessageProvider.swift in Sources */,
 				078A35091D8265CD000CCBB1 /* BTLEPlusTestMessageReceiver_NSFileHandle.swift in Sources */,
+				0791EBB81D8A4EFE0097DC72 /* OfferTurnTests.swift in Sources */,
 				078A35051D8265CD000CCBB1 /* BTLEPlusTestMessageProvider_FileHandle.swift in Sources */,
 				078A35041D8265CD000CCBB1 /* BLEPlusTestAdvertisementData.swift in Sources */,
 				07AF65431D8A13DC0014BB1B /* PeerInfoTests.swift in Sources */,
@@ -437,6 +438,7 @@
 				078A35221D826643000CCBB1 /* BTLEPlusSerialServiceController.swift in Sources */,
 				078A35231D826643000CCBB1 /* BTLEPlusSerialServiceMessage.swift in Sources */,
 				07AF654A1D8A19280014BB1B /* NSFileManager+Extensions.swift in Sources */,
+				0791EBB61D8A4A650097DC72 /* BTLEPlus.swift in Sources */,
 				078A35241D826643000CCBB1 /* BTLEPlusSerialServicePacketProvider.swift in Sources */,
 				078A35251D826643000CCBB1 /* BTLEPlusSerialServicePacketReceiver.swift in Sources */,
 				078A35261D826643000CCBB1 /* BTLEPlusSerialServiceProtocolMessage.swift in Sources */,
