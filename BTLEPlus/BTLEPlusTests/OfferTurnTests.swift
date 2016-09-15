@@ -11,8 +11,10 @@ import XCTest
 
 class OfferTurnTests : BTLEPlusSerialServiceControllerBaseTests {
 	
-	var expectedMessages:[BTLEPlusSerialServiceProtocolMessageType] = [.PeerInfo,.Ack,.TakeTurn,.TakeTurn,.Ack]
-	var done:Bool = false
+	override func setUp() {
+		super.setUp()
+		expectedMessages = [.PeerInfo,.Ack,.TakeTurn,.TakeTurn,.Ack]
+	}
 	
 	override func serialServiceController(controller: BTLEPlusSerialServiceController, wantsToSendData data: NSData) {
 		

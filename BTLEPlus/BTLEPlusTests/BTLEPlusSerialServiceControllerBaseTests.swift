@@ -11,8 +11,10 @@ import XCTest
 
 class BTLEPlusSerialServiceControllerBaseTests : XCTestCase, BTLEPlusSerialServiceControllerDelegate {
 	
+	var expectedMessages:[BTLEPlusSerialServiceProtocolMessageType] = []
 	var centralController:BTLEPlusSerialServiceController?
 	var periphController:BTLEPlusSerialServiceController?
+	var done:Bool = false
 	
 	override func setUp() {
 		centralController = BTLEPlusSerialServiceController(withRunMode: .Central)
@@ -24,10 +26,16 @@ class BTLEPlusSerialServiceControllerBaseTests : XCTestCase, BTLEPlusSerialServi
 	}
 	
 	func serialServiceController(controller: BTLEPlusSerialServiceController, wantsToSendData data: NSData) {
+		
+		let message = BTLEPlusSerialServiceProtocolMessage(withData: data)
+		
 		if controller == centralController {
+			print(">>> centralSent: ",message?.protocolType.rawValue)
 			periphController?.receive(data)
 		}
+		
 		if controller == periphController {
+			print(">>> peripheralSent: ",message?.protocolType.rawValue)
 			centralController?.receive(data)
 		}
 	}

@@ -233,9 +233,9 @@
 			isa = PBXGroup;
 			children = (
 				07AF653F1D8A109F0014BB1B /* BTLEPlusSerialServiceControllerBaseTests.swift */,
-				07AF65421D8A13DC0014BB1B /* PeerInfoTests.swift */,
-				0791EBB71D8A4EFE0097DC72 /* OfferTurnTests.swift */,
 				0791EBB91D8A55A80097DC72 /* NewMessageTests.swift */,
+				0791EBB71D8A4EFE0097DC72 /* OfferTurnTests.swift */,
+				07AF65421D8A13DC0014BB1B /* PeerInfoTests.swift */,
 				0791EBBB1D8A59F50097DC72 /* WaitTests.swift */,
 			);
 			name = SerialService;

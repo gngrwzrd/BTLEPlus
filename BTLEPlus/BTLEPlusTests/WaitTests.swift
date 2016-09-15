@@ -12,17 +12,17 @@ import XCTest
 
 class TestWait : BTLEPlusSerialServiceControllerBaseTests {
 	
-	var expectedMessages:[BTLEPlusSerialServiceProtocolMessageType] = [.PeerInfo,.Ack,.TakeTurn,.Ack,.NewMessage,.Wait,.NewMessage,.Wait,.NewMessage,.Ack]
-	var done:Bool = false
 	var waitCount:UInt = 0
 	var oneTurn:Bool = false
+	
+	override func setUp() {
+		super.setUp()
+		expectedMessages = [.PeerInfo,.Ack,.TakeTurn,.Ack,.NewMessage,.Wait,.NewMessage,.Wait,.NewMessage,.Ack]
+	}
 	
 	override func serialServiceController(controller: BTLEPlusSerialServiceController, wantsToSendData data: NSData) {
 		
 		let message = BTLEPlusSerialServiceProtocolMessage(withData: data)
-		print("hooked data", message?.protocolType.rawValue)
-		data.bleplus_base16EncodedString(uppercase: true)
-		
 		if expectedMessages.count > 0 {
 			assert( message?.protocolType == expectedMessages[0] )
 			expectedMessages.removeAtIndex(0)
