@@ -18,5 +18,6 @@ class NSFileManagerExtensionTests : XCTestCase {
 		isTestingFD = false
 		url = NSFileManager.defaultManager().getTempFileForWriting()
 		assert(url != nil)
+		_ = try? NSFileManager.defaultManager().removeItemAtURL(url!)
 	}
 }

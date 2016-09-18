@@ -25,6 +25,8 @@ extension NSFileManager {
 		var fd = mkstemp(&buffer)
 		if isTestingFD {
 			if fd != -1 {
+				let url = NSURL(fileURLWithFileSystemRepresentation: buffer, isDirectory: false, relativeToURL: nil)
+				_ = try? NSFileManager.defaultManager().removeItemAtURL(url)
 				close(fd)
 			}
 			fd = -1

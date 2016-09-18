@@ -262,12 +262,12 @@ a delegate callback.
 	/// here is nanoseconds. libdispatch's timers require nanoseconds.
 	/// You can use NSEC_PER_SECONDS to calculate this value.
 	///
-	/// Default value is 1 seconds.
+	/// Default value is 3 seconds.
 	///
 	/// Example: 2 seconds: 2 * NSEC_PER_SEC
 	/// Example: .5 seconds: .5 * NSEC_PER_SEC
 	/// Example: .25 seconds: .25 * NSEC_PER_SEC
-	public var resendTimeout:UInt64 = 1 * NSEC_PER_SEC
+	var resendTimeout:UInt64 = 3 * NSEC_PER_SEC
 	
 	/// A timer to wait for responses like acks.
 	private var resendCurrentControlTimer:dispatch_source_t?
@@ -467,7 +467,8 @@ a delegate callback.
 		}
 	}
 	
-	/// Utility method for reset which resets local state. And optionall sends the reset message.
+	/// Utility method for reset which resets local state.
+	/// And optionally sends the reset message.
 	func internal_reset(deleteAllMessages:Bool = false, shouldSendReset:Bool = true, notifyDelegate:Bool = true, notifyDelegatePeerReset:Bool = false) {
 		
 		if let cm = self.currentMessage {

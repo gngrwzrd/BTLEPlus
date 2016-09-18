@@ -11,6 +11,7 @@ import XCTest
 
 class BTLEPlusSerialServiceControllerBaseTests : XCTestCase, BTLEPlusSerialServiceControllerDelegate {
 	
+	var testingExpectedMessages:Bool = false
 	var expectedMessages:[BTLEPlusSerialServiceProtocolMessageType] = []
 	var centralController:BTLEPlusSerialServiceController?
 	var periphController:BTLEPlusSerialServiceController?
@@ -29,6 +30,17 @@ class BTLEPlusSerialServiceControllerBaseTests : XCTestCase, BTLEPlusSerialServi
 		
 		let message = BTLEPlusSerialServiceProtocolMessage(withData: data)
 		
+		if testingExpectedMessages {
+			if expectedMessages.count > 0 {
+				assert( message?.protocolType == expectedMessages[0] )
+				expectedMessages.removeAtIndex(0)
+				if expectedMessages.count < 1 {
+					done = true
+					return
+				}
+			}
+		}
+		
 		if controller == centralController {
 			print(">>> centralSent: ",message?.protocolType.rawValue)
 			periphController?.receive(data)
@@ -39,7 +51,4 @@ class BTLEPlusSerialServiceControllerBaseTests : XCTestCase, BTLEPlusSerialServi
 			centralController?.receive(data)
 		}
 	}
-	
-	
-	
 }

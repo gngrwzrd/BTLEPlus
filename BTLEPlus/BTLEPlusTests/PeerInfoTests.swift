@@ -11,6 +11,11 @@ import XCTest
 
 class PeerInfoTests : BTLEPlusSerialServiceControllerBaseTests {
 	
+	override func setUp() {
+		super.setUp()
+		testingExpectedMessages = false
+	}
+	
 	func testPeerInfo() {
 		centralController?.resume()
 		periphController?.resume()

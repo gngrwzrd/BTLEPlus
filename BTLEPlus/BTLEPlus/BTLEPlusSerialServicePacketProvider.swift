@@ -235,7 +235,7 @@ import Foundation
 		}
 		
 		//subtract from bytes written for packets that had to be resent.
-		let diff:UInt64 = UInt64((UInt16(windowSize) - UInt16(gotPacketCount)) * mtu)
+		let diff:UInt64 = UInt64( ( UInt16(windowSize) - UInt16(gotPacketCount) ) * mtu)
 		if bytesWritten > diff {
 			bytesWritten -= diff
 		} else {

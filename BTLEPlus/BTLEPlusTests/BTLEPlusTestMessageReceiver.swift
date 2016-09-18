@@ -47,5 +47,6 @@ class BTLEPlusTestMessageReceiver : XCTestCase {
 		let fileURL = NSFileManager.defaultManager().getTempFileForWriting()
 		let receiver = BTLEPlusSerialServicePacketReceiver(withFileURLForWriting: fileURL!, windowSize: 0)
 		assert(receiver == nil)
+		_ = try? NSFileManager.defaultManager().removeItemAtURL(fileURL!) //this is just cleanup so empty files don't alarm me.
 	}
 }

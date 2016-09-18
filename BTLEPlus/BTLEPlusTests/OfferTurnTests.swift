@@ -13,22 +13,9 @@ class OfferTurnTests : BTLEPlusSerialServiceControllerBaseTests {
 	
 	override func setUp() {
 		super.setUp()
+		testingExpectedMessages = true
+		//                   p         c    p         c         p
 		expectedMessages = [.PeerInfo,.Ack,.TakeTurn,.TakeTurn,.Ack]
-	}
-	
-	override func serialServiceController(controller: BTLEPlusSerialServiceController, wantsToSendData data: NSData) {
-		
-		let message = BTLEPlusSerialServiceProtocolMessage(withData: data)
-		if expectedMessages.count > 0 {
-			assert( message?.protocolType == expectedMessages[0] )
-			expectedMessages.removeAtIndex(0)
-			if expectedMessages.count < 1 {
-				done = true
-				return
-			}
-		}
-		
-		super.serialServiceController(controller, wantsToSendData: data)
 	}
 	
 	func testDefaultOfferTurn() {

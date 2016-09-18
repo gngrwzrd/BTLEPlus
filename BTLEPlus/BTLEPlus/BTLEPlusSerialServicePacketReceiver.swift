@@ -110,7 +110,7 @@ import Foundation
 	}
 	
 	/**
-	Reveive some more data to be appended to the message.
+	Receive some more data to be appended to the message.
 	
 	- parameter data:	NSData
 	

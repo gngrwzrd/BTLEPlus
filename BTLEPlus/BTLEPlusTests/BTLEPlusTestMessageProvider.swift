@@ -38,7 +38,13 @@ class BTLEPlusTestMessageProvider : XCTestCase {
 		_provider.windowSize = 32
 		_provider.mtu = 1024
 		_provider.lastPacketCounterStart = 0
+		_provider.bytesWritten = 40000
 		_provider.resendFromPacket(10)
+		
+		// Test new bytes written. When resend happens the bytes written is reduced
+		// by the remaining bytes to be sent.
+		let newBytesWrittenAfterResend = UInt64( 40000 - ((32-10) * 1024) )
+		assert(_provider.bytesWritten == newBytesWrittenAfterResend)
 		assert(_provider.packetCounter == 10)
 		assert(_provider.gotPacketCount == 10)
 		
