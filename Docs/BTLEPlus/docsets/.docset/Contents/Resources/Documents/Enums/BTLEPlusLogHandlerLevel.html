@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>OptionSetType Extension Reference</title>
+    <title>BTLEPlusLogHandlerLevel Enum Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -11,9 +11,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Extension/OptionSetType" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Enum/BTLEPlusLogHandlerLevel" class="dashAnchor"></a>
 
-    <a title="OptionSetType Extension Reference"></a>
+    <a title="BTLEPlusLogHandlerLevel Enum Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -29,7 +29,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html"> Reference</a>
       <img class="carat" src="../img/carat.png" />
-      OptionSetType Extension Reference
+      BTLEPlusLogHandlerLevel Enum Reference
     </p>
 
     <div class="content-wrapper">
@@ -148,14 +148,9 @@
 
         <section class="section">
           <div class="section-content">
-            <h1>OptionSetType</h1>
-              <div class="declaration">
-                <div class="language">
-                  <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">OptionSetType</span> <span class="p">:</span> <span class="kt">SetAlgebraType</span><span class="p">,</span> <span class="kt">RawRepresentable</span></code></pre>
+            <h1>BTLEPlusLogHandlerLevel</h1>
+            <p>Undocumented</p>
 
-                </div>
-              </div>
-            
           </div>
         </section>
 
@@ -166,9 +161,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FE8BTLEPlusPs13OptionSetType3setFTx2onSb_T_"></a>
-                    <a name="//apple_ref/swift/Method/set(_:on:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE8BTLEPlusPs13OptionSetType3setFTx2onSb_T_">set(_:on:)</a>
+                    <a name="/s:FO8BTLEPlus23BTLEPlusLogHandlerLevel14PacketDataOnlyFMS0_S0_"></a>
+                    <a name="//apple_ref/swift/Element/PacketDataOnly" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FO8BTLEPlus23BTLEPlusLogHandlerLevel14PacketDataOnlyFMS0_S0_">PacketDataOnly</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -176,61 +171,31 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>An extension to OptionSetType to easily turn on or off values in an enum.
-This can be used on any enum that implements OptionSetType, but is mostly
-intended to simplify using CBAttributePerimissions, and CBCharaceristicProperties
-in Core Bluetooth.</p>
-
-<p>BTLEPlus use case example:</p>
-
-<pre class="highlight plaintext"><code>let properties = CBCharacteristicProperties()
-properties.set(.Read,true)
-properties.set(.Write,true)
-properties.set(.WriteWithoutResponse, true)
-properties.set(.NotifyEncryptionRequired,true)
-</code></pre>
+                        <p>Undocumented</p>
 
                       </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="k">mutating</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">set</span><span class="p">(</span><span class="nv">option</span><span class="p">:</span><span class="k">Self</span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span><span class="kt">Bool</span><span class="p">)</span></code></pre>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FO8BTLEPlus23BTLEPlusLogHandlerLevel3AllFMS0_S0_"></a>
+                    <a name="//apple_ref/swift/Element/All" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FO8BTLEPlus23BTLEPlusLogHandlerLevel3AllFMS0_S0_">All</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
 
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>option</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The value.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>on</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Whether or not the value is on or off.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
                       </div>
                     </section>
                   </div>

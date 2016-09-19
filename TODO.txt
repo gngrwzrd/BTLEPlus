@@ -1,14 +1,10 @@
 Test resend from packet with serial service controller.
 
-
-
 Need to check that acceptFilter is set properly in all reset cases.
 Should I add Cancel, which is basically reset as it is now?
 Should Reset behave differently, maybe it only resets and starts sending current message from byte 0
 
 Try and find as many places where I can take out optionals. Like startScanning on central manager.
-
-
 
 Make mtu/window size not changeable after init??
 

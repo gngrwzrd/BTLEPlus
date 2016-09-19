@@ -424,23 +424,6 @@ a delegate callback.
 	}
 	
 	/**
-	Start a stream of bytes that sends to the peer.
-	
-	You can use this to stream data from the serial service controller to it's peer.
-	You implement the delegate method that requests more stream buffer data.
-	*/
-	public func startStreaming(bufferLength:UInt16) -> Bool {
-		return false
-	}
-	
-	/**
-	Stop streaming.
-	*/
-	public func stopStreaming() {
-		
-	}
-	
-	/**
 	Reset internal state of the controller.
 	
 	Any current messages being transmitted will be dropped. Messages already in the

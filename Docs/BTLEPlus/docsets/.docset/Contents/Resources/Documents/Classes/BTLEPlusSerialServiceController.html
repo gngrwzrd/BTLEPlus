@@ -20,7 +20,7 @@
         <a class="header-link" href="../index.html">
            Docs
         </a>
-         (93% documented)
+         (90% documented)
       </p>
     
     
@@ -56,6 +56,9 @@
                 <a class="nav-group-task-link" href="../Classes/BTLEPlusCentralManager.html">BTLEPlusCentralManager</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/BTLEPlusLogger.html">BTLEPlusLogger</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/BTLEPlusPeripheral.html">BTLEPlusPeripheral</a>
               </li>
               <li class="nav-group-task">
@@ -87,6 +90,9 @@
             <a class="nav-group-name-link" href="../Enums.html">Enums</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/BTLEPlusLogHandlerLevel.html">BTLEPlusLogHandlerLevel</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/BTLEPlusSerialServiceRunMode.html">BTLEPlusSerialServiceRunMode</a>
               </li>
             </ul>
@@ -113,6 +119,9 @@
           <li class="nav-group-name">
             <a class="nav-group-name-link" href="../Typealiases.html">Typealiases</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus18BTLEPlusLogHandler">BTLEPlusLogHandler</a>
+              </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Typealiases.html#/s:8BTLEPlus29BTLEPlusSerialServiceMTU_Type">BTLEPlusSerialServiceMTU_Type</a>
               </li>
@@ -308,9 +317,9 @@ after any messages being transmitted finish.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vC8BTLEPlus31BTLEPlusSerialServiceController17offerTurnIntervalSd"></a>
+                    <a name="/s:vC8BTLEPlus31BTLEPlusSerialServiceController17offerTurnIntervalVs6UInt64"></a>
                     <a name="//apple_ref/swift/Property/offerTurnInterval" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC8BTLEPlus31BTLEPlusSerialServiceController17offerTurnIntervalSd">offerTurnInterval</a>
+                    <a class="token" href="#/s:vC8BTLEPlus31BTLEPlusSerialServiceController17offerTurnIntervalVs6UInt64">offerTurnInterval</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -318,41 +327,22 @@ after any messages being transmitted finish.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The repeat interval to offer turns to the peer.</p>
+                        <p>The repeat interval to offer turns to the peer. The unit of time
+here is nanoseconds. libdispatch&rsquo;s timers require nanoseconds.
+You can use NSEC_PER_SECONDS to calculate this value.</p>
+
+<p>Default value is 1 seconds.</p>
+
+<p>Example: 2 seconds: 2 * NSEC_PER_SEC
+Example: .5 seconds: .5 * NSEC_PER_SEC
+Example: .25 seconds: .25 * NSEC_PER_SEC</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">offerTurnInterval</span><span class="p">:</span><span class="kt">NSTimeInterval</span> <span class="o">=</span> <span class="mi">1</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:vC8BTLEPlus31BTLEPlusSerialServiceController13resendTimeoutSd"></a>
-                    <a name="//apple_ref/swift/Property/resendTimeout" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC8BTLEPlus31BTLEPlusSerialServiceController13resendTimeoutSd">resendTimeout</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The timeout before resending any waiting control packets.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">resendTimeout</span><span class="p">:</span><span class="kt">NSTimeInterval</span> <span class="o">=</span> <span class="mi">3</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">offerTurnInterval</span><span class="p">:</span><span class="kt">UInt64</span> <span class="o">=</span> <span class="kt">NSEC_PER_SEC</span></code></pre>
 
                         </div>
                       </div>
@@ -554,63 +544,6 @@ left off when <em>resume()</em> is called.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">pause</span><span class="p">()</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC8BTLEPlus31BTLEPlusSerialServiceController14startStreamingFVs6UInt16Sb"></a>
-                    <a name="//apple_ref/swift/Method/startStreaming(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC8BTLEPlus31BTLEPlusSerialServiceController14startStreamingFVs6UInt16Sb">startStreaming(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Start a stream of bytes that sends to the peer.</p>
-
-<p>You can use this to stream data from the serial service controller to it&rsquo;s peer.
-You implement the delegate method that requests more stream buffer data.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">startStreaming</span><span class="p">(</span><span class="nv">bufferLength</span><span class="p">:</span><span class="kt">UInt16</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC8BTLEPlus31BTLEPlusSerialServiceController13stopStreamingFT_T_"></a>
-                    <a name="//apple_ref/swift/Method/stopStreaming()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC8BTLEPlus31BTLEPlusSerialServiceController13stopStreamingFT_T_">stopStreaming()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Stop streaming.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">stopStreaming</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -831,7 +764,7 @@ based on expected message size.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-14)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2016-09-18)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
