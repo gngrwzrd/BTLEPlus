@@ -122,38 +122,6 @@ class BLEPlusTestMessageProvider_FileHandle : XCTestCase {
 		provider.finishMessage()
 	}
 	
-	func testResendWindow() {
-		let fileURL = NSBundle(forClass: self.dynamicType).URLForImageResource("IMG_5543")
-		let _provider = BTLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)
-		_provider?.mtu = testMTU
-		_provider?.windowSize = testWindowSize
-		guard let provider = _provider else {
-			assert(false)
-		}
-		provider.fillWindow()
-		var i:UInt8 = 0
-		var packet:NSData? = nil
-		var packetCounter:UInt8 = 0
-		while(i < UInt8(provider.windowSize)) {
-			packet = provider.getPacket()
-			assert(packet!.length == Int(testRealMTU) + sizeof(provider.packetCounter.dynamicType))
-			packet?.getBytes(&packetCounter, range: NSRange.init(location: 0, length: sizeof(packetCounter.dynamicType) ))
-			assert(packetCounter == i)
-			i = i + 1
-		}
-		provider.resendWindow()
-		assert(provider.packetCounter == 0)
-		i = 0
-		while(i < UInt8(provider.windowSize)) {
-			packet = provider.getPacket()
-			assert(packet!.length == Int(testRealMTU) + sizeof(provider.packetCounter.dynamicType))
-			packet?.getBytes(&packetCounter, range: NSRange.init(location: 0, length: sizeof(packetCounter.dynamicType) ))
-			assert(packetCounter == i)
-			i = i + 1
-		}
-		provider.finishMessage()
-	}
-	
 	func testAllParts() {
 		let fileURL = NSBundle(forClass: self.dynamicType).URLForImageResource("IMG_5543")
 		let _provider = BTLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL!)

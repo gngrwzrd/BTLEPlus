@@ -64,11 +64,7 @@ this to _BTLEPlusSerialServiceController.send()_.
 		self.data = data
 		self.messageType = withMessageType
 		self.messageId = messageId
-		if let provider = BTLEPlusSerialServicePacketProvider(withData: data) {
-			self.provider = provider
-			return
-		}
-		return nil
+		self.provider = BTLEPlusSerialServicePacketProvider(withData: data)
 	}
 	
 	/**
@@ -80,9 +76,6 @@ this to _BTLEPlusSerialServiceController.send()_.
 	- returns: BTLEPlusSerialServiceMessage?
 	*/
 	public init?(withMessageType:BTLEPlusSerialServiceMessageType_Type, messageId:BTLEPlusSerialServiceMessageId_Type, fileURL:NSURL) {
-		guard withMessageType > 0 else {
-			return nil
-		}
 		guard let path = fileURL.path else {
 			return nil
 		}
@@ -92,10 +85,6 @@ this to _BTLEPlusSerialServiceController.send()_.
 		self.fileURL = fileURL
 		self.messageType = withMessageType
 		self.messageId = messageId
-		if let provider = BTLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL) {
-			self.provider = provider
-			return
-		}
-		return nil
+		self.provider = BTLEPlusSerialServicePacketProvider(withFileURLForReading: fileURL)
 	}
 }

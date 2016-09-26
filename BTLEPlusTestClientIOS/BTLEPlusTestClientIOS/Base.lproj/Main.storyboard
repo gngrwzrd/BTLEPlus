@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -14,18 +15,16 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aDg-8O-zVJ">
-                                <rect key="frame" x="260" y="42" width="80" height="30"/>
                                 <state key="normal" title="Hello World"/>
                                 <connections>
                                     <action selector="sendHelloWorld" destination="BYZ-38-t0r" eventType="touchUpInside" id="Sae-hS-oE3"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rU8-SE-dys">
-                                <rect key="frame" x="260" y="80" width="80" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="U4L-Qi-0LR"/>
                                     <constraint firstAttribute="height" constant="30" id="eWA-CD-38U"/>
@@ -36,7 +35,6 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iSt-U4-p1x">
-                                <rect key="frame" x="248" y="118" width="104" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="L35-3W-Lb0"/>
                                     <constraint firstAttribute="width" constant="104" id="vXe-lA-1cX"/>
@@ -47,7 +45,6 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VlX-iX-4AN">
-                                <rect key="frame" x="230" y="156" width="140" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="140" id="3Ak-e7-toL"/>
                                     <constraint firstAttribute="height" constant="30" id="qKO-bG-6sE"/>
@@ -58,7 +55,6 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rxp-EV-ERc">
-                                <rect key="frame" x="261" y="194" width="79" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="79" id="BV0-Bc-AwK"/>
                                     <constraint firstAttribute="height" constant="30" id="N5y-ls-cBQ"/>
@@ -69,7 +65,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="rU8-SE-dys" firstAttribute="top" secondItem="aDg-8O-zVJ" secondAttribute="bottom" constant="8" id="2Wz-Ns-BnS"/>
                             <constraint firstItem="rxp-EV-ERc" firstAttribute="top" secondItem="VlX-iX-4AN" secondAttribute="bottom" constant="8" id="504-V5-Oj2"/>

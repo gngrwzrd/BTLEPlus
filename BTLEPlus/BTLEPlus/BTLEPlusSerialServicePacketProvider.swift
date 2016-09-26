@@ -205,21 +205,11 @@ import Foundation
 		return packet!
 	}
 	
-	/// Reset internal state so the entire window is resent.
-	func resendWindow() {
-		if let fileHandle = fileHandle {
-			fileHandle.seekToFileOffset(lastFileOffsetAtStart)
-		}
-		packetCounter = lastPacketCounterStart
-		bytesWritten = bytesWrittenAtFill
-		gotPacketCount = 0
-	}
-	
 	/// Reset the packet counter to resend from a specific packet.
 	func resendFromPacket(packetCount:BTLEPlusSerialServicePacketCounter_Type) {
 		packetCounter = packetCount
 		gotPacketCount = 0
-		isEndOfMessage = false
+		//isEndOfMessage = false
 		
 		//loop and add how many packets were sent.
 		var packet = lastPacketCounterStart

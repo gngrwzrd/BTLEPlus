@@ -413,6 +413,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.gngrwzrd.BLEPlusTestClientIOS;
 				PRODUCT_NAME = BTLEPlusTestClientIOS;
 				PROVISIONING_PROFILE = "f658292d-67ad-4ae9-bcdf-23747fa69c10";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -426,6 +427,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gngrwzrd.BLEPlusTestClientIOS;
 				PRODUCT_NAME = BTLEPlusTestClientIOS;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};

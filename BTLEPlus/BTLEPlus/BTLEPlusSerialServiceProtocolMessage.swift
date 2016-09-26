@@ -36,6 +36,19 @@ public var BTLEPlusSerialServiceMaxWindowSize:BTLEPlusSerialServiceWindowSize_Ty
 /// The default max message id value before it loops to zero.
 public var BTLEPlusSerialServiceMaxMessageId:BTLEPlusSerialServiceMessageId_Type = BTLEPlusSerialServiceMessageId_Type.max
 
+/// :nodoc:
+/// The type to use for protocol message type.
+typealias BTLEPlusSerialServiceProtocolMessageType_Type = UInt8
+
+/// :nodoc:
+/// The type to use for packet counting.
+typealias BTLEPlusSerialServicePacketCounter_Type = UInt8
+
+/// :nodoc:
+/// The default max packet counter before it loops to zero.
+var BTLEPlusSerialServiceMaxPacketCounter:BTLEPlusSerialServicePacketCounter_Type = 128
+
+
 /// Extension for NSData to print the data as hex values
 extension NSData {
 	
