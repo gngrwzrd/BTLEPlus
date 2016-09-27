@@ -16,13 +16,11 @@ class BTLEPlusSerialServiceControllerBaseTests : XCTestCase, BTLEPlusSerialServi
 	var centralController:BTLEPlusSerialServiceController?
 	var periphController:BTLEPlusSerialServiceController?
 	var done:Bool = false
-	var delegateQueue:dispatch_queue_t?
 	
 	override func setUp() {
-		delegateQueue = dispatch_queue_create("com.btleplus.tests", nil)
-		centralController = BTLEPlusSerialServiceController(withRunMode: .Central, delegateQueue: delegateQueue!)
+		centralController = BTLEPlusSerialServiceController(withRunMode: .Central)
 		centralController?.delegate = self
-		periphController = BTLEPlusSerialServiceController(withRunMode: .Peripheral, delegateQueue: delegateQueue!)
+		periphController = BTLEPlusSerialServiceController(withRunMode: .Peripheral)
 		periphController?.delegate = self
 		periphController?.mtu = 32
 		periphController?.windowSize = 64
@@ -36,10 +34,6 @@ class BTLEPlusSerialServiceControllerBaseTests : XCTestCase, BTLEPlusSerialServi
 			if expectedMessages.count > 0 {
 				assert( message?.protocolType == expectedMessages[0] )
 				expectedMessages.removeAtIndex(0)
-				if expectedMessages.count < 1 {
-					done = true
-					return
-				}
 			}
 		}
 		
@@ -53,5 +47,9 @@ class BTLEPlusSerialServiceControllerBaseTests : XCTestCase, BTLEPlusSerialServi
 			centralController?.receive(data)
 		}
 		
+		if expectedMessages.count < 1 {
+			done = true
+			return
+		}
 	}
 }

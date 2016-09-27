@@ -20,6 +20,12 @@ class NewMessageTests : BTLEPlusSerialServiceControllerBaseTests {
 		expectedMessages = [.PeerInfo,.Ack,.TakeTurn,.Ack,.NewMessage,.Ack,.Data,.EndMessage,.Ack]
 	}
 	
+	override func serialServiceController(controller: BTLEPlusSerialServiceController, wantsToSendData data: NSData) {
+		print("central progress: ",centralController?.progress)
+		print("peripheral progress:",periphController?.progress)
+		super.serialServiceController(controller, wantsToSendData: data)
+	}
+	
 	func testNewMessage() {
 		let s = "148E4241-8524-4813-B55F-6BBA94C4EB70"
 		let d = s.dataUsingEncoding(NSUTF8StringEncoding)

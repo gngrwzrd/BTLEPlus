@@ -34,6 +34,12 @@ class BTLEPlusTestAdvertisementData : XCTestCase {
 		assert(adv.localName! == "testLocalName")
 	}
 	
+	func testLocalName3() {
+		let data:[String:AnyObject] = [:]
+		let adv = BTLEAdvertisementData(discoveredData: data)
+		assert(adv.localName == nil)
+	}
+	
 	func testServiceUUIDs1() {
 		let cbuuid = CBUUID(string: "180D")
 		let data = [CBAdvertisementDataServiceUUIDsKey:[cbuuid]]
@@ -46,6 +52,42 @@ class BTLEPlusTestAdvertisementData : XCTestCase {
 		let adv = BTLEAdvertisementData()
 		adv.serviceUUIDS = [cbuuid]
 		assert(adv.serviceUUIDS!.count == 1)
+	}
+	
+	func testIsConnectable() {
+		var adv = BTLEAdvertisementData()
+		adv.isConnectable = NSNumber.init(bool: true)
+		assert(adv.isConnectable != nil)
+		assert(adv.isConnectable!.boolValue == true)
+		
+		let data:[String:AnyObject] = [CBAdvertisementDataIsConnectable: NSNumber.init(bool: true) ]
+		adv = BTLEAdvertisementData(discoveredData: data)
+		assert(adv.isConnectable != nil)
+		assert(adv.isConnectable!.boolValue == true)
+	}
+	
+	func testAdvertisementData() {
+		let data = NSMutableData()
+		var adv = BTLEAdvertisementData()
+		adv.manufacturerData = data
+		assert(adv.manufacturerData != nil)
+		
+		let ddata:[String:AnyObject] = [CBAdvertisementDataManufacturerDataKey:data]
+		adv = BTLEAdvertisementData(discoveredData: ddata)
+		assert(adv.manufacturerData != nil)
+		assert(adv.manufacturerData == data)
+	}
+	
+	func testOverflowServiceUUIDs() {
+		let cbuuid = CBUUID(string: "180D")
+		var adv = BTLEAdvertisementData()
+		adv.overflowServiceUUIDs = [cbuuid]
+		assert(adv.overflowServiceUUIDs != nil)
+		
+		let data:[String:AnyObject] = [CBAdvertisementDataOverflowServiceUUIDsKey:[cbuuid]]
+		adv = BTLEAdvertisementData(discoveredData: data)
+		assert(adv.overflowServiceUUIDs != nil)
+		assert(adv.overflowServiceUUIDs![0] == cbuuid)
 	}
 	
 }

@@ -165,9 +165,6 @@ a delegate callback.
 	/// The delegate object that you want to receive serial service events.
 	public var delegate:BTLEPlusSerialServiceControllerDelegate?
 	
-	/// The delegate callback queue.
-	var delegateQueue:dispatch_queue_t
-	
 	/// The maximum data transmission length.
 	///
 	/// Changing this value triggers a peer information exchange and it's not
@@ -295,24 +292,6 @@ a delegate callback.
 		self.mode = mode
 		messageQueue = []
 		serialQueue = dispatch_queue_create("com.btleplus.SerialServiceController", DISPATCH_QUEUE_SERIAL)
-		delegateQueue = dispatch_get_main_queue()
-		super.init()
-	}
-	
-	/**
-	Initialize a serial service with it's run mode and a custom delegate queue to receive
-	callbacks on.
-	
-	- parameter mode: The run mode for the serial service.
-	- parameter queue: A queue for delegate messages to callback on.
-	
-	- returns: BTLEPlusSerialServiceController
-	*/
-	public init(withRunMode mode:BTLEPlusSerialServiceRunMode, delegateQueue queue:dispatch_queue_t) {
-		messageQueue = []
-		self.mode = mode
-		serialQueue = dispatch_queue_create("com.btleplus.SerialServiceController", DISPATCH_QUEUE_SERIAL)
-		delegateQueue = queue
 		super.init()
 	}
 	
@@ -478,15 +457,11 @@ a delegate callback.
 			}
 			
 			if notifyDelegate {
-				dispatch_async(delegateQueue, {
-					self.delegate?.serialServiceController?(self, droppedMessageFromReset: cm)
-				})
+				self.delegate?.serialServiceController?(self, droppedMessageFromReset: cm)
 			}
 			
 			if notifyDelegatePeerReset {
-				dispatch_async(delegateQueue, {
-					self.delegate?.serialServiceController?(self, droppedMessageFromPeerReset: cm)
-				})
+				self.delegate?.serialServiceController?(self, droppedMessageFromPeerReset: cm)
 			}
 		}
 		
@@ -999,10 +974,8 @@ a delegate callback.
 			currentMessage = nil
 			sendAck([.TakeTurn,.NewMessage,.NewFileMessage,.Reset])
 			
-			dispatch_async(delegateQueue) {
-				if let cm = cm {
-					self.delegate?.serialServiceController?(self, receivedMessage: cm)
-				}
+			if let cm = cm {
+				self.delegate?.serialServiceController?(self, receivedMessage: cm)
 			}
 		}
 	}
@@ -1072,11 +1045,8 @@ a delegate callback.
 	
 	/// Ack end message
 	func receivedAckForEndMessage() {
-		let cm = currentMessage
-		dispatch_async(delegateQueue) {
-			if let cm = cm {
-				self.delegate?.serialServiceController?(self, sentMessage: cm)
-			}
+		if let cm = currentMessage {
+			self.delegate?.serialServiceController?(self, sentMessage: cm)
 		}
 		
 		currentMessage?.provider?.finishMessage()

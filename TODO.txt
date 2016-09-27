@@ -1,5 +1,6 @@
-Get rid of delegate queue. It's really not necessary.
+Finish advertisement data tests.
 Test reset
+Test progress
 Need to check that acceptFilter is set properly in all reset cases.
 Should I add Cancel, which is basically reset as it is now?
 Should Reset behave differently, maybe it only resets and starts sending current message from byte 0
