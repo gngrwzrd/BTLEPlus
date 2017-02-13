@@ -36,6 +36,7 @@
 		078A35261D826643000CCBB1 /* BTLEPlusSerialServiceProtocolMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A34E81D8265A0000CCBB1 /* BTLEPlusSerialServiceProtocolMessage.swift */; };
 		0791EBB51D8A49CC0097DC72 /* BTLEPlus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0791EBB41D8A49CC0097DC72 /* BTLEPlus.swift */; };
 		0791EBB61D8A4A650097DC72 /* BTLEPlus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0791EBB41D8A49CC0097DC72 /* BTLEPlus.swift */; };
+		07A0F9FF1DAB024F008C9276 /* _CBPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A0F9FE1DAB024F008C9276 /* _CBPeripheral.swift */; };
 		07AF65491D8A19280014BB1B /* NSFileManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AF65481D8A19280014BB1B /* NSFileManager+Extensions.swift */; };
 		07AF654A1D8A19280014BB1B /* NSFileManager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07AF65481D8A19280014BB1B /* NSFileManager+Extensions.swift */; };
 		07B671AF1D8E4CC6007A7C54 /* BTLEPlusTestProtocolMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078A35001D8265CD000CCBB1 /* BTLEPlusTestProtocolMessage.swift */; };
@@ -54,6 +55,7 @@
 		07D725FC1D98DFAE00C12B15 /* BTLEPlusSerialServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D725FB1D98DFAE00C12B15 /* BTLEPlusSerialServiceTests.swift */; };
 		07E997911D82FDA1004E3624 /* OptionsSetType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E997901D82FDA1004E3624 /* OptionsSetType+Extensions.swift */; };
 		07E997951D83C5FD004E3624 /* OptionsSetType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E997901D82FDA1004E3624 /* OptionsSetType+Extensions.swift */; };
+		07FEE7171DAB3E92007FEA46 /* _CBCentralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FEE7161DAB3E92007FEA46 /* _CBCentralManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +102,7 @@
 		0791EBB71D8A4EFE0097DC72 /* OfferTurnTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferTurnTests.swift; sourceTree = "<group>"; };
 		0791EBB91D8A55A80097DC72 /* NewMessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMessageTests.swift; sourceTree = "<group>"; };
 		0791EBBB1D8A59F50097DC72 /* WaitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitTests.swift; sourceTree = "<group>"; };
+		07A0F9FE1DAB024F008C9276 /* _CBPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CBPeripheral.swift; sourceTree = "<group>"; };
 		07AF653F1D8A109F0014BB1B /* BTLEPlusSerialServiceControllerBaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTLEPlusSerialServiceControllerBaseTests.swift; sourceTree = "<group>"; };
 		07AF65421D8A13DC0014BB1B /* PeerInfoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerInfoTests.swift; sourceTree = "<group>"; };
 		07AF65481D8A19280014BB1B /* NSFileManager+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSFileManager+Extensions.swift"; sourceTree = "<group>"; };
@@ -109,6 +112,7 @@
 		07D725F91D98DE4300C12B15 /* ResetTestDropAll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetTestDropAll.swift; sourceTree = "<group>"; };
 		07D725FB1D98DFAE00C12B15 /* BTLEPlusSerialServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTLEPlusSerialServiceTests.swift; sourceTree = "<group>"; };
 		07E997901D82FDA1004E3624 /* OptionsSetType+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OptionsSetType+Extensions.swift"; sourceTree = "<group>"; };
+		07FEE7161DAB3E92007FEA46 /* _CBCentralManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CBCentralManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,8 +220,10 @@
 		078A35861D826E9D000CCBB1 /* DIscovery */ = {
 			isa = PBXGroup;
 			children = (
-				078A34DF1D8265A0000CCBB1 /* BTLEPlusPeripheral.swift */,
+				07FEE7161DAB3E92007FEA46 /* _CBCentralManager.swift */,
+				07A0F9FE1DAB024F008C9276 /* _CBPeripheral.swift */,
 				078A34DE1D8265A0000CCBB1 /* BTLEPlusCentralManager.swift */,
+				078A34DF1D8265A0000CCBB1 /* BTLEPlusPeripheral.swift */,
 			);
 			name = DIscovery;
 			sourceTree = "<group>";
@@ -414,6 +420,7 @@
 			files = (
 				078A34F61D8265A0000CCBB1 /* BTLEPlusSerialServiceProtocolMessage.swift in Sources */,
 				078A34EB1D8265A0000CCBB1 /* BTLEAdvertisementData.swift in Sources */,
+				07FEE7171DAB3E92007FEA46 /* _CBCentralManager.swift in Sources */,
 				078A34ED1D8265A0000CCBB1 /* BTLEPlusPeripheral.swift in Sources */,
 				078A34EC1D8265A0000CCBB1 /* BTLEPlusCentralManager.swift in Sources */,
 				078A34F31D8265A0000CCBB1 /* BTLEPlusSerialServiceMessage.swift in Sources */,
@@ -422,6 +429,7 @@
 				07AF65491D8A19280014BB1B /* NSFileManager+Extensions.swift in Sources */,
 				0791EBB51D8A49CC0097DC72 /* BTLEPlus.swift in Sources */,
 				078A34F41D8265A0000CCBB1 /* BTLEPlusSerialServicePacketProvider.swift in Sources */,
+				07A0F9FF1DAB024F008C9276 /* _CBPeripheral.swift in Sources */,
 				078A34F51D8265A0000CCBB1 /* BTLEPlusSerialServicePacketReceiver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

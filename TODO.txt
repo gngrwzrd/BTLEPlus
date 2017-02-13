@@ -1,3 +1,5 @@
+I think if I unwrap as much as possible from CBPeripheral and CBCentralManager I can test them easier
+
 Finish advertisement data tests.
 Test reset
 Test progress

@@ -49,19 +49,6 @@ public class TestPeripheralServer : NSObject, CBPeripheralManagerDelegate, BTLEP
 		let props2 = CBCharacteristicProperties.init(rawValue: props)
 		let perms2 = CBAttributePermissions.init(rawValue: perms)
 		
-		var test = CBAttributePermissions()
-		test.set(.ReadEncryptionRequired, on: true)
-		test.set(.WriteEncryptionRequired, on: true)
-		
-//		var test = CBAttributePermissions()
-//		test.setPermission(.ReadEncryptionRequired, on: true)
-//		test.setPermission(.WriteEncryptionRequired, on: true)
-
-//		let test = CBMutableCharacteristic(type: TestPeripheralServer.CharacteristicUUID, properties: .Read, value: nil, permissions: .ReadEncryptionRequired)
-//		test.setProperty(.Read, on: on)
-//		test.setProperty(.Write, on: on)
-//		test.setProperty(.WriteWithoutResponse, on: on)
-		
 		channel = CBMutableCharacteristic(type: TestPeripheralServer.CharacteristicUUID, properties: props2, value: nil, permissions: perms2)
 		service.characteristics = [channel]
 		pmanager.addService(service)

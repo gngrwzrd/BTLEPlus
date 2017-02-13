@@ -39,7 +39,8 @@ events from a BTLEPlusCentralManager.
 	optional func btleCentralManagerDidDiscoverPeripheral(manager:BTLEPlusCentralManager,peripheral:BTLEPlusPeripheral)
 	
 	/**
-	Receive raw state updates from the internal CBCentralManager.
+	Receive raw state updates from the internal CBCentralManager.  If you want to receive callbacks
+	for unknown, unsupported, or unauthorized states from CoreBluetooth use this.
 	
 	- parameter manager:	BTLEPlusCentralManager
 	- parameter state:   CBCentralManagerState
@@ -151,12 +152,6 @@ for more information about responding to advertisement data.
 	/// from Core Bluetooth documentation.
 	public var scanOptions:[String:AnyObject] = [CBCentralManagerScanOptionAllowDuplicatesKey:true]
 	
-	//#if os(iOS)
-	/// Whether to start scanning when core bluetooth restores from a background state.
-	/// This only has effects for iOS.
-	public var shouldScanAfterRestore = false
-	//#endif
-	
 	/// The core bluetooth central manager.
 	var btCentralManager:CBCentralManager?
 	
@@ -214,7 +209,7 @@ for more information about responding to advertisement data.
 	}
 	
 	//utility to copy a peripheral prototype
-	private func copyPrototype(prototype:BTLEPlusPeripheral, advertisementData:BTLEAdvertisementData?, peripheral:CBPeripheral?) -> BTLEPlusPeripheral? {
+	func copyPrototype(prototype:BTLEPlusPeripheral, advertisementData:BTLEAdvertisementData?, peripheral:CBPeripheral?) -> BTLEPlusPeripheral? {
 		if let newDevice = prototype.copy() as? BTLEPlusPeripheral {
 			newDevice.btleCentralManager = self
 			newDevice.btCentralManager = btCentralManager
@@ -237,7 +232,7 @@ for more information about responding to advertisement data.
 	
 	- returns: BTLEPlusPeripheral?
 	*/
-	private func findPrototype(advertisementData:BTLEAdvertisementData?) -> BTLEPlusPeripheral? {
+	func findPrototype(advertisementData:BTLEAdvertisementData?) -> BTLEPlusPeripheral? {
 		guard let advData = advertisementData else {
 			return nil
 		}
@@ -256,7 +251,7 @@ for more information about responding to advertisement data.
 	
 	- returns: BTLEPlusPeripheral?
 	*/
-	private func newPrototypeInstance(peripheral:CBPeripheral, advertisementData:BTLEAdvertisementData?) -> BTLEPlusPeripheral? {
+	func newPrototypeInstance(peripheral:CBPeripheral, advertisementData:BTLEAdvertisementData?) -> BTLEPlusPeripheral? {
 		guard let advData = advertisementData else {
 			return nil
 		}
@@ -275,7 +270,7 @@ for more information about responding to advertisement data.
 	
 	- returns: BTLEAdvertisementData?
 	*/
-	private func knownPeripheralAdvertisementData(forUUID:NSUUID) -> BTLEAdvertisementData? {
+	func knownPeripheralAdvertisementData(forUUID:NSUUID) -> BTLEAdvertisementData? {
 		guard let knownPeripherals = NSUserDefaults.standardUserDefaults().objectForKey(knownPeripheralsDefaultsKey) else {
 			return nil
 		}
@@ -291,7 +286,7 @@ for more information about responding to advertisement data.
 	///connected peripherals, and not connected but still known. If a peripheral prototype
 	///matches a new peripheral is created, and either it connects, or if already connected
 	///will go through the setup process starting with discovering services.
-	private func discoverKnownPeripherals(services:[CBUUID]) {
+	func discoverKnownPeripherals(services:[CBUUID]) {
 		if !shouldRetrieveKnownPeripherals {
 			return
 		}
@@ -419,7 +414,7 @@ for more information about responding to advertisement data.
 	
 	- parameter peripheral: The peripheral to add
 	*/
-	private func addPeripheral(peripheral:BTLEPlusPeripheral) {
+	func addPeripheral(peripheral:BTLEPlusPeripheral) {
 		guard peripheral.cbPeripheral != nil else {
 			return
 		}
@@ -474,7 +469,7 @@ for more information about responding to advertisement data.
 	
 	- returns: A BTLEPlusPeripheral or nil
 	*/
-	private func peripheralForPeripheral(peripheral:CBPeripheral) -> BTLEPlusPeripheral? {
+	func peripheralForPeripheral(peripheral:CBPeripheral) -> BTLEPlusPeripheral? {
 		for _peripheral in peripherals {
 			if _peripheral.cbPeripheral?.identifier.UUIDString == peripheral.identifier.UUIDString {
 				return _peripheral
@@ -568,17 +563,17 @@ for more information about responding to advertisement data.
 	}
 	
 	/// Called when bluetooth is powered on.
-	private func poweredOn() {
+	func poweredOn() {
 		delegate?.btleCentralManagerDidTurnOnBluetooth?(self)
 	}
 	
 	/// Called when bluetooth is powered off.
-	private func poweredOff() {
+	func poweredOff() {
 		delegate?.btleCentralManagerDidTurnOffBluetooth?(self)
 	}
 	
 	/// Called when bluetooth is resetting
-	private func resetting() {
+	func resetting() {
 		delegate?.btleCentralManagerBluetoothIsResetting?(self)
 	}
 	
@@ -586,7 +581,7 @@ for more information about responding to advertisement data.
 	public func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
 		
 		//find any existing collected advertisement data. collected adv data is only
-		//colluected during the lifetime of the scan.
+		//collected during the lifetime of the scan.
 		var updatedAdvData = false
 		var advertisementDataObject:BTLEAdvertisementData? = collectedAdvertisementData[peripheral.identifier]
 		if advertisementDataObject != nil {

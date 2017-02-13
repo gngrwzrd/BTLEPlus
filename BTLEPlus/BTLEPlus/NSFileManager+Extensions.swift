@@ -21,7 +21,7 @@ extension NSFileManager {
 		let templateString = "BTLEPlusSerialService.XXXXXX"
 		let template = NSURL(fileURLWithPath:NSTemporaryDirectory()).URLByAppendingPathComponent(templateString)
 		var buffer = [Int8](count: Int(PATH_MAX), repeatedValue: 0)
-		template.getFileSystemRepresentation(&buffer, maxLength: buffer.count)
+		template!.getFileSystemRepresentation(&buffer, maxLength: buffer.count)
 		var fd = mkstemp(&buffer)
 		if isTestingFD {
 			if fd != -1 {
